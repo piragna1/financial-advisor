@@ -1,4 +1,5 @@
-# Financial advisor: a personal project for Solvd. company's LABA program.
+# Financial advisor
+personal project for Solvd. company's LABA program.
 
 ## Table of Contents
 
