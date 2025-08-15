@@ -5,7 +5,7 @@ This is a personal project for Solvd. company's LABA program for NodeJS backend 
 
 | Section                | Subsections                                                                                                                                           |
 |------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Overview](#overview)  |                                                                                                                                                       |
+| [Overview](#overview)  |                                                                                                                                                | [Description](#description)  |                                                                                                                                                       |
 | [Setup](#setup)        |                                                                                                                                                       |
 | [Summary](#summary-of-the-relationship-between-objects) |                                                                                                                     |
 | [Authentication](./documentation/AUTH-README.md#authentication) | 
