@@ -1,5 +1,4 @@
-# financial-advisor-
-Internship in Solvd. company's LABA program for NodeJS backend development.
+# Financial advisor: a personal project for Solvd. company's LABA program.
 
 ## Table of Contents
 
