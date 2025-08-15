@@ -1,5 +1,5 @@
 # Financial advisor
-This is a personal project for Solvd. company's LABA program.
+This is a personal project for Solvd. company's LABA program for NodeJS backend development.
 ##
 ## Table of content
 
