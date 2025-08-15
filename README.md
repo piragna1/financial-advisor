@@ -1,8 +1,6 @@
 # Financial advisor
 personal project for Solvd. company's LABA program.
 
-##Table of Contents
-
 | Section                | Subsections                                                                                                                                           |
 |------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [Overview](#overview)  |                                                                                                                                                       |
@@ -11,6 +9,6 @@ personal project for Solvd. company's LABA program.
 | [Authentication](./documentation/AUTH-README.md#authentication) | 
 | [Relationships](./documentation/RELATIONSHIP-README.md#data-modeling) | 
 | [Endpoints API Documentation](./documentation/ENDPOINTS-README.md#endpoints-api-documentation) | 
-
+## 
 ### Overview
 This project was made as part of my internship in the Solvd. LABA program. The main idea is to help me (and maybe others) learn the basics of managing personal finances with some simple tools and calculators. Since I’m still learning, the features are pretty basic, and I’m figuring things out as I go. The application lets users try out different financial strategies and see how their decisions might affect their money over time. It’s a work in progress, and I hope to improve it as I learn more!
