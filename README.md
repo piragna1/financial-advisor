@@ -15,4 +15,4 @@ personal project for Solvd. company's LABA program.
 
 ### Overview
 
-This is the overview
+This small application is intended for being able of calculating some operations regarding to personal finance tools an strategies for one in order to make benefitial decisions in the desired period of time to contribute to one's individual economy sistem.
