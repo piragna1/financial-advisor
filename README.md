@@ -1,7 +1,7 @@
 # financial-advisor-
 Internship in Solvd. company's LABA program for NodeJS backend development.
 
-### Table of Contents
+## Table of Contents
 
 | Section                | Subsections                                                                                                                                           |
 |------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
