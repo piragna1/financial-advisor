@@ -1,20 +1,41 @@
+import { error } from 'console';
 import app from 'express';
 import http from 'http';
+import { hostname } from 'os';
 
 
 //create server
 const server = http.createServer(
     function (request, response) {
-        response.statusCode =200;
-        response.setHeader('Content-type', 'text/plain');
-        response.end('End of response.');
+        if (req.url === '/'){
+            response.writeHead(200,{'Content-type':'text/html'});
+            response.write('<h1>Hello World!</h1>'
+                // , (error) => console.log(`error: ${error.message}`)
+            );
+            response.setHeader('Content-type', 'text/plain');
+            response.end('End of response.');
+        }
+        else {
+            res.writeHead(404);
+            res.end('Page not found');
+        }
     }
 );
 
+const PORT = 3000;
+
 //listen
-server.listen(3000, () => {
-    'Server running at http://localhost:3000'
+server.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
 })
+
+const options = {
+    hostname: 'example.com',
+    port:80,
+    path:'/upload',
+    method:'POST',
+    headers: { 'Content-Type':'application/json'}
+};
 
 //request
 const req = http.request(options, (res) => {
@@ -40,4 +61,4 @@ http.get('http://www.example.com', (res) => {
     res.on('data' , (chunk) => {
         console.log(`body: ${chunk}`);
     });
-});import express from 'express';
+});
