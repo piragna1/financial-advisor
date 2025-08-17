@@ -3,12 +3,13 @@
         -Basic loan calculation (done)
         -Monthly payment calculation (done)
         -Total repayment amount (done)
+
         -Compound interest logic (pending)
         -Input validation (pending)
         -Early repayment logic (pending)
         -Amortization schedule (pending)
         -Debt-to-income ratio check (pending)
-        C-onfigurable interest type (pending)
+        -Configurable interest type (pending)
 
     🎯 Smart Features
         -Interest rate suggestions (pending)
@@ -20,3 +21,7 @@
     🌍 User Experience
         -Localization (desired)
         -Visual charts (interesting)
+
+
+📃  Next steps for development:
+    -Compound interest integration in calculations.
