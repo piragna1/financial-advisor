@@ -36,3 +36,23 @@ function calculateMaxLoanCapacity(repaymentCapacity, loanTermYears, interestRate
 //loanTermYears=1 
 //interestRate=0.25
 calculateMaxLoanCapacity(calculateRepaymentCapacity(user,loanTermYears),loanTermYears,interestRate);//User max loan capacity over 1 years: $9,000
+
+function calculateCompoundInterest({principal, annualRate, years, compoundsPerYear}){
+    if (
+        principal<=0 ||
+        annualRate <= 0 ||
+        years <= 0 ||
+        compoundsPerYear <=0
+    ) {
+        throw new Error('Invalid input received.');
+    };
+
+    const ratePerPeriod = annualRate/compoundsPerYear;
+    const totalPeriods = compoundsPerYear * years;
+    const totalAmount = principal * Math.pow(1 + ratePerPeriod, totalPeriods);
+
+    return {
+        totalAmount:parseFloat(totalAmount.toFixed(2)),
+        interestAccrued: parseFloat((totalAmount-principal).toFixed(2));        
+    };
+}
