@@ -25,3 +25,10 @@
 
 📃  Next steps for development:
     -Compound interest integration in calculations.
+
+🔤  Glossary:
+    -ratePerPeriod: Interest rate applied each compounding period
+    -totalAmount: Final amount the user repays (principal + interest)
+    -interestAccrued: Total interest paid over the loan term
+
+
