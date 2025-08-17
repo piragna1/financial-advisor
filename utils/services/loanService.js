@@ -53,6 +53,6 @@ function calculateCompoundInterest({principal, annualRate, years, compoundsPerYe
 
     return {
         totalAmount:parseFloat(totalAmount.toFixed(2)),
-        interestAccrued: parseFloat((totalAmount-principal).toFixed(2));        
+        interestAccrued: parseFloat((totalAmount-principal).toFixed(2))       
     };
 }
