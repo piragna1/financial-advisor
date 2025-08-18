@@ -20,7 +20,7 @@
 
     🌍 User Experience
         -Localization (desired)
-        -Visual charts (interesting)
+        -Visual charts (interesting) Use libraries like Chart.js or D3.js
         -Visual chart (principal payment vs interest payment percentage fluctuation in total paymen along the different periods)
         -User should be able to adjust the interest rate
         -User should be able to adjust the interest type
@@ -28,10 +28,11 @@
         -User should be able to see real-time updates to: total repayment
         -User should be able to see real-time updates to: amortization schedule
         -User should be able to see real-time updates to: interest cost
+        - Add date tracking (optional) that would be interesting to add later with frontend! (pending)
 
 
 📃  Next steps for development:
-    -Compound interest integration in calculations.
+    - Early repayment logic.
 
 🔤  Glossary:
     -ratePerPeriod: Interest rate applied each compounding period
