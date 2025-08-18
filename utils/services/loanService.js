@@ -1,19 +1,20 @@
-function calculateRepaymentCapacity(user, loanTermYears){
+function calculateRepaymentCapacity(user, years){
     //Supposing that the maximum term time period is 30 years
-    if (user == null || loanTermYears == null){
+    if (user == null || years == null){
         throw new Error('Invalid input received.');
     }
-    if (loanTermYears <=0 || loanTermYears >= 30){
+    if (years <=0 || years >= 30){
         throw new Error('Invalid input received.');
     }
     const annualRepaymentCapacity = user.annualSalary*user.paymentRatio; //discounting the interest to the annual salary
     //annualRepaymentCapacity * years = maxRepaymentCapacity
-    const repaymentCapacity = annualRepaymentCapacity*loanTermYears;
-    console.log(`User repayment capacity over ${loanTermYears} years: $${repaymentCapacity.toLocaleString()}`);
+    const repaymentCapacity = annualRepaymentCapacity*years;
+    console.log(`User repayment capacity over ${years} years: $${repaymentCapacity.toLocaleString()}`);
     return repaymentCapacity;
 }
 
-function calculateMaxLoanCapacity(repaymentCapacity, loanTermYears, interestRate){
+function calculateMaxLoanCapacity(loan){
+    const {repaymentCapacity, loanTermYears, interestRate} = loan;
     if (repaymentCapacity == null || loanTermYears == null ||interestRate == null) {
         throw new Error('Invalid input received.');
     }
@@ -26,11 +27,12 @@ function calculateMaxLoanCapacity(repaymentCapacity, loanTermYears, interestRate
 };
 
 function calculateCompoundInterest(loan){
+    const { principal, annualRate, years, compoundsPerYear } = loan;
     if (
-        loan.principal<=0 ||
-        loan.annualRate <= 0 ||
-        loan.years <= 0 ||
-        loan.compoundsPerYear <=0
+        principal<=0 ||
+        annualRate <= 0 ||
+        years <= 0 ||
+        compoundsPerYear <=0
     ) {
         throw new Error('Invalid input received.');
     };
