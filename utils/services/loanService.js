@@ -77,3 +77,11 @@ function generateAmortizationSchedule(loan){
     return schedule;
 }
 
+
+/*Validation purposes:
+const totalPaid = schedule.reduce((sum, p) => sum + p.payment, 0);
+const totalPrincipal = schedule.reduce((sum, p) => sum + p.principal, 0);
+const totalInterest = schedule.reduce((sum, p) => sum + p.interest, 0);
+totalPaid === totalPrincipal + totalInterest
+payment === principal + interest
+*/
