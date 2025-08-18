@@ -4,8 +4,8 @@
         -Monthly payment calculation (done)
         -Total repayment amount (done)
         -Compound interest logic (done)
+        -Input validation (done)
 
-        -Input validation (pending)
         -Early repayment logic (pending)
         -Amortization schedule (pending)
         -Debt-to-income ratio check (pending)
@@ -21,6 +21,7 @@
     🌍 User Experience
         -Localization (desired)
         -Visual charts (interesting)
+        -Visual chart (principal payment vs interest payment percentage fluctuation in total paymen along the different periods)
         -User should be able to adjust the interest rate
         -User should be able to adjust the interest type
         -User should be able to see real-time updates to: monthly payments
