@@ -1,5 +1,5 @@
 COURSE TASKS:
-  -GITHUB REPOSITORY
+  -GITHUB REPOSITORY ()
   -Your next task for the personal project is to implement authentication in your application.
     Assignment: Choose and implement one of the authentication methods we covered in class:
       JWT (JSON Web Tokens)
@@ -16,19 +16,6 @@ COURSE TASKS:
         -Input validation (done)
         -Amortization schedule (done)
         -Early repayment logic (done)
-
-
-        -Debt-to-income ratio check (pending)
-        -Configurable interest type (pending)
-        -Mid period repayment functionality(pending)
-        -Summary object {totalInterestSaved,earlyRepaymentPeriod,finalPayment,modifiedSchedule} (pending)
-        -loan scenario object:const scenario = {name: "Standard 15-Year Fixed",loan: { principal: 100000, rate: 0.05, term: 15 },user: { salary: 60000, ratio: 0.2 },earlyRepaymentPeriod: 60};(pending)
-
-
-
-
-
-
 
 
 
