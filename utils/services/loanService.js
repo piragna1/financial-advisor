@@ -57,6 +57,15 @@ function fixedPaymentCalculation(loan){
     return (r* principal) / (1- Math.pow(1+r, -n));
 }
 
+
+/* paymentBreakdownOnPeriod: 
+{
+            period:i,
+            payment:payment,
+            interest:interest,
+            principal:principalPaid,
+            balance:Math.balance(balance,0)
+        }*/
 function generateAmortizationSchedule(loan){
     const {principal, annualRate, totalPeriodsPerYear, years} = loan;
     const schedule = [];
@@ -75,6 +84,12 @@ function generateAmortizationSchedule(loan){
         });
     }
     return schedule;
+}
+
+function calculateInterestSaving(schedule, earlyRepaymentPeriod){
+    const futurePayments = schedule.slice(earlyRepaymentPeriod);
+    const interestSaved = futurePayments.reduce((sum, period)=>sum+=period.interest,0);
+    return parseFloat(interestSaved).toFixed(2);
 }
 
 
