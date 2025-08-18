@@ -46,3 +46,14 @@ function calculateCompoundInterest(loan){
         interestAccrued: parseFloat((totalAmount-principal).toFixed(2))       
     };
 }
+
+
+function fixedPaymentCalculation(loan){
+    const {principal, annualRate, totalPeriodsPerYear, years} = loan;
+    const r = annualRate/totalPeriodsPerYear; //Rate value for individual periods.
+    const n = years * totalPeriodsPerYear; //Total number of payments
+    
+    //Loan Payment Formula:
+    return (r* principal) / (1- Math.pow(1+r, -n));
+}
+
