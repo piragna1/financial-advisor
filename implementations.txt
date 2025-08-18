@@ -43,29 +43,51 @@
 
 
 
-🗂️ Suggested Next Steps (Prioritized)
-Let’s break it down into manageable chunks:
+# 🗂️ Loan Simulator Roadmap Checklist
 
-🔹 Phase 1: Finalize Core Module
-[ ] Add summary object to early repayment logic
+## 🔹 Phase 1: Finalize Core Module
+- [ ] **Add summary object to early repayment logic**
+  - [ ] Include total interest saved
+  - [ ] Include adjusted loan duration
+- [ ] **Validate full vs early repayment totals**
+  - [ ] Compare principal + interest across scenarios
+  - [ ] Ensure consistency with amortization schedule
+- [ ] **Write unit tests for edge cases**
+  - [ ] Zero interest rate
+  - [ ] Very short loan duration
+  - [ ] Early repayment at final period
 
-[ ] Validate full vs early repayment totals
+## 🔹 Phase 2: Comparison & Simulation
+- [ ] **Implement `compareLoans()` function**
+  - [ ] Accept multiple loan configs
+  - [ ] Return ranked summary by cost, duration, flexibility
+- [ ] **Add `simulateEarlyRepayments()` for multiple periods**
+  - [ ] Support custom repayment schedules
+  - [ ] Visualize impact over time
+- [ ] **Prepare data structure for frontend charts**
+  - [ ] Monthly breakdowns
+  - [ ] Cumulative totals
+  - [ ] Interest vs principal split
 
-[ ] Write unit tests for edge cases
+## 🔹 Phase 3: Frontend Prep
+- [ ] **Sketch UI components**
+  - [ ] Loan input form
+  - [ ] Results table
+  - [ ] Interactive chart
+- [ ] **Decide on chart library**
+  - [ ] Chart.js (simple, responsive)
+  - [ ] D3.js (custom, powerful)
+- [ ] **Plan localization**
+  - [ ] Currency formatting
+  - [ ] Language support
+  - [ ] Regional loan norms
 
-🔹 Phase 2: Comparison & Simulation
-[ ] Implement compareLoans() function
+---
 
-[ ] Add simulateEarlyRepayments() for multiple periods
-
-[ ] Prepare data structure for frontend charts
-
-🔹 Phase 3: Frontend Prep
-[ ] Sketch UI components (loan form, chart, results table)
-
-[ ] Decide on chart library (Chart.js, D3.js, etc.)
-
-[ ] Plan localization (currency, date formats)
+## 🧠 Notes
+- Keep logic pure and config-driven
+- Avoid premature optimization — build for clarity first
+- Modularize functions for reuse in future products
 
 
 🔤  Glossary:
