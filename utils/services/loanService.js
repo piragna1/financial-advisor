@@ -116,3 +116,26 @@ function applyEarlyRepayment(loan,schedule, earlyRepaymentPeriod){
     const interestSaved = calculateInterestSaving(schedule,earlyRepaymentPeriod);
     return scheduleCopy;
 };
+
+//simulation
+const loan = {
+  principal: 100000,
+  interestRate: 0.06,
+  termYears: 10,
+  paymentFrecuency: 12,
+};
+
+const schedule = generateAmortizationSchedule(
+  loan.principal,
+  loan.interestRate,
+  loan.paymentFrecuency,
+  loan.termYears
+);
+
+const earlyRepaymentPeriod = 60; // after 5 years
+
+const modifiedSchedule = applyEarlyRepayment(loan, schedule, earlyRepaymentPeriod);
+const interestSaved = calculateInterestSaving(schedule, earlyRepaymentPeriod);
+
+console.log("Interest saved:", interestSaved);
+console.log("Modified schedule:", modifiedSchedule.slice(-3)); // last 3 entries
