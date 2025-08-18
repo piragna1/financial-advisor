@@ -49,11 +49,14 @@ function calculateCompoundInterest(loan){
 
 
 function fixedPaymentCalculation(loan){
-    const {principal, annualRate, totalPeriodsPerYear, years} = loan;
-    const r = annualRate/totalPeriodsPerYear; //Rate value for individual periods.
-    const n = years * totalPeriodsPerYear; //Total number of payments
+    console.log('Entered in fixedPaymentCalculation execution:')
+    console.log('loan',loan)
+    const {principal, interestRate, termYears, paymentFrecuency} = loan;
+    const r = interestRate/paymentFrecuency; //Rate value for individual periods.
+    const n = termYears * paymentFrecuency; //Total number of payments
     
     //Loan Payment Formula:
+    console.log('Loan Payment Formula result:',(r* principal) / (1- Math.pow(1+r, -n)))
     return (r* principal) / (1- Math.pow(1+r, -n));
 }
 
@@ -67,12 +70,14 @@ function fixedPaymentCalculation(loan){
             balance:Math.balance(balance,0)
         }*/
 function generateAmortizationSchedule(loan){
-    const {principal, annualRate, totalPeriodsPerYear, years} = loan;
+    console.log('start generateAmortizationSchedule')
+    const {principal, interestRate, termYears, paymentFrecuency} = loan;
     const schedule = [];
     const payment = fixedPaymentCalculation(loan);
+    console.log('payment:',payment)
     let balance = principal;
-    for (let i = 1; i< years*totalPeriodsPerYear; i++){
-        const interest = balance * (annualRate/totalPeriodsPerYear);
+    for (let i = 1; i< termYears*paymentFrecuency; i++){
+        const interest = balance * (interestRate/paymentFrecuency);
         const principalPaid = payment-interest;
         balance-=principalPaid;
         schedule.push({
@@ -80,9 +85,15 @@ function generateAmortizationSchedule(loan){
             payment:payment,
             interest:interest,
             principal:principalPaid,
-            balance:Math.balance(balance,0)
+            balance:Math.max(balance,0)
         });
     }
+    console.log('principal:',principal)
+    console.log('interestRate:',interestRate)
+    console.log('paymentFrecuency:',paymentFrecuency)
+    console.log('termYears:',termYears)
+    console.log('schedule:',schedule)
+    console.log('END generateAmortizationSchedule')
     return schedule;
 }
 
@@ -102,6 +113,13 @@ payment === principal + interest
 */
 
 function applyEarlyRepayment(loan,schedule, earlyRepaymentPeriod){
+
+    console.log('loan:',loan);
+    console.log('schedule:',schedule);
+    console.log('earlyRepaymentPeriod:',earlyRepaymentPeriod);
+
+
+
     const scheduleCopy = schedule.slice(0, earlyRepaymentPeriod-1);
     const periodBreakdown = schedule[earlyRepaymentPeriod-1];
     const periodBreakdownCopy = {
@@ -111,7 +129,7 @@ function applyEarlyRepayment(loan,schedule, earlyRepaymentPeriod){
         principal:periodBreakdown.balance, //100% of payment is under principal?
         balance:0//reduce the current remaining balance to 0
     };
-    scheduleCopy[earlyRepaymentPeriod-1] = copy;
+    scheduleCopy[earlyRepaymentPeriod-1] = periodBreakdownCopy;
     loan['earlyRepaymentPeriod'] = earlyRepaymentPeriod;
     const interestSaved = calculateInterestSaving(schedule,earlyRepaymentPeriod);
     return scheduleCopy;
@@ -121,18 +139,14 @@ function applyEarlyRepayment(loan,schedule, earlyRepaymentPeriod){
 const loan = {
   principal: 100000,
   interestRate: 0.06,
-  termYears: 10,
+  termYears: 2,
   paymentFrecuency: 12,
 };
 
-const schedule = generateAmortizationSchedule(
-  loan.principal,
-  loan.interestRate,
-  loan.paymentFrecuency,
-  loan.termYears
-);
+const schedule = generateAmortizationSchedule(loan);
+    console.log('GENERATED SCHEDULE:',schedule);
 
-const earlyRepaymentPeriod = 60; // after 5 years
+const earlyRepaymentPeriod = 12; // after 1 years
 
 const modifiedSchedule = applyEarlyRepayment(loan, schedule, earlyRepaymentPeriod);
 const interestSaved = calculateInterestSaving(schedule, earlyRepaymentPeriod);
