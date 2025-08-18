@@ -21,6 +21,12 @@
     🌍 User Experience
         -Localization (desired)
         -Visual charts (interesting)
+        -User should be able to adjust the interest rate
+        -User should be able to adjust the interest type
+        -User should be able to see real-time updates to: monthly payments
+        -User should be able to see real-time updates to: total repayment
+        -User should be able to see real-time updates to: amortization schedule
+        -User should be able to see real-time updates to: interest cost
 
 
 📃  Next steps for development:
