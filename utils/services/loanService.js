@@ -97,13 +97,6 @@ function calculateInterestSaving(schedule, earlyRepaymentPeriod){
 }
 
 
-/*Validation purposes:
-const totalPaid = schedule.reduce((sum, p) => sum + p.payment, 0);
-const totalPrincipal = schedule.reduce((sum, p) => sum + p.principal, 0);
-const totalInterest = schedule.reduce((sum, p) => sum + p.interest, 0);
-totalPaid === totalPrincipal + totalInterest
-payment === principal + interest
-*/
 
 function applyEarlyRepayment(loan,schedule, earlyRepaymentPeriod){
 
@@ -145,3 +138,23 @@ const interestSaved = calculateInterestSaving(schedule, earlyRepaymentPeriod);
 
 console.log("Interest saved:", interestSaved);
 console.log("Modified schedule:", modifiedSchedule.slice(-3)); // last 3 entries
+
+
+
+/*Validation purposes:
+const totalPaid = schedule.reduce((sum, p) => sum + p.payment, 0);
+const totalPrincipal = schedule.reduce((sum, p) => sum + p.principal, 0);
+const totalInterest = schedule.reduce((sum, p) => sum + p.interest, 0);
+totalPaid === totalPrincipal + totalInterest
+payment === principal + interest
+*/
+
+/*Possible additional object: summary
+{
+  totalInterestSaved,
+  earlyRepaymentPeriod,
+  finalPayment,
+  modifiedSchedule
+}
+
+*/
