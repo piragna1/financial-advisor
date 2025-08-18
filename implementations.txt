@@ -6,12 +6,12 @@
         -Compound interest logic (done)
         -Input validation (done)
         -Amortization schedule (done)
+        -Early repayment logic (done)
 
-        -Early repayment logic (pending)
         -Debt-to-income ratio check (pending)
         -Configurable interest type (pending)
         -Mid period repayment functionality(pending)
-        -Summary object {totalInterestSaved,earlyRepaymentPeriod,finalPayment,modifiedSchedule}
+        -Summary object {totalInterestSaved,earlyRepaymentPeriod,finalPayment,modifiedSchedule} (pending)
 
     🎯 Smart Features
         -Interest rate suggestions (pending)
@@ -43,9 +43,30 @@
 
 
 
+🗂️ Suggested Next Steps (Prioritized)
+Let’s break it down into manageable chunks:
 
-📃  Next steps for development:
-    - Early repayment logic.
+🔹 Phase 1: Finalize Core Module
+[ ] Add summary object to early repayment logic
+
+[ ] Validate full vs early repayment totals
+
+[ ] Write unit tests for edge cases
+
+🔹 Phase 2: Comparison & Simulation
+[ ] Implement compareLoans() function
+
+[ ] Add simulateEarlyRepayments() for multiple periods
+
+[ ] Prepare data structure for frontend charts
+
+🔹 Phase 3: Frontend Prep
+[ ] Sketch UI components (loan form, chart, results table)
+
+[ ] Decide on chart library (Chart.js, D3.js, etc.)
+
+[ ] Plan localization (currency, date formats)
+
 
 🔤  Glossary:
     -ratePerPeriod: Interest rate applied each compounding period
