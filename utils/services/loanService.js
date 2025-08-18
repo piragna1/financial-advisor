@@ -100,3 +100,19 @@ const totalInterest = schedule.reduce((sum, p) => sum + p.interest, 0);
 totalPaid === totalPrincipal + totalInterest
 payment === principal + interest
 */
+
+function applyEarlyRepayment(loan,schedule, earlyRepaymentPeriod){
+    const scheduleCopy = schedule.slice(0, earlyRepaymentPeriod-1);
+    const periodBreakdown = schedule[earlyRepaymentPeriod-1];
+    const periodBreakdownCopy = {
+        period:earlyRepaymentPeriod,
+        payment:periodBreakdown.balance,
+        interest:0, // I am not sure here
+        principal:periodBreakdown.balance, //100% of payment is under principal?
+        balance:0//reduce the current remaining balance to 0
+    };
+    scheduleCopy[earlyRepaymentPeriod-1] = copy;
+    loan['earlyRepaymentPeriod'] = earlyRepaymentPeriod;
+    const interestSaved = calculateInterestSaving(schedule,earlyRepaymentPeriod);
+    return scheduleCopy;
+};
