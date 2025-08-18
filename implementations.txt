@@ -11,10 +11,12 @@
         -Debt-to-income ratio check (pending)
         -Configurable interest type (pending)
         -Mid period repayment functionality(pending)
+        -Summary object {totalInterestSaved,earlyRepaymentPeriod,finalPayment,modifiedSchedule}
 
     🎯 Smart Features
         -Interest rate suggestions (pending)
         -Loan comparison tool (pending)
+
 
     🧠 Educational Layer
         -Educational tooltips (pending)
@@ -29,7 +31,17 @@
         -User should be able to see real-time updates to: total repayment
         -User should be able to see real-time updates to: amortization schedule
         -User should be able to see real-time updates to: interest cost
-        - Add date tracking (optional) that would be interesting to add later with frontend! (pending)
+        -Add date tracking (optional) that would be interesting to add later with frontend! (pending)
+        -Let users simulate different early repayment periods and compare savings
+        -Interest vs principal over time
+        -Let the user do:Comparison: full term vs early repayment
+        -
+        -
+        -
+        -
+        -
+
+
 
 
 📃  Next steps for development:
