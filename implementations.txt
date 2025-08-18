@@ -5,11 +5,12 @@
         -Total repayment amount (done)
         -Compound interest logic (done)
         -Input validation (done)
+        -Amortization schedule (done)
 
         -Early repayment logic (pending)
-        -Amortization schedule (pending)
         -Debt-to-income ratio check (pending)
         -Configurable interest type (pending)
+        -Mid period repayment functionality(pending)
 
     🎯 Smart Features
         -Interest rate suggestions (pending)
