@@ -3,8 +3,8 @@
         -Basic loan calculation (done)
         -Monthly payment calculation (done)
         -Total repayment amount (done)
+        -Compound interest logic (done)
 
-        -Compound interest logic (pending)
         -Input validation (pending)
         -Early repayment logic (pending)
         -Amortization schedule (pending)

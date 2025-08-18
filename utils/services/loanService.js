@@ -1,4 +1,11 @@
 function calculateRepaymentCapacity(user, loanTermYears){
+    //Supposing that the maximum term time period is 30 years
+    if (user == null || loanTermYears == null){
+        throw new Error('Invalid input received.');
+    }
+    if (loanTermYears <=0 || loanTermYears >= 30){
+        throw new Error('Invalid input received.');
+    }
     const annualRepaymentCapacity = user.annualSalary*user.paymentRatio; //discounting the interest to the annual salary
     //annualRepaymentCapacity * years = maxRepaymentCapacity
     const repaymentCapacity = annualRepaymentCapacity*loanTermYears;
@@ -7,6 +14,12 @@ function calculateRepaymentCapacity(user, loanTermYears){
 }
 
 function calculateMaxLoanCapacity(repaymentCapacity, loanTermYears, interestRate){
+    if (repaymentCapacity == null || loanTermYears == null ||interestRate == null) {
+        throw new Error('Invalid input received.');
+    }
+    if (repaymentCapacity <=0 || loanTermYears <=0 || interestRate <= 0){
+        throw new Error('Invalid input received.')
+    }
     const maxLoanCapacity = repaymentCapacity/(1+interestRate);
     console.log(`User max loan capacity over ${loanTermYears} years: $${maxLoanCapacity.toLocaleString()} with an interest rate of % ${interestRate*100}.`);
     return maxLoanCapacity;
