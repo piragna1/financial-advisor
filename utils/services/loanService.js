@@ -57,3 +57,23 @@ function fixedPaymentCalculation(loan){
     return (r* principal) / (1- Math.pow(1+r, -n));
 }
 
+function generateAmortizationSchedule(loan){
+    const {principal, annualRate, totalPeriodsPerYear, years} = loan;
+    const schedule = [];
+    const payment = fixedPaymentCalculation(loan);
+    let balance = principal;
+    for (let i = 1; i< years*totalPeriodsPerYear; i++){
+        const interest = balance * (annualRate/totalPeriodsPerYear);
+        const principalPaid = payment-interest;
+        balance-=principalPaid;
+        schedule.push({
+            period:i,
+            payment:payment,
+            interest:interest,
+            principal:principalPaid,
+            balance:Math.balance(balance,0)
+        });
+    }
+    return schedule;
+}
+
