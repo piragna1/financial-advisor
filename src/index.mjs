@@ -1,7 +1,9 @@
-import { error } from 'console';
-import app from 'express';
+import express from 'express';
 import http from 'http';
-import { hostname } from 'os';
+
+
+const app = express();
+const PORT = 3000;
 
 
 //create server
@@ -22,7 +24,6 @@ const server = http.createServer(
     }
 );
 
-const PORT = 3000;
 
 //listen
 server.listen(PORT, () => {
