@@ -25,6 +25,24 @@ COURSE TASKS:
         -loan scenario object:const scenario = {name: "Standard 15-Year Fixed",loan: { principal: 100000, rate: 0.05, term: 15 },user: { salary: 60000, ratio: 0.2 },earlyRepaymentPeriod: 60};(pending)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------Non core
     🎯 Smart Features
         -Interest rate suggestions (pending)
         -Loan comparison tool (pending)
