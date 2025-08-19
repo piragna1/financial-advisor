@@ -1,6 +1,11 @@
 COURSE TASKS:
-  -GITHUB REPOSITORY ()
-  -Your next task for the personal project is to implement authentication in your application.
+  -GITHUB REPOSITORY (
+    +Table of contents
+      *Overview
+      *Description
+      *ERD
+  )
+  -Implement authentication in your application.
     Assignment: Choose and implement one of the authentication methods we covered in class:
       JWT (JSON Web Tokens)
       OAuth 2.0
