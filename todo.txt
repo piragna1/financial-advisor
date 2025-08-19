@@ -1,9 +1,9 @@
 COURSE TASKS:
   -GITHUB REPOSITORY (
     +Table of contents
-      *Overview
-      *Description
-      *ERD
+      *Overview (done)
+      *Description (done)
+      *ERD (pending)
   )
   -Implement authentication in your application.
     Assignment: Choose and implement one of the authentication methods we covered in class:
@@ -18,9 +18,10 @@ COURSE TASKS:
         -Monthly payment calculation (done)
         -Total repayment amount (done)
         -Compound interest logic (done)
-        -Input validation (done)
         -Amortization schedule (done)
         -Early repayment logic (done)
+
+        -Input validation (check)
 
 
 
