@@ -1,10 +1,11 @@
-const { validateUserInput } = import ('../validators/validateUserInput')
+const { validateRegistrationInput } = import ('../validators/validateRegistrationInput.js')
+const {validateLoginInput } = import ('../validators/validateLoginInput.js')
 const { findUserByEmail, saveUser } = import ('../repositories/userRepo')
 const bcrypt = import ('bcrypt')
 const { v4: uuidv4 } = import ('uuid')
 
 export async function registerUser({ name, email, password }) {
-  validateUserInput({ name, email, password })
+  validateRegistrationInput({ name, email, password })
 
   const existingUser = await findUserByEmail(email)
   if (existingUser) {
@@ -25,3 +26,10 @@ export async function registerUser({ name, email, password }) {
   return await saveUser(newUser)
 }
 
+
+export async function loginUser({email ,password}) {
+    const errors = validateLoginInput(email,password);
+    if (errors.length) {
+  throw new ValidationError(errors);
+}
+}
