@@ -1,0 +1,6 @@
+Auth:
+-The user must be able to provide their name
+-The user must be able to provide their email
+-The user must be able to provide their password
+-The user must be able to confirm their password
+-The user must be able to submit the sign-up form
