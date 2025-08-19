@@ -24,7 +24,7 @@ COURSE TASKS:
         -Input validation (check)
 
 
-
+Current doing task: models definition
 
 
 
