@@ -1,6 +1,27 @@
 Auth:
--The user must be able to provide their name
--The user must be able to provide their email
--The user must be able to provide their password
--The user must be able to confirm their password
--The user must be able to submit the sign-up form
+-The user should be able to enter their name into a text input field.
+-The user should be able to enter their email address into a text input field.
+-The user should be able to enter their password into a secure password input field.
+-The user should be able to enter their password confirmation into a separate secure input field.
+-The user should be able to submit the form containing these credentials.
+-The user should receive immediate feedback if any field is invalid or missing.
+
+-The system should validate the 'name' field.
+    +The system should ensure the 'name' field is not empty.
+    +The system should ensure the 'name' field meets a minimum length requirement (e.g. at least 2 characters).
+    +The system should ensure the 'name' field does not exceed a maximum length (e.g. 50 characters).
+    +The system should ensure the 'name' field contains only valid characters (e.g. letters, spaces, hyphens).
+    +The system should trim leading and trailing whitespace from the 'name' field.
+    +The system should reject the 'name' field if it contains disallowed symbols or numbers.
+-The system should validate the 'email' field.
+    +The system should ensure the 'email' field is not empty.
+    +The system should ensure the 'email' field matches a valid email format.
+    +The system should ensure the 'email' field does not exceed a maximum length (e.g. 100 characters).
+    +The system should trim leading and trailing whitespace from the 'email' field.
+    +The system should reject the 'email' field if it contains disallowed characters or multiple @ symbols.
+    +The system should check whether the 'email' field already exists in the database.
+    +The system should reject the 'email' field if it is already registered.
+
+-The system should validate the 'password' field.
+-The system should validate the 'confirmPassword' field.
+
