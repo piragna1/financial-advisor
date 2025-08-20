@@ -24,3 +24,12 @@ export function verifyToken(token,secret='secret'){
     const payload = JSON.parse(Buffer.from(payloadB64, 'base64url').toString());
     return payload;
 }
+
+export function decodeToken(token){
+    try {
+        const decoded = JSON.parse(atob(token));
+        return decoded;
+    } catch (error) {
+        return null;
+    }
+}
