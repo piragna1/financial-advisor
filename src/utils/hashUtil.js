@@ -1,0 +1,23 @@
+function hash(string, salt) {
+    //assuming string === (headerB64+'.'+payloadB64);
+    //assuming that salt is the secret
+    //As far as I understand we want to generate the signature here right copilot?
+
+    //So we have this hashFunction
+  if (typeof string !== "string") {
+    throw Error("Invalid input key");
+  }
+  let signature = "";
+  const prime1 = 3;
+  const prime3= 199;
+
+  let sum;
+  for (let index = 0; index < string.length; index++) {
+    sum=0;
+    let charcode = string.charCodeAt(index);
+    let charcode1=salt.charCodeAt(index);
+    sum += ((charcode*charcode1*prime3)*prime1)%(signature.length+1);
+    signature+=sum.toString();
+  }
+  return signature;
+}
