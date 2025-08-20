@@ -1,15 +1,20 @@
-export function generateToken(userId, secret = 'secret',expiresInSeconds='3600'){
-    Math.floor(Date.now()/1000)+expiresInSeconds;
+export function generateToken(userId, secret = 'secret',expiresInSeconds=3600){
+    const now = Math.floor(Date.now()/1000);
+    const exp = now+expiresInSeconds;
     const header = {alg:'HS256', typ:'JWT'};
     const payload = {
         sub:userId,
-        iat:Date.now()
+        iat:now,
+        exp
     };
-    //simulate encoding
+
     const base64Header = Buffer.from(JSON.stringify(header)).toString('base64');
+
     const base64Payload = Buffer.from(JSON.stringify(payload)).toString('base64');
-    const signature = Buffer.from(base64Header+'.'+base64Payload+secret).toString('base64')
-    return `${base64Header}.${base64Payload}.${signature}`;
+
+    const signatureB64 = Buffer.from(base64Header+'.'+base64Payload+secret).toString('base64')
+
+    return `${base64Header}.${base64Payload}.${signatureB64}`;
 };
 
 export function verifyToken(token,secret='secret'){
@@ -27,7 +32,7 @@ export function verifyToken(token,secret='secret'){
 
 export function decodeToken(token){
     try {
-        const decoded = JSON.parse(atob(token));
+        const decoded = JSON.parse(Buffer.from(token, 'base64').toString());
         return decoded;
     } catch (error) {
         return null;
