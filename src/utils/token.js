@@ -33,3 +33,11 @@ export function decodeToken(token){
         return null;
     }
 }
+
+export function isTokenExpired(token){
+    const payload = decodeToken(token);
+    if(!payload || !payload.exp) return true;
+    const now = Math.floor(Date.now()/100);
+    return now > payload.exp;
+}
+
