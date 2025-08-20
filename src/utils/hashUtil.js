@@ -15,9 +15,9 @@ function hash(string, salt) {
   for (let index = 0; index < string.length; index++) {
     sum=0;
     let charcode = string.charCodeAt(index);
-    let charcode1=salt.charCodeAt(index);
-    sum += ((charcode*charcode1*prime3)*prime1)%(signature.length+1);
+    let charcode1=salt.charCodeAt(index%salt.length);
+    sum += ((charcode*charcode1*prime3)*prime1)%string.length;
     signature+=sum.toString();
   }
-  return signature;
+  return Buffer.from(signature).toString('base64');
 }
