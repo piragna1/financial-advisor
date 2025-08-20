@@ -41,3 +41,11 @@ export function isTokenExpired(token){
     return now > payload.exp;
 }
 
+export function refreshToken(oldToken, secret){
+    if (isTokenExpired(oldToken)){
+        const payload = JSON.parse(atob(oldToken.split('.')[1]));
+        delete payload.exp;
+        return generateToken(payload, secret);
+    }
+    return oldToken;
+}
