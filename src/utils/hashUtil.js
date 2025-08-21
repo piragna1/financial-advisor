@@ -1,9 +1,4 @@
 function hash(string, salt) {
-    //assuming string === (headerB64+'.'+payloadB64);
-    //assuming that salt is the secret
-    //As far as I understand we want to generate the signature here right copilot?
-
-    //So we have this hashFunction
   if (typeof string !== "string") {
     throw Error("Invalid input key");
   }
