@@ -7,13 +7,9 @@ export function generateToken(userId, secret = 'secret',expiresInSeconds=3600){
         iat:now,
         exp
     };
-
     const base64Header = Buffer.from(JSON.stringify(header)).toString('base64');
-
     const base64Payload = Buffer.from(JSON.stringify(payload)).toString('base64');
-
-    const signatureB64 = Buffer.from(base64Header+'.'+base64Payload+secret).toString('base64')
-
+    const signatureB64 = Buffer.from(`${base64Header}.${base64Payload+secret}`).toString('base64');
     return `${base64Header}.${base64Payload}.${signatureB64}`;
 };
 
