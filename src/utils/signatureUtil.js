@@ -2,6 +2,9 @@ export function generateSignature(string, secret) {
   if (typeof string !== "string") {
     throw Error("Invalid input key");
   }
+  if (typeof secret !== "string" || secret.length === 0) {
+  throw Error("Invalid secret");
+}
   let signature = "";
   const prime1 = 3;
   const prime3= 199;
@@ -14,5 +17,5 @@ export function generateSignature(string, secret) {
     sum += ((charcode*charcode1*prime3)*prime1);
     signature+=sum.toString();
   }
-  return Buffer.from(signature).toString('base64url');
+  return Buffer.from(signature.slice(0,256)).toString('base64url');
 }
