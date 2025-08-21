@@ -1,4 +1,4 @@
-import { generateSignature } from "./hashUtil";
+import { generateSignature } from "./signatureUtil";
 export function generateToken(userId, secret = 'simulationSecret',expiresInSeconds=3600){
     const now = Math.floor(Date.now()/1000);
     const exp = now+expiresInSeconds;
