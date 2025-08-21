@@ -1,4 +1,4 @@
-function hash(string, salt) {
+export function generateSignature(string, secret) {
   if (typeof string !== "string") {
     throw Error("Invalid input key");
   }
@@ -10,9 +10,9 @@ function hash(string, salt) {
   for (let index = 0; index < string.length; index++) {
     sum=0;
     let charcode = string.charCodeAt(index);
-    let charcode1=salt.charCodeAt(index%salt.length);
-    sum += ((charcode*charcode1*prime3)*prime1)%string.length;
+    let charcode1=secret.charCodeAt(index%secret.length);
+    sum += ((charcode*charcode1*prime3)*prime1);
     signature+=sum.toString();
   }
-  return Buffer.from(signature).toString('base64');
+  return Buffer.from(signature).toString('base64url');
 }
