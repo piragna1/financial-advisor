@@ -1,6 +1,6 @@
 // src/controllers/authController.mjs
 
-import { findUserByEmail } from '../repositories/userRepo.js';
+import { findUserByEmail, listUsers } from '../repositories/userRepo.js';
 import { registerUser } from '../services/auth/authService.js'
 import { loginUser } from '../services/auth/authService.js'
 import { validateRegistrationInput } from '../validators/validateRegistrationInput.js';
@@ -17,14 +17,16 @@ export async function registerUserController(req, res) {
       throw new Error('User already exists');
     }
     const newUser = await registerUser({ name, email, password })
-    const users = 
+    const users = listUsers();
     
     res.status(200).json({
+      message:'User registered',
       token,
       user: {
-        id: user.id,
-        email: user.email
-      }
+        id: newUser.id,
+        email: newUser.email
+      },
+      users:(await users).map(u=>u.name)
     });
   } catch (error) {
     res.status(400).json({ error: error.message })
