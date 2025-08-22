@@ -41,5 +41,6 @@ export async function loginUser({ email, password }) {
   await validateLoginInput(email, password);
   const user = await findUserByEmail(email);
   await verifyPassword(password, user.passwordHash);
-  return generateToken({ userId: user.id });
+  const token = generateToken({ userId: user.id }); 
+  return {user,token};
 }
