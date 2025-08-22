@@ -17,7 +17,7 @@ export async function registerUserController(req, res) {
       throw new Error('User already exists');
     }
     const newUser = await registerUser({ name, email, password })
-    const users = listUsers();
+    const users = (await listUsers()).map(u => u.name);
     
     res.status(200).json({
       message:'User registered',
@@ -26,7 +26,7 @@ export async function registerUserController(req, res) {
         id: newUser.id,
         email: newUser.email
       },
-      users:(await users).map(u=>u.name)
+      users
     });
   } catch (error) {
     res.status(400).json({ error: error.message })
