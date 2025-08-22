@@ -1,6 +1,6 @@
 import { listUsers } from "../repositories/userRepo";
 
 export async function checkUserUniqueness (email) {
-    const users = listUsers();
-    return await users.some(u => u.email === email);
+    const users = await listUsers();
+    return users.some(u => u.email === email);
 }
