@@ -8,17 +8,7 @@ const { v4: uuidv4 } = import("uuid");
 import { generateToken } from "../../utils/token.js";
 
 export async function registerUser({ name, email, password }) {
-  validateRegistrationInput({ name, email, password });
-
-  const existingUser = await findUserByEmail(email);
-  if (existingUser) {
-    throw new Error(
-      "The email you have entered is not available at this moment"
-    );
-  }
-
   const passwordHash = await bcrypt.hash(password, 10);
-
   const newUser = {
     id: uuidv4(),
     name,
