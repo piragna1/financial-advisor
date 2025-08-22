@@ -1,7 +1,7 @@
 // src/controllers/authController.mjs
 
-import { registerUser } from '../services/authService.js'
-import { loginUser } from '../services/authService.js'
+import { registerUser } from '../services/auth/authService.js'
+import { loginUser } from '../services/auth/authService.js'
 
 export async function registerUserController(req, res) {
   try {
