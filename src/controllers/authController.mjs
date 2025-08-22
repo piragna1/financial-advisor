@@ -1,13 +1,24 @@
 // src/controllers/authController.mjs
 
+import { findUserByEmail } from '../repositories/userRepo.js';
 import { registerUser } from '../services/auth/authService.js'
 import { loginUser } from '../services/auth/authService.js'
+import { validateRegistrationInput } from '../validators/validateRegistrationInput.js';
 
 export async function registerUserController(req, res) {
   try {
-    const { name, email, password } = req.body
+    const { name, lastName, email, password } = req.body;
+    const validation = validateRegistrationInput({name,lastName,email,password});
+    if (!validation.success){
+      throw new Error('Invalid input entered')
+    }
+    const exist = findUserByEmail(email);
+    if (exist) {
+      throw new Error('User already exists');
+    }
     const newUser = await registerUser({ name, email, password })
-
+    const users = 
+    
     res.status(200).json({
       token,
       user: {
