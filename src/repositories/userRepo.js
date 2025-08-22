@@ -10,3 +10,7 @@ export async function saveUser(user) {
   users.push(user);
   return user;
 }
+
+export async function listUsers(){
+  return users.slice();
+}
