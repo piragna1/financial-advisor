@@ -1,11 +1,11 @@
 const { validateRegistrationInput } = import(
-  "../validators/validateRegistrationInput.js"
+  "../../validators/validateRegistrationInput.js"
 );
-const { validateLoginInput } = import("../validators/validateLoginInput.js");
-const { findUserByEmail, saveUser } = import("../repositories/userRepo");
+const { validateLoginInput } = import("../../validators/validateLoginInput.js");
+const { findUserByEmail, saveUser } = import("../../repositories/userRepo.js");
 const bcrypt = import("bcrypt");
 const { v4: uuidv4 } = import("uuid");
-import { generateToken } from "../utils/token.js";
+import { generateToken } from "../../utils/token.js";
 
 export async function registerUser({ name, email, password }) {
   validateRegistrationInput({ name, email, password });
