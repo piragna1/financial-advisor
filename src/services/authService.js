@@ -12,7 +12,9 @@ export async function registerUser({ name, email, password }) {
 
   const existingUser = await findUserByEmail(email);
   if (existingUser) {
-    throw new Error("Email already in use");
+    throw new Error(
+      "The email you have entered is not available at this moment"
+    );
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
@@ -29,21 +31,15 @@ export async function registerUser({ name, email, password }) {
   return await saveUser(newUser);
 }
 
-export async function loginUser({ email, password }) {
-  const errors = validateRegistrationInput(email, password);
-  if (errors.length) {
-    throw new ValidationError(errors);
-  }
-  const user = findUserByEmail(email);
-  if (!user){
-    throw new Error('User not found!')
-  }
-  const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
-  if (!isPasswordValid){
-    throw new Error('Invalid password');
-  }
+async function verifyPassword(password, userPasswordHash){
+  const result = await bcrypt.compare(password, userPasswordHash);
+  if (!result) throw new InvalidCredentialsError(); //custom
+  return true;
+}
 
-  const token = generateToken({userId:user.id});
-  return {token};
-  
+export async function loginUser({ email, password }) {
+  await validateLoginInput(email, password);
+  const user = await findUserByEmail(email);
+  await verifyPassword(password, user.passwordHash);
+  return generateToken({ userId: user.id });
 }
