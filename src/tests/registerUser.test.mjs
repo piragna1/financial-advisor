@@ -9,23 +9,21 @@ const input = {
 };
 
 async function testRegisterFlow(user) {
+
   console.log("Test de registro de usuario:");
+
   const result = await registerUser(user);
+
   if (!result.success) {
     return;
   }
   console.log(`Usuario registrado correctamente
-    id:${result.userId} -> success:${result.success}`);
+    id:${result.newUser['id']} -> success:${result.success}`);
     const registeredUser = mockUsers.find((u)=> {return result.id === u.id});
     if (registeredUser){
-        console.log(`Registered user:${result}`)
-
+        console.log(`Registered user:${result}`);
     }
-    else{
-        console.log('No se encontro el usuario en el mock db')
-    }
-    console.log('Estado actual de mockUsers:');
-    console.log(mockUsers);
+    console.log('Estado actual de mockUsers:',mockUsers);
 }
 
 
