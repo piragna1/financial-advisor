@@ -8,20 +8,14 @@ import { validateRegistrationInput } from '../validators/validateRegistrationInp
 export async function registerUserController(req, res) {
   try {
     const { name, lastName, email, password } = req.body;
-    const validation = validateRegistrationInput({name,lastName,email,password});
-    if (!validation.success){
-      throw new Error('Invalid input entered')
-    }
-    const exist = findUserByEmail(email);
-    if (exist) {
-      throw new Error('User already exists');
-    }
+    
     const newUser = await registerUser({ name, email, password })
-    const users = (await listUsers()).map(u => u.name);
+    
+    const users = ( listUsers()).map(u => u.name);
     
     res.status(200).json({
       message:'User registered',
-      token,
+      // token,
       user: {
         id: newUser.id,
         email: newUser.email
