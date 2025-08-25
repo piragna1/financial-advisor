@@ -14,5 +14,5 @@ export function hash(string, optionalSalt=""){
     sum += ((charcode*charcode1*prime3)*prime1);
     hashedPassword+=sum.toString();
   }
-  return hashedPassword;
+  return hashedPassword.toString();
 }
