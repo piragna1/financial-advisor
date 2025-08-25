@@ -1,12 +1,12 @@
 import express from 'express';
-import registerRoute from '../routes/auth/register.route.js'
+import authRoutes from '../routes/auth/auth.route.js';
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
 
-app.use('/auth', registerRoute);
+app.use('/auth', authRoutes);
 
 app.get('/', (req,res)=>{
     res.send('<h1>Express server active</h1>');
