@@ -12,7 +12,7 @@ export function validateRegistrationInput({ name,lastName, email, password }) {
     throw new Error("Password must be at least 8 characters long")
   }
 
-    if (/\d/.test(firstName) || /\d/.test(lastName)) 
+    if (/\d/.test(name) || /\d/.test(lastName)) 
       throw new Error('Name cannot contain numbers');
 
   // You can add uniqueness check later in the controller or service
