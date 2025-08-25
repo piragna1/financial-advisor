@@ -3,13 +3,15 @@ COURSE TASKS:
     +Table of contents
       *Overview (done)
       *Description (done)
-      *ERD (pending)
+      *ERD (erd done, add it to the github REPOSITORY's content)
   )
   -Implement authentication in your application.
     Assignment: Choose and implement one of the authentication methods we covered in class:
       JWT (JSON Web Tokens)
       OAuth 2.0
-    Important: You must implement the authentication logic from scratch without using ready-made authentication libraries. This will help you understand how these protocols work under the hood.
+    Important: You must implement the authentication logic from scratch without using ready-made 
+    authentication libraries. This will help you understand how these protocols 
+    work under the hood. (login process pending)
 
 
 🗂️ Suggested Categorization
@@ -24,10 +26,7 @@ COURSE TASKS:
         -Input validation (check)
 
 
-Current doing task: models definition
-
-
-
+Current doing task: login auth process
 
 
 
@@ -63,48 +62,6 @@ Current doing task: models definition
         -
         -
         -
-
-
-
-# 🗂️ Loan Simulator Roadmap Checklist
-
-## 🔹 Phase 1: Finalize Core Module
-- [ ] **Add summary object to early repayment logic**
-  - [ ] Include total interest saved
-  - [ ] Include adjusted loan duration
-- [ ] **Validate full vs early repayment totals**
-  - [ ] Compare principal + interest across scenarios
-  - [ ] Ensure consistency with amortization schedule
-- [ ] **Write unit tests for edge cases**
-  - [ ] Zero interest rate
-  - [ ] Very short loan duration
-  - [ ] Early repayment at final period
-
-## 🔹 Phase 2: Comparison & Simulation
-- [ ] **Implement `compareLoans()` function**
-  - [ ] Accept multiple loan configs
-  - [ ] Return ranked summary by cost, duration, flexibility
-- [ ] **Add `simulateEarlyRepayments()` for multiple periods**
-  - [ ] Support custom repayment schedules
-  - [ ] Visualize impact over time
-- [ ] **Prepare data structure for frontend charts**
-  - [ ] Monthly breakdowns
-  - [ ] Cumulative totals
-  - [ ] Interest vs principal split
-
-## 🔹 Phase 3: Frontend Prep
-- [ ] **Sketch UI components**
-  - [ ] Loan input form
-  - [ ] Results table
-  - [ ] Interactive chart
-- [ ] **Decide on chart library**
-  - [ ] Chart.js (simple, responsive)
-  - [ ] D3.js (custom, powerful)
-- [ ] **Plan localization**
-  - [ ] Currency formatting
-  - [ ] Language support
-  - [ ] Regional loan norms
-
 ---
 
 ## 🧠 Notes
