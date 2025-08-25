@@ -3,6 +3,8 @@ import { loginUserController } from '../controllers/authController.mjs';
 
 const router = express.Router();
 
-router.post('/login', loginUserController);
+router.use('/register', )
+router.use('/login', loginUserController);
+
 
 export default router;
