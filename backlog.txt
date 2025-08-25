@@ -7,7 +7,7 @@ COURSE TASKS:
   )
   -Implement authentication in your application.
     Assignment: Choose and implement one of the authentication methods we covered in class:
-      JWT (JSON Web Tokens)
+      JWT (JSON Web Tokens) (chosen)
       OAuth 2.0
     Important: You must implement the authentication logic from scratch without using ready-made 
     authentication libraries. This will help you understand how these protocols 
@@ -30,11 +30,7 @@ Current doing task: login auth process
 
 
 
-
-
-
-
------------------------------------------------------------------------------------------------------------Non core
+-----------------------------------------------------------------------NOT CORE FEATURES OF PROJECTS
     🎯 Smart Features
         -Interest rate suggestions (pending)
         -Loan comparison tool (pending)
