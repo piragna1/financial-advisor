@@ -1,5 +1,4 @@
-import {generateToken} from './token.js'
-import {} from ''
+import {generateToken} from '../../utils/auth/token.js'
 //tokenIssuer.js
 export function issueToken(user){
     //default value for secret and expiresInSeconds

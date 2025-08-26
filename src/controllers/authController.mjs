@@ -1,6 +1,6 @@
 // src/controllers/authController.mjs
 import { findUserByEmail, listUsers } from '../repositories/userRepo.js';
-import { registerUser } from '../services/auth/authService.js'
+import { registerUser } from '../services/auth/registerUser.mjs'
 import { loginUser } from '../services/auth/loginUser.js'
 
 export async function registerUserController(req, res) {

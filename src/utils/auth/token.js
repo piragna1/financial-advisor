@@ -1,4 +1,4 @@
-import { generateSignature } from "./signatureUtil";
+import { generateSignature } from "../../actors/security/auth/generateSignature.js";
 export async function generateToken(
   userId,
   secret = "simulationSecret",
