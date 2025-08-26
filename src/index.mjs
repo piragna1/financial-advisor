@@ -9,11 +9,11 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/auth', authRoutes);
+// app.use('/auth', authRoutes);
 
-app.post('/login', authRoutes);
+// app.post('/login', authRoutes);
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 app.get('/', (req,res)=>{
     res.send('<h1>Express server active</h1>');
