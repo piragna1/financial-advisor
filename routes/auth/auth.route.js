@@ -1,9 +1,11 @@
+//auth.route.js
 import express from 'express';
-import { loginUserController } from '../controllers/authController.mjs';
+import { loginUserController } from '../../src/controllers/authController.mjs';
+import { registerUserController } from '../../src/controllers/authController.mjs';
 
 const router = express.Router();
 
-router.use('/register', )
+router.use('/register', registerUserController)
 router.use('/login', loginUserController);
 
 
