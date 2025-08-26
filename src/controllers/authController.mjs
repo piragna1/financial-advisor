@@ -1,9 +1,7 @@
 // src/controllers/authController.mjs
-
 import { findUserByEmail, listUsers } from '../repositories/userRepo.js';
 import { registerUser } from '../services/auth/authService.js'
-import { loginUser } from '../services/auth/authService.js'
-import { validateRegistrationInput } from '../validators/validateRegistrationInput.js';
+import { loginUser } from '../services/auth/loginUser.js'
 
 export async function registerUserController(req, res) {
   try {
@@ -33,7 +31,6 @@ export async function loginUserController(req, res) {
     const {user,token,success} = await loginUser({email,password});
     res.status(200).json({ user,token,success });
   } catch (error) {
-
     res.status(401).json({error: error.message})
     next(error);
   }
