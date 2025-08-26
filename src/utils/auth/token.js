@@ -1,5 +1,5 @@
 import { generateSignature } from "./signatureUtil";
-export function generateToken(
+export async function generateToken(
   userId,
   secret = "simulationSecret",
   expiresInSeconds = 3600
