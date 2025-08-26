@@ -1,15 +1,17 @@
-export function validateLoginInput({ email, password }) {
-  const errors = [];
-
-  if (!email || typeof email !== 'string') {
-    errors.push('Email is required and must be a string.');
+export function validateLoginInput(input) {
+  const { email, password } = input;
+  const errors = {};
+  if (!email) errors.email = "required";
+  if (!password) errors.password = "required";
+  if (!email || typeof email !== "string") {
+    errors.email = "Email must be a string.";
   } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-    errors.push('Email format is invalid.');
+    errors.email = "Email format is invalid";
   }
-
-  if (!password || typeof password !== 'string') {
-    errors.push('Password is required and must be a string.');
+  if (!password || typeof password !== "string") {
+    errors.password = "Password is required and must be a string";
   }
-
-  return errors;
+  return Object.keys(errors).length === 0
+    ? { ok: true, value: { email, password } }
+    : { ok: false, value: errors };
 }
