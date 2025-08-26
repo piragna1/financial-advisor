@@ -1,11 +1,27 @@
-import { findUserByEmail } from "../../repositories/userRepo";
 import { generateToken } from "../../utils/token";
-import { validateLoginInput } from "../../validators/validateLoginInput";
+import {userRetrieve} from '../../actors/retrievers/userRetriever.js'
+import {validateLoginInput} from '../../actors/validators/auth/validateLoginInput.js'
+import {comparePasswords} from '../../actors/security/comparePasswords.js'
+import {} from ''
 
 export async function loginUser({ email, password }) {
-  validateLoginInput(email, password);
-  const user = findUserByEmail(email);
-  await verifyPassword(password, user.passwordHash);
+
+  const valid = validateLoginInput(email, password);
+  console.log(valid);
+
+  const user = userRetrieve(email);
+  console.log(user);
+
+
+  const validPass = comparePasswords(user.passwordHash,password);
+  console.log(validPass);
+
+
   const token = generateToken({ userId: user.id });
+  console.log(token);
+
+
+  console.log({user,token});
+
   return { user, token };
 }
