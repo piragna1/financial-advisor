@@ -1,3 +1,4 @@
+//validateLoginInput.js
 export function validateLoginInput(input) {
   const { email, password } = input;
   const errors = {};
