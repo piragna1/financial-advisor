@@ -4,7 +4,7 @@ import { validateLoginInput } from "../../validators/validateLoginInput";
 
 export async function loginUser({ email, password }) {
   validateLoginInput(email, password);
-  const user = await findUserByEmail(email);
+  const user = findUserByEmail(email);
   await verifyPassword(password, user.passwordHash);
   const token = generateToken({ userId: user.id });
   return { user, token };
