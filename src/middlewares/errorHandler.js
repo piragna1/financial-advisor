@@ -6,6 +6,7 @@ export default function errorHandler(err,req,res,next){
             details:err.details
         });
     }
-    console.error(err);
-    res.status(500).json({error:'Internal server error'});
+    else{
+        return res.status(500).json({error:'Internal server error'});
+    }
 }
