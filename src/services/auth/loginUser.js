@@ -6,13 +6,16 @@ import { comparePasswords } from "../../utils/auth/comparePasswords.js";
 import { issueToken } from "../../utils/auth/tokenIssuer.js";
 
 export async function loginUser({ email, password }) {
-  const valid = validateLoginInput({email, password});
-  if (!valid) throw new AppError(AuthErrors.INVALID_INPUT);
-  console.log(valid);
+  console.log('loginUser.js -> loginUser()')
 
-  const user = await userRetrieve(email); 
+  const valid = validateLoginInput({email, password});
+  console.log('valid', valid);
+  if (!valid.ok) throw new AppError(AuthErrors.INVALID_INPUT);
+
+  const user = await userRetrieve(email);
+  console.log('user', user);
   if (!user) throw new AppError(AuthErrors.USER_NOT_FOUND);
-  console.log(user);
+  console.log('user:',user);
 
   const validPass = comparePasswords(user.passwordHash, password);
   console.log(validPass);
