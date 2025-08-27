@@ -1,8 +1,6 @@
 export class AppError extends Error{
     constructor({code,message,status},details){
         super(message);
-        code,
-        status,
-        details
+        Object.assign(this, {code, status,details})
     }
 }
