@@ -1,3 +1,5 @@
+import { hash } from "../crypto/hashPassword.js";
+
 export function generateSignature(string, secret) {
   if (typeof string !== "string") {
     throw Error("Invalid input key");
