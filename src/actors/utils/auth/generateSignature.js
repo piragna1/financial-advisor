@@ -1,4 +1,4 @@
-import { hash } from "../crypto/hashPassword.js";
+import {createHmac} from 'crypto';
 
 export function generateSignature(string, secret) {
   if (typeof string !== "string") {
@@ -7,7 +7,7 @@ export function generateSignature(string, secret) {
   if (typeof secret !== "string" || secret.length === 0) {
   throw Error("Invalid secret");
 }
-  let signature = hash(string,secret);
-
-  return Buffer.from(signature.slice(0,256)).toString('base64url');
+  const hmac = createHmac('sha256', secret);
+  hmac.update(string);
+  return hmac.digest('base64url');
 }
