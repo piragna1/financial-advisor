@@ -1,4 +1,9 @@
-const TokenErrors = {
+export const TokenErrors = {
+    MISSING_TOKEN:{
+        code:"MISSING_TOKEN",
+        message:"Missing token",
+        status:401
+    },
     INVALID_HEADER:{
         code:"INVALID_TOKEN",
         message:'Invalid token',
