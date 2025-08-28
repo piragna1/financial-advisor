@@ -2,16 +2,16 @@ const TokenErrors = {
     INVALID_HEADER:{
         code:"INVALID_TOKEN",
         message:'Invalid token',
-        status:410
+        status:401
     },
     INVALID_PAYLOAD:{
         code:"INVALID_TOKEN",
         message:'Invalid token',
-        status:411
+        status:401
     },
     INVALID_SIGNATURE:{
         code:"INVALID_TOKEN_SIGNATURE",
         message:'Invalid token',
-        status:412
+        status:401
     },
 }
