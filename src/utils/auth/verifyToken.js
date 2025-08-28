@@ -3,10 +3,12 @@ import {generateSignature} from '../../actors/utils/auth/generateSignature.js'
 import { decodePayload, isTokenExpired } from "./token.js";
 import {TokenErrors} from '../../errors/tokenError.js';
 import {extractToken} from '../../actors/utils/auth/extractToken.js';
+import {tokenExists} from '../../actors/utils/auth/tokenExists.js';
 
 export function verifyToken(req,res,next,secret = "simulationSecret") {
 
-  if (!req.token) throw new AppError(TokenErrors.MISSING_TOKEN);
+  if (!tokenExists(req)) throw new AppError(TokenErrors.MISSING_TOKEN);
+  
   const token = extractToken(req);
 
   const [base64Header, base64Payload, base64Signature] = token.split(".");
