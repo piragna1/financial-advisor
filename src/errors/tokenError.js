@@ -24,4 +24,9 @@ export const TokenErrors = {
         message:'Invalid token',
         status:401
     },
+    INVALID_TOKEN:{
+        code:'INVALID_TOKEN',
+        message:'Invalid token',
+        status:401,
+    }
 }
