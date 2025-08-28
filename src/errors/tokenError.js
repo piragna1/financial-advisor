@@ -1,11 +1,17 @@
-const tokenError = {
+const TokenErrors = {
     INVALID_HEADER:{
-        message:'Invalid token'
+        code:"INVALID_TOKEN",
+        message:'Invalid token',
+        status:410
     },
     INVALID_PAYLOAD:{
-        message:'Invalid token'
+        code:"INVALID_TOKEN",
+        message:'Invalid token',
+        status:411
     },
     INVALID_SIGNATURE:{
-        message:'Invalid token'
+        code:"INVALID_TOKEN",
+        message:'Invalid token',
+        status:412
     },
 }
