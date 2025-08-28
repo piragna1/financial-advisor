@@ -2,14 +2,8 @@ import { AppError } from "../../errors/AppError.js";
 import {generateSignature} from '../../actors/utils/auth/generateSignature.js'
 import { decodePayload, isTokenExpired } from "./token.js";
 import {TokenErrors} from '../../errors/tokenError.js';
-import {extractToken} from '../../actors/utils/auth/extractToken.js';
-import {tokenExists} from '../../actors/utils/auth/tokenExists.js';
 
-export function verifyToken(req,res,next,secret = "simulationSecret") {
-
-  if (!tokenExists(req)) throw new AppError(TokenErrors.MISSING_TOKEN);
-  
-  const token = extractToken(req);
+export function verifyToken(token,secret = "simulationSecret") {
 
   const [base64Header, base64Payload, base64Signature] = token.split(".");
   if (!base64Header) {throw new AppError(TokenErrors.INVALID_HEADER);}
@@ -26,7 +20,6 @@ export function verifyToken(req,res,next,secret = "simulationSecret") {
 
   const decoded = decodePayload(token);
   if (isTokenExpired(decoded)) throw new AppError(TokenErrors.EXPIRED_TOKEN);
-  req.user.payload = decoded;
 
-  next();
+  return true;
 }
