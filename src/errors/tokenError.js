@@ -14,4 +14,9 @@ const TokenErrors = {
         message:'Invalid token',
         status:401
     },
+    EXPIRED_TOKEN:{
+        code:"TOKEN_EXPIRED",
+        message:'Invalid token',
+        status:401
+    },
 }
