@@ -10,7 +10,7 @@ const TokenErrors = {
         status:411
     },
     INVALID_SIGNATURE:{
-        code:"INVALID_TOKEN",
+        code:"INVALID_TOKEN_SIGNATURE",
         message:'Invalid token',
         status:412
     },
