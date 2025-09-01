@@ -1,7 +1,7 @@
 //auth.route.js
 import express from 'express';
-import { loginUserController } from '../../src/controllers/authController.mjs';
-import { registerUserController } from '../../src/controllers/authController.mjs';
+import { loginUserController } from '../../controllers/authController.mjs';
+import { registerUserController } from '../../controllers/authController.mjs';
 
 const router = express.Router();
 
