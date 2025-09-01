@@ -1,3 +1,3 @@
 export function extractToken(req){
-    return req.token;
+    return req.headers.authorization;
 }
