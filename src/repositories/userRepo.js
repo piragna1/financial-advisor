@@ -9,6 +9,14 @@ export async function findUserByEmail(email) {
   return mockUsers.find(user => user.email === email);
 }
 
+export async function findUserById(id) {
+  
+  console.log('userRepo.js -> findUserById()')
+  console.log('mockUsers',mockUsers);
+  console.log('mockUsers.find(user => user.id === id)',mockUsers.find(user => user.id === id));
+  return mockUsers.find(user => user.id === id);
+}
+
 export function saveUser(user) {
   mockUsers.push(user);
   return user;
