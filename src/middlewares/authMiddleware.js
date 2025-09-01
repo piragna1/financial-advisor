@@ -12,6 +12,6 @@ export function authMiddleware(res,req,next){
     const valid = verifyToken(token);
     if(valid) next();
     else{
-        throw new AppError(TokenErrors)
+        throw new AppError(TokenErrors.INVALID_TOKEN);
     }
 }
