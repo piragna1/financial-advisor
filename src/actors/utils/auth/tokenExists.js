@@ -1,3 +1,3 @@
 export function tokenExists(req){
-    return req.token != null;
+    return req.headers.authorization != null;
 }

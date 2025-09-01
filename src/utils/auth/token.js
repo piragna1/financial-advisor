@@ -1,7 +1,7 @@
 import { generateSignature } from "../../actors/utils/auth/generateSignature.js";
 export async function generateToken(
   userId,
-  secret = "simulationSecret",
+  secret = "secret",
   expiresInSeconds = 3600
 ) {
   const now = Math.floor(Date.now() / 1000);
