@@ -1,7 +1,7 @@
 //comparePasswords.js
-import { hash } from "../../actors/utils/crypto/hashPassword.js";
-export function comparePasswords(real,input){
-    const hashed = hash(real);
-    const hashed1 = hash(input);
-    return hashed1 === hashed;
+import {v4 as uuidv4, v4} from 'uuid';
+import { hashPassword } from './hashPassword.js';
+
+export function comparePasswords(real,input,secret){
+    return real === hashPassword(input,secret);
 }
