@@ -1,6 +1,6 @@
 import {createHmac} from 'crypto';
 
-export function generateSignature(string, secret) {
+export function generateSignature(string, secret='secret') {
   if (typeof string !== "string") {
     throw Error("Invalid input key");
   }
