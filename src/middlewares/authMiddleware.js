@@ -4,7 +4,7 @@ import { AppError } from '../errors/AppError.js';
 import { TokenErrors } from '../errors/tokenError.js';
 import { verifyToken } from '../utils/auth/verifyToken.js';
 
-export function authMiddleware(err,res,req,next){
+export function authMiddleware(res,req,next){
     if (!tokenExists(req)) {
         throw new AppError(TokenErrors.MISSING_TOKEN);
     }
