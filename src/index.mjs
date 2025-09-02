@@ -7,6 +7,8 @@ import { generateToken } from "./utils/auth/token.js";
 import { jwtConfig } from "./config/jwtConfig.js";
 import { generateSignature } from "./actors/utils/auth/generateSignature.js";
 import { verifyToken } from "./utils/auth/verifyToken.js";
+import { mockUsers } from "./config/mock.db.config.js";
+import { writeFile } from "fs";
 
 const PORT = 3000;
 
@@ -26,4 +28,7 @@ app.get("/", (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {console.log(`Local server running on: http://localhost:${PORT}`);});
+const json = JSON.stringify(mockUsers);
+writeFile('src/config/mock.db.config.json',json,()=>console.log(json));
+
+// app.listen(PORT, () => {console.log(`Local server running on: http://localhost:${PORT}`);});
