@@ -27,12 +27,3 @@ app.get("/", (req, res) => {
 app.use(errorHandler);
 
 app.listen(PORT, () => {console.log(`Local server running on: http://localhost:${PORT}`);});
-
-//-------------
-{
-    const header = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ8";
-    const paylaod = "eyJzdWIiOiJ1MSIsImlhdCI6NjM3OTkzMzcyMjAsImV4cCI6NjM3OTkzNDA4MjB1";
-    //-_xCyoEvRIJJiqHP-zG9J4DJBH-ZWYoeYiCYhz4j0HI
-    const signature = generateSignature(`${header}.${paylaod}`,jwtConfig.SECRET_SALT);
-    console.log('expected ----->',signature)
-}

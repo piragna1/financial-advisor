@@ -12,8 +12,6 @@ export function generateSignature(string, secret = "secret") {
   if (typeof secret !== "string" || secret.length === 0) {
     throw Error("Invalid secret");
   }
-
-  console.log('Este es el secreto que estoy usando:', secret)
   const hmac = createHmac("sha256", secret);
   hmac.update(string);
   return hmac.digest("base64url");

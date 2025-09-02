@@ -12,8 +12,7 @@ export async function generateToken(
   secret='secret',
   expiresInSeconds = 3600
 ) {
-  // const now = Math.floor(Date.now() / 1000); use this
-  const now = 63799337220; //debug purposes;
+  const now = Math.floor(Date.now() / 1000);
   const exp = now + expiresInSeconds;
   const header = { alg: "HS256", typ: "JWT" };
   const payload = {
@@ -29,24 +28,19 @@ export async function generateToken(
 
 
 export function decodePayload(token) {
-  console.log('decodePayload()')
   try {
-    console.log('try{}')
     const payloadB64 = token.split(".")[1];
-    console.log('Payload base64url',payloadB64)
-    const payload = JSON.parse(Buffer.from(payloadB64, "base64url").toString());
-    console.log('parsed! ->>>>', payload)
-    return payload;
+    const payload1 = Buffer.from(payloadB64, "base64url").toString();
+    const payload2 = JSON.parse(payload1);
+    return payload2;
   } catch (error) {
     return null;
   }
 }
 
 export function isTokenExpired(payload) {
-  console.log('payload',payload)
-  console.log('!payload || !payload.exp',!payload || !payload.exp)
   if (!payload || !payload.exp) return true;
-  const now = Math.floor(Date.now() / 1000);
+  const now = Math.floor(Date.now() / 1000); //use this
   return now > payload.exp;
 }
 

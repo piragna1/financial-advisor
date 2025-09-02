@@ -9,16 +9,11 @@ export async function verifyToken(token) {
   const token_arr = token.split(".");
   const [base64Header, base64Payload, base64Signature] = [token_arr[0].slice(7),token_arr[1],token_arr[2]];
 
-  console.log('base 64 Header:', base64Header);
-  console.log('base 64 Payload', base64Payload);
-  console.log('base 64 Signature', base64Signature);
-  
   if (!base64Header) {throw new AppError(TokenErrors.INVALID_HEADER);}
   if (!base64Payload) {throw new AppError(TokenErrors.INVALID_PAYLOAD);}
   if (!base64Signature) {throw new AppError(TokenErrors.INVALID_SIGNATURE);}
   
   const expectedSignature = generateSignature(`${base64Header}.${base64Payload}`,jwtConfig.SECRET_SALT);
-  console.log('expectedSignature',expectedSignature)
 
   if (base64Signature !== expectedSignature) {
     throw new AppError(TokenErrors.INVALID_SIGNATURE);

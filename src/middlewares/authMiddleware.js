@@ -10,21 +10,13 @@ export async function authMiddleware(req, res, next) {
   if (!tokenExists(req)) throw new AppError(TokenErrors.MISSING_TOKEN);
 
   const token = extractToken(req);
-  console.log('extracted token ->>>>',token);
-
   const valid = await verifyToken(token);
-  console.log("valid", valid);
-
   const payload = decodePayload(token);
-  console.log('decoded payload:',payload)
 
   if (isTokenExpired(payload)) throw new AppError(TokenErrors.EXPIRED_TOKEN);
 
-  console.log("payload", payload);
-
   const userId = payload.sub;
   req.userId = userId;
-  console.log("userId", userId);
 
   if (valid) next();
   else throw new AppError(TokenErrors.INVALID_TOKEN);
