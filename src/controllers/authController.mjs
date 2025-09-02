@@ -7,7 +7,7 @@ export async function registerUserController(req, res) {
   try {
     const { name, lastName, email, password } = req.body;
     
-    const newUser = await registerUser({ name, email, password })
+    const newUser = await registerUser({ name, lastName,email, password })
     
     const users = ( listUsers()).map(u => u.name);
     
