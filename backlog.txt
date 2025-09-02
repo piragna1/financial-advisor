@@ -1,5 +1,33 @@
+-----------------------------------------------------------------------
 TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
+--------------
 
+-----------------------------------------------------------------------Daily Sprint
+🛡️ Autenticación y seguridad
+[ ] Validar firma de tokens con Node crypto usando algoritmo robusto (e.g., RS256)
+
+[ ] Separar actor de extracción de token del actor de validación
+
+[ ] Simular flujo completo: registro → login → acceso protegido → logout
+
+[ ] Auditar pureza de actores en todo el flujo
+
+⚙️ Configuración y mantenibilidad
+[ ] Centralizar secretos y configuración en módulo único
+
+[ ] Formalizar errores comunes como constantes reutilizables
+
+[ ] Revisar naming de funciones para que revelen intención y alcance real
+
+🎨 Frontend Angular
+[ ] Refinar estilos de componentes del calendario
+
+[ ] Centralizar providers del calendario en módulo escalable
+
+[ ] Validar que los componentes no tengan lógica inline ni dependencias cruzadas
+--------------
+
+-----------------------------------------------------------------------
 COURSE TASKS:
   -GITHUB REPOSITORY (
     +Table of contents
@@ -14,8 +42,10 @@ COURSE TASKS:
     Important: You must implement the authentication logic from scratch without using ready-made 
     authentication libraries. This will help you understand how these protocols 
     work under the hood. (login process pending)
+--------------
 
-
+-----------------------------------------------------------------------
+CORE FEATURES:
 🗂️ Suggested Categorization
     ✅ Core Logic
         -Basic loan calculation (done)
@@ -24,54 +54,8 @@ COURSE TASKS:
         -Compound interest logic (done)
         -Amortization schedule (done)
         -Early repayment logic (done)
-
         -Input validation (check)
+--------------
 
-
-Current doing task: login auth process
-
-
-
------------------------------------------------------------------------NOT CORE FEATURES OF PROJECTS
-    🎯 Smart Features
-        -Interest rate suggestions (pending)
-        -Loan comparison tool (pending)
-
-
-    🧠 Educational Layer
-        -Educational tooltips (pending)
-
-    🌍 User Experience
-        -Localization (desired)
-        -Visual charts (interesting) Use libraries like Chart.js or D3.js
-        -Visual chart (principal payment vs interest payment percentage fluctuation in total paymen along the different periods)
-        -User should be able to adjust the interest rate
-        -User should be able to adjust the interest type
-        -User should be able to see real-time updates to: monthly payments
-        -User should be able to see real-time updates to: total repayment
-        -User should be able to see real-time updates to: amortization schedule
-        -User should be able to see real-time updates to: interest cost
-        -Add date tracking (optional) that would be interesting to add later with frontend! (pending)
-        -Let users simulate different early repayment periods and compare savings
-        -Interest vs principal over time
-        -Let the user do:Comparison: full term vs early repayment
-        -
-        -
-        -
-        -
-        -
----
-
-## 🧠 Notes
-- Keep logic pure and config-driven
-- Avoid premature optimization — build for clarity first
-- Modularize functions for reuse in future products
-
-
-🔤  Glossary:
-    -ratePerPeriod: Interest rate applied each compounding period
-    -totalAmount: Final amount the user repays (principal + interest)
-    -interestAccrued: Total interest paid over the loan term
-    -Lump Sum: single large payment made at once.
-
-
+-----------------------------------------------------------------------NOT CORE FEATURES
+--------------
