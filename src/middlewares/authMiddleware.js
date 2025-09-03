@@ -18,9 +18,7 @@ export async function authMiddleware(req, res, next) {
   const userId = payload.sub;
   req.userId = userId;
 
-  if (valid) return true;
-  // if (valid) next(); use this
-
+  if (valid) next(); 
 
   else throw new AppError(TokenErrors.INVALID_TOKEN);
 }
