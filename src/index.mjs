@@ -25,11 +25,10 @@ app.get("/", (req, res) => {
 
 app.use(errorHandler);
 
-// app.listen(PORT, () => {console.log(`Local server running on: http://localhost:${PORT}`);});
-
+app.listen(PORT, () => {console.log(`Local server running on: http://localhost:${PORT}`);});
 
 //-------------------------------------DEBUG PURPOSES BELOW
-//-----COMPLETE FLOW SIMULATION: register->login->secured route access with valid token
+//-----COMPLETE FLOW (register,login,access to protected route) SIMULATION: register->login->secured route access with valid token
 let req = {};
 req.body = {
     "name":"Gonzalo",
