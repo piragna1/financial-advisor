@@ -7,7 +7,9 @@ import { jwtConfig } from "../../config/jwtConfig.js";
 export async function verifyToken(token) {
 
   const token_arr = token.split(".");
-  const [base64Header, base64Payload, base64Signature] = [token_arr[0],token_arr[1],token_arr[2]];
+  let [base64Header] = [token_arr[0]];
+  if (base64Header.startsWith("Bearer ")){base64Header = base64Header.slice("Bearer ".length)};
+  const [base64Payload, base64Signature] = [token_arr[1],token_arr[2]]
 
   if (!base64Header) {throw new AppError(TokenErrors.INVALID_HEADER);}
   if (!base64Payload) {throw new AppError(TokenErrors.INVALID_PAYLOAD);}
