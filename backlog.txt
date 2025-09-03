@@ -4,7 +4,7 @@ TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
 
 -----------------------------------------------------------------------DAY'S BACKLOG
 - Use POSTMAN for register attempt [done]
-- Use POSTMAN for login attempt []
+- Use POSTMAN for login attempt [done]
 - Use POSTMAN for secured routes access attempt []
 --------------
 
