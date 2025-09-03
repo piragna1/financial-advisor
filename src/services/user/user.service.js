@@ -1,5 +1,4 @@
 //user.service.js
-import { mockUsers } from "../../config/mock.db.config.js";
 import { passwordSecret } from "../../config/passwordSecretConfig.js";
 import { listUsers, saveUser } from "../../repositories/userRepo.js";
 import { hashPassword } from "../../utils/auth/hashPassword.js";
