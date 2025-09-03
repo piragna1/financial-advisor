@@ -3,8 +3,6 @@ import express from "express";
 import authRoutes from "./routes/auth/auth.route.js";
 import profileRoutes from "./routes/profile/profile.route.js";
 import errorHandler from "./middlewares/errorHandler.js";
-import { hashPassword } from "./utils/auth/hashPassword.js";
-import { jwtConfig } from "./config/jwtConfig.js";
 
 const PORT = 3000;
 
@@ -24,6 +22,15 @@ app.get("/", (req, res) => {
 
 app.use(errorHandler);
 
-console.log(hashPassword('gonzalillo', jwtConfig.SECRET_SALT));//e40f3e0638876806f2ecc80c554c1bd052f029eebfc98ca5676a6b8afaa65e57
+app.listen(PORT, () => {console.log(`Local server running on: http://localhost:${PORT}`);});
 
-// app.listen(PORT, () => {console.log(`Local server running on: http://localhost:${PORT}`);});
+
+//-------------------------------------DEBUG PURPOSES BELOW
+// const req = {};
+// req.body = {
+//     "name":"Gonzalo",
+//     "lastName":"Varela Alagna",
+//     "email":"gvalagna@gmail.com",
+//     "password":"gvalagnA$4"
+// }
+// registerUserController(req, {});
