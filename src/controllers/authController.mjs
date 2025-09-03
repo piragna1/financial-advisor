@@ -8,9 +8,12 @@ export async function registerUserController(req, res) {
     const { name, lastName, email, password } = req.body;
     console.log(`${name} ${lastName}, ${email}, ${password}`)
     
-    const newUser = await registerUser({ name, lastName,email, password })
+    let newUser = {};
+    await registerUser({ name, lastName,email, password }).then((returnVal) => {
+      newUser = returnVal['newUser'];
+    });
     
-    const users = ( listUsers()).map(u => u.name);
+    const users = listUsers();
     
     res.status(200).json({
       message:'User registered',
