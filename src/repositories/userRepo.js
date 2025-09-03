@@ -18,3 +18,12 @@ export function saveUser(user) {
 export function listUsers(){
   return mockUsers.slice();
 }
+
+export function deleteUser(id){
+  for (let i = 0; i < mockUsers.length; i++){
+    if (mockUsers[i].id === id){
+      mockUsers.splice(i,1)
+      return;
+    }
+  }
+}
