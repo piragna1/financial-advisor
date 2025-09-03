@@ -1,33 +1,39 @@
------------------------------------------------------------------------
+-----------------------------------------------------------------------WORKSPACE
 TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
 --------------
 
------------------------------------------------------------------------
-Daily Backlog
+-----------------------------------------------------------------------DAY'S BACKLOG
 - Use POSTMAN for register attempt
 - Use POSTMAN for login attempt
 - Use POSTMAN for secured routes access attempt
 --------------
 
------------------------------------------------------------------------
-COURSE TASKS:
+-----------------------------------------------------------------------COURSE TASKS (must)
+
   -GITHUB REPOSITORY (
     +Table of contents
       *Overview (done)
       *Description (done)
       *ERD (erd done, add it to the github REPOSITORY's content)
   )
+
   -Implement authentication in your application.
     Assignment: Choose and implement one of the authentication methods we covered in class:
-      JWT (JSON Web Tokens) (chosen)
-      OAuth 2.0
+      -JWT (JSON Web Tokens) (chosen)
+      -OAuth 2.0
     Important: You must implement the authentication logic from scratch without using ready-made 
-    authentication libraries. This will help you understand how these protocols 
-    work under the hood. (login process pending)
+      authentication libraries. This will help you understand how these protocols 
+      work under the hood. (login process pending)
+  -Create DB schema as diagram.
+    In your application u should have at list 3 DB tables.
+  -Your task is to implement the database you designed in your diagram by creating executable SQL scripts.
+    It can be any SQL database. If you don't know which to use - I recommend to use PostgreSQL.
+  Requirements:
+    -Create a comprehensive SQL script (.sql file) that generates all tables, relationships, indexes,
+      and constraints from your database diagram
 --------------
 
------------------------------------------------------------------------
-CORE FEATURES:
+-----------------------------------------------------------------------CORE FEATURES
 🗂️ Suggested Categorization
     ✅ Core Logic
         -Basic loan calculation (done)
