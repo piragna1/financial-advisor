@@ -3,6 +3,9 @@ import express from "express";
 import authRoutes from "./routes/auth/auth.route.js";
 import profileRoutes from "./routes/profile/profile.route.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import { loginUserController, registerUserController } from "./controllers/authController.mjs";
+import { authMiddleware } from "./middlewares/authMiddleware.js";
+import { getProfile } from "./controllers/profileController.mjs";
 
 const PORT = 3000;
 
@@ -22,15 +25,33 @@ app.get("/", (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {console.log(`Local server running on: http://localhost:${PORT}`);});
+// app.listen(PORT, () => {console.log(`Local server running on: http://localhost:${PORT}`);});
 
 
 //-------------------------------------DEBUG PURPOSES BELOW
-// const req = {};
-// req.body = {
-//     "name":"Gonzalo",
-//     "lastName":"Varela Alagna",
-//     "email":"gvalagna@gmail.com",
-//     "password":"gvalagnA$4"
-// }
-// registerUserController(req, {});
+//-----COMPLETE FLOW SIMULATION: register->login->secured route access with valid token
+let req = {};
+req.body = {
+    "name":"Gonzalo",
+    "lastName":"Varela Alagna",
+    "email":"gvalagna@gmail.com",
+    "password":"gvalagnA$4"
+}
+const token = "";
+const user = await registerUserController(req, {});
+const email = user.email;
+const password = req.body.password;
+req.body = {email,password}
+const login = await loginUserController(req, {}, (err,req,res)=>{
+  if (err) console.error(err.message);
+  if(res) console.log(res);
+});
+req.headers = {};
+req.headers.authorization = login.token;
+const auth = authMiddleware(req, {}, ()=>{console.log('nnnnnext')});
+let getProf = undefined;
+if (auth){
+  req.userId = user.id;
+  getProf = await getProfile(req,{},()=>{console.log('user id gotten')})
+}
+console.log(getProf)

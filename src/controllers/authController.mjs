@@ -15,17 +15,20 @@ export async function registerUserController(req, res) {
     
     const users = listUsers();
     
-    res.status(200).json({
-      message:'User registered',
-      // token,
-      user: {
-        id: newUser.id,
-        email: newUser.email
-      },
-      users
-    });
+    // res.status(200).json({
+    //   message:'User registered',
+    //   // token,
+    //   user: {
+    //     id: newUser.id,
+    //     email: newUser.email
+    //   },
+    //   users
+    // });
+
+    return newUser;
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    throw new Error(error.message)
+    // res.status(400).json({ error: error.message })
   }
 }
 
@@ -33,7 +36,8 @@ export async function loginUserController(req, res, next) {
   try {
     const {email,password} = req.body;
     const {user,token,success} = await loginUser({email,password});
-    res.status(200).json({ user,token,success });
+    return {user, token, success};
+    // res.status(200).json({ user,token,success });
   } catch (error) {
     next(error);
   }
