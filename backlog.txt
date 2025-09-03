@@ -24,13 +24,12 @@ TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
     Important: You must implement the authentication logic from scratch without using ready-made 
       authentication libraries. This will help you understand how these protocols 
       work under the hood. (login process pending)
-  -Create DB schema as diagram.
-    In your application u should have at list 3 DB tables.
+  -Create DB schema as diagram. In your application u should have at list 3 DB tables.
   -Your task is to implement the database you designed in your diagram by creating executable SQL scripts.
     It can be any SQL database. If you don't know which to use - I recommend to use PostgreSQL.
-  Requirements:
-    -Create a comprehensive SQL script (.sql file) that generates all tables, relationships, indexes,
-      and constraints from your database diagram
+    Requirements:
+      -Create a comprehensive SQL script (.sql file) that generates all tables, relationships, indexes,
+        and constraints from your database diagram
 --------------
 
 -----------------------------------------------------------------------CORE FEATURES
