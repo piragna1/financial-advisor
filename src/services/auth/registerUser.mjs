@@ -15,7 +15,7 @@ export async function registerUser({ name,lastName, email, password }) {
   if (!validation.success) {
     throw new Error("Invalid input entered");
   }
-  const exist = findUserByEmail(email);
+  const exist = await findUserByEmail(email);
   if (exist) {
     throw new Error("User already exists");
   }
