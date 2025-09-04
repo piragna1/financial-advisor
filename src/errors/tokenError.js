@@ -28,5 +28,10 @@ export const TokenErrors = {
         code:'INVALID_TOKEN',
         message:'Invalid token',
         status:401,
-    }
+    },
+    TOKEN_GEN_ERROR:{
+    code:'TOKEN_GEN_ERROR',
+    message:'Failed to generate the token',
+    status:500
+}
 }
