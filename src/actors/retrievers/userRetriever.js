@@ -1,6 +1,6 @@
 //userRetriever.js
 import {findUserByEmail} from '../../repositories/userRepo.js'
-export function userRetrieve(email){
+export async function userRetrieve(email){
     console.log('userRetriever.js -> userRetrieve()')
-    return findUserByEmail(email);
+    return await findUserByEmail(email);
 }
