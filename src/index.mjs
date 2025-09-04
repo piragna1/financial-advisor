@@ -3,9 +3,6 @@ import express from "express";
 import authRoutes from "./routes/auth/auth.route.js";
 import profileRoutes from "./routes/profile/profile.route.js";
 import errorHandler from "./middlewares/errorHandler.js";
-import { loginUserController, registerUserController } from "./controllers/authController.mjs";
-import { authMiddleware } from "./middlewares/authMiddleware.js";
-import { getProfile } from "./controllers/profileController.mjs";
 
 const PORT = 3000;
 
