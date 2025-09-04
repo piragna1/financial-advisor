@@ -16,5 +16,5 @@ export function validateRegistrationInput({ name,lastName, email, password }) {
       throw new Error('Name cannot contain numbers');
 
   // You can add uniqueness check later in the controller or service
-  return {success:true};
+  return true;
 }
