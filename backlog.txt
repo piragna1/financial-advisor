@@ -5,7 +5,86 @@ TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
 -----------------------------------------------------------------------DAY'S BACKLOG
 - Use POSTMAN for register attempt [done]
 - Use POSTMAN for login attempt [done]
-- Use POSTMAN for secured routes access attempt []
+- Use POSTMAN for secured routes access attempt [DONE]
+- CHECK TESTCASES:
+  + TC-001 []
+    -> Test case: Valid registration -> login -> access to protected route.
+    -> Input / Preconditions: -
+    -> Actor: AuthService (encapsulation needed because AuthService is missing)
+    -> Expected result: 200 OK + resource data.
+    -> Status: Pending.
+  + TC-002 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
+  + TC-003 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
+  + TC-004 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
+  + TC-005 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
+  + TC-006 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
+  + TC-007 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
+  + TC-008 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
+  + TC-009 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
+  + TC-010 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
+  + TC-011 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
+  + TC-012 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
+  + TC-013 []
+    -> Test case:
+    -> Input / Preconditions:
+    -> Actor:
+    -> Expected result:
+    -> Status:
 --------------
 
 -----------------------------------------------------------------------COURSE TASKS (must)
