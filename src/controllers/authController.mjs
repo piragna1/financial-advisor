@@ -69,7 +69,7 @@ export async function loginUserController(req, res, next) {
 
     //password hashing comparing
     console.log('starting comparePasswordHases...')
-    const validPass = await comparePasswordHashes(user.passwordHash, password,passwordSecret.PASSWORD_SECRET);//semi-pure (calls another function hashPassword)
+    const validPass = await comparePasswordHashes(user.hashedPassword, password,passwordSecret.PASSWORD_SECRET);//semi-pure (calls another function hashPassword)
     if (!validPass) throw new AppError(AuthErrors.INVALID_CREDENTIALS);
 
     //issue token
