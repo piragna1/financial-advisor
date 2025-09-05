@@ -63,10 +63,13 @@ export async function loginUserController(req, res, next) {
     //userRetrieve
     let user = await userRetrieve(email);//semi-pure (interactis with userRepo.js)
     console.log('retrieved user:',user)//debug
+    console.log('!user',!user)
     if (!user) throw new AppError(AuthErrors.USER_NOT_FOUND);
+    console.log('!user',!user)
 
     //password hashing comparing
-    const validPass = comparePasswordHashes(user.passwordHash, password,passwordSecret.PASSWORD_SECRET);//semi-pure (calls another function hashPassword)
+    console.log('starting comparePasswordHases...')
+    const validPass = await comparePasswordHashes(user.passwordHash, password,passwordSecret.PASSWORD_SECRET);//semi-pure (calls another function hashPassword)
     if (!validPass) throw new AppError(AuthErrors.INVALID_CREDENTIALS);
 
     //issue token
@@ -74,6 +77,7 @@ export async function loginUserController(req, res, next) {
     if (!token) throw new TokenGenerationError(TokenErrors.TOKEN_GEN_ERROR);
 
     //status return
+    console.log('status 200')//debug
     res.status(200).json({ user,token,success });
     
   } catch (error) {
