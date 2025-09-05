@@ -3,6 +3,7 @@
 import { mockUsers } from '../config/mock.db.config.js';
 
 export async function findUserByEmail(email) {
+  console.log('findUserByEmail()')
   return mockUsers.find(user => user.email === email);
 }
 
