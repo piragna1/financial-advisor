@@ -19,6 +19,9 @@ Please make sure that before each testing case actors are pure as much as possib
     -> Actor: AuthService (encapsulation needed because AuthService is missing)
     -> Expected result: 200 OK + resource data.
     -> Status: Pending.
+    RESULTS:
+      -ERROR WHEN TRYING TO REGISTER WITH THE SAME INPUT MORE THAN ONCE
+        ~check what happens when find an existing email in registering process
   + TC-002 [] ->
     -> Input / Preconditions:
     -> Actor:
