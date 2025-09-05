@@ -9,14 +9,14 @@ import { isTokenExpired } from "../utils/auth/token.js";
 export async function authMiddleware(req, res, next) {
   if (!tokenExists(req)) throw new AppError(TokenErrors.MISSING_TOKEN);
 
-  const token = extractToken(req);
-  const valid = await verifyToken(token);
-  const payload = decodePayload(token);
+  const token = extractToken(req); //pure
 
+  await verifyToken(token); //semi-pure
+
+  const payload = decodePayload(token);//pure
   if (isTokenExpired(payload)) throw new AppError(TokenErrors.EXPIRED_TOKEN);
 
-  const userId = payload.sub;
-  req.userId = userId;
+  req.userId = payload.sub;
 
   if (valid) next(); 
 
