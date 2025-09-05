@@ -8,83 +8,71 @@ TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
 - Use POSTMAN for login attempt [done]
 - Use POSTMAN for secured routes access attempt [DONE]
 
-Please make sure that before testing cases actors are as pure as possible.
+Please make sure that before each testing case actors are pure as much as possible. []
 
 - CHECK TESTCASES:
-  + TC-001 []
-    -> Test case: Valid registration -> login -> access to protected route.
-    -> Input / Preconditions: -
+  + TC-001 [] -> Valid registration -> login -> access to protected route.
+    -> Input / Preconditions:
+      + Pure actors []
     -> Actor: AuthService (encapsulation needed because AuthService is missing)
     -> Expected result: 200 OK + resource data.
     -> Status: Pending.
-  + TC-002 []
-    -> Test case:
+  + TC-002 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
     -> Status:
-  + TC-003 []
-    -> Test case:
+  + TC-003 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
     -> Status:
-  + TC-004 []
-    -> Test case:
+  + TC-004 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
     -> Status:
-  + TC-005 []
-    -> Test case:
+  + TC-005 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
     -> Status:
-  + TC-006 []
-    -> Test case:
+  + TC-006 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
     -> Status:
-  + TC-007 []
-    -> Test case:
+  + TC-007 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
     -> Status:
-  + TC-008 []
-    -> Test case:
+  + TC-008 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
     -> Status:
-  + TC-009 []
-    -> Test case:
+  + TC-009 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
     -> Status:
-  + TC-010 []
-    -> Test case:
+  + TC-010 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
     -> Status:
-  + TC-011 []
-    -> Test case:
+  + TC-011 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
     -> Status:
-  + TC-012 []
-    -> Test case:
+  + TC-012 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
     -> Status:
-  + TC-013 []
-    -> Test case:
+  + TC-013 [] ->
     -> Input / Preconditions:
     -> Actor:
     -> Expected result:
