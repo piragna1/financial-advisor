@@ -15,7 +15,7 @@ Please make sure that before each testing case actors are pure as much as possib
 - CHECK TESTCASES:
   + TC-001 [] -> Valid registration -> login -> access to protected route.
     -> Input / Preconditions:
-      + Pure actors []
+      + Purify actors as much as possible [done]
     -> Actor: AuthService (encapsulation needed because AuthService is missing)
     -> Expected result: 200 OK + resource data.
     -> Status: Pending.
