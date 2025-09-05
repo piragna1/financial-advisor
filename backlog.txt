@@ -8,7 +8,9 @@ TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
 - Use POSTMAN for login attempt [done]
 - Use POSTMAN for secured routes access attempt [DONE]
 
-Please make sure that before each testing case actors are pure as much as possible. []
+Please make sure that before each testing case actors are pure as much as possible. 
+  +registerController[done]
+  +loginController[done]
 
 - CHECK TESTCASES:
   + TC-001 [] -> Valid registration -> login -> access to protected route.
