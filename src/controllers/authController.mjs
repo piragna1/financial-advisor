@@ -26,7 +26,7 @@ export async function registerUserController(req, res) {
 
     let exists = await findUserByEmail(email);//semi-pure (access (mock) db)
 
-    if (exists) throw new AppError();
+    if (exists) throw new AppError(AuthErrors.USER_EXISTS);
 
     const hashedPassword = hashPassword(password);//semi-pure (import crypto)
 
