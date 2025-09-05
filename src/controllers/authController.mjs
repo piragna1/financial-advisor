@@ -62,6 +62,7 @@ export async function loginUserController(req, res, next) {
 
     //userRetrieve
     let user = await userRetrieve(email);//semi-pure (interactis with userRepo.js)
+    console.log('retrieved user:',user)//debug
     if (!user) throw new AppError(AuthErrors.USER_NOT_FOUND);
 
     //password hashing comparing
