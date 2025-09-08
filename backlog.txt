@@ -18,7 +18,7 @@ C:.
 │       └───auth
 │               checkUserUniqueness.js (works)
 │               loginResponse.js (works)
-│               validateLoginInput.js (now)
+│               validateLoginInput.js (works)
 │               validateRegistrationInput.js
 │
 ├───config
