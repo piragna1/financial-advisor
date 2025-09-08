@@ -19,7 +19,7 @@ C:.
 │               checkUserUniqueness.js (works)
 │               loginResponse.js (works)
 │               validateEmailInput.js (works)
-│               validatePasswordInput.js (do)
+│               validatePasswordInput.js (works)
 │               validateLoginInput.js (do)
 │               validateRegistrationInput.js ()
 │
