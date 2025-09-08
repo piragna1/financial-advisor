@@ -1,19 +1,19 @@
+import { validateName } from "./validateName";
+
 export function validateRegistrationInput({ name,lastName, email, password }) {
-  if (!name || !lastName||!email || !password  ) {
-    throw new Error("All fields: name, last name, email and password are required")
-  }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(email)) {
-    throw new Error("Invalid email format")
-  }
-
-  if (password.length < 8) {
-    throw new Error("Password must be at least 8 characters long")
-  }
-
-    if (/\d/.test(name) || /\d/.test(lastName)) 
-      throw new Error('Name cannot contain numbers');
-
-  return true;
+    const emailErrors = validateEmailInput(email);
+    const passwordErrors = validatePasswordInput(password);
+    const nameErrors = validateName(name);
+    const lastNameErrors = validateName(lastName);
+    const errors = {email:emailErrors, password:passwordErrors, name:nameErrors, lastName:lastNameErrors};
+    if (
+      errors['email'].length==0 &&
+      errors['password'].length==0 &&
+      errors['name'].length==0 &&
+      errors['password'].length==0 
+    ) return true;
+    else{
+      throw new Error(errors);
+    }
 }
