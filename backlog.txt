@@ -23,7 +23,7 @@ C:.
 │               validatePasswordInput.js (checked)
 │               validateLoginInput.js (checked)
 │               validateName.js (checked)
-│               validateRegistrationInput.js (pending)
+│               validateRegistrationInput.js (working on it)
 │
 ├───config
 │       jwtConfig.js
