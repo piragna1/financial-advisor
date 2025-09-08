@@ -26,34 +26,34 @@ export function validateLoginInput(input) {
 }
 //------------------------------------- TEST CASES
 
-//-----Works fine
+// //-----Works fine
 
-//--invalid email format
-console.log(
-  validateLoginInput({ email: "gonzalo@.com", password: "lalala123" }) //ok
-); 
+// //--invalid email format
+// console.log(
+//   validateLoginInput({ email: "gonzalo@.com", password: "lalala123" }) //ok
+// ); 
 
-//correct input
-console.log(
-  validateLoginInput({ email: "gonzalo@example.com", password: "lalala123" })
-); //ok
+// //correct input
+// console.log(
+//   validateLoginInput({ email: "gonzalo@example.com", password: "lalala123" })
+// ); //ok
 
-//email not string
-console.log(validateLoginInput({ email: 12345, password: "securePass123" }));//ok
-//missing email
-console.log(validateLoginInput({ password: "securePass123" })); //ok
-//missing password
-console.log(validateLoginInput({ email: "user@example.com" })); //ok
-//password not string
-console.log(
-  validateLoginInput({ email: "gonzalo@example.com", password: 123 })
-); //ok
-//Missing email and missing password
-console.log(validateLoginInput({}));//ok
-//Empty strings
-console.log(validateLoginInput({ email: "", password: "" })); //ok
-// //-------------------------------------
+// //email not string
+// console.log(validateLoginInput({ email: 12345, password: "securePass123" }));//ok
+// //missing email
+// console.log(validateLoginInput({ password: "securePass123" })); //ok
+// //missing password
+// console.log(validateLoginInput({ email: "user@example.com" })); //ok
+// //password not string
+// console.log(
+//   validateLoginInput({ email: "gonzalo@example.com", password: 123 })
+// ); //ok
+// //Missing email and missing password
+// console.log(validateLoginInput({}));//ok
+// //Empty strings
+// console.log(validateLoginInput({ email: "", password: "" })); //ok
+// // //-------------------------------------
 
-// //-----Must correct
-// //-------------------------------------
+// // //-----Must correct
+// // //-------------------------------------
 
