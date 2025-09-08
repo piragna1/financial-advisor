@@ -1,7 +1,7 @@
 export function validateEmailInput(email) {
   const errors = [];
   if (!email) {
-    errors.push("Email isrequired");
+    errors.push("Email is required");
   } else {
     if (email && typeof email !== "string") {
       errors.push("Email must be a string.");
