@@ -22,7 +22,7 @@ C:.
 │               validateEmailInput.js (checked)
 │               validatePasswordInput.js (checked)
 │               validateLoginInput.js (checked)
-│               validateName.js (pending)
+│               validateName.js (checked)
 │               validateRegistrationInput.js (pending)
 │
 ├───config
