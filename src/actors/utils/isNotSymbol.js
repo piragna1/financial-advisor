@@ -3,10 +3,24 @@ export function isNotSymbol(char){
   return /^[a-zA-Z0-9 ]$/.test(char);
 }
 
-console.log(isNotSymbol());//f
-console.log(isNotSymbol(''));//f
-console.log(isNotSymbol('1'));//t
-console.log(isNotSymbol('A'));//t
-console.log(isNotSymbol('a'));//t
+//Empty input: f | expected -> t
+console.log(isNotSymbol());
+//Empty string: f | expected -> t
+console.log(isNotSymbol(''));
+//Number as character: t | expected -> t
+console.log(isNotSymbol('1'));
+//Uppercase letter: t | expected -> t
+console.log(isNotSymbol('A'));
+//Lowercase letter: t | expected -> t
+console.log(isNotSymbol('a'));
+// Empty space: t | expected -> t
 console.log(isNotSymbol(' '));//t
+//Symbol: f | expected -> f
 console.log(isNotSymbol('$'));//f
+
+//Need to fix:
+//
+//
+//
+//
+//
