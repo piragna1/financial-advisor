@@ -18,8 +18,8 @@ C:.
 │       └───auth
 │               checkUserUniqueness.js (works)
 │               loginResponse.js (works)
-│               validateLoginInput.js (works)
-│               validateRegistrationInput.js (now)
+│               validateLoginInput.js (now)
+│               validateRegistrationInput.js ()
 │
 ├───config
 │       jwtConfig.js
