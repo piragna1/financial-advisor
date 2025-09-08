@@ -11,7 +11,7 @@ export function validateRegistrationInput({ name,lastName, email, password }) {
       errors['email'].length==0 &&
       errors['password'].length==0 &&
       errors['name'].length==0 &&
-      errors['password'].length==0 
+      errors['lastName'].length==0 
     ) return true;
     else{
       throw new Error(errors);
@@ -27,3 +27,82 @@ validateRegistrationInput({
   password: "securePass123"
 });
 // → returns true
+
+//❌ Missing Fields
+validateRegistrationInput({});
+// → throws Error with:
+// {
+//   name: ["Name is required"],
+  //  lastName: ["Last name is required"],
+  //  email: ["Email is required"],
+  //  password: ["Password is required"]
+// }
+
+
+// ❌ Invalid Email Format
+validateRegistrationInput({
+  name: "Gonzalo",
+  lastName: "Varela",
+  email: "gonzalo@.com",
+  password: "securePass123"
+});
+// → throws Error with: { email: ["Email format is invalid"] }
+
+//❌ Email Not a String
+validateRegistrationInput({
+  name: "Gonzalo",
+  lastName: "Varela",
+  email: 12345,
+  password: "securePass123"
+});
+// → throws Error with: { email: ["Email must be a string."] }
+
+
+//❌ Password Not a String
+validateRegistrationInput({
+  name: "Gonzalo",
+  lastName: "Varela",
+  email: "gonzalo@example.com",
+  password: 12345
+});
+// → throws Error with: { password: ["Password must be a string."] }
+
+
+//❌ Empty Strings
+validateRegistrationInput({
+  name: "",
+  lastName: "",
+  email: "",
+  password: ""
+});
+// → throws Error with:
+// {
+//   name: ["Name is required"],
+  //  lastName: ["Last name is required"],
+  //  email: ["Email format is invalid"],
+  //  password: ["Password must be a string"]
+// }
+
+
+//❌ Name Not a String
+validateRegistrationInput({
+  name: 123,
+  lastName: "Varela",
+  email: "gonzalo@example.com",
+  password: "securePass123"
+});
+// → throws Error with: { name: ["Name must be a string."] }
+
+
+//❌ Last Name Not a String
+
+validateRegistrationInput({
+  name: "Gonzalo",
+  lastName: 456,
+  email: "gonzalo@example.com",
+  password: "securePass123"
+});
+// → throws Error with: { lastName: ["Last name must be a string."] }
+
+
+
