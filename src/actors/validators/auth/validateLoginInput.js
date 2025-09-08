@@ -4,8 +4,8 @@ import { validatePasswordInput } from "./validatePasswordInput";
 //validateLoginInput.js
 export function validateLoginInput(input) {
   const { email, password } = input;
-  const emailErrors = validateEmailInput(errors,email);
-  const passwordErrors = validatePasswordInput(errors,password);
+  const emailErrors = validateEmailInput(email);
+  const passwordErrors = validatePasswordInput(password);
   const errors = {email:emailErrors, password:passwordErrors}
   return errors;
 }
