@@ -24,11 +24,4 @@ export function validateName(name){
     return errors;
 }
 
-console.log(validateName(''))
-console.log(validateName())
-console.log(validateName('Go'))
-console.log(validateName('Gon'))
-console.log(validateName('Gon224zalo'))
-console.log(validateName('Gonzalo'))
 console.log(validateName('Gonzalo$'))
-console.log(validateName('Gonzaloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo'))
