@@ -1,5 +1,5 @@
-import { validateEmailInput } from "./validateEmailInput";
-import { validatePasswordInput } from "./validatePasswordInput";
+import { validateEmailInput } from "./validateEmailInput.js";
+import { validatePasswordInput } from "./validatePasswordInput.js";
 
 //validateLoginInput.js
 export function validateLoginInput(input) {
@@ -10,35 +10,30 @@ export function validateLoginInput(input) {
   return errors;
 }
 //------------------------------------- TEST CASES
+console.log('invalid email format');
+console.log(
+  validateLoginInput({ email: "gonzalo@.com", password: "lalala123" }) 
+); 
 
-// //-----Works fine
+console.log('correct input')
+console.log(
+  validateLoginInput({ email: "gonzalo@example.com", password: "lalala123" })
+); 
 
-// //--invalid email format
-// console.log(
-//   validateLoginInput({ email: "gonzalo@.com", password: "lalala123" }) //ok
-// ); 
+console.log('email not string')
+console.log(validateLoginInput({ email: 12345, password: "securePass123" }));
+console.log('missing email')
+console.log(validateLoginInput({ password: "securePass123" })); 
+console.log('missing password')
+console.log(validateLoginInput({ email: "user@example.com" })); 
+console.log('password not string')
+console.log(
+  validateLoginInput({ email: "gonzalo@example.com", password: 123 })
+); 
+console.log('Missing email and missing password')
+console.log(validateLoginInput({}));
+console.log('Empty strings')
+console.log(validateLoginInput({ email: "", password: "" })); 
+// //-------------------------------------
 
-// //correct input
-// console.log(
-//   validateLoginInput({ email: "gonzalo@example.com", password: "lalala123" })
-// ); //ok
-
-// //email not string
-// console.log(validateLoginInput({ email: 12345, password: "securePass123" }));//ok
-// //missing email
-// console.log(validateLoginInput({ password: "securePass123" })); //ok
-// //missing password
-// console.log(validateLoginInput({ email: "user@example.com" })); //ok
-// //password not string
-// console.log(
-//   validateLoginInput({ email: "gonzalo@example.com", password: 123 })
-// ); //ok
-// //Missing email and missing password
-// console.log(validateLoginInput({}));//ok
-// //Empty strings
-// console.log(validateLoginInput({ email: "", password: "" })); //ok
-// // //-------------------------------------
-
-// // //-----Must correct
-// // //-------------------------------------
 
