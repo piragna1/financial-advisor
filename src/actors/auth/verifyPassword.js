@@ -1,5 +1,3 @@
-async function verifyPassword(password, userPasswordHash) {
-  const result = await bcrypt.compare(password, userPasswordHash);
-  if (!result) throw new InvalidCredentialsError(); //custom
-  return true;
+function verifyPassword(hash1, hash2) {
+  return hash1===hash2;
 }
