@@ -8,16 +8,16 @@ C:.
 │   ├───auth
 │   │       extractToken.js
 │   │       tokenExists.js
-│   │       verifyPassword.js (done)
+│   │       verifyPassword.js (works)
 │   │
 │   ├───retrievers
-│   │       userRetriever.js (done)
+│   │       userRetriever.js (works)
 │   │
 │   ├───utils
 │   └───validators
 │       └───auth
-│               checkUserUniqueness.js (done)
-│               loginResponse.js (now)
+│               checkUserUniqueness.js (works)
+│               loginResponse.js (works)
 │               validateLoginInput.js
 │               validateRegistrationInput.js
 │
