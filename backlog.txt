@@ -1,4 +1,99 @@
 Doing now: Focusing on checkUserUniqueness()
+-------------------------------------------------------------
+CHECK EVERY PART OF THE SYSTEM IN ISOLATION:
+C:.
+│   index.mjs
+│
+├───actors
+│   ├───auth
+│   │       extractToken.js
+│   │       tokenExists.js
+│   │       verifyPassword.js (done)
+│   │
+│   ├───retrievers
+│   │       userRetriever.js (done)
+│   │
+│   ├───utils
+│   └───validators
+│       └───auth
+│               checkUserUniqueness.js (done)
+│               loginResponse.js
+│               validateLoginInput.js
+│               validateRegistrationInput.js
+│
+├───config
+│       jwtConfig.js
+│       loanConfig.js
+│       mock.db.config.js
+│       passwordSecretConfig.js
+│       registerData.js
+│       userConfig.js
+│
+├───controllers
+│       authController.mjs
+│       loanController.mjs
+│       profileController.mjs
+│
+├───entities
+│       userEntity.js
+│
+├───errors
+│       AppError.js
+│       authErrors.js
+│       mapError.js
+│       profileErrors.js
+│       registrationErrors.js
+│       tokenError.js
+│       TokenGenerationError.js
+│
+├───middlewares
+│       authMiddleware.js
+│       errorHandler.js
+│
+├───models
+│       loanModel.js
+│       userModel.js
+│
+├───repositories
+│       userRepo.js
+│
+├───routes
+│   ├───auth
+│   │       auth.route.js
+│   │
+│   ├───loan
+│   │       loanRoutes.js
+│   │
+│   └───profile
+│           profile.route.js
+│
+├───services
+│   ├───auth
+│   │       registerUser.mjs
+│   │
+│   ├───loan
+│   │       loanCalculator.js
+│   │
+│   └───user
+│           generateUserId.js
+│           user.service.js
+│
+├───tests
+│       registerUser.test.mjs
+│
+└───utils
+    └───auth
+            comparePasswords.js
+            generateSignature.js
+            hashPassword.js
+            invalidateUserToken.js
+            refreshToken.js
+            token.js
+            tokenIssuer.js
+            verifyToken.js
+
+
+
 -----------------------------------------------------------------------WORKSPACE
 TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
 --------------
