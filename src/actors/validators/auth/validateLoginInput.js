@@ -1,28 +1,13 @@
+import { validateEmailInput } from "./validateEmailInput";
+import { validatePasswordInput } from "./validatePasswordInput";
+
 //validateLoginInput.js
 export function validateLoginInput(input) {
   const { email, password } = input;
-  const errors = {
-    email:[],
-    password:[]
-  };
-  if (!email) {
-    errors.email.push("Email isrequired");
-  }
-  if (!password){ errors.password.push("Password is required.");
-
-  };
-  
-  if (email && typeof email !== "string") {
-    errors.email.push("Email must be a string.");
-  } else if (email && !/^\S+@\S+\.\S+$/.test(email)) {
-    errors.email.push("Email format is invalid");
-  }
-  if (password  && typeof password !== "string") {
-    errors.password.push("Password is required and must be a string");
-  }
-  return (Object.keys(errors.email).length === 0 && Object.keys(errors.password).length === 0 )
-    ? { ok: true, value: { email, password } }
-    : { ok: false, value: errors };
+  const emailErrors = validateEmailInput(errors,email);
+  const passwordErrors = validatePasswordInput(errors,password);
+  const errors = {email:emailErrors, password:passwordErrors}
+  return errors;
 }
 //------------------------------------- TEST CASES
 
