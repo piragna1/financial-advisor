@@ -14,6 +14,7 @@ C:.
 │   │       userRetriever.js (works)
 │   │
 │   ├───utils
+│               isNotSymbol.js (check)
 │   └───validators
 │       └───auth
 │               checkUserUniqueness.js (works)
@@ -21,8 +22,8 @@ C:.
 │               validateEmailInput.js (works)
 │               validatePasswordInput.js (works)
 │               validateLoginInput.js (works)
-│               validateName.js (do)
-│               validateRegistrationInput.js (do)
+│               validateName.js (check)
+│               validateRegistrationInput.js (check)
 │
 ├───config
 │       jwtConfig.js
