@@ -18,6 +18,8 @@ C:.
 │       └───auth
 │               checkUserUniqueness.js (works)
 │               loginResponse.js (works)
+│               validateEmailInput.js (do)
+│               validatePasswordInput.js (do)
 │               validateLoginInput.js (now)
 │               validateRegistrationInput.js ()
 │
