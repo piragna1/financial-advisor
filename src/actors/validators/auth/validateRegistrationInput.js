@@ -1,6 +1,6 @@
 export function validateRegistrationInput({ name,lastName, email, password }) {
   if (!name || !lastName||!email || !password  ) {
-    throw new Error("All fields (name, last name, email, password) are required")
+    throw new Error("All fields: name, last name, email and password are required")
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -15,6 +15,5 @@ export function validateRegistrationInput({ name,lastName, email, password }) {
     if (/\d/.test(name) || /\d/.test(lastName)) 
       throw new Error('Name cannot contain numbers');
 
-  // You can add uniqueness check later in the controller or service
   return true;
 }
