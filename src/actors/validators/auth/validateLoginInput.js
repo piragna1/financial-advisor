@@ -12,12 +12,12 @@ export function validateLoginInput(input) {
 
   };
   
-  if (typeof email !== "string") {
+  if (email && typeof email !== "string") {
     errors.email.push("Email must be a string.");
-  } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+  } else if (email && !/^\S+@\S+\.\S+$/.test(email)) {
     errors.email.push("Email format is invalid");
   }
-  if (!password || typeof password !== "string") {
+  if (password  && typeof password !== "string") {
     errors.password.push("Password is required and must be a string");
   }
   return (Object.keys(errors.email).length === 0 && Object.keys(errors.password).length === 0 )
@@ -43,8 +43,8 @@ console.log(validateLoginInput({ email: 12345, password: "securePass123" }));
 // //-------------------------------------
 
 // //-----Must correct
-// //missing email
-// console.log(validateLoginInput({ password: "securePass123" })); //{ ok: false, value: { email: 'Email must be a string.' } } should be: email is required
+//missing email
+console.log(validateLoginInput({ password: "securePass123" })); //{ ok: false, value: { email: 'Email must be a string.' } } should be: email is required
 
 // //missing password
 // console.log(validateLoginInput({ email: "user@example.com" })); /* {
