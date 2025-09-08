@@ -21,7 +21,8 @@ C:.
 │               validateEmailInput.js (works)
 │               validatePasswordInput.js (works)
 │               validateLoginInput.js (works)
-│               validateRegistrationInput.js ()
+│               validateName.js (do)
+│               validateRegistrationInput.js (do)
 │
 ├───config
 │       jwtConfig.js
