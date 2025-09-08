@@ -8,20 +8,20 @@ C:.
 │   ├───auth
 │   │       extractToken.js
 │   │       tokenExists.js
-│   │       verifyPassword.js (works)
+│   │       verifyPassword.js (done)
 │   │
 │   ├───retrievers
-│   │       userRetriever.js (works)
+│   │       userRetriever.js (done)
 │   │
 │   ├───utils
-│               isNotSymbol.js (check)
+│               isNotSymbol.js (done)
 │   └───validators
 │       └───auth
-│               checkUserUniqueness.js (works)
-│               loginResponse.js (works)
-│               validateEmailInput.js (works)
-│               validatePasswordInput.js (works)
-│               validateLoginInput.js (works)
+│               checkUserUniqueness.js (done)
+│               loginResponse.js (done)
+│               validateEmailInput.js (done)
+│               validatePasswordInput.js (done)
+│               validateLoginInput.js (done)
 │               validateName.js (check)
 │               validateRegistrationInput.js (check)
 │
