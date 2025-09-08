@@ -8,22 +8,22 @@ C:.
 │   ├───auth
 │   │       extractToken.js
 │   │       tokenExists.js
-│   │       verifyPassword.js (done)
+│   │       verifyPassword.js (checked)
 │   │
 │   ├───retrievers
-│   │       userRetriever.js (done)
+│   │       userRetriever.js (checked)
 │   │
 │   ├───utils
-│               isNotSymbol.js (done)
+│               isNotSymbol.js (checked)
 │   └───validators
 │       └───auth
-│               checkUserUniqueness.js (done)
-│               loginResponse.js (done)
-│               validateEmailInput.js (done)
-│               validatePasswordInput.js (done)
-│               validateLoginInput.js (done)
-│               validateName.js (check)
-│               validateRegistrationInput.js (check)
+│               checkUserUniqueness.js (checked)
+│               loginResponse.js (checked)
+│               validateEmailInput.js (checked)
+│               validatePasswordInput.js (checked)
+│               validateLoginInput.js (checked)
+│               validateName.js (pending)
+│               validateRegistrationInput.js (pending)
 │
 ├───config
 │       jwtConfig.js
