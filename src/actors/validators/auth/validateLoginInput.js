@@ -48,28 +48,14 @@ console.log(validateLoginInput({ email: "user@example.com" })); //ok
 console.log(
   validateLoginInput({ email: "gonzalo@example.com", password: 123 })
 ); //ok
+//Missing email and missing password
+console.log(validateLoginInput({}));//ok
 // //-------------------------------------
 
 // //-----Must correct
 
 
 
-// //Missing email and missing password
-// console.log(validateLoginInput({})); /* {
-//   ok: false,
-//   value: {
-//     email: 'Email must be a string.',
-//     password: 'Password is required and must be a string'
-//   }
-// }
-//   expected:{
-//     ok: false,
-//     value: {
-//       email: 'Email is required.',
-//       password: 'Password is required'
-//     }
-//   }
-// */
 
 // //Empty strings
 // console.log(validateLoginInput({ email: "", password: "" })); //expected:
