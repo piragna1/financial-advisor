@@ -1,0 +1,1 @@
+export function validatePasswordInput(errors,password){}
