@@ -50,12 +50,10 @@ console.log(
 ); //ok
 //Missing email and missing password
 console.log(validateLoginInput({}));//ok
+//Empty strings
+console.log(validateLoginInput({ email: "", password: "" })); //ok
 // //-------------------------------------
 
 // //-----Must correct
-
-//Empty strings
-console.log(validateLoginInput({ email: "", password: "" })); //ok
-
 // //-------------------------------------
 
