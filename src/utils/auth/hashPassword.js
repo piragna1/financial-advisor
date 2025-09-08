@@ -1,6 +1,7 @@
 //hashPassword.js
-import crypto from 'crypto';
+import { createHmac } from 'crypto';
 
-export async function hashPassword(input,secret='secret'){
-    return crypto.createHmac('sha256',secret).update(input).digest('hex');
+export function hashPassword(input,secret='secret'){
+    console.log('hashPassword() ->{}')
+    return createHmac('sha256',secret).update(input).digest('hex');
 }
