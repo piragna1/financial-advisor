@@ -1,3 +1,4 @@
+import {isNotSymbol} from '../../utils/isNotSymbol.js'
 export function validateName(name){
     const errors = [];
     if (!name){
@@ -15,7 +16,7 @@ export function validateName(name){
                 errors.push('The name cannot contain characters!')
                 break;
             }
-            if (typeof char ==='symbol'){
+            if (!isNotSymbol(char)){
                 errors.push('The name cannot contain symbols!')
                 break;
             }
