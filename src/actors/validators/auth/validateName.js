@@ -24,5 +24,3 @@ export function validateName(name){
     }
     return errors;
 }
-
-console.log(validateName('Gonzalo$'))
