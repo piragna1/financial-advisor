@@ -54,20 +54,8 @@ console.log(validateLoginInput({}));//ok
 
 // //-----Must correct
 
-
-
-
-// //Empty strings
-// console.log(validateLoginInput({ email: "", password: "" })); //expected:
-// // // → { ok: false, value: { email: 'Email format is invalid', password: 'Password is required and must be a string' } }
-// //output:
-// /*
-// {
-//   ok: false,
-//   value: {
-//     email: 'Email must be a string.',
-//     password: 'Password is required and must be a string'  
-// */
+//Empty strings
+console.log(validateLoginInput({ email: "", password: "" })); //ok
 
 // //-------------------------------------
 
