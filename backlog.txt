@@ -19,7 +19,7 @@ C:.
 │               checkUserUniqueness.js (works)
 │               loginResponse.js (works)
 │               validateLoginInput.js (works)
-│               validateRegistrationInput.js
+│               validateRegistrationInput.js (now)
 │
 ├───config
 │       jwtConfig.js
