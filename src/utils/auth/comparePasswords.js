@@ -1,13 +1,14 @@
 //comparePasswords.js
+import { passwordSecret } from '../../config/passwordSecretConfig.js';
 import { hashPassword } from './hashPassword.js';
 
-export async function comparePasswordHashes(real,input,secret){
-
-    console.log('comparePasswordHashes()')//debug
-    console.log('real password', real)
-    console.log('input password', input)
-    console.log('secret', secret)
+export function comparePassword(real,input,secret){
 
 
-    return real === await hashPassword(input,secret); //semi pure (crypto import)
+    const hashed = hashPassword(input,secret); //semi pure (crypto import)
+
+    console.log('hashPassword(input,passwordSecret.PASSWORD_SECRET)',hashPassword(input,passwordSecret.PASSWORD_SECRET))
+    console.log('real',real)
+    console.log('hashed',hashed)
+    return real ===  hashed;
 }
