@@ -26,75 +26,75 @@ C:.
 │               validateRegistrationInput.js (working on it)
 │
 ├───config
-│       jwtConfig.js
-│       loanConfig.js
-│       mock.db.config.js
-│       passwordSecretConfig.js
-│       registerData.js
-│       userConfig.js
+│       jwtConfig.js (pending)
+│       loanConfig.js (pending)
+│       mock.db.config.js (pending)
+│       passwordSecretConfig.js (pending)
+│       registerData.js (pending)
+│       userConfig.js (pending)
 │
 ├───controllers
-│       authController.mjs
-│       loanController.mjs
-│       profileController.mjs
+│       authController.mjs (pending)
+│       loanController.mjs (pending)
+│       profileController.mjs (pending)
 │
 ├───entities
-│       userEntity.js
+│       userEntity.js (pending)
 │
 ├───errors
-│       AppError.js
-│       authErrors.js
-│       mapError.js
-│       profileErrors.js
-│       registrationErrors.js
-│       tokenError.js
-│       TokenGenerationError.js
+│       AppError.js (pending)
+│       authErrors.js (pending)
+│       mapError.js (pending)
+│       profileErrors.js (pending)
+│       registrationErrors.js (pending)
+│       tokenError.js (pending)
+│       TokenGenerationError.js (pending)
 │
 ├───middlewares
-│       authMiddleware.js
-│       errorHandler.js
+│       authMiddleware.js (pending)
+│       errorHandler.js (pending)
 │
 ├───models
-│       loanModel.js
-│       userModel.js
+│       loanModel.js (pending)
+│       userModel.js (pending)
 │
 ├───repositories
-│       userRepo.js
+│       userRepo.js (pending)
 │
 ├───routes
 │   ├───auth
-│   │       auth.route.js
+│   │       auth.route.js (pending)
 │   │
 │   ├───loan
-│   │       loanRoutes.js
+│   │       loanRoutes.js (pending)
 │   │
 │   └───profile
-│           profile.route.js
+│           profile.route.js (pending)
 │
 ├───services
 │   ├───auth
-│   │       registerUser.mjs
+│   │       registerUser.mjs (pending)
 │   │
 │   ├───loan
-│   │       loanCalculator.js
+│   │       loanCalculator.js (pending)
 │   │
 │   └───user
-│           generateUserId.js
-│           user.service.js
+│           generateUserId.js (pending)
+│           user.service.js (pending)
 │
 ├───tests
-│       registerUser.test.mjs
+│       registerUser.test.mjs (pending)
 │
 └───utils
     └───auth
-            comparePasswords.js
-            generateSignature.js
-            hashPassword.js
-            invalidateUserToken.js
-            refreshToken.js
-            token.js
-            tokenIssuer.js
-            verifyToken.js
+            comparePasswords.js (pending)
+            generateSignature.js (pending)
+            hashPassword.js (pending)
+            invalidateUserToken.js (pending)
+            refreshToken.js (pending)
+            token.js (pending)
+            tokenIssuer.js (pending)
+            verifyToken.js (pending)
 
 
 
