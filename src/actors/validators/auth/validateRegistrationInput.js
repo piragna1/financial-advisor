@@ -17,3 +17,13 @@ export function validateRegistrationInput({ name,lastName, email, password }) {
       throw new Error(errors);
     }
 }
+
+//----------TEST CASES
+//✅ Valid Input
+validateRegistrationInput({
+  name: "Gonzalo",
+  lastName: "Varela",
+  email: "gonzalo@example.com",
+  password: "securePass123"
+});
+// → returns true
