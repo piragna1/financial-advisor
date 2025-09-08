@@ -20,7 +20,7 @@ C:.
 │               loginResponse.js (works)
 │               validateEmailInput.js (works)
 │               validatePasswordInput.js (works)
-│               validateLoginInput.js (do)
+│               validateLoginInput.js (works)
 │               validateRegistrationInput.js ()
 │
 ├───config
