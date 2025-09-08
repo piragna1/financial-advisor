@@ -1,4 +1,4 @@
-Doing now: Focusing on userRetriever
+Doing now: Focusing on userRetriever (done)
 -----------------------------------------------------------------------WORKSPACE
 TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
 --------------
