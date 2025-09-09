@@ -20,22 +20,22 @@ export function validateRegistrationInput({ name,lastName, email, password }) {
 //     password: "securePass123"
 //   })
 // );
-// → returns true
+// // → returns true
 
-//❌ Missing Fields
-try {
+// //❌ Missing Fields
+// try {
   
-  validateRegistrationInput({});
-} catch (error) {
-  console.error(error)
-}
-// → throws Error with:
-// {
-//   name: ["Name is required"],
-  //  lastName: ["Last name is required"],
-  //  email: ["Email is required"],
-  //  password: ["Password is required"]
+//   validateRegistrationInput({});
+// } catch (error) {
+//   console.error(error)
 // }
+// // → throws Error with:
+// // {
+// //   name: ["Name is required"],
+//   //  lastName: ["Last name is required"],
+//   //  email: ["Email is required"],
+//   //  password: ["Password is required"]
+// // }
 
 
 // // ❌ Invalid Email Format
