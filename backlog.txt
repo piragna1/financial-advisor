@@ -6,98 +6,98 @@ C:.
 │
 ├───actors
 │   ├───auth
-│   │       extractToken.js (pending)
-│   │       tokenExists.js (pending)
-│   │       verifyPassword.js (done)
+│   │       extractToken.js (❌).
+│   │       tokenExists.js (❌)
+│   │       verifyPassword.js (✅)
 │   │
 │   ├───retrievers
-│   │       userRetriever.js (done)
+│   │       userRetriever.js (✅)
 │   │
 │   ├───utils
-│               hasControlChars.js (pending)
-│               hasEmoji.js (pending)
-│               hasWhiteSpaces.js (pending)
-│               isNotSymbol.js (done)
+│               hasControlChars.js (❌)
+│               hasEmoji.js (❌)
+│               hasWhiteSpaces.js (❌)
+│               isNotSymbol.js (✅)
 │   └───validators
 │       └───auth
-│               checkUserUniqueness.js (done)
-│               loginResponse.js (done)
-│               validateEmailInput.js (done)
-│               validateLoginInput.js (pending)
-│               validateName.js (done)
-│               validatePasswordInput.js (pending)
-│               validateRegistrationInput.js (pending)
+│               checkUserUniqueness.js (✅)
+│               loginResponse.js (✅)
+│               validateEmailInput.js (✅)
+│               validateLoginInput.js (❌)
+│               validateName.js (✅)
+│               validatePasswordInput.js (❌)
+│               validateRegistrationInput.js (❌)
 │
 ├───config
-│       jwtConfig.js (pending)
-│       loanConfig.js (pending)
-│       mock.db.config.js (pending)
-│       passwordSecretConfig.js (pending)
-│       registerData.js (pending)
-│       userConfig.js (pending)
+│       jwtConfig.js (❌)
+│       loanConfig.js (❌)
+│       mock.db.config.js (❌)
+│       passwordSecretConfig.js (❌)
+│       registerData.js (❌)
+│       userConfig.js (❌)
 │
 ├───controllers
-│       authController.mjs (pending)
-│       loanController.mjs (pending)
-│       profileController.mjs (pending)
+│       authController.mjs (❌)
+│       loanController.mjs (❌)
+│       profileController.mjs (❌)
 │
 ├───entities
-│       userEntity.js (pending)
+│       userEntity.js (❌)
 │
 ├───errors
-│       AppError.js (pending)
-│       authErrors.js (pending)
-│       mapError.js (pending)
-│       profileErrors.js (pending)
-│       registrationErrors.js (pending)
-│       tokenError.js (pending)
-│       TokenGenerationError.js (pending)
+│       AppError.js (❌)
+│       authErrors.js (❌)
+│       mapError.js (❌)
+│       profileErrors.js (❌)
+│       registrationErrors.js (❌)
+│       tokenError.js (❌)
+│       TokenGenerationError.js (❌)
 │
 ├───middlewares
-│       authMiddleware.js (pending)
-│       errorHandler.js (pending)
+│       authMiddleware.js (❌)
+│       errorHandler.js (❌)
 │
 ├───models
-│       loanModel.js (pending)
-│       userModel.js (pending)
+│       loanModel.js (❌)
+│       userModel.js (❌)
 │
 ├───repositories
-│       userRepo.js (pending)
+│       userRepo.js (❌)
 │
 ├───routes
 │   ├───auth
-│   │       auth.route.js (pending)
+│   │       auth.route.js (❌)
 │   │
 │   ├───loan
-│   │       loanRoutes.js (pending)
+│   │       loanRoutes.js (❌)
 │   │
 │   └───profile
-│           profile.route.js (pending)
+│           profile.route.js (❌)
 │
 ├───services
 │   ├───auth
-│   │       registerUser.mjs (pending)
+│   │       registerUser.mjs (❌)
 │   │
 │   ├───loan
-│   │       loanCalculator.js (pending)
+│   │       loanCalculator.js (❌)
 │   │
 │   └───user
-│           generateUserId.js (pending)
-│           user.service.js (pending)
+│           generateUserId.js (❌)
+│           user.service.js (❌)
 │
 ├───tests
-│       registerUser.test.mjs (pending)
+│       registerUser.test.mjs (❌)
 │
 └───utils
     └───auth
-            comparePasswords.js (pending)
-            generateSignature.js (pending)
-            hashPassword.js (pending)
-            invalidateUserToken.js (pending)
-            refreshToken.js (pending)
-            token.js (pending)
-            tokenIssuer.js (pending)
-            verifyToken.js (pending)
+            comparePasswords.js (❌)
+            generateSignature.js (❌)
+            hashPassword.js (❌)
+            invalidateUserToken.js (❌)
+            refreshToken.js (❌)
+            token.js (❌)
+            tokenIssuer.js (❌)
+            verifyToken.js (❌)
 
 
 
@@ -107,13 +107,13 @@ TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
 
 -----------------------------------------------------------------------DAY'S BACKLOG
 
-- Use POSTMAN for register attempt [done]
-- Use POSTMAN for login attempt [done]
-- Use POSTMAN for secured routes access attempt [DONE]
+- Use POSTMAN for register attempt [✅]
+- Use POSTMAN for login attempt [✅]
+- Use POSTMAN for secured routes access attempt [✅]
 
 Please make sure that before each testing case actors are pure as much as possible. 
-  +registerController[done]
-  +loginController[done]
+  +registerController[✅]
+  +loginController[✅]
 
 - CHECK TESTCASES:
   + TC-001 [] -> Valid registration -> login -> access to protected route.
@@ -191,9 +191,9 @@ Please make sure that before each testing case actors are pure as much as possib
 
   -GITHUB REPOSITORY (
     +Table of contents
-      *Overview (done)
-      *Description (done)
-      *ERD (erd done, add it to the github REPOSITORY's content)
+      *Overview (✅)
+      *Description (✅)
+      *ERD (erd ✅, add it to the github REPOSITORY's content)
   )
 
   -Implement authentication in your application.
@@ -202,7 +202,7 @@ Please make sure that before each testing case actors are pure as much as possib
       -OAuth 2.0
     Important: You must implement the authentication logic from scratch without using ready-made 
       authentication libraries. This will help you understand how these protocols 
-      work under the hood. (login process pending)
+      work under the hood. (login process ❌)
   -Create DB schema as diagram. In your application u should have at list 3 DB tables.
   -Your task is to implement the database you designed in your diagram by creating executable SQL scripts.
     It can be any SQL database. If you don't know which to use - I recommend to use PostgreSQL.
@@ -214,12 +214,12 @@ Please make sure that before each testing case actors are pure as much as possib
 -----------------------------------------------------------------------CORE FEATURES
 🗂️ Suggested Categorization
     ✅ Core Logic
-        -Basic loan calculation (done)
-        -Monthly payment calculation (done)
-        -Total repayment amount (done)
-        -Compound interest logic (done)
-        -Amortization schedule (done)
-        -Early repayment logic (done)
+        -Basic loan calculation (✅)
+        -Monthly payment calculation (✅)
+        -Total repayment amount (✅)
+        -Compound interest logic (✅)
+        -Amortization schedule (✅)
+        -Early repayment logic (✅)
         -Input validation (check)
 --------------
 
