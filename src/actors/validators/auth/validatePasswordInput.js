@@ -1,5 +1,6 @@
 import { AppError } from "../../../errors/AppError.js";
 import { AuthErrors } from "../../../errors/authErrors.js";
+import {hasEmoji} from "../../utils/hasEmoji.js"
 
 export function validatePasswordInput(password){
     if (!password){ 
