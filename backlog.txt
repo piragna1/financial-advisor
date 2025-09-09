@@ -14,6 +14,9 @@ C:.
 │   │       userRetriever.js (done)
 │   │
 │   ├───utils
+│               hasControlChars.js (pending)
+│               hasEmoji.js (pending)
+│               hasWhiteSpaces.js (pending)
 │               isNotSymbol.js (done)
 │   └───validators
 │       └───auth
