@@ -12,6 +12,7 @@ export function validatePasswordInput(password){
         }
         else if (password.length <= 3) throw new AppError(AuthErrors.INVALID_INPUT, 'Password must contain more than 3 characters');
         else if (password.length >=200) throw new AppError (AuthErrors.INVALID_INPUT, 'Password must be less than 200 characters');
+        else if (hasEmoji(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'The password cannot contain emojis')
     }
     return true;
 }
