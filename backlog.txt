@@ -20,7 +20,7 @@ C:.
 │               checkUserUniqueness.js (checked)
 │               loginResponse.js (checked)
 │               validateEmailInput.js (checked)
-│               validatePasswordInput.js (pending)
+│               validatePasswordInput.js (currently working on it)
 │               validateLoginInput.js (pending)
 │               validateName.js (pending)
 │               validateRegistrationInput.js (pending)
