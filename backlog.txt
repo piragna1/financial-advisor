@@ -23,10 +23,10 @@ C:.
 │               checkUserUniqueness.js (✅)
 │               loginResponse.js (✅)
 │               validateEmailInput.js (✅)
-│               validateLoginInput.js (❌) -> now
+│               validateLoginInput.js (✅) 
 │               validateName.js (✅)
 │               validatePasswordInput.js (✅) 
-│               validateRegistrationInput.js (❌)
+│               validateRegistrationInput.js (❌) -> now
 │
 ├───config
 │       jwtConfig.js (❌)
