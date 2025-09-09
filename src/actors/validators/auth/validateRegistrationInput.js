@@ -21,31 +21,31 @@ export function validateRegistrationInput({ name,lastName, email, password }) {
 }
 
 //----------TEST CASES
-//✅ Valid Input
-console.log(
-  validateRegistrationInput({
-    name: "Gonzalo",
-    lastName: "Varela",
-    email: "gonzalo@example.com",
-    password: "securePass123"
-  })
-);
+// //✅ Valid Input
+// console.log(
+//   validateRegistrationInput({
+//     name: "Gonzalo",
+//     lastName: "Varela",
+//     email: "gonzalo@example.com",
+//     password: "securePass123"
+//   })
+// );
 // → returns true
 
-// //❌ Missing Fields
-// try {
+//❌ Missing Fields
+try {
   
-//   validateRegistrationInput({});
-// } catch (error) {
-//   console.error(error)
+  validateRegistrationInput({});
+} catch (error) {
+  console.error(error)
+}
+// → throws Error with:
+// {
+//   name: ["Name is required"],
+  //  lastName: ["Last name is required"],
+  //  email: ["Email is required"],
+  //  password: ["Password is required"]
 // }
-// // → throws Error with:
-// // {
-// //   name: ["Name is required"],
-//   //  lastName: ["Last name is required"],
-//   //  email: ["Email is required"],
-//   //  password: ["Password is required"]
-// // }
 
 
 // // ❌ Invalid Email Format
