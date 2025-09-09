@@ -6,8 +6,8 @@ C:.
 │
 ├───actors
 │   ├───auth
-│   │       extractToken.js
-│   │       tokenExists.js
+│   │       extractToken.js (pending)
+│   │       tokenExists.js (pending)
 │   │       verifyPassword.js (checked)
 │   │
 │   ├───retrievers
