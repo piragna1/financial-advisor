@@ -16,7 +16,7 @@ C:.
 │   ├───utils
 │               hasControlChars.js (✅)
 │               hasEmoji.js (✅) 
-│               hasWhiteSpaces.js (❌) -> now
+│               hasWhiteSpaces.js (✅)
 │               isNotSymbol.js (✅)
 │   └───validators
 │       └───auth
@@ -25,7 +25,7 @@ C:.
 │               validateEmailInput.js (✅)
 │               validateLoginInput.js (❌)
 │               validateName.js (✅)
-│               validatePasswordInput.js (❌)
+│               validatePasswordInput.js (❌) -> now
 │               validateRegistrationInput.js (❌)
 │
 ├───config
