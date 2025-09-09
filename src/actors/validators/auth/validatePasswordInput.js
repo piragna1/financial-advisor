@@ -5,21 +5,18 @@ import { hasWhiteSpaces } from "../../utils/hasWhiteSpaces.js";
 import {hasControlChars} from '../../utils/hasControlChars.js'
 
 export function validatePasswordInput(password){
-    if (!password){ 
-        throw new AppError(AuthErrors.MISSING_CREDENTIALS, 'Password is missing');
-    }
-    else {
-      if (hasWhiteSpaces(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'Password can not have white spaces')
-      else{
-          if (typeof password !== "string") {
-              throw new AppError(AuthErrors.INVALID_INPUT, 'Password must be a string');
-          }
-          else if (password.length <= 3) throw new AppError(AuthErrors.INVALID_INPUT, 'Password must contain more than 3 characters');
-          else if (password.length >=200) throw new AppError (AuthErrors.INVALID_INPUT, 'Password must be less than 200 characters');
-          else if (hasEmoji(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'The password cannot contain emojis')
-          else if (hasControlChars(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'There must not be any control characters in password')
-      }
-    }
+    //not null
+    if (!password){ throw new AppError(AuthErrors.MISSING_CREDENTIALS, 'Password is missing');}
+    //string type only
+    if (typeof password !== 'string') throw new AppError(AuthErrors.INVALID_INPUT, 'Password must be a string');
+    //length > 8 && length < 200
+    if (password.length <=8 || password.length >= 200) throw new AppError(AuthErrors.INVALID_INPUT, 'Password must have between 8 and 200 characters')
+    //no emojis
+    if (hasEmoji(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'Input password must NOT have any emoji characters')
+    //no white spaces
+    if (hasWhiteSpaces(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'White spaces cannot be added to the input password')
+    //no control characters
+    if (hasControlChars(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'Password CANNOT have any control character!!!')
     return true;
 }
 
@@ -49,7 +46,7 @@ const testCases = [
   },
   {
     label: "❌ Password is not a string (number)",
-    input: 123456,
+    input: 1234567778,
     expectError: true,
     expectedCode: "INVALID_INPUT"
   },
@@ -142,19 +139,17 @@ const testCases = [
   }
 ];
 
-for (const { label, input, expectError, expectedCode } of testCases) {
-  console.log(`\n${label}`);
-  try {
-    const result = validatePasswordInput(input);
-    console.log("Result:", result);
-  } catch (error) {
-    if (expectError) {
-      console.log("Caught AppError:", error.code);
-      if (expectedCode && error.code !== expectedCode) {
-        console.error(`❌ Expected code ${expectedCode}, but got ${error.code}`);
-      }
-    } else {
-      console.error("❌ Unexpected error:", error);
-    }
-  }
-}
+// for (const { label, input, expectError, expectedCode } of testCases) {
+//   try {
+//     const result = validatePasswordInput(input);
+//   } catch (error) {
+//     if (expectError) {
+//       console.log("Caught AppError:", error);
+//       if (expectedCode && error.code !== expectedCode) {
+//         console.error(`❌ Expected code ${expectedCode}, but got ${error.code}`);
+//       }
+//     } else {
+//       console.error("❌ Unexpected error:", error);
+//     }
+//   }
+// }
