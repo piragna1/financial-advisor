@@ -22,7 +22,7 @@ C:.
 │               validateEmailInput.js (done)
 │               validateLoginInput.js (pending)
 │               validateName.js (done)
-│               validatePasswordInput.js (done)
+│               validatePasswordInput.js (pending)
 │               validateRegistrationInput.js (pending)
 │
 ├───config
