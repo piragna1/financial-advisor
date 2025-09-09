@@ -1,6 +1,9 @@
 import { AppError } from '../../../errors/AppError.js';
 import { AuthErrors } from '../../../errors/authErrors.js';
 import {isNotSymbol} from '../../utils/isNotSymbol.js'
+import {hasEmoji} from '../../utils/hasEmoji.js'
+import {hasControlChars} from '../../utils/hasControlChars.js'
+
 export function validateName(name){
     if (!name){
         throw new AppError(AuthErrors.MISSING_CREDENTIALS, 'Name is missing')
@@ -18,6 +21,12 @@ export function validateName(name){
             }
             if (!isNotSymbol(char)){
                 throw new AppError(AuthErrors.INVALID_INPUT, 'Name cannot contain symbols');
+            }
+            if (hasEmoji(name)){
+                throw new AppError(AuthErrors.INVALID_INPUT, 'Name cannot contain emojis');
+            }
+            if (hasControlChars(name)){
+                throw new AppError(AuthErrors.INVALID_INPUT, 'Name cannot contain control characters');
             }
         }
     }
