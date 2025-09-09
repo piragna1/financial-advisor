@@ -14,7 +14,7 @@ C:.
 │   │       userRetriever.js (✅)
 │   │
 │   ├───utils
-│               hasControlChars.js (❌)
+│               hasControlChars.js (❌) -> now
 │               hasEmoji.js (❌)
 │               hasWhiteSpaces.js (❌)
 │               isNotSymbol.js (✅)
