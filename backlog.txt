@@ -21,7 +21,7 @@ C:.
 │               loginResponse.js (done)
 │               validateEmailInput.js (done)
 │               validateLoginInput.js (pending)
-│               validateName.js (pending)
+│               validateName.js (done)
 │               validatePasswordInput.js (done)
 │               validateRegistrationInput.js (pending)
 │
