@@ -23,9 +23,9 @@ C:.
 │               checkUserUniqueness.js (✅)
 │               loginResponse.js (✅)
 │               validateEmailInput.js (✅)
-│               validateLoginInput.js (❌)
+│               validateLoginInput.js (❌) -> now
 │               validateName.js (✅)
-│               validatePasswordInput.js (❌) -> now
+│               validatePasswordInput.js (✅) 
 │               validateRegistrationInput.js (❌)
 │
 ├───config
