@@ -8,21 +8,21 @@ C:.
 │   ├───auth
 │   │       extractToken.js (pending)
 │   │       tokenExists.js (pending)
-│   │       verifyPassword.js (checked)
+│   │       verifyPassword.js (done)
 │   │
 │   ├───retrievers
-│   │       userRetriever.js (checked)
+│   │       userRetriever.js (done)
 │   │
 │   ├───utils
-│               isNotSymbol.js (checked)
+│               isNotSymbol.js (done)
 │   └───validators
 │       └───auth
-│               checkUserUniqueness.js (checked)
-│               loginResponse.js (checked)
-│               validateEmailInput.js (checked)
-│               validatePasswordInput.js (currently working on it)
+│               checkUserUniqueness.js (done)
+│               loginResponse.js (done)
+│               validateEmailInput.js (done)
 │               validateLoginInput.js (pending)
 │               validateName.js (pending)
+│               validatePasswordInput.js (done)
 │               validateRegistrationInput.js (pending)
 │
 ├───config
