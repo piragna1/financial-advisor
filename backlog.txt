@@ -19,7 +19,7 @@ C:.
 │       └───auth
 │               checkUserUniqueness.js (checked)
 │               loginResponse.js (checked)
-│               validateEmailInput.js (checked)
+│               validateEmailInput.js (pending)
 │               validatePasswordInput.js (checked)
 │               validateLoginInput.js (checked)
 │               validateName.js (checked)
