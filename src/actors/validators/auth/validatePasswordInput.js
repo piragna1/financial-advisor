@@ -115,6 +115,7 @@ for (const { label, input, expectError, expectedCode } of testCases) {
       }
     } else {
       console.error("❌ Unexpected error:", error);
+      console.error('Expected error:',expectedCode)
     }
   }
 }
