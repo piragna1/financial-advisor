@@ -1,4 +1,6 @@
-import { validateName } from "./validateName";
+import { validateName } from "./validateName.js";
+import {validateEmailInput} from './validateEmailInput.js'
+import {validatePasswordInput} from './validatePasswordInput.js'
 
 export function validateRegistrationInput({ name,lastName, email, password }) {
 
