@@ -1,6 +1,7 @@
 import { AppError } from "../../../errors/AppError.js";
 import { AuthErrors } from "../../../errors/authErrors.js";
 import {hasEmoji} from "../../utils/hasEmoji.js"
+import { hasWhiteSpaces } from "../../utils/hasWhiteSpaces.js";
 
 export function validatePasswordInput(password){
     if (!password){ 
@@ -13,6 +14,8 @@ export function validatePasswordInput(password){
         else if (password.length <= 3) throw new AppError(AuthErrors.INVALID_INPUT, 'Password must contain more than 3 characters');
         else if (password.length >=200) throw new AppError (AuthErrors.INVALID_INPUT, 'Password must be less than 200 characters');
         else if (hasEmoji(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'The password cannot contain emojis')
+        
+        if (hasWhiteSpaces(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'Password can not have white spaces')
     }
     return true;
 }
