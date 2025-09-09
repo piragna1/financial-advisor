@@ -1,5 +1,5 @@
 export function isNotSymbol(char){
     // Check if the character is alphanumeric or a space
   if (char == null || char === '') return true;
-  return /^[a-zA-Z0-9 ]$/.test(char);
+  return /^[\p{L}'-]$/u.test(char);
 }
