@@ -1,9 +1,15 @@
+import { AppError } from "../../../errors/AppError";
+import { AuthErrors } from "../../../errors/authErrors";
+
 export function validatePasswordInput(password){
-    const errors = [];
-    if (!password){ errors.push("Password is required."); }
-    else{
-        if (typeof password !== "string") { errors.push("Password must be a string"); }
-        else if (password.length <= 3) errors.push('Password is too short!');
+    if (!password){ 
+        throw new AppError(AuthErrors.MISSING_CREDENTIALS);
     }
-    return errors;
+    else{
+        if (typeof password !== "string") {
+            throw new AppError(AuthErrors.INVALID_INPUT);
+        }
+        else if (password.length <= 3) throw new AppError(AuthErrors.INVALID_INPUT);
+    }
+    return true;
 }
