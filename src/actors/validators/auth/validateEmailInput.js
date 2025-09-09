@@ -1,13 +1,16 @@
+import { AppError } from "../../../errors/AppError.js";
+import { AuthErrors } from "../../../errors/authErrors";
+
 export function validateEmailInput(email) {
-  const errors = [];
   if (!email) {
     errors.push("Email is required");
+    throw new AppError(AuthErrors.MISSING_CREDENTIALS);
   } else {
     if (email && typeof email !== "string") {
-      errors.push("Email must be a string.");
+      throw new AppError(AuthErrors.INVALID_INPUT)
     } else if (email && !/^\S+@\S+\.\S+$/.test(email)) {
-      errors.push("Email format is invalid");
+      throw new AppError(AuthErrors.INVALID_INPUT)
     }
   }
-  return errors;
+  return true;
 }
