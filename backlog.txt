@@ -15,8 +15,8 @@ C:.
 │   │
 │   ├───utils
 │               hasControlChars.js (✅)
-│               hasEmoji.js (❌) -> now
-│               hasWhiteSpaces.js (❌)
+│               hasEmoji.js (✅) 
+│               hasWhiteSpaces.js (❌) -> now
 │               isNotSymbol.js (✅)
 │   └───validators
 │       └───auth
