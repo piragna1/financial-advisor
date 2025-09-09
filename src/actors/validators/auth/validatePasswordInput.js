@@ -7,15 +7,16 @@ export function validatePasswordInput(password){
     if (!password){ 
         throw new AppError(AuthErrors.MISSING_CREDENTIALS, 'Password is missing');
     }
-    else{
-        if (typeof password !== "string") {
-            throw new AppError(AuthErrors.INVALID_INPUT, 'Password must be a string');
-        }
-        else if (password.length <= 3) throw new AppError(AuthErrors.INVALID_INPUT, 'Password must contain more than 3 characters');
-        else if (password.length >=200) throw new AppError (AuthErrors.INVALID_INPUT, 'Password must be less than 200 characters');
-        else if (hasEmoji(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'The password cannot contain emojis')
-        
-        if (hasWhiteSpaces(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'Password can not have white spaces')
+    else {
+      if (hasWhiteSpaces(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'Password can not have white spaces')
+      else{
+          if (typeof password !== "string") {
+              throw new AppError(AuthErrors.INVALID_INPUT, 'Password must be a string');
+          }
+          else if (password.length <= 3) throw new AppError(AuthErrors.INVALID_INPUT, 'Password must contain more than 3 characters');
+          else if (password.length >=200) throw new AppError (AuthErrors.INVALID_INPUT, 'Password must be less than 200 characters');
+          else if (hasEmoji(password)) throw new AppError(AuthErrors.INVALID_INPUT, 'The password cannot contain emojis')
+      }
     }
     return true;
 }
@@ -91,11 +92,12 @@ const testCases = [
   {
     label: "❌ Whitespace only",
     input: "   ",
-    expectError: false // may pass depending on implementation
+    expectError: true,
+    expectedCode: "INVALID_INPUT"
   },
   {
     label: "❌ Control characters",
-    input: "\n\t",
+    input: "\n\t\n\t\n\t",
     expectError: false // may pass depending on implementation
   },
   {
