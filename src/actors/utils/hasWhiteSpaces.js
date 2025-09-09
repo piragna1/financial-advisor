@@ -1,6 +1,6 @@
 export function hasWhiteSpaces(input){
     return /\s/.test(input); // includes tabs, newlines, NBSP, etc.
-// }
+}
 // const testCases = [
 //   {
 //     label: "✅ No whitespace: plain ASCII",
@@ -63,19 +63,19 @@ export function hasWhiteSpaces(input){
 //     expected: false
 //   },
 //   {
-//     label: "❌ Contains tab character (not detected)",
+//     label: "❌ Contains tab character ( detected)",
 //     input: "Hello\tWorld",
-//     expected: false // tab is not a space
+//     expected: true // tab is not a space
 //   },
 //   {
-//     label: "❌ Contains newline character (not detected)",
+//     label: "❌ Contains newline character ( detected)",
 //     input: "Hello\nWorld",
-//     expected: false // newline is not a space
+//     expected: true // newline is not a space
 //   },
 //   {
 //     label: "❌ Contains non-breaking space (Unicode)",
 //     input: "Hello\u00A0World",
-//     expected: false // not detected by .includes(' ')
+//     expected: true // not detected by .includes(' ')
 //   },
 //   {
 //     label: "✅ No whitespace: hyphenated name",
