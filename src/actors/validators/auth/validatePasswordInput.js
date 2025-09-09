@@ -139,17 +139,17 @@ const testCases = [
   }
 ];
 
-// for (const { label, input, expectError, expectedCode } of testCases) {
-//   try {
-//     const result = validatePasswordInput(input);
-//   } catch (error) {
-//     if (expectError) {
-//       console.log("Caught AppError:", error);
-//       if (expectedCode && error.code !== expectedCode) {
-//         console.error(`❌ Expected code ${expectedCode}, but got ${error.code}`);
-//       }
-//     } else {
-//       console.error("❌ Unexpected error:", error);
-//     }
-//   }
-// }
+for (const { label, input, expectError, expectedCode } of testCases) {
+  try {
+    const result = validatePasswordInput(input);
+  } catch (error) {
+    if (expectError) {
+      console.log("Caught AppError:", error.code);
+      if (expectedCode && error.code !== expectedCode) {
+        console.error(`❌ Expected code ${expectedCode}, but got ${error.code}`);
+      }
+    } else {
+      console.error("❌ Unexpected error:", error);
+    }
+  }
+}
