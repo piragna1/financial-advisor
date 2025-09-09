@@ -1,5 +1,5 @@
 export function hasWhiteSpaces(input){
-    return input.includes(' ');
+    return /\s/.test(input); // includes tabs, newlines, NBSP, etc.
 }
 const testCases = [
   {
@@ -92,5 +92,7 @@ const testCases = [
 for (const { label, input, expected } of testCases) {
   const result = hasWhiteSpaces(input);
   const pass = result === expected;
-  console.log(`${label}: ${pass ? "✅ Pass" : `❌ Fail (got ${result})`}`);
+  console.log(`${label}:
+    INPUT:${input}  
+    PASS?: ${pass ? "✅ Pass" : `❌ Fail (got ${result})`}`);
 }
