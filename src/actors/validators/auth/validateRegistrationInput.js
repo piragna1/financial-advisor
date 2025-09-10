@@ -121,20 +121,20 @@ export function validateRegistrationInput(input) {
 // });
 // → throws Error with: { password: ["Password must be a string."] }
 
-// //❌ Empty Strings
-// validateRegistrationInput({
-//   name: "correct",
-//   lastName: "correct",
-//   email: "correct",
-//   password: "correct",
-// });
-// // → throws Error with:
-// // {
-// //   name: ["Name is required"],
-// //  lastName: ["Last name is required"],
-// //  email: ["Email format is invalid"],
-// //  password: ["Password must be a string"]
-// // }
+//❌ Empty Strings
+validateRegistrationInput({
+  name: "",
+  lastName: "",
+  email: "",
+  password: "",
+});
+// → throws Error with:
+// {
+//   name: ["Name is required"],
+//  lastName: ["Last name is required"],
+//  email: ["Email format is invalid"],
+//  password: ["Password must be a string"]
+// }
 
 // //❌ Name Not a String
 // validateRegistrationInput({
