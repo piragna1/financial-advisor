@@ -9,25 +9,32 @@ export function validateRegistrationInput({ name, lastName, email, password }) {
   try {
     const emailErrors = validateEmailInput(email);
   } catch (error) {
-    errors.email = [error.detail || error.message];
+    console.log(error);
+    errors.email = [error.details || error.code];
   }
   try {
     const passwordErrors = validatePasswordInput(password);
   } catch (error) {
-    errors.password = [error.detail || error.message];
+    errors.password = [error.details || error.code];
   }
   try {
     const nameErrors = validateName(name);
   } catch (error) {
-    errors.name = [error.detail || error.message];
+    errors.name = [error.details || error.code];
   }
   try {
     const lastNameErrors = validateName(lastName);
   } catch (error) {
-    errors.lastName = [error.detail || error.message];
+    errors.lastName = [error.details || error.code];
   }
   if (Object.keys(errors).length>0)
-    throw new AppError(AuthErrors.INVALID_INPUT, 'Registration input is invalid', errors);
+    throw new AppError(AuthErrors.INVALID_INPUT, `
+  Registration input is invalid. See:
+  ${(errors['email'] ? errors['email'] : '')}
+  ${(errors['password'] ? errors['password'] : '')}
+  ${(errors['name'] ? errors['name'] : '')}
+  ${(errors['lastName'] ? errors['lastName'] : '')}
+  `);
   return true;
 }
 
@@ -43,19 +50,19 @@ console.log(
 );
 // → returns true
 
-// //❌ Missing Fields
-// try {
-//   validateRegistrationInput({});
-// } catch (error) {
-//   console.error(error);
+//❌ Missing Fields
+try {
+  validateRegistrationInput({name:1,lastName:'2'});
+} catch (error) {
+  console.error(error);
+}
+// → throws Error with:
+// {
+//   name: ["Name is required"],
+//  lastName: ["Last name is required"],
+//  email: ["Email is required"],
+//  password: ["Password is required"]
 // }
-// // → throws Error with:
-// // {
-// //   name: ["Name is required"],
-// //  lastName: ["Last name is required"],
-// //  email: ["Email is required"],
-// //  password: ["Password is required"]
-// // }
 
 // // ❌ Invalid Email Format
 // validateRegistrationInput({
