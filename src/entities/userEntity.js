@@ -3,7 +3,7 @@ import { AuthErrors } from "../errors/authErrors.js";
 
 export function buildUserEntity({id,name,lastName='',email,hashedPassword}){
     if (!id || !name) {
-        throw new AppError(AuthErrors.MISSING_CREDENTIALS)
+        throw new AppError(AuthErrors.MISSING_CREDENTIALS, 'Id or name fields are missing')
     }
     const user = {
         id,
@@ -18,7 +18,7 @@ export function buildUserEntity({id,name,lastName='',email,hashedPassword}){
 
 console.log(buildUserEntity(
     {
-        id:'1',
+        // id:'1',
         name:'gon',
         lastName:'var',
         email:'gonzalo@example.com',
