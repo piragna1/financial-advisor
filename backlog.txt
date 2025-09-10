@@ -26,10 +26,10 @@ C:.
 │               validateLoginInput.js (✅) 
 │               validateName.js (✅)
 │               validatePasswordInput.js (✅) 
-│               validateRegistrationInput.js (❌) -> now
+│               validateRegistrationInput.js (✅)
 │
 ├───config
-│       jwtConfig.js (❌)
+│       jwtConfig.js (❌) -> now
 │       loanConfig.js (❌)
 │       mock.db.config.js (❌)
 │       passwordSecretConfig.js (❌)
