@@ -37,12 +37,12 @@ C:.
 │       userConfig.js (✅)
 │
 ├───controllers
-│       authController.mjs (❌)
+│       authController.mjs (❌) -> now
 │       loanController.mjs (❌)
 │       profileController.mjs (❌)
 │
 ├───entities
-│       userEntity.js (❌) -> now
+│       userEntity.js (✅)
 │
 ├───errors
 │       AppError.js (❌)
