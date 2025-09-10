@@ -1,27 +1,43 @@
 import { AppError } from "../errors/AppError.js";
 import { AuthErrors } from "../errors/authErrors.js";
 
-export function buildUserEntity({id,name,lastName='',email,hashedPassword}){
-    if (!id || !name) {
-        throw new AppError(AuthErrors.MISSING_CREDENTIALS)
-    }
-    const user = {
-        id,
-        name,
-        lastName,
-        email,
-        hashedPassword,
-        createdAt:Date.now()
-    }
-    return user;
-};
+export function buildUserEntity({
+  id,
+  name,
+  lastName = "",
+  email,
+  hashedPassword,
+}) {
+  if (!id || !name || !email || !hashedPassword) {
+    throw new AppError(AuthErrors.MISSING_CREDENTIALS);
+  }
+  if (
+    typeof id != "string" ||
+    typeof name != "string" ||
+    typeof lastName != "string" ||
+    typeof email != "string" ||
+    typeof hashedPassword != "string"
+  ) {
+    throw new AppError(AuthErrors.INVALID_INPUT, "Format of data is invalid");
+  }
+  const user = {
+    id,
+    name,
+    lastName,
+    email,
+    hashedPassword,
+    createdAt: Date.now(),
+  };
+  return user;
+}
 
-console.log(buildUserEntity(
-    {
-        // id:'1',
-        name:'gon',
-        lastName:'var',
-        email:'gonzalo@example.com',
-        hashedPassword:'7cfb26784163a421daa0dee7c46de2e8d0c825223ed2ff07ce3069682c3d9a12'
-    }
-));
+console.log(
+  buildUserEntity({
+    // id:'1',
+    name: "gon",
+    lastName: "var",
+    email: "gonzalo@example.com",
+    hashedPassword:
+      "7cfb26784163a421daa0dee7c46de2e8d0c825223ed2ff07ce3069682c3d9a12",
+  })
+);
