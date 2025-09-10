@@ -27,7 +27,3 @@ export function deleteUser(id){
     }
   }
 }
-//✅ Existing email case
-console.log(await findUserByEmail('gonzalo@example.com'));
-//❌ Not existing email case
-console.log(await findUserByEmail('gvalagna@example.com'));
