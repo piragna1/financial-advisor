@@ -48,6 +48,7 @@ export function validateRegistrationInput(input) {
       try {
         const lastNameErrors = validateName(input.lastName);
       } catch (error) {
+        error.details = error.details.replace('Name','Last name')
         errors.lastName = [error.details || error.message];
       }
     }
