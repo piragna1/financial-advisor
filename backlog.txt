@@ -40,7 +40,7 @@ C:.
 │       authController.mjs (
           ❌registerUserController(),
           ❌loginUserController()
-          ) ----
+          ) -----> now
 │       loanController.mjs (❌)
 │       profileController.mjs (❌)
 │
@@ -93,7 +93,7 @@ C:.
 │
 └───utils
     └───auth
-            comparePasswords.js (❌) -> now
+            comparePasswords.js (✅) 
             generateSignature.js (❌)
             hashPassword.js (✅)
             invalidateUserToken.js (❌)
