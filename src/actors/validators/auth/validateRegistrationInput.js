@@ -18,7 +18,7 @@ export function validateRegistrationInput(input) {
       try {
         const emailErrors = validateEmailInput(input.email);
       } catch (error) {
-        errors.email = [error.details || error.code];
+        errors.email = [error.details || error.message];
       }
     }
   
@@ -28,7 +28,7 @@ export function validateRegistrationInput(input) {
       try {
         const passwordErrors = validatePasswordInput(input.password);
       } catch (error) {
-        errors.password = [error.details || error.code];
+        errors.password = [error.details || error.message];
       }
     }
   
@@ -38,7 +38,7 @@ export function validateRegistrationInput(input) {
       try {
         const nameErrors = validateName(input.name);
       } catch (error) {
-        errors.name = [error.details || error.code];
+        errors.name = [error.details || error.message];
       }
     }
   
@@ -48,7 +48,7 @@ export function validateRegistrationInput(input) {
       try {
         const lastNameErrors = validateName(input.lastName);
       } catch (error) {
-        errors.lastName = [error.details || error.code];
+        errors.lastName = [error.details || error.message];
       }
     }
   
@@ -69,48 +69,48 @@ export function validateRegistrationInput(input) {
 }
 
 // ----------TEST CASES
-//✅ Valid Input
-console.log(
-  validateRegistrationInput({
-    name: "Gonzalo",
-    lastName: "Varela",
-    email: "gonzalo@example.com",
-    password: "securePass123",
-  })
-);
-// → returns true
+// //✅ Valid Input
+// console.log(
+//   validateRegistrationInput({
+//     name: "Gonzalo",
+//     lastName: "Varela",
+//     email: "gonzalo@example.com",
+//     password: "securePass123",
+//   })
+// );
+// // → returns true
 
-//❌ Missing Fields
-try {
-  validateRegistrationInput();
-} catch (error) {
-  console.error(error);
-}
-// → throws Error with:
-// {
-//   name: ["Name is required"],
-//  lastName: ["Last name is required"],
-//  email: ["Email is required"],
-//  password: ["Password is required"]
+// //❌ Missing Fields
+// try {
+//   validateRegistrationInput();
+// } catch (error) {
+//   console.error(error);
 // }
+// // → throws Error with:
+// // {
+// //   name: ["Name is required"],
+// //  lastName: ["Last name is required"],
+// //  email: ["Email is required"],
+// //  password: ["Password is required"]
+// // }
 
-// ❌ Invalid Email Format
-validateRegistrationInput({
-  name: "Gonzalo",
-  lastName: "Varela",
-  email: "gonzalo@.com",
-  password: "securePass123",
-});
-// → throws Error with: { email: ["Email format is invalid"] }
+// // ❌ Invalid Email Format
+// validateRegistrationInput({
+//   name: "Gonzalo",
+//   lastName: "Varela",
+//   email: "gonzalo@.com",
+//   password: "securePass123",
+// });
+// // → throws Error with: { email: ["Email format is invalid"] }
 
-//❌ Email Not a String
-validateRegistrationInput({
-  name: "Gonzalo",
-  lastName: "Varela",
-  email: 12345,
-  password: "securePass123",
-});
-// // → throws Error with: { email: ["Email must be a string."] }
+// //❌ Email Not a String
+// validateRegistrationInput({
+//   name: "Gonzalo",
+//   lastName: "Varela",
+//   email: 12345,
+//   password: "securePass123",
+// });
+// // // → throws Error with: { email: ["Email must be a string."] }
 
 // //❌ Password Not a String
 // validateRegistrationInput({
