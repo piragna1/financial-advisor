@@ -9,7 +9,6 @@ export function validateRegistrationInput({ name, lastName, email, password }) {
   try {
     const emailErrors = validateEmailInput(email);
   } catch (error) {
-    console.log(error);
     errors.email = [error.details || error.code];
   }
   try {
@@ -25,16 +24,18 @@ export function validateRegistrationInput({ name, lastName, email, password }) {
   try {
     const lastNameErrors = validateName(lastName);
   } catch (error) {
+    console.log(error)
     errors.lastName = [error.details || error.code];
   }
   if (Object.keys(errors).length>0)
-    throw new AppError(AuthErrors.INVALID_INPUT, `
-  Registration input is invalid. See:
-  ${(errors['email'] ? errors['email'] : '')}
-  ${(errors['password'] ? errors['password'] : '')}
-  ${(errors['name'] ? errors['name'] : '')}
-  ${(errors['lastName'] ? errors['lastName'] : '')}
-  `);
+    throw new AppError(AuthErrors.INVALID_INPUT,
+      'Registration input is invalild.'+"\n"+
+      "See:"+"\n"+
+      (errors['email'] ? errors['email'] : 'correct')+"\n"+
+      (errors['password'] ? errors['password'] : '')+"\n"+
+      (errors['name'] ? errors['name'] : '')+"\n"+
+      (errors['lastName'] ? errors['lastName'] : ''));
+      
   return true;
 }
 
@@ -52,7 +53,7 @@ console.log(
 
 //❌ Missing Fields
 try {
-  validateRegistrationInput({name:1,lastName:'2'});
+  validateRegistrationInput({name:1,lastName:'23456789'});
 } catch (error) {
   console.error(error);
 }
