@@ -29,8 +29,8 @@ C:.
 │               validateRegistrationInput.js (✅)
 │
 ├───config
-│       jwtConfig.js (🔁...) -> now
-│       loanConfig.js (❌)
+│       jwtConfig.js (🔁...) ✅
+│       loanConfig.js (❌) -> now
 │       mock.db.config.js (❌)
 │       passwordSecretConfig.js (❌)
 │       registerData.js (❌)
