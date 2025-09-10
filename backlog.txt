@@ -37,7 +37,7 @@ C:.
 │       userConfig.js (✅)
 │
 ├───controllers
-│       authController.mjs (❌) -> now
+│       authController.mjs (❌)
 │       loanController.mjs (❌)
 │       profileController.mjs (❌)
 │
@@ -62,7 +62,7 @@ C:.
 │       userModel.js (❌)
 │
 ├───repositories
-│       userRepo.js (❌)
+│       userRepo.js (❌) -> now
 │
 ├───routes
 │   ├───auth
