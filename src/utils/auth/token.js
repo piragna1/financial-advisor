@@ -1,4 +1,4 @@
-import { generateSignature } from "../../actors/utils/auth/generateSignature.js";
+import { generateSignature } from "./generateSignature.js";
 /**
  * Generate a token for a given user with a default expiration time of 3600 seconds.
  * @param {*} userId The id of the user to who the token will be generated.
