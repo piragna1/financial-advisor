@@ -4,45 +4,73 @@ import { validatePasswordInput } from "./validatePasswordInput.js";
 import { AppError } from "../../../errors/AppError.js";
 import { AuthErrors } from "../../../errors/authErrors.js";
 
-export function validateRegistrationInput({ name, lastName, email, password }) {
+export function validateRegistrationInput(input) {
   const errors = {};
-  try {
-    const emailErrors = validateEmailInput(email);
-  } catch (error) {
-    errors.email = [error.details || error.code];
+
+  if (!input) {
+    throw new AppError(AuthErrors.MISSING_CREDENTIALS, 'Empty input received')
   }
-  try {
-    const passwordErrors = validatePasswordInput(password);
-  } catch (error) {
-    errors.password = [error.details || error.code];
+  else{
+
+    if (!input.email) {
+      errors["email"] = "Email is required";
+    } else {
+      try {
+        const emailErrors = validateEmailInput(input.email);
+      } catch (error) {
+        errors.email = [error.details || error.code];
+      }
+    }
+  
+    if (!input.password) {
+      errors["password"] = "Password is required";
+    } else {
+      try {
+        const passwordErrors = validatePasswordInput(input.password);
+      } catch (error) {
+        errors.password = [error.details || error.code];
+      }
+    }
+  
+    if (!input.name) {
+      errors["name"] = "Name is required";
+    } else {
+      try {
+        const nameErrors = validateName(input.name);
+      } catch (error) {
+        errors.name = [error.details || error.code];
+      }
+    }
+  
+    if (!input.lastName) {
+      errors["lastName"] = "Last name is required";
+    } else {
+      try {
+        const lastNameErrors = validateName(input.lastName);
+      } catch (error) {
+        errors.lastName = [error.details || error.code];
+      }
+    }
+  
+    if (Object.keys(errors).length > 0)
+      throw new AppError(
+        AuthErrors.INVALID_INPUT,
+        "Registration input is invalild." +
+          "\n" +
+          "See:" +
+          "\n" +
+          (errors["email"] ? errors["email"] : "correct") +
+          "\n" +
+          (errors["password"] ? errors["password"] : "") +
+          "\n" +
+          (errors["name"] ? errors["name"] : "") +
+          "\n" +
+          (errors["lastName"] ? errors["lastName"] : "")
+      );
   }
-  try {
-    const nameErrors = validateName(name);
-  } catch (error) {
-    errors.name = [error.details || error.code];
-  }
-  try {
-    const lastNameErrors = validateName(lastName);
-  } catch (error) {
-    errors.lastName = [error.details || error.code];
-  }
-  if (Object.keys(errors).length > 0)
-    throw new AppError(
-      AuthErrors.INVALID_INPUT,
-      "Registration input is invalild." +
-        "\n" +
-        "See:" +
-        "\n" +
-        (errors["email"] ? errors["email"] : "correct") +
-        "\n" +
-        (errors["password"] ? errors["password"] : "") +
-        "\n" +
-        (errors["name"] ? errors["name"] : "") +
-        "\n" +
-        (errors["lastName"] ? errors["lastName"] : "")
-    );
 
   return true;
+
 }
 
 // ----------TEST CASES
@@ -59,7 +87,7 @@ console.log(
 
 //❌ Missing Fields
 try {
-  validateRegistrationInput({ name: 1, lastName: "23456789" });
+  validateRegistrationInput();
 } catch (error) {
   console.error(error);
 }

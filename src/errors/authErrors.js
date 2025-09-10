@@ -1,7 +1,7 @@
 export const AuthErrors= {
     INVALID_INPUT:{
         code:"INVALID_INPUT",
-        message:"Invalid email or password format",
+        message:"Invalid field/s format",
         status:400
     },
     INVALID_CREDENTIALS:{
@@ -11,7 +11,7 @@ export const AuthErrors= {
     },
     MISSING_CREDENTIALS:{
         code:"MISSING_CREDENTIALS",
-        message:"Email or password is missing",
+        message:"There is one (or more) field(s) missing",
         status:402
     },
     USER_NOT_FOUND:{
@@ -21,7 +21,7 @@ export const AuthErrors= {
     },
     USER_EXISTS:{
         code:"USER_ALREADY_EXISTS",
-        message:"That user is currently not available",
+        message:"User is currently not available",
         status:409,
     }
 }
