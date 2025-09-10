@@ -23,7 +23,7 @@ C:.
 │               checkUserUniqueness.js (✅)
 │               loginResponse.js (✅)
 │               validateEmailInput.js (✅)
-│               validateLoginInput.js (✅) 
+│               validateLoginInput.js (✅)
 │               validateName.js (✅)
 │               validatePasswordInput.js (✅) 
 │               validateRegistrationInput.js (✅)
@@ -39,8 +39,8 @@ C:.
 ├───controllers
 │       authController.mjs (
           ❌registerUserController(),
-          ❌loginUserController()->now
-          ) -> now 
+          ❌loginUserController()
+          ) ----
 │       loanController.mjs (❌)
 │       profileController.mjs (❌)
 │
@@ -93,7 +93,7 @@ C:.
 │
 └───utils
     └───auth
-            comparePasswords.js (❌)
+            comparePasswords.js (❌) -> now
             generateSignature.js (❌)
             hashPassword.js (✅)
             invalidateUserToken.js (❌)
