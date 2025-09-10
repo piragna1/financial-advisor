@@ -112,14 +112,14 @@ export function validateRegistrationInput(input) {
 // });
 // // // → throws Error with: { email: ["Email must be a string."] }
 
-// //❌ Password Not a String
-// validateRegistrationInput({
-//   name: "Gonzalo",
-//   lastName: "Varela",
-//   email: "gonzalo@example.com",
-//   password: 12345,
-// });
-// // → throws Error with: { password: ["Password must be a string."] }
+//❌ Password Not a String
+validateRegistrationInput({
+  name: "Gonzalo",
+  lastName: "Varela",
+  email: "gonzalo@example.com",
+  password: 12345,
+});
+// → throws Error with: { password: ["Password must be a string."] }
 
 // //❌ Empty Strings
 // validateRegistrationInput({
