@@ -1,3 +1,3 @@
 export const passwordSecret = {
-    PASSWORD_SECRET:'nWpo5$/j37&2'
+    PASSWORD_SECRET:'pOerDINmoSWa'
 }
