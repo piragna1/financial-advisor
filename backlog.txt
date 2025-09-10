@@ -32,8 +32,8 @@ C:.
 │       jwtConfig.js (🔁...) ✅
 │       loanConfig.js (✅)
 │       mock.db.config.js (✅)
-│       passwordSecretConfig.js (❌) -> now
-│       registerData.js (❌)
+│       passwordSecretConfig.js (✅)
+│       registerData.js (❌) -> now
 │       userConfig.js (❌)
 │
 ├───controllers
