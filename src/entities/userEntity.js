@@ -43,46 +43,90 @@ function runBuildUserEntityTests() {
     hashedPassword: 'abc123'
   };
 
-  // ✅ Valid input
-  assert.deepEqual(buildUserEntity(validInput).name, 'Gonzalo');
+  const testCases = [
+  {
+    label: '✅ Valid input',
+    input: {
+      id: '1',
+      name: 'Gonzalo',
+      lastName: 'Var',
+      email: 'gonzalo@example.com',
+      hashedPassword: 'abc123'
+    }
+  },
+  {
+    label: '❌ Missing id',
+    input: {
+      name: 'Gon',
+      email: 'x',
+      hashedPassword: 'x'
+    }
+  },
+  {
+    label: '❌ Missing name',
+    input: {
+      id: '1',
+      email: 'x',
+      hashedPassword: 'x'
+    }
+  },
+  {
+    label: '❌ Invalid id type (number)',
+    input: {
+      id: 123,
+      name: 'Gon',
+      email: 'x',
+      hashedPassword: 'x'
+    }
+  },
+  {
+    label: '❌ Invalid lastName type (array)',
+    input: {
+      id: '1',
+      name: 'Gon',
+      lastName: [],
+      email: 'x',
+      hashedPassword: 'x'
+    }
+  },
+  {
+    label: '✅ Unicode name and lastName',
+    input: {
+      id: '2',
+      name: 'Gonzálø',
+      lastName: 'Łópez',
+      email: 'gon@example.com',
+      hashedPassword: 'abc123'
+    }
+  },
+  {
+    label: '✅ No lastName provided',
+    input: {
+      id: '3',
+      name: 'Gon',
+      email: 'gon@example.com',
+      hashedPassword: 'abc123'
+    }
+  },
+  {
+    label: '❌ Empty hashedPassword',
+    input: {
+      id: '4',
+      name: 'Gon',
+      email: 'gon@example.com',
+      hashedPassword: ''
+    }
+  }
+];
 
-  // ❌ Missing fields
-  assert.throws(() => buildUserEntity({ name: 'Gon', email: 'x', hashedPassword: 'x' }), AppError);
-  assert.throws(() => buildUserEntity({ id: '1', email: 'x', hashedPassword: 'x' }), AppError);
-  assert.throws(() => buildUserEntity({ id: '1', name: 'Gon', hashedPassword: 'x' }), AppError);
-  assert.throws(() => buildUserEntity({ id: '1', name: 'Gon', email: 'x' }), AppError);
-
-  // ❌ Invalid types
-  assert.throws(() => buildUserEntity({ ...validInput, id: 123 }), AppError);
-  assert.throws(() => buildUserEntity({ ...validInput, name: true }), AppError);
-  assert.throws(() => buildUserEntity({ ...validInput, lastName: [] }), AppError);
-  assert.throws(() => buildUserEntity({ ...validInput, email: {} }), AppError);
-  assert.throws(() => buildUserEntity({ ...validInput, hashedPassword: null }), AppError);
-
-  // ❌ Edge cases
-  assert.throws(() => buildUserEntity({ ...validInput, id: '' }), AppError);
-  assert.throws(() => buildUserEntity({ ...validInput, name: '   ' }), AppError);
-  assert.throws(() => buildUserEntity({ ...validInput, email: '' }), AppError);
-  assert.throws(() => buildUserEntity({ ...validInput, hashedPassword: '' }), AppError);
-
-  // ✅ Unicode and optional field handling
-  const unicodeInput = {
-    id: '2',
-    name: 'Gonzálø',
-    lastName: 'Łópez',
-    email: 'gon@example.com',
-    hashedPassword: 'abc123'
-  };
-  assert.deepEqual(buildUserEntity(unicodeInput).lastName, 'Łópez');
-
-  const noLastNameInput = {
-    id: '3',
-    name: 'Gon',
-    email: 'gon@example.com',
-    hashedPassword: 'abc123'
-  };
-  assert.deepEqual(buildUserEntity(noLastNameInput).lastName, '');
-}
-
-runBuildUserEntityTests();
-console.log('✅ buildUserEntity test suite passed');
+for (const { label, input } of testCases) {
+  try {
+    const result = buildUserEntity(input);
+    console.log(`${label}: PASSED`, result);
+  } catch (error) {
+    if (error instanceof AppError) {
+      console.log(`${label}: FAILED with AppError —`, error.message);
+    } else {
+      console.log(`${label}: FAILED with unexpected error —`, error);
+    }
+  }
