@@ -3,7 +3,6 @@
 import { mockUsers } from '../config/mock.db.config.js';
 
 export async function findUserByEmail(email) {
-  console.log('findUserByEmail()')
   return mockUsers.find(user => user.email === email);
 }
 
@@ -28,3 +27,7 @@ export function deleteUser(id){
     }
   }
 }
+//✅ Existing email case
+console.log(await findUserByEmail('gonzalo@example.com'));
+//❌ Not existing email case
+console.log(await findUserByEmail('gvalagna@example.com'));
