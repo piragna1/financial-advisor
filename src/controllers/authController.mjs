@@ -23,21 +23,18 @@ export async function registerUserController(req, res) {
 
     const { name, lastName, email, password } = req.body;
 
-    if (!validateRegistrationInput({name,lastName,email,password}))throw new AppError(REGISTRATION_ERRORS.INVALID_INPUT)//pure
+    if (!validateRegistrationInput({name,lastName,email,password}))throw new AppError(REGISTRATION_ERRORS.INVALID_INPUT);
 
-    let exists = await findUserByEmail(email);//semi-pure (access (mock) db)
-
+    let exists = await findUserByEmail(email);
     if (exists) throw new AppError(AuthErrors.USER_EXISTS);
 
-    const hashedPassword = await hashPassword(password);//semi-pure (import crypto)
+    const hashedPassword = hashPassword(password);
 
-    const id = generateUserId();//semi-pure (import uuid)
+    const id = generateUserId();
 
-    newUser = buildUserEntity({id,name,lastName,email,hashedPassword});//pure
-    console.log('newUser:', newUser) //debug
+    newUser = buildUserEntity({id,name,lastName,email,hashedPassword});
 
-    const success = await registerUser(newUser);//semi-pure (interacts with uesrRepo.js)
-    console.log('success:', success)
+    const success = await registerUser(newUser);
 
     if (!success) throw new AppError(REGISTRATION_ERRORS.CREATION_FAILED);
 
@@ -57,38 +54,30 @@ export async function registerUserController(req, res) {
 export async function loginUserController(req, res, next) {
   try {
     //input
-    console.log('loginUserController()->')
     const {email,password} = req.body;
-    console.log('body',req.body)
 
     //validate input
-    let valid = validateLoginInput({email, password});//pure
+    let valid = validateLoginInput({email, password});
     if (!valid.ok) throw new AppError (AuthErrors.INVALID_INPUT);
 
     //userRetrieve
-    let user = await userRetrieve(email);//semi-pure (interactis with userRepo.js)
-    console.log('retrieved user:',user)//debug
-    console.log('!user',!user)
+    let user = await userRetrieve(email);
     if (!user) throw new AppError(AuthErrors.USER_NOT_FOUND);
 
     //password hashing comparing
-    console.log('user',user)
-    console.log('starting comparePasswordHases...')
-    const validPass = comparePassword(user.hashedPassword, password,passwordSecret.PASSWORD_SECRET);//semi-pure (calls another function hashPassword)
-    console.log("validPass", validPass)
+    const validPass = comparePassword(user.hashedPassword, password,passwordSecret.PASSWORD_SECRET);
     if (!validPass) throw new AppError(AuthErrors.INVALID_CREDENTIALS);
 
     //issue token
-    const token = issueToken(user);//semi-pure 
+    const token = issueToken(user);
     if (!token) throw new TokenGenerationError(TokenErrors.TOKEN_GEN_ERROR);
 
     //status return
-    console.log('status 200')//debug
     res.status(200).json({ user,token,success });
     
   } catch (error) {
 
-    const {code, message, status} = mapError(error);//pure
+    const {code, message, status} = mapError(error);
     res.status(status).json({code,message,status});
 
   }
