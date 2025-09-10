@@ -62,7 +62,7 @@ C:.
 │       userModel.js (❌)
 │
 ├───repositories
-│       userRepo.js (✅❌❌❌❌ 5 inner functions) -> now
+│       userRepo.js (✅❌✅❌❌ 5 inner functions)
 │
 ├───routes
 │   ├───auth
@@ -76,7 +76,7 @@ C:.
 │
 ├───services
 │   ├───auth
-│   │       registerUser.mjs (❌) 
+│   │       registerUser.mjs (❌) -> now 
 │   │
 │   ├───loan
 │   │       loanCalculator.js (❌)
