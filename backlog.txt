@@ -37,7 +37,10 @@ C:.
 │       userConfig.js (✅)
 │
 ├───controllers
-│       authController.mjs (❌❌) -> now 
+│       authController.mjs (
+          ❌registerUserController(),
+          ❌loginUserController() 
+          ) -> now 
 │       loanController.mjs (❌)
 │       profileController.mjs (❌)
 │
