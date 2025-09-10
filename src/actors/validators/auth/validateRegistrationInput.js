@@ -55,17 +55,12 @@ export function validateRegistrationInput(input) {
     if (Object.keys(errors).length > 0)
       throw new AppError(
         AuthErrors.INVALID_INPUT,
-        "Registration input is invalild." +
-          "\n" +
-          "See:" +
-          "\n" +
-          (errors["email"] ? errors["email"] : "correct") +
-          "\n" +
-          (errors["password"] ? errors["password"] : "") +
-          "\n" +
-          (errors["name"] ? errors["name"] : "") +
-          "\n" +
-          (errors["lastName"] ? errors["lastName"] : "")
+        `Registration input is invalild.
+        See:
+        ${(errors["email"] ? errors["email"] : "correct")}
+        ${(errors["password"] ? errors["password"] : "correct")}
+        ${(errors["name"] ? errors["name"] : "correct")}
+        ${(errors["lastName"] ? errors["lastName"] : "correct")}`
       );
   }
 
@@ -128,10 +123,10 @@ validateRegistrationInput({
 
 // //❌ Empty Strings
 // validateRegistrationInput({
-//   name: "",
-//   lastName: "",
-//   email: "",
-//   password: "",
+//   name: "correct",
+//   lastName: "correct",
+//   email: "correct",
+//   password: "correct",
 // });
 // // → throws Error with:
 // // {
