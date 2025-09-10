@@ -99,14 +99,14 @@ try {
 //  password: ["Password is required"]
 // }
 
-// // ❌ Invalid Email Format
-// validateRegistrationInput({
-//   name: "Gonzalo",
-//   lastName: "Varela",
-//   email: "gonzalo@.com",
-//   password: "securePass123",
-// });
-// // → throws Error with: { email: ["Email format is invalid"] }
+// ❌ Invalid Email Format
+validateRegistrationInput({
+  name: "Gonzalo",
+  lastName: "Varela",
+  email: "gonzalo@.com",
+  password: "securePass123",
+});
+// → throws Error with: { email: ["Email format is invalid"] }
 
 // //❌ Email Not a String
 // validateRegistrationInput({
