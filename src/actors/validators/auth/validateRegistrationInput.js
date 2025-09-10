@@ -103,13 +103,13 @@ validateRegistrationInput({
 });
 // → throws Error with: { email: ["Email format is invalid"] }
 
-// //❌ Email Not a String
-// validateRegistrationInput({
-//   name: "Gonzalo",
-//   lastName: "Varela",
-//   email: 12345,
-//   password: "securePass123",
-// });
+//❌ Email Not a String
+validateRegistrationInput({
+  name: "Gonzalo",
+  lastName: "Varela",
+  email: 12345,
+  password: "securePass123",
+});
 // // → throws Error with: { email: ["Email must be a string."] }
 
 // //❌ Password Not a String
