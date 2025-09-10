@@ -8,7 +8,7 @@ export function validateEmailInput(email) {
     if (email && typeof email !== "string") {
       throw new AppError(AuthErrors.INVALID_INPUT, 'Email must be a string')
     } else if (email && !/^\S+@\S+\.\S+$/.test(email)) {
-      throw new AppError(AuthErrors.INVALID_INPUT, 'Email format is invalid')
+      throw new AppError(AuthErrors.INVALID_INPUT, 'Email must be a string')
     }
   }
   return true;
