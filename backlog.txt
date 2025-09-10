@@ -30,8 +30,8 @@ C:.
 │
 ├───config
 │       jwtConfig.js (🔁...) ✅
-│       loanConfig.js (❌) -> now
-│       mock.db.config.js (❌)
+│       loanConfig.js (✅)
+│       mock.db.config.js (❌) -> now
 │       passwordSecretConfig.js (❌)
 │       registerData.js (❌)
 │       userConfig.js (❌)
