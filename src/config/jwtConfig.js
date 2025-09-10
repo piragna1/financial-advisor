@@ -1,3 +1,3 @@
 export const jwtConfig = {
-    SECRET_SALT:'emALTAnsTAmE'    
+    SECRET_SALT:'eDoUstaGrePE'    
 }
