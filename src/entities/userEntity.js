@@ -1,5 +1,10 @@
+import { AppError } from "../errors/AppError.js";
+import { AuthErrors } from "../errors/authErrors.js";
 
 export function buildUserEntity({id,name,lastName='',email,hashedPassword}){
+    if (!id || !name) {
+        throw new AppError(AuthErrors.MISSING_CREDENTIALS)
+    }
     const user = {
         id,
         name,
