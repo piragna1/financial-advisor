@@ -34,10 +34,10 @@ C:.
 │       mock.db.config.js (✅)
 │       passwordSecretConfig.js (✅)
 │       registerData.js (✅)
-│       userConfig.js (❌) -> now
+│       userConfig.js (✅)
 │
 ├───controllers
-│       authController.mjs (❌)
+│       authController.mjs (❌) -> now
 │       loanController.mjs (❌)
 │       profileController.mjs (❌)
 │
