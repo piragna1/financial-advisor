@@ -136,14 +136,14 @@ export function validateRegistrationInput(input) {
 // //  password: ["Password must be a string"]
 // // }
 
-//❌ Name Not a String
-validateRegistrationInput({
-  name: 123,
-  lastName: "Varela",
-  email: "gonzalo@example.com",
-  password: "securePass123",
-});
-// → throws Error with: { name: ["Name must be a string."] }
+// //❌ Name Not a String
+// validateRegistrationInput({
+//   name: 123,
+//   lastName: "Varela",
+//   email: "gonzalo@example.com",
+//   password: "securePass123",
+// });
+// // → throws Error with: { name: ["Name must be a string."] }
 
 // //❌ Last Name Not a String
 
