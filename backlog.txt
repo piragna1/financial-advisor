@@ -39,7 +39,7 @@ C:.
 ├───controllers
 │       authController.mjs (
           ❌registerUserController(),
-          ❌loginUserController() 
+          ❌loginUserController()->now
           ) -> now 
 │       loanController.mjs (❌)
 │       profileController.mjs (❌)
