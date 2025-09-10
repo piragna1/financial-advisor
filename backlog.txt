@@ -37,7 +37,7 @@ C:.
 │       userConfig.js (✅)
 │
 ├───controllers
-│       authController.mjs (❌) -> now
+│       authController.mjs (❌)
 │       loanController.mjs (❌)
 │       profileController.mjs (❌)
 │
@@ -92,7 +92,7 @@ C:.
     └───auth
             comparePasswords.js (❌)
             generateSignature.js (❌)
-            hashPassword.js (❌)
+            hashPassword.js (❌) -> now
             invalidateUserToken.js (❌)
             refreshToken.js (❌)
             token.js (❌)
