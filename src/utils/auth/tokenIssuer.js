@@ -3,7 +3,7 @@ import { AppError } from '../../errors/AppError.js';
 import { AuthErrors } from '../../errors/authErrors.js';
 import {generateToken} from '../../utils/auth/token.js'
 //tokenIssuer.js
-export function issueToken(user){
+export function issueToken(user){ //checked
     //default value for secret and expiresInSeconds
     if (!user || !user.id || !user.id.trim() === '')
         throw new AppError(AuthErrors.USER_NOT_FOUND, 'Missing user information');

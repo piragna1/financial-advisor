@@ -21,7 +21,7 @@ export async function registerUserController(req, res) {
   try {
     let newUser = {};
 
-    console.log('ho I am', req.body);//debug
+    // console.log('ho I am', req.body);//debug
 
     const { name, lastName, email, password } = req.body;
 
@@ -30,7 +30,7 @@ export async function registerUserController(req, res) {
       throw new AppError(REGISTRATION_ERRORS.INVALID_INPUT);
 
 
-  console.log('do ',req.body['name'],'exists?',await findUserByEmail(email));//debug
+  // console.log('do ',req.body['name'],'exists?',await findUserByEmail(email));//debug
 
     if (await findUserByEmail(email)) throw new AppError(AuthErrors.USER_EXISTS);
 
@@ -52,7 +52,7 @@ export async function registerUserController(req, res) {
       },
     });
   } catch (error) {
-    console.log('i am logging the error here for debug purposes', error)
+    // console.log('i am logging the error here for debug purposes', error)
     res.status(400).json({ 
       // err:error,
       code:error.code,
@@ -69,15 +69,15 @@ export async function loginUserController(req, res, next) {
     const { email, password } = req.body;
 
     //validate input
-    let valid = validateLoginInput({ email, password });
+    let valid = validateLoginInput({ email, password }); //checked
     if (!valid.ok) throw new AppError(AuthErrors.INVALID_INPUT);
 
     //userRetrieve
-    let user = await userRetrieve(email);
+    let user = await userRetrieve(email);//checked
     if (!user) throw new AppError(AuthErrors.USER_NOT_FOUND);
 
     //password hashing comparing
-    const validPass = comparePassword(
+    const validPass = comparePassword(//checked
       user.hashedPassword,
       password,
       passwordSecret.PASSWORD_SECRET
@@ -85,7 +85,7 @@ export async function loginUserController(req, res, next) {
     if (!validPass) throw new AppError(AuthErrors.INVALID_CREDENTIALS);
 
     //issue token
-    const token = issueToken(user);
+    const token = issueToken(user);//checked
     if (!token) throw new TokenGenerationError(TokenErrors.TOKEN_GEN_ERROR);
 
     //status return

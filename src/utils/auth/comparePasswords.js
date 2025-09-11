@@ -2,7 +2,7 @@
 import { passwordSecret } from '../../config/passwordSecretConfig.js';
 import { hashPassword } from './hashPassword.js';
 
-export function comparePassword(real,input,secret){
+export function comparePassword(real,input,secret){//checked
     //real is a hashed password!
     const hashed = hashPassword(input,secret); //semi pure (crypto import)
     return real ===  hashed;
