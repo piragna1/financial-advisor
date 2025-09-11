@@ -94,11 +94,11 @@ C:.
 └───utils
     └───auth
             comparePasswords.js (✅) 
-            generateSignature.js (❌) -> now
+            generateSignature.js (✅)
             hashPassword.js (✅)
             invalidateUserToken.js (❌)
             refreshToken.js (❌)
-            token.js (❌)
+            token.js (❌❌❌) -> now generateToken()
             tokenIssuer.js (❌)
             verifyToken.js (❌)
 
