@@ -40,7 +40,7 @@ C:.
 │       authController.mjs (
           ❌registerUserController(),
           ❌loginUserController()
-          ) -----
+          ) -----> now
 │       loanController.mjs (❌)
 │       profileController.mjs (❌)
 │
@@ -99,7 +99,7 @@ C:.
             invalidateUserToken.js (❌)
             refreshToken.js (❌)
             token.js (✅❌❌) 
-            tokenIssuer.js (❌)-> now issueToken()
+            tokenIssuer.js (❌)
             verifyToken.js (❌)
 
 
