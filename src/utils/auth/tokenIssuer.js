@@ -8,7 +8,7 @@ export function issueToken(user){
     if (!user || !user.id || !user.id.trim() === '')
         throw new AppError(AuthErrors.USER_NOT_FOUND, 'Missing user information');
     return generateToken(user.id, jwtConfig.SECRET_SALT, 3600);
-// }
+}
 
 // const testUsers = [
 //   { id: "user1" },
