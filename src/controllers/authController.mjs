@@ -21,6 +21,8 @@ export async function registerUserController(req, res) {
   try {
     let newUser = {};
 
+    console.log('ho I am', req.body);//debug
+
     const { name, lastName, email, password } = req.body;
 
     if (!validateRegistrationInput({ name, lastName, email, password }))
