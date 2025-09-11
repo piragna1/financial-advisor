@@ -186,6 +186,9 @@ export async function loginUserController(req, res, next) {
   {email:'gonzalo@example.com', password:'WronPass!123'},
   {email:'nonexistinguser@example.com',password:'notimportantpasswordkeymasteresecrets'},
   {email:'',password:'password'},
+  {email:'emmail@example.com',password:''},
+  {email:'jemai@gmail.com',password:null},
+  {email:null,password:'pass'},
  ];
  for (const body of testInputs) {
   const req = {body};
