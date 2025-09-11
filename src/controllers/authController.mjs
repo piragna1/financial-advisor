@@ -30,10 +30,9 @@ export async function registerUserController(req, res) {
       throw new AppError(REGISTRATION_ERRORS.INVALID_INPUT);
 
 
-    let exists = await findUserByEmail(email);
-  console.log('do ',req.body['name'],'exists?',exists);//debug
+  console.log('do ',req.body['name'],'exists?',await findUserByEmail(email));//debug
 
-    if (exists) throw new AppError(AuthErrors.USER_EXISTS);
+    if (await findUserByEmail(email)) throw new AppError(AuthErrors.USER_EXISTS);
 
     const hashedPassword = hashPassword(password);
 
@@ -97,78 +96,78 @@ export async function loginUserController(req, res, next) {
   }
 }
 
-async function test() {
-  const testInputs = [
-    {
-      name: "Gonzalo",
-      lastName: "Varela",
-      email: "gvalagna@gmail.com",
-      password: "gvalagnA$4",
-    },
-    {
-      name: "Ana",
-      lastName: "Lopez",
-      email: "ana@example.com",
-      password: "Ana123!",
-    },
-    {
-      name: "",
-      lastName: "NoName",
-      email: "noname@example.com",
-      password: "pass123",
-    },
-    { name: "Luis", lastName: "Martinez", email: "", password: "pass123" },
-    {
-      name: "Sara",
-      lastName: "Smith",
-      email: "sara@example.com",
-      password: "",
-    },
-    {
-      name: "Gonzalo",
-      lastName: "Varela",
-      email: "gvalagna@gmail.com",
-      password: "gvalagnA$4",
-    }, // duplicate
-    { name: "李", lastName: "王", email: "li@example.cn", password: "密码123" },
-    {
-      name: "Omar",
-      lastName: "",
-      email: "omar@example.com",
-      password: "omarpass",
-    },
-    {
-      name: "Test",
-      lastName: "User",
-      email: "test@example.com",
-      password: null,
-    },
-    {
-      name: null,
-      lastName: "Null",
-      email: "null@example.com",
-      password: "nullpass",
-    },
-  ];
+// async function test() {
+//   const testInputs = [
+//     {
+//       name: "Gonzalo",
+//       lastName: "Varela",
+//       email: "gvalagna@gmail.com",
+//       password: "gvalagnA$4",
+//     },
+//     {
+//       name: "Ana",
+//       lastName: "Lopez",
+//       email: "ana@example.com",
+//       password: "Ana123!",
+//     },
+//     {
+//       name: "",
+//       lastName: "NoName",
+//       email: "noname@example.com",
+//       password: "pass123",
+//     },
+//     { name: "Luis", lastName: "Martinez", email: "", password: "pass123" },
+//     {
+//       name: "Sara",
+//       lastName: "Smith",
+//       email: "sara@example.com",
+//       password: "",
+//     },
+//     {
+//       name: "Gonzalo",
+//       lastName: "Varela",
+//       email: "gvalagna@gmail.com",
+//       password: "gvalagnA$4",
+//     }, // duplicate
+//     { name: "李", lastName: "王", email: "li@example.cn", password: "密码123" },
+//     {
+//       name: "Omar",
+//       lastName: "",
+//       email: "omar@example.com",
+//       password: "omarpass",
+//     },
+//     {
+//       name: "Test",
+//       lastName: "User",
+//       email: "test@example.com",
+//       password: null,
+//     },
+//     {
+//       name: null,
+//       lastName: "Null",
+//       email: "null@example.com",
+//       password: "nullpass",
+//     },
+//   ];
 
-  for (const body of testInputs) {
-    const res = {
-      code: undefined,
-      status(code) {
-        this.code = code;
-        return this;
-      },
-      json(payload) {
-        this.response = payload;
-      },
-    };
+//   for (const body of testInputs) {
+//     const res = {
+//       code: undefined,
+//       status(code) {
+//         this.code = code;
+//         return this;
+//       },
+//       json(payload) {
+//         this.response = payload;
+//       },
+//     };
 
-    const req = { body };
+//     const req = { body };
 
-    await registerUserController(req, res);
-    console.log("input", req);
-    console.log("response", res["response"]);
-  }
-}
+//     await registerUserController(req, res);
+//     console.log("input", req);
+//     console.log("response", res["response"]);
+//   }
+// }
 
-await test();
+// await test();
