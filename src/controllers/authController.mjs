@@ -188,6 +188,8 @@ export async function loginUserController(req, res, next) {
   {email:'',password:'password'},
   {email:'emmail@example.com',password:''},
   {email:'jemai@gmail.com',password:null},
+  {email:'gonzalo@example.com', password:'SuperSecure123'},
+  {email:'gonzalo@examplee.com', password:'SuperSecure123!'},
   {email:null,password:'pass'},
  ];
  for (const body of testInputs) {
