@@ -7,7 +7,7 @@ import { generateSignature } from "./generateSignature.js";
  * @returns The token generated.
  * @example generateToken('userid1', 'salt', 7200);
  */
-export async function generateToken(
+export function generateToken(
   userId,
   secret='secret',
   expiresInSeconds = 3600
@@ -95,9 +95,10 @@ const testCases = [
   );
   setTimeout(()=>{},3000)
   const payload = decodePayload(token);
-  const isTokenExpired = isTokenExpired(payload);
+  const expired = isTokenExpired(payload);
+  console.log(token);
   console.log(payload);
-  console.log(isTokenExpired);
+  console.log(expired);
 
 })();
 
