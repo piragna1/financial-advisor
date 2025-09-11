@@ -98,8 +98,8 @@ C:.
             hashPassword.js (✅)
             invalidateUserToken.js (❌)
             refreshToken.js (❌)
-            token.js (❌❌❌) -> now generateToken()
-            tokenIssuer.js (❌)
+            token.js (✅❌❌) 
+            tokenIssuer.js (❌)-> now issueToken()
             verifyToken.js (❌)
 
 
