@@ -138,7 +138,7 @@ async function test() {
     },
   ];
 
-  for (const element of testInputs) {
+  for (const body of testInputs) {
     const res = {
       code: undefined,
       status(code) {
@@ -150,7 +150,7 @@ async function test() {
       },
     };
 
-    const req = { element };
+    const req = { body };
 
     await registerUserController(req, res);
     console.log("input", req);
@@ -158,3 +158,5 @@ async function test() {
     console.log("response", res["response"]);
   }
 }
+
+await test();
