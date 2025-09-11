@@ -5,6 +5,7 @@ import { AppError } from "../../../errors/AppError.js";
 import { AuthErrors } from "../../../errors/authErrors.js";
 
 export function validateRegistrationInput(input) {
+  console.log('validateRegistrationInput()')
   const errors = {};
 
   if (!input) {
@@ -12,11 +13,15 @@ export function validateRegistrationInput(input) {
   }
   else{
 
+  console.log('else{}')
+
     if (!input.email) {
       errors["email"] = "Email is required";
     } else {
       try {
         const emailErrors = validateEmailInput(input.email);
+  console.log('email passed')
+
       } catch (error) {
         errors.email = [error.details || error.message];
       }
@@ -27,7 +32,9 @@ export function validateRegistrationInput(input) {
     } else {
       try {
         const passwordErrors = validatePasswordInput(input.password);
+  console.log('pass passed')
       } catch (error) {
+        console.log('catching password error')
         errors.password = [error.details || error.message];
       }
     }
@@ -37,6 +44,7 @@ export function validateRegistrationInput(input) {
     } else {
       try {
         const nameErrors = validateName(input.name);
+  console.log('name passed')
       } catch (error) {
         errors.name = [error.details || error.message];
       }
@@ -47,13 +55,16 @@ export function validateRegistrationInput(input) {
     } else {
       try {
         const lastNameErrors = validateName(input.lastName);
+  console.log('last name passed')
       } catch (error) {
         error.details = error.details.replace('Name','Last name')
         errors.lastName = [error.details || error.message];
       }
     }
   
-    if (Object.keys(errors).length > 0)
+    if (Object.keys(errors).length > 0){
+      console.log('We have at least 1 error. Let us print it/them!');
+      console.log(errors);
       throw new AppError(
         AuthErrors.INVALID_INPUT,
         `Registration input is invalild.
@@ -63,6 +74,7 @@ export function validateRegistrationInput(input) {
         ${(errors["name"] ? errors["name"] : "correct")}
         ${(errors["lastName"] ? errors["lastName"] : "correct")}`
       );
+    }
   }
 
   return true;
