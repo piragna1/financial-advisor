@@ -9,7 +9,7 @@ import { generateSignature } from "./generateSignature.js";
  */
 export function generateToken(
   userId,
-  secret='secret',
+  secret = "secret",
   expiresInSeconds = 3600
 ) {
   const now = Math.floor(Date.now() / 1000);
@@ -20,12 +20,18 @@ export function generateToken(
     iat: now,
     exp,
   };
-  const base64Header = Buffer.from(JSON.stringify(header)).toString("base64url");
-  const base64Payload = Buffer.from(JSON.stringify(payload)).toString("base64url");
-  const base64Signature = generateSignature(`${base64Header}.${base64Payload}`,secret);
+  const base64Header = Buffer.from(JSON.stringify(header)).toString(
+    "base64url"
+  );
+  const base64Payload = Buffer.from(JSON.stringify(payload)).toString(
+    "base64url"
+  );
+  const base64Signature = generateSignature(
+    `${base64Header}.${base64Payload}`,
+    secret
+  );
   return `${base64Header}.${base64Payload}.${base64Signature}`;
 }
-
 
 export function decodePayload(token) {
   try {
@@ -41,67 +47,66 @@ export function decodePayload(token) {
 export function isTokenExpired(payload) {
   if (!payload || !payload.exp) return true;
   const now = Math.floor(Date.now() / 1000); //use this
+  console.log(`
+    payload.exp -> ${payload["exp"]}
+    now ->         ${now}`);
   return now > payload.exp;
 }
 
+function suite() {
+  const testCases = [
+    { userId: "user1", secret: "salt123", expiresInSeconds: 1 },
+    { userId: "user2", secret: "salt456", expiresInSeconds: 7200 },
+    { userId: "admin", secret: "adminSecret", expiresInSeconds: 1800 },
+    { userId: "guest", secret: "guestKey", expiresInSeconds: 60 },
+    { userId: "user_äöü", secret: "unicodeSecret", expiresInSeconds: 3600 },
+    { userId: "user-with-hyphen", secret: "hyphenSecret", expiresInSeconds: 3600 },
+    { userId: "user.with.dot", secret: "dotSecret", expiresInSeconds: 3600 },
+    { userId: "user@domain.com", secret: "emailSecret", expiresInSeconds: 3600 },
+    { userId: "1234567890", secret: "numericSecret", expiresInSeconds: 3600 },
+    { userId: "user💥", secret: "emojiSecret", expiresInSeconds: 3600 },
+    { userId: "user", secret: "", expiresInSeconds: 3600 },
+    { userId: "", secret: "emptyUserSecret", expiresInSeconds: 3600 },
+    { userId: "nullUser", secret: null, expiresInSeconds: 3600 },
+    { userId: "undefinedUser", secret: undefined, expiresInSeconds: 3600 },
+    { userId: "longUserId_" + "x".repeat(100), secret: "longSecret", expiresInSeconds: 3600 },
+    { userId: "user", secret: "salt", expiresInSeconds: 0 },
+    { userId: "user", secret: "salt", expiresInSeconds: -100 },
+    { userId: "user", secret: "salt", expiresInSeconds: Number.MAX_SAFE_INTEGER },
+    { userId: "user", secret: "salt", expiresInSeconds: 1 },
+    { userId: "user", secret: "salt", expiresInSeconds: 999999 },
+    { userId: "user1", secret: "salt123", expiresInSeconds: 3600 },
+    // Add more edge cases as needed
+  ];
 
+  (async () => {
+    for (const [index, testCase] of testCases.entries()) {
+      try {
+        const token = generateToken(
+          testCase.userId,
+          testCase.secret,
+          testCase.expiresInSeconds
+        );
+        await wait(2);
+        console.log(`Test #${index + 1}:`, token);
 
-function suite(){
-
-const testCases = [
-  { userId: "user1", secret: "salt123", expiresInSeconds: 3600 },
-  { userId: "user2", secret: "salt456", expiresInSeconds: 7200 },
-  { userId: "admin", secret: "adminSecret", expiresInSeconds: 1800 },
-  { userId: "guest", secret: "guestKey", expiresInSeconds: 60 },
-  { userId: "user_äöü", secret: "unicodeSecret", expiresInSeconds: 3600 },
-  { userId: "user-with-hyphen", secret: "hyphenSecret", expiresInSeconds: 3600 },
-  { userId: "user.with.dot", secret: "dotSecret", expiresInSeconds: 3600 },
-  { userId: "user@domain.com", secret: "emailSecret", expiresInSeconds: 3600 },
-  { userId: "1234567890", secret: "numericSecret", expiresInSeconds: 3600 },
-  { userId: "user💥", secret: "emojiSecret", expiresInSeconds: 3600 },
-  { userId: "user", secret: "", expiresInSeconds: 3600 },
-  { userId: "", secret: "emptyUserSecret", expiresInSeconds: 3600 },
-  { userId: "nullUser", secret: null, expiresInSeconds: 3600 },
-  { userId: "undefinedUser", secret: undefined, expiresInSeconds: 3600 },
-  { userId: "longUserId_" + "x".repeat(100), secret: "longSecret", expiresInSeconds: 3600 },
-  { userId: "user", secret: "salt", expiresInSeconds: 0 },
-  { userId: "user", secret: "salt", expiresInSeconds: -100 },
-  { userId: "user", secret: "salt", expiresInSeconds: Number.MAX_SAFE_INTEGER },
-  { userId: "user", secret: "salt", expiresInSeconds: 1 },
-  { userId: "user", secret: "salt", expiresInSeconds: 999999 },
-  { userId: "user1", secret: "salt123", expiresInSeconds: 3600 },
-  // Add more edge cases as needed
-];
-
-(async () => {
-  for (const [index, testCase] of testCases.entries()) {
-    try {
-      const token = await generateToken(
-        testCase.userId,
-        testCase.secret,
-        testCase.expiresInSeconds
-      );
-      console.log(`Test #${index + 1}:`, token);
-    } catch (error) {
-      console.error(`Test #${index + 1} failed:`, error.message);
+        const payload = decodePayload(token);
+        const expired = isTokenExpired(payload);
+        console.log(token);
+        console.log(payload);
+        console.log(expired);
+      } catch (error) {
+        console.error(`Test #${index + 1} failed:`, error.message);
+      }
     }
-  }
-  const token = generateToken(
-    {
-      userId:testCases['0']['userId'],
-      secret:testCases['0']['secret'],
-      expiresInSeconds:testCases['0']['expiresInSeconds']
-    }
-  );
-  setTimeout(()=>{},3000)
-  const payload = decodePayload(token);
-  const expired = isTokenExpired(payload);
-  console.log(token);
-  console.log(payload);
-  console.log(expired);
-
-})();
-
+    const token = generateToken(
+      testCases["0"]["userId"],
+      testCases["0"]["secret"],
+      0
+    );
+  })();
 }
-
+function wait(seconds) {
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+}
 suite();
