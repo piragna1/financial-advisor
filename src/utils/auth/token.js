@@ -69,6 +69,7 @@ const testCases = [
   { userId: "user", secret: "salt", expiresInSeconds: Number.MAX_SAFE_INTEGER },
   { userId: "user", secret: "salt", expiresInSeconds: 1 },
   { userId: "user", secret: "salt", expiresInSeconds: 999999 },
+  { userId: "user1", secret: "salt123", expiresInSeconds: 3600 },
   // Add more edge cases as needed
 ];
 
@@ -85,6 +86,19 @@ const testCases = [
       console.error(`Test #${index + 1} failed:`, error.message);
     }
   }
+  const token = generateToken(
+    {
+      userId:testCases['0']['userId'],
+      secret:testCases['0']['secret'],
+      expiresInSeconds:testCases['0']['expiresInSeconds']
+    }
+  );
+  setTimeout(()=>{},3000)
+  const payload = decodePayload(token);
+  const isTokenExpired = isTokenExpired(payload);
+  console.log(payload);
+  console.log(isTokenExpired);
+
 })();
 
 }
