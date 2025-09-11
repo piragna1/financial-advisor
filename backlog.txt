@@ -38,9 +38,9 @@ C:.
 │
 ├───controllers
 │       authController.mjs (
-          ❌registerUserController(),
-          ❌loginUserController()
-          ) -----> now
+          ✅registerUserController(),
+          ❌loginUserController()-----> now
+          ) 
 │       loanController.mjs (❌)
 │       profileController.mjs (❌)
 │
