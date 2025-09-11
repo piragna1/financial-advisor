@@ -150,11 +150,11 @@ async function test() {
       },
     };
 
-    const req = {element};
+    const req = { element };
 
-    await registerUserController(req,res);
-    console.log('input',req);
-    console.log('status',res['code']);
-    console.log('response',res['response']);
+    await registerUserController(req, res);
+    console.log("input", req);
+    console.log("status", res["code"]);
+    console.log("response", res["response"]);
   }
 }
