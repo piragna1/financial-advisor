@@ -70,7 +70,7 @@ export async function loginUserController(req, res, next) {
 
     //validate input
     let valid = validateLoginInput({ email, password }); //checked
-    if (!valid.ok) throw new AppError(AuthErrors.INVALID_INPUT);
+    if (!valid) throw new AppError(AuthErrors.INVALID_INPUT);
 
     //userRetrieve
     let user = await userRetrieve(email);//checked
@@ -78,7 +78,7 @@ export async function loginUserController(req, res, next) {
 
     //password hashing comparing
     const validPass = comparePassword(//checked
-      user.hashedPassword,
+      user.passwordHash,
       password,
       passwordSecret.PASSWORD_SECRET
     );
@@ -89,9 +89,9 @@ export async function loginUserController(req, res, next) {
     if (!token) throw new TokenGenerationError(TokenErrors.TOKEN_GEN_ERROR);
 
     //status return
-    res.status(200).json({ user, token, success });
+    res.status(200).json({ user, token });
   } catch (error) {
-    const { code, message, status } = mapError(error);
+    const { code, message, status, details } = mapError(error);
     res.status(status).json({ code, message, status });
   }
 }
@@ -171,3 +171,35 @@ export async function loginUserController(req, res, next) {
 // }
 
 // await test();
+
+
+(async function testLoginController(){
+  /* body type:
+  {
+    "email": "gvalagna@gmail.com",
+    "password": "gvalagnA$4"
+  }
+  */
+ const testInputs = [
+  //Valid login
+  {email:'gonzalo@example.com', password:'SuperSecure123!'}
+ ];
+ for (const body of testInputs) {
+  const req = {body};
+  const res = {
+    code:undefined,
+    response:undefined,
+    status(code){
+      this.code=code;
+      return this;
+    },
+    json(paylaod){
+      this.response=paylaod;
+    }
+  }
+  await loginUserController(req,res);
+  console.log('input',body);
+  console.log('status', res.code);
+  console.log('response',res.response);
+ }
+})();

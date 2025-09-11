@@ -5,7 +5,8 @@ export function mapError(error){
         return {
             code:error.code,
             message:error.message,
-            status:error.status
+            status:error.status,
+            details:error.details || ''
         }
     }
     return {
