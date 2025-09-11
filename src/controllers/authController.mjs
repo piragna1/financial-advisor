@@ -184,6 +184,7 @@ export async function loginUserController(req, res, next) {
   //Valid login
   {email:'gonzalo@example.com', password:'SuperSecure123!'},
   {email:'gonzalo@example.com', password:'WronPass!123'},
+  {email:'nonexistinguser@example.com',password:'notimportantpasswordkeymasteresecrets'}
  ];
  for (const body of testInputs) {
   const req = {body};
