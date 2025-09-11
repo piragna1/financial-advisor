@@ -84,20 +84,77 @@ export async function loginUserController(req, res, next) {
   }
 }
 
-function test() {
-  const req = {
-    body: {
+async function test() {
+  const testInputs = [
+    {
       name: "Gonzalo",
-      lastName: "Varela Alagna",
+      lastName: "Varela",
       email: "gvalagna@gmail.com",
       password: "gvalagnA$4",
     },
-  };
-  const res = {
-    code: undefined,
-    status(code) {
-      this.code = code;
-      return this;
+    {
+      name: "Ana",
+      lastName: "Lopez",
+      email: "ana@example.com",
+      password: "Ana123!",
     },
-  };
+    {
+      name: "",
+      lastName: "NoName",
+      email: "noname@example.com",
+      password: "pass123",
+    },
+    { name: "Luis", lastName: "Martinez", email: "", password: "pass123" },
+    {
+      name: "Sara",
+      lastName: "Smith",
+      email: "sara@example.com",
+      password: "",
+    },
+    {
+      name: "Gonzalo",
+      lastName: "Varela",
+      email: "gvalagna@gmail.com",
+      password: "gvalagnA$4",
+    }, // duplicate
+    { name: "李", lastName: "王", email: "li@example.cn", password: "密码123" },
+    {
+      name: "Omar",
+      lastName: "",
+      email: "omar@example.com",
+      password: "omarpass",
+    },
+    {
+      name: "Test",
+      lastName: "User",
+      email: "test@example.com",
+      password: null,
+    },
+    {
+      name: null,
+      lastName: "Null",
+      email: "null@example.com",
+      password: "nullpass",
+    },
+  ];
+
+  for (const element of testInputs) {
+    const res = {
+      code: undefined,
+      status(code) {
+        this.code = code;
+        return this;
+      },
+      json(payload) {
+        this.response = payload;
+      },
+    };
+
+    const req = {element};
+
+    await registerUserController(req,res);
+    console.log('input',req);
+    console.log('status',res['code']);
+    console.log('response',res['response']);
+  }
 }
