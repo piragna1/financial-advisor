@@ -11,7 +11,7 @@ C:.
 │   │       verifyPassword.js (✅)
 │   │
 │   ├───retrievers
-│   │       userRetriever.js (✅)
+│   │       userRetriever.js (✅)🔁
 │   │
 │   ├───utils
 │               hasControlChars.js (✅)
