@@ -1,4 +1,5 @@
-import { AuthErrors } from "./authErrors";
+import { AuthErrors } from "./authErrors.js";
+
 
 export const ErrorRegistry = {
     AUTH:AuthErrors,
