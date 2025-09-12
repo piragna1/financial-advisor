@@ -6,7 +6,7 @@ C:.
 │
 ├───actors
 │   ├───auth
-│   │       extractToken.js (❌).
+│   │       extractToken.js (✅).
 │   │       tokenExists.js (✅)
 │   │       verifyPassword.js (✅)
 │   │
@@ -107,7 +107,7 @@ C:.
             refreshToken.js (❌)
             token.js (✅❌❌) 
             tokenIssuer.js (✅)
-            verifyToken.js (❌)
+            verifyToken.js (❌)----> now
 
 
 
