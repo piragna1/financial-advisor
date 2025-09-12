@@ -1,9 +1,9 @@
-import { findUserById, findUserByEmail } from "../actors/retrievers/userRetriever.js";
+import { retrieveUserById, retrieveUserByEmail } from "../actors/retrievers/userRetriever.js";
 
 export async function getProfile(req, res,next) {
   try{  
     const userId = req.userId;
-    const user = await findUserById(userId); //semi-pure
+    const user = await retrieveUserById(userId); //semi-pure
     res.status(200).json({ user });
   }catch(err){
     next(err);
