@@ -61,6 +61,11 @@ const testCases = [
     token: `${validHeader}.${validPayload}.${validSignature}`,
     expect: true,
   },
+  {
+    label:'manual case: empty token',
+    token:`hola que tal`,
+    expectError:TokenErrors.INVALID_TOKEN
+  }
 ];
 
 for (const test of testCases) {
