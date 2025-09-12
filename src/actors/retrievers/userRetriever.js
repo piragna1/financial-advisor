@@ -1,11 +1,11 @@
 //userRetriever.js
 import { findUserByEmail, findUserById } from "../../repositories/userRepo.js";
 
-export async function findUserByEmail(email) {
+export async function retrieveUserByEmail(email) {
   //checked
   return await findUserByEmail(email);
 }
-export async function findUserById(id) {
+export async function retrieveUserById(id) {
   if (!id || typeof id != "string") {
     throw new AppError(AuthErrors.MISSING_CREDENTIALS, "Id is missing");
   }
