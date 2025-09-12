@@ -55,10 +55,10 @@ C:.
 │       profileErrors.js (✅)
 │       registrationErrors.js (✅)
 │       tokenError.js (✅)
-│       TokenGenerationError.js (❌) ----> now
+│       TokenGenerationError.js (✅)
 │
 ├───middlewares
-│       authMiddleware.js (❌)
+│       authMiddleware.js (❌) ----> now
 │       errorHandler.js (❌)
 │
 ├───models
