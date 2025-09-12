@@ -42,13 +42,13 @@ C:.
           ✅loginUserController()
           ) 
 │       loanController.mjs (✅)
-│       profileController.mjs (❌) ----> now
+│       profileController.mjs (✅) 
 │
 ├───entities
 │       userEntity.js (✅)
 │
 ├───errors
-│       AppError.js (❌)
+│       AppError.js (❌)----> now
 │       authErrors.js (❌)
 │       mapError.js (❌)
 │       profileErrors.js (❌)
