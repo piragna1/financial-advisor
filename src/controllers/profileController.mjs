@@ -1,5 +1,4 @@
-import { findUserById } from "../repositories/userRepo.js";
-
+import { findUserById, findUserByEmail } from "../actors/retrievers/userRetriever.js";
 
 export async function getProfile(req, res,next) {
   try{  
