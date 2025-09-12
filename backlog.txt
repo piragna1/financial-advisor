@@ -63,7 +63,7 @@ C:.
             ✅extractToken() 
             ✅verifyToken() 
             ✅decodePayload() (lives in token.js)
-            ❌isTokenExpired()
+            ❌isTokenExpired ---> working on it now()
         )
 │       errorHandler.js (❌)
 │
@@ -109,7 +109,7 @@ C:.
               ✅tokenExists
               ✅verifyToken
               ✅decodePayload
-              ❌isTokenExpired 
+              ❌isTokenExpired ---> working on it now 
               ) 
             tokenIssuer.js (✅)
             verifyToken.js (✅)
