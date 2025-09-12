@@ -1,6 +1,6 @@
 //userRetriever.js
 import { findUserByEmail, findUserById } from "../../repositories/userRepo.js";
-import {AppError} from '../../errors/AppError.js;
+import {AppError} from '../../errors/AppError.js';
 import {AuthErrors} from '../../errors/authErrors.js'
 
 export async function retrieveUserByEmail(email) {
