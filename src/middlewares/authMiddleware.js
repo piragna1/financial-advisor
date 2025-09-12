@@ -1,4 +1,4 @@
-import { extractToken } from "../actors/utils/auth/extractToken.js";
+import { extractToken } from "../actors/auth/extractToken.js";
 import { tokenExists } from "../actors/auth/tokenExists.js";
 import { AppError } from "../errors/AppError.js";
 import { TokenErrors } from "../errors/tokenError.js";
