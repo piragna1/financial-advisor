@@ -6,6 +6,7 @@ export function tokenExists(req) {
         throw new AppError(AuthErrors.TOKEN.INVALID_TOKEN);
     }
     if ( header.trim()==='')  throw new AppError(AuthErrors.TOKEN.MISSING_TOKEN);
+    return true;
 }
 
 const testCases = [
@@ -44,6 +45,7 @@ const testCases = [
 for (const test of testCases) {
     let result= false;
     try {
+        console.log('input:',test.req)
         result = tokenExists(test.req);
     } catch (error) {
         console.log('error has ocurred');
