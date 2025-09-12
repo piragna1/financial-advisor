@@ -6,8 +6,8 @@ C:.
 │
 ├───actors
 │   ├───auth
-│   │       extractToken.js (❌).
-│   │       tokenExists.js (❌) ----> now
+│   │       extractToken.js (❌). ----> now
+│   │       tokenExists.js (✅)
 │   │       verifyPassword.js (✅)
 │   │
 │   ├───retrievers
