@@ -49,7 +49,7 @@ C:.
 │
 ├───errors
 │       AppError.js (✅)
-│       authErrors.js (✅)
+│       authErrors.js (❌) recently modified structure
 │       errorRegistry.js (✅) RECENTLY CREATED 
 │       mapError.js (✅)
 │       profileErrors.js (✅)
