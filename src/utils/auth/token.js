@@ -1,3 +1,5 @@
+import { AppError } from "../../errors/AppError.js";
+import { AuthErrors } from "../../errors/authErrors.js";
 import { generateSignature } from "./generateSignature.js";
 /**
  * Generate a token for a given user with a default expiration time of 3600 seconds.
@@ -45,19 +47,13 @@ export function decodePayload(token) {
 }
 
 export function isTokenExpired(payload) {
-  if (!payload || !payload.exp) return true;
+  if (!payload || !payload.exp || typeof payload.exp !== 'number' ) throw new AppError(AuthErrors.TOKEN.INVALID_PAYLOAD);
   const now = Math.floor(Date.now() / 1000);
   console.log(`
     payload.exp -> ${payload["exp"]}
     now ->         ${now}`);
   return now > payload.exp;
 }
-
-
-
-
-
-
 
 
 // function suite() {
@@ -219,3 +215,67 @@ export function isTokenExpired(payload) {
 //   const match = JSON.stringify(result) === JSON.stringify(test.expected);
 //   console.log(match ? `✅ ${test.label}` : `❌ ${test.label} → got ${JSON.stringify(result)}, expected ${JSON.stringify(test.expected)}`);
 // }
+
+
+const now = Math.floor(Date.now() / 1000);
+
+const testCases = [
+  {
+    label: 'payload is undefined',
+    payload: undefined,
+    expected: true,
+  },
+  {
+    label: 'payload is null',
+    payload: null,
+    expected: true,
+  },
+  {
+    label: 'payload missing exp field',
+    payload: { userId: 'abc123' },
+    expected: true,
+  },
+  {
+    label: 'payload.exp is in the past',
+    payload: { exp: now - 100 },
+    expected: true,
+  },
+  {
+    label: 'payload.exp is now',
+    payload: { exp: now },
+    expected: false,
+  },
+  {
+    label: 'payload.exp is in the future',
+    payload: { exp: now + 100 },
+    expected: false,
+  },
+  {
+    label: 'payload.exp is a string',
+    payload: { exp: String(now + 100) },
+    expected: false,
+  },
+  {
+    label: 'payload.exp is non-numeric string',
+    payload: { exp: 'not-a-timestamp' },
+    expected: true,
+  },
+  {
+    label: 'payload.exp is NaN',
+    payload: { exp: NaN },
+    expected: true,
+  },
+  {
+    label: 'payload.exp is zero',
+    payload: { exp: 0 },
+    expected: true,
+  },
+];
+
+for (const { label, payload, expected } of testCases) {
+  const result = isTokenExpired(payload);
+  const pass = result === expected;
+  console.log(pass ? `✅ ${label}` : `❌ ${label} → got ${result}, expected ${expected}`);
+}
+
+
