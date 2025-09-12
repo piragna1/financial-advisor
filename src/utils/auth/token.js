@@ -38,6 +38,12 @@ export function generateToken(
 export function decodePayload(token) {
   try {
     const payloadB64 = token.split(".")[1];
+    
+    //---debug
+    const raw = token.split('.')[1];
+    console.log(Buffer.from(raw, 'base64url').toString());
+    //---debug
+    
     const payload1 = Buffer.from(payloadB64, "base64url").toString();
     const payload2 = JSON.parse(payload1);
     return payload2;
