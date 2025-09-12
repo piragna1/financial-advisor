@@ -3,7 +3,7 @@ export class AppError extends Error{
         super(message);
         Object.assign(this, {code, status,details})
     }
-// }
+}
 
 // const testInputs = [
 //   // ✅ Valid inputs
