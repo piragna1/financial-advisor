@@ -14,7 +14,7 @@ export async function retrieveUserById(id) {
   if (typeof id != "string") {
     throw new AppError(AuthErrors.INVALID_INPUT, "Id must be a string");
   }
-  const userId = req.userId;
+  const userId = id;
   const user = await findUserById(userId); //semi-pure
   return user;
 }
