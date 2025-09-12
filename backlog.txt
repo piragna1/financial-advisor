@@ -48,8 +48,8 @@ C:.
 │       userEntity.js (✅)
 │
 ├───errors
-│       AppError.js (❌)----> now
-│       authErrors.js (❌)
+│       AppError.js (✅)
+│       authErrors.js (❌)----> now
 │       mapError.js (❌)
 │       profileErrors.js (❌)
 │       registrationErrors.js (❌)
