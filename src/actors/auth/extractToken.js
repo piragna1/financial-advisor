@@ -41,7 +41,13 @@ const testCases = [
 ];
 
 for (const test of testCases) {
-  const result = extractToken(test.req);
+
+    let result = undefined;
+    try {
+        result=extractToken(test.req);
+    } catch (error) {
+        console.log(error.message);
+    }
   const pass = result === test.expected;
   console.log(pass ? `✅ ${test.label}` : `❌ ${test.label} → got ${result}, expected ${test.expected}`);
 }
