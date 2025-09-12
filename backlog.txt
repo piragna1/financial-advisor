@@ -58,7 +58,13 @@ C:.
 │       TokenGenerationError.js (✅)
 │
 ├───middlewares
-│       authMiddleware.js (❌) ----> now
+│       authMiddleware.js (
+            ✅tokenExists()
+            ✅extractToken()
+            ❌verifyToken() ----> now
+            ❌decodePayload()
+            ❌isTokenExpired()
+        )
 │       errorHandler.js (❌)
 │
 ├───models
