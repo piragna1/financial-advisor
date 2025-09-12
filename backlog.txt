@@ -41,8 +41,8 @@ C:.
           ✅registerUserController(),
           ✅loginUserController()
           ) 
-│       loanController.mjs (❌)----> now
-│       profileController.mjs (❌)
+│       loanController.mjs (✅)
+│       profileController.mjs (❌) ----> now
 │
 ├───entities
 │       userEntity.js (✅)
