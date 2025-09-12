@@ -51,8 +51,8 @@ C:.
 │       AppError.js (✅)
 │       authErrors.js (✅)
 │       mapError.js (✅)
-│       profileErrors.js (❌)----> now
-│       registrationErrors.js (❌)
+│       profileErrors.js (✅)
+│       registrationErrors.js (❌)----> now
 │       tokenError.js (❌)
 │       TokenGenerationError.js (❌)
 │
