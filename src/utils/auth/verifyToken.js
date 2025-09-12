@@ -1,5 +1,5 @@
 import { AppError } from "../../errors/AppError.js";
-import {generateSignature} from '../../actors/utils/auth/generateSignature.js'
+import {generateSignature} from './generateSignature.js'
 import {TokenErrors} from '../../errors/tokenError.js';
 import { jwtConfig } from "../../config/jwtConfig.js";
 
