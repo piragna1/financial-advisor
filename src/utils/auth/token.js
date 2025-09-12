@@ -53,6 +53,13 @@ export function isTokenExpired(payload) {
   return now > payload.exp;
 }
 
+
+
+
+
+
+
+
 // function suite() {
 //   const testCases = [
 //     { userId: "user1", secret: "salt123", expiresInSeconds: 1 },
@@ -110,3 +117,105 @@ export function isTokenExpired(payload) {
 //   return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 // }
 // suite();
+
+
+const validObject = { userId: 'abc123', role: 'admin' };
+const nestedObject = { user: { id: 'u1', name: 'Gonzalo' }, meta: { active: true } };
+const unicodeObject = { name: 'José', city: 'München', script: '漢字' };
+const emojiObject = { mood: '🔥', status: '✅' };
+const arrayPayload = [1, 2, 3];
+const stringPayload = 'hello world';
+const numberPayload = 42;
+const booleanPayload = true;
+const nullPayload = null;
+const malformedJSON = '{userId:"abc123"'; // missing closing brace
+const nonBase64 = '%%%'; // invalid base64url
+
+const testCases = [
+  {
+    label: 'valid object payload',
+    input: validObject,
+    expected: validObject,
+  },
+  {
+    label: 'nested object payload',
+    input: nestedObject,
+    expected: nestedObject,
+  },
+  {
+    label: 'unicode object payload',
+    input: unicodeObject,
+    expected: unicodeObject,
+  },
+  {
+    label: 'emoji object payload',
+    input: emojiObject,
+    expected: emojiObject,
+  },
+  {
+    label: 'array payload',
+    input: arrayPayload,
+    expected: arrayPayload,
+  },
+  {
+    label: 'string payload',
+    input: stringPayload,
+    expected: stringPayload,
+  },
+  {
+    label: 'number payload',
+    input: numberPayload,
+    expected: numberPayload,
+  },
+  {
+    label: 'boolean payload',
+    input: booleanPayload,
+    expected: booleanPayload,
+  },
+  {
+    label: 'null payload',
+    input: nullPayload,
+    expected: null,
+  },
+  {
+    label: 'malformed JSON payload',
+    token: `header.${Buffer.from(malformedJSON).toString('base64url')}.signature`,
+    expected: null,
+    skipEncoding: true,
+  },
+  {
+    label: 'non-base64 payload',
+    token: `header.${nonBase64}.signature`,
+    expected: null,
+    skipEncoding: true,
+  },
+  {
+    label: 'missing payload segment',
+    token: `header..signature`,
+    expected: null,
+    skipEncoding: true,
+  },
+  {
+    label: 'token with only one segment',
+    token: `headeronly`,
+    expected: null,
+    skipEncoding: true,
+  },
+  {
+    label: 'empty token',
+    token: ``,
+    expected: null,
+    skipEncoding: true,
+  },
+];
+
+for (const test of testCases) {
+  const token = test.skipEncoding
+    ? test.token
+    : `header.${Buffer.from(JSON.stringify(test.input)).toString('base64url')}.signature`;
+
+  const result = decodePayload(token);
+  console.log(result);
+  const match = JSON.stringify(result) === JSON.stringify(test.expected);
+  console.log(match ? `✅ ${test.label}` : `❌ ${test.label} → got ${JSON.stringify(result)}, expected ${JSON.stringify(test.expected)}`);
+}
