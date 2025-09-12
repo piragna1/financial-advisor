@@ -6,7 +6,7 @@ C:.
 │
 ├───actors
 │   ├───auth
-│   │       extractToken.js (✅). 
+│   │       extractToken.js (❌). ----> now
 │   │       tokenExists.js (✅)
 │   │       verifyPassword.js (✅)
 │   │
@@ -58,7 +58,7 @@ C:.
 │       TokenGenerationError.js (✅)
 │
 ├───middlewares
-│       authMiddleware.js (❌)----> now
+│       authMiddleware.js (❌)
 │       errorHandler.js (❌)
 │
 ├───models
