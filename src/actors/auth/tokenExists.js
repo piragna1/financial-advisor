@@ -1,5 +1,5 @@
 import { AppError } from '../../errors/AppError.js';
-import { AuthErrors } from '../../errors/authErrors';
+import { AuthErrors } from '../../errors/authErrors.js';
 export function tokenExists(req) {
     const header = req?.headers?.authorization;
     if (typeof header !== 'string') {
