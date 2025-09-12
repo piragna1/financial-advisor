@@ -1,28 +1,37 @@
 export const AuthErrors = {
-  INVALID_INPUT: {
-    code: "INVALID_INPUT",
-    message: "Invalid field/s format",
-    status: 400,
+  LOGIN:{
+    INVALID_CREDENTIALS: {
+      code: "INVALID_CREDENTIALS",
+      message: "Invalid email or password",
+      status: 401,
+    },
+    USER_NOT_FOUND: {
+      code: "USER_NOT_FOUND",
+      message: "User not found",
+      status: 404,
+    },
   },
-  INVALID_CREDENTIALS: {
-    code: "INVALID_CREDENTIALS",
-    message: "Invalid email or password",
-    status: 401,
-  },
-  MISSING_CREDENTIALS: {
-    code: "MISSING_CREDENTIALS",
-    message: "There is one (or more) field(s) missing",
-    status: 402,
-  },
-  USER_NOT_FOUND: {
-    code: "USER_NOT_FOUND",
-    message: "User not found",
-    status: 404,
-  },
-  USER_EXISTS: {
-    code: "USER_ALREADY_EXISTS",
-    message: "User is currently not available",
-    status: 409,
+  REGISTER:{
+    INVALID_INPUT: {
+      code: "INVALID_INPUT",
+      message: "Invalid field/s format",
+      status: 400,
+    },
+    MISSING_CREDENTIALS: {
+      code: "MISSING_CREDENTIALS",
+      message: "There is one (or more) field(s) missing",
+      status: 402,
+    },
+    USER_EXISTS: {
+      code: "USER_ALREADY_EXISTS",
+      message: "User is currently not available",
+      status: 409,
+    },
+    CREATION_FAILED:{
+        code:"CREATION_FAILED",
+        message:"An error has ocurred during registration",
+        status:500
+    }
   },
 };
 
