@@ -49,9 +49,6 @@ export function decodePayload(token) {
 export function isTokenExpired(payload) {
   if ((!payload || !payload.exp || typeof payload.exp !== 'number' ) && payload.exp !== 0) throw new AppError(AuthErrors.TOKEN.INVALID_PAYLOAD);
   const now = Math.floor(Date.now() / 1000);
-  console.log(`
-    payload.exp -> ${payload["exp"]}
-    now ->         ${now}`);
   return now > payload.exp;
 }
 
