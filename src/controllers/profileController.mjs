@@ -1,9 +1,12 @@
 import { retrieveUserById, retrieveUserByEmail } from "../actors/retrievers/userRetriever.js";
+import { AppError } from "../errors/AppError.js";
+import { AuthErrors } from "../errors/authErrors.js";
 
 export async function getProfile(req, res,next) {
   try{  
-    const userId = req.userId;
-    const user = await retrieveUserById(userId); //semi-pure
+
+    const user = await retrieveUserById(req.userId); //semi-pure
+    if (!user) throw new AppError(AuthErrors.USER_NOT_FOUND,'The user was not found')
     res.status(200).json({ user });
   }catch(err){
     next(err);
@@ -12,16 +15,17 @@ export async function getProfile(req, res,next) {
 };
 
 const testInputs = [
-  { userId: 'valid-id' },
   { userId: 'unicode-id' },
   { userId: 'nonexistent-id' },
   { userId: '' },
+  { userId: 'u1' },
   { userId: null },
   { userId: undefined },
   { userId: 123 },
 ];
 
-for (const req of testInputs.map(id => ({ userId: id.userId }))) {
+for (const user of testInputs) {
+  const req=user;// {uesrId:'value'} format
   const res = {
     code: undefined,
     response: undefined,
