@@ -24,3 +24,55 @@ export async function verifyToken(token) {
 
   return true;
 }
+
+const validHeader = 'header';
+const validPayload = 'payload';
+const validSignature = generateSignature(`${validHeader}.${validPayload}`, jwtConfig.SECRET_SALT);
+const bearerPrefix = 'Bearer ';
+
+const testCases = [
+  {
+    label: 'token missing header',
+    token: `.${validPayload}.${validSignature}`,
+    expectError: TokenErrors.INVALID_HEADER,
+  },
+  {
+    label: 'token missing payload',
+    token: `${validHeader}..${validSignature}`,
+    expectError: TokenErrors.INVALID_PAYLOAD,
+  },
+  {
+    label: 'token missing signature',
+    token: `${validHeader}.${validPayload}.`,
+    expectError: TokenErrors.INVALID_SIGNATURE,
+  },
+  {
+    label: 'token with invalid signature',
+    token: `${validHeader}.${validPayload}.invalidsig`,
+    expectError: TokenErrors.INVALID_SIGNATURE,
+  },
+  {
+    label: 'token with Bearer prefix and valid signature',
+    token: `${bearerPrefix}${validHeader}.${validPayload}.${validSignature}`,
+    expect: true,
+  },
+  {
+    label: 'token without Bearer prefix and valid signature',
+    token: `${validHeader}.${validPayload}.${validSignature}`,
+    expect: true,
+  },
+];
+
+for (const test of testCases) {
+  try {
+    const result = await verifyToken(test.token);
+    if (test.expect === true && result === true) {
+      console.log(`✅ ${test.label}`);
+    } else {
+      console.error(`❌ ${test.label} → expected true, got ${result}`);
+    }
+  } catch (err) {
+    const match = err.code === test.expectError.code;
+    console.log(match ? `✅ ${test.label} threw ${err.code}` : `❌ ${test.label} threw ${err.code}, expected ${test.expectError.code}`);
+  }
+}
