@@ -50,12 +50,11 @@ C:.
 ├───errors
 │       AppError.js (✅)
 │       authErrors.js (✅)
-│       errorRegistry.js (❌) RECENTLY CREATED ----> now
+│       errorRegistry.js (✅) RECENTLY CREATED 
 │       mapError.js (✅)
 │       profileErrors.js (✅)
 │       registrationErrors.js (✅)
-
-│       tokenError.js (❌)
+│       tokenError.js (❌) ----> now
 │       TokenGenerationError.js (❌)
 │
 ├───middlewares
