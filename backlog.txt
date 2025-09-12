@@ -61,8 +61,8 @@ C:.
 │       authMiddleware.js (
             ✅tokenExists()
             ✅extractToken()
-            ❌verifyToken() ----> now
-            ❌decodePayload()
+            ✅verifyToken() 
+            ❌decodePayload()----> now
             ❌isTokenExpired()
         )
 │       errorHandler.js (❌)
@@ -107,7 +107,7 @@ C:.
             refreshToken.js (❌)
             token.js (✅❌❌) 
             tokenIssuer.js (✅)
-            verifyToken.js (❌)----> now
+            verifyToken.js (✅)
 
 
 
