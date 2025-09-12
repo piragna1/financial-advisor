@@ -54,8 +54,8 @@ C:.
 │       mapError.js (✅)
 │       profileErrors.js (✅)
 │       registrationErrors.js (✅)
-│       tokenError.js (❌) ----> now
-│       TokenGenerationError.js (❌)
+│       tokenError.js (✅)
+│       TokenGenerationError.js (❌) ----> now
 │
 ├───middlewares
 │       authMiddleware.js (❌)
