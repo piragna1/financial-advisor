@@ -8,7 +8,7 @@ import { isTokenExpired } from "../utils/auth/token.js";
 import { jwtConfig } from "../config/jwtConfig.js";
 import { generateSignature } from "../utils/auth/generateSignature.js";
 import { issueToken } from "../utils/auth/tokenIssuer.js";
-
+import { validatePayloadStructure } from '../actors/auth/validatePayloadStructure.js'
 export async function authMiddleware(req, res, next) {
   if (!tokenExists(req)) throw new AppError(TokenErrors.MISSING_TOKEN);
 
@@ -17,6 +17,8 @@ export async function authMiddleware(req, res, next) {
   await verifyToken(token); //semi-pure
 
   const payload = decodePayload(token); //pure
+
+  validatePayloadStructure(payload);
 
   if (isTokenExpired(payload)) throw new AppError(TokenErrors.EXPIRED_TOKEN);
 
