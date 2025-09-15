@@ -41,7 +41,7 @@ export function decodePayload(token) {
     
     //---debug
     const raw = token.split('.')[1];
-    console.log(Buffer.from(raw, 'base64url').toString());
+    // console.log(Buffer.from(raw, 'base64url').toString());
     //---debug
     
     const payload1 = Buffer.from(payloadB64, "base64url").toString();
