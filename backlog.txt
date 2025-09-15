@@ -69,8 +69,8 @@ C:.
 │       errorHandler.js (✅)
 │
 ├───models
-│       loanModel.js (❌)-----> working on it now
-│       userModel.js (❌)
+│       loanModel.js (✅)
+│       userModel.js (❌)-----> working on it now
 │
 ├───repositories
 │       userRepo.js (✅❌✅❌❌ 5 inner functions)
