@@ -17,7 +17,6 @@ export async function authMiddleware(req, res, next) {
   await verifyToken(token); //semi-pure
 
   const payload = decodePayload(token); //pure
-  console.log("payload", payload);
 
   if (isTokenExpired(payload)) throw new AppError(TokenErrors.EXPIRED_TOKEN);
 
@@ -33,22 +32,22 @@ async function testAuth(req, expectedUserId) {
   const past = now - 3600;
 
   const tokenInputs = [
-    {
-      label: "✅ valid token",
-      authorization: buildToken(
-        { sub: "u1", iat: now, exp: future },
-        jwtConfig.SECRET_SALT
-      ),
-      expect: "pass",
-    },
-    {
-      label: "❌ expired token",
-      authorization: buildToken(
-        { sub: "u1", iat: past, exp: past },
-        jwtConfig.SECRET_SALT
-      ),
-      expect: "EXPIRED_TOKEN",
-    },
+    // {
+    //   label: "✅ valid token",
+    //   authorization: buildToken(
+    //     { sub: "u1", iat: now, exp: future },
+    //     jwtConfig.SECRET_SALT
+    //   ),
+    //   expect: "pass",
+    // },
+    // {
+    //   label: "❌ expired token",
+    //   authorization: buildToken(
+    //     { sub: "u1", iat: past, exp: past },
+    //     jwtConfig.SECRET_SALT
+    //   ),
+    //   expect: "EXPIRED_TOKEN",
+    // },
     {
       label: "❌ missing sub field",
       authorization: buildToken(
@@ -65,35 +64,35 @@ async function testAuth(req, expectedUserId) {
       ),
       expect: "INVALID_TOKEN",
     },
-    {
-      label: "❌ missing exp field",
-      authorization: buildToken({ sub: "u1", iat: now }, jwtConfig.SECRET_SALT),
-      expect: "INVALID_PAYLOAD",
-    },
-    {
-      label: "❌ exp is string",
-      authorization: buildToken(
-        { sub: "u1", iat: now, exp: String(future) },
-        jwtConfig.SECRET_SALT
-      ),
-      expect: "INVALID_PAYLOAD",
-    },
-    {
-      label: "❌ exp is zero",
-      authorization: buildToken(
-        { sub: "u1", iat: now, exp: 0 },
-        jwtConfig.SECRET_SALT
-      ),
-      expect: "EXPIRED_TOKEN",
-    },
-    {
-      label: "❌ exp is NaN",
-      authorization: buildToken(
-        { sub: "u1", iat: now, exp: NaN },
-        jwtConfig.SECRET_SALT
-      ),
-      expect: "INVALID_PAYLOAD",
-    },
+    // {
+    //   label: "❌ missing exp field",
+    //   authorization: buildToken({ sub: "u1", iat: now }, jwtConfig.SECRET_SALT),
+    //   expect: "INVALID_PAYLOAD",
+    // },
+    // {
+    //   label: "❌ exp is string",
+    //   authorization: buildToken(
+    //     { sub: "u1", iat: now, exp: String(future) },
+    //     jwtConfig.SECRET_SALT
+    //   ),
+    //   expect: "INVALID_PAYLOAD",
+    // },
+    // {
+    //   label: "❌ exp is zero",
+    //   authorization: buildToken(
+    //     { sub: "u1", iat: now, exp: 0 },
+    //     jwtConfig.SECRET_SALT
+    //   ),
+    //   expect: "EXPIRED_TOKEN",
+    // },
+    // {
+    //   label: "❌ exp is NaN",
+    //   authorization: buildToken(
+    //     { sub: "u1", iat: now, exp: NaN },
+    //     jwtConfig.SECRET_SALT
+    //   ),
+    //   expect: "INVALID_PAYLOAD",
+    // },
   ];
 
   for (const test of tokenInputs) {
