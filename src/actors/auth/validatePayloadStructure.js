@@ -1,5 +1,5 @@
-import { AppError } from "../../errors/AppError";
-import { AuthErrors } from "../../errors/authErrors";
+import { AppError } from "../../errors/AppError.js";
+import { AuthErrors } from "../../errors/authErrors.js";
 
 export function validatePayloadStructure(payload){
     if (!payload || typeof payload !== 'object'){
