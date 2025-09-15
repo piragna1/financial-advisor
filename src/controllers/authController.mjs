@@ -1,4 +1,5 @@
 // src/controllers/authController.mjs
+import { findUserByEmail, listUsers } from "../repositories/userRepo.js";
 import { registerUser } from "../services/auth/registerUser.mjs";
 import { validateRegistrationInput } from "../actors/validators/auth/validateRegistrationInput.js";
 import { hashPassword } from "../utils/auth/hashPassword.js";
@@ -7,6 +8,7 @@ import { generateUserId } from "../services/user/generateUserId.js";
 import { validateLoginInput } from "../actors/validators/auth/validateLoginInput.js";
 import { AuthErrors } from "../errors/authErrors.js";
 import { AppError } from "../errors/AppError.js";
+import { userRetrieve } from "../actors/retrievers/userRetriever.js";
 import { issueToken } from "../utils/auth/tokenIssuer.js";
 import { mapError } from "../errors/mapError.js";
 import { TokenErrors } from "../errors/tokenError.js";
@@ -14,7 +16,6 @@ import { TokenGenerationError } from "../errors/tokenGenerationError.js";
 import { REGISTRATION_ERRORS } from "../errors/registrationErrors.js";
 import { comparePassword } from "../utils/auth/comparePasswords.js";
 import { passwordSecret } from "../config/passwordSecretConfig.js";
-import { retrieveUserByEmail, retrieveUserById } from '../actors/retrievers/userRetriever.js'
 
 export async function registerUserController(req, res) {
   try {
@@ -31,7 +32,7 @@ export async function registerUserController(req, res) {
 
   // console.log('do ',req.body['name'],'exists?',await findUserByEmail(email));//debug
 
-    if (await retrieveUserByEmail(email)) throw new AppError(AuthErrors.USER_EXISTS);
+    if (await findUserByEmail(email)) throw new AppError(AuthErrors.USER_EXISTS);
 
     const hashedPassword = hashPassword(password);
 
@@ -72,7 +73,7 @@ export async function loginUserController(req, res, next) {
     if (!valid) throw new AppError(AuthErrors.INVALID_INPUT);
 
     //userRetrieve
-    let user = await retrieveUserByEmail(email);//checked
+    let user = await userRetrieve(email);//checked
     if (!user) throw new AppError(AuthErrors.USER_NOT_FOUND);
 
     //password hashing comparing
@@ -100,7 +101,7 @@ export async function loginUserController(req, res, next) {
 //     {
 //       name: "Gonzalo",
 //       lastName: "Varela",
-//       email: "gonzalo@example.com",
+//       email: "gvalagna@gmail.com",
 //       password: "gvalagnA$4",
 //     },
 //     {
@@ -172,41 +173,41 @@ export async function loginUserController(req, res, next) {
 // await test();
 
 
-// (async function testLoginController(){
+(async function testLoginController(){
   /* body type:
   {
     "email": "gvalagna@gmail.com",
     "password": "gvalagnA$4"
   }
   */
-//  const testInputs = [
-//   //Valid login
-//   {email:'gonzalo@example.com', password:'SuperSecure123!'},
-//   // {email:'gonzalo@example.com', password:'WronPass!123'},
-//   // {email:'nonexistinguser@example.com',password:'notimportantpasswordkeymasteresecrets'},
-//   // {email:'',password:'password'},
-//   // {email:'emmail@example.com',password:''},
-//   // {email:'jemai@gmail.com',password:null},
-//   // {email:'gonzalo@example.com', password:'SuperSecure123'},
-//   // {email:'gonzalo@examplee.com', password:'SuperSecure123!'},
-//   // {email:null,password:'pass'},
-//  ];
-//  for (const body of testInputs) {
-//   const req = {body};
-//   const res = {
-//     code:undefined,
-//     response:undefined,
-//     status(code){
-//       this.code=code;
-//       return this;
-//     },
-//     json(paylaod){
-//       this.response=paylaod;
-//     }
-//   }
-//   await loginUserController(req,res);
-//   console.log('input',body);
-//   console.log('status', res.code);
-//   console.log('response',res.response);
-//  }
-// })();
+ const testInputs = [
+  //Valid login
+  {email:'gonzalo@example.com', password:'SuperSecure123!'},
+  {email:'gonzalo@example.com', password:'WronPass!123'},
+  {email:'nonexistinguser@example.com',password:'notimportantpasswordkeymasteresecrets'},
+  {email:'',password:'password'},
+  {email:'emmail@example.com',password:''},
+  {email:'jemai@gmail.com',password:null},
+  {email:'gonzalo@example.com', password:'SuperSecure123'},
+  {email:'gonzalo@examplee.com', password:'SuperSecure123!'},
+  {email:null,password:'pass'},
+ ];
+ for (const body of testInputs) {
+  const req = {body};
+  const res = {
+    code:undefined,
+    response:undefined,
+    status(code){
+      this.code=code;
+      return this;
+    },
+    json(paylaod){
+      this.response=paylaod;
+    }
+  }
+  await loginUserController(req,res);
+  console.log('input',body);
+  console.log('status', res.code);
+  console.log('response',res.response);
+ }
+})();

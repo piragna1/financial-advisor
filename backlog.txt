@@ -49,8 +49,8 @@ C:.
 │
 ├───errors
 │       AppError.js (✅)
-│       src\errors\authErrors.js (❌) recently modified structure
-│       errorRegistry.js (✅) 
+│       authErrors.js (❌) recently modified structure
+│       errorRegistry.js (✅) RECENTLY CREATED 
 │       mapError.js (✅)
 │       profileErrors.js (✅)
 │       registrationErrors.js (✅)
