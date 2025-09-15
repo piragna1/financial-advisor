@@ -16,131 +16,120 @@ export async function authMiddleware(req, res, next) {
 
   await verifyToken(token); //semi-pure
 
-  const payload = decodePayload(token);//pure
-  console.log('payload',payload)
+  const payload = decodePayload(token); //pure
+  console.log("payload", payload);
 
   if (isTokenExpired(payload)) throw new AppError(TokenErrors.EXPIRED_TOKEN);
 
   req.userId = payload.sub;
 
-  next(); 
+  next();
 }
 
-// console.log(generateToken('u1', jwtConfig.SECRET_SALT));//
+// console.log(generateToken('u1', jwtConfig.SECRET_SALT,160000));//
 async function testAuth(req, expectedUserId) {
+  const now = Math.floor(Date.now() / 1000);
+  const future = now + 3600;
+  const past = now - 3600;
+
   const tokenInputs = [
-  // // ✅ Valid token
-  // {
-  //   label: 'valid token',
-  //   authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MSIsImlhdCI6MTc1NzkzODM3NSwiZXhwIjoxNzU3OTQxOTc1fQ.FgGz24wcp25G2FFAbJYy7s95GMQQ8O9q_D22Pg1x1Mc',
-  //   expect: 'pass'
-  // },
+    {
+      label: "✅ valid token",
+      authorization: buildToken(
+        { sub: "u1", iat: now, exp: future },
+        jwtConfig.SECRET_SALT
+      ),
+      expect: "pass",
+    },
+    {
+      label: "❌ expired token",
+      authorization: buildToken(
+        { sub: "u1", iat: past, exp: past },
+        jwtConfig.SECRET_SALT
+      ),
+      expect: "EXPIRED_TOKEN",
+    },
+    {
+      label: "❌ missing sub field",
+      authorization: buildToken(
+        { iat: now, exp: future },
+        jwtConfig.SECRET_SALT
+      ),
+      expect: "INVALID_TOKEN",
+    },
+    {
+      label: "❌ numeric sub field",
+      authorization: buildToken(
+        { sub: 12345, iat: now, exp: future },
+        jwtConfig.SECRET_SALT
+      ),
+      expect: "INVALID_TOKEN",
+    },
+    {
+      label: "❌ missing exp field",
+      authorization: buildToken({ sub: "u1", iat: now }, jwtConfig.SECRET_SALT),
+      expect: "INVALID_PAYLOAD",
+    },
+    {
+      label: "❌ exp is string",
+      authorization: buildToken(
+        { sub: "u1", iat: now, exp: String(future) },
+        jwtConfig.SECRET_SALT
+      ),
+      expect: "INVALID_PAYLOAD",
+    },
+    {
+      label: "❌ exp is zero",
+      authorization: buildToken(
+        { sub: "u1", iat: now, exp: 0 },
+        jwtConfig.SECRET_SALT
+      ),
+      expect: "EXPIRED_TOKEN",
+    },
+    {
+      label: "❌ exp is NaN",
+      authorization: buildToken(
+        { sub: "u1", iat: now, exp: NaN },
+        jwtConfig.SECRET_SALT
+      ),
+      expect: "INVALID_PAYLOAD",
+    },
+  ];
 
-  // // ❌ Missing authorization header
-  // {
-  //   label: 'missing authorization header',
-  //   authorization: undefined,
-  //   expect: 'MISSING_TOKEN'
-  // },
+  for (const test of tokenInputs) {
+    runTest(test);
+  }
 
-  // // ❌ Empty token string
-  // {
-  //   label: 'empty token',
-  //   authorization: 'Bearer ',
-  //   expect: 'INVALID_TOKEN'
-  // },
+}
 
-  // // ❌ Malformed token structure
-  // {
-  //   label: 'malformed token structure',
-  //   authorization: 'Bearer not.a.jwt',
-  //   expect: 'INVALID_SIGNATURE'
-  // },
+testAuth();
 
-  // // ❌ Invalid signature
-  // {
-  //   label: 'invalid signature',
-  //   authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1MSIsImV4cCI6MTc1ODAwMDAwMH0.invalidsig',
-  //   expect: 'INVALID_SIGNATURE'
-  // },
-
-  // ❌ Expired token
-  {
-    label: 'expired token',
-    authorization: `Bearer ${Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString('base64url')}.eyJzdWIiOiJlbGNhY28iLCJpYXQiOjE3NTc5NDEzNjksImV4cCI6MTc1Nzk0MTAwMH0${generateSignature( Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString('base64url')+'.eyJzdWIiOiJlbGNhY28iLCJpYXQiOjE3NTc5NDEzNjksImV4cCI6MTc1Nzk0MTAwMH0' )}`,
-    expect: 'EXPIRED_TOKEN'
-  },
-
-  // // ❌ Undecodable payload
-  // {
-  //   label: 'undecodable payload',
-  //   authorization: 'Bearer header.@@@.signature',
-  //   expect: 'INVALID_TOKEN'
-  // },
-
-  // // ❌ Missing sub field
-  // {
-  //   label: 'missing sub field',
-  //   authorization: 'Bearer header.' + Buffer.from(JSON.stringify({ exp: 9999999999 })).toString('base64url') + '.signature',
-  //   expect: 'INVALID_TOKEN'
-  // },
-
-  // // ❌ Non-string sub
-  // {
-  //   label: 'numeric sub field',
-  //   authorization: 'Bearer header.' + Buffer.from(JSON.stringify({ sub: 12345, exp: 9999999999 })).toString('base64url') + '.signature',
-  //   expect: 'INVALID_TOKEN'
-  // },
-
-  // // ❌ Missing exp field
-  // {
-  //   label: 'missing exp field',
-  //   authorization: 'Bearer header.' + Buffer.from(JSON.stringify({ sub: 'u1' })).toString('base64url') + '.signature',
-  //   expect: 'INVALID_PAYLOAD'
-  // },
-
-  // // ❌ exp is string
-  // {
-  //   label: 'exp is string',
-  //   authorization: 'Bearer header.' + Buffer.from(JSON.stringify({ sub: 'u1', exp: "9999999999" })).toString('base64url') + '.signature',
-  //   expect: 'INVALID_PAYLOAD'
-  // },
-
-  // // ❌ exp is zero
-  // {
-  //   label: 'exp is zero',
-  //   authorization: 'Bearer header.' + Buffer.from(JSON.stringify({ sub: 'u1', exp: 0 })).toString('base64url') + '.signature',
-  //   expect: 'EXPIRED_TOKEN'
-  // },
-
-  // // ❌ exp is NaN
-  // {
-  //   label: 'exp is NaN',
-  //   authorization: 'Bearer header.' + Buffer.from(JSON.stringify({ sub: 'u1', exp: NaN })).toString('base64url') + '.signature',
-  //   expect: 'INVALID_PAYLOAD'
-  // }
-];
-for (const { label, authorization, expect } of tokenInputs) {
+async function runTest({ label, authorization, expect }) {
   const req = { headers: { authorization } };
   const res = {};
   let nextCalled = false;
   const next = () => { nextCalled = true; };
 
-  (async () => {
-    try {
-      await authMiddleware(req, res, next);
-      if (expect === 'pass' && nextCalled) {
-        console.log(`✅ ${label} → passed`);
-      } else {
-        console.log(`❌ ${label} → expected ${expect}, got success`);
-      }
-    } catch (err) {
-      const match = err.code === TokenErrors[expect]?.code;
-      console.log(match ? `✅ ${label} threw ${err.code}` : `❌ ${label} threw ${err.code}, expected ${TokenErrors[expect]?.code}`);
+  try {
+    await authMiddleware(req, res, next);
+    if (expect === "pass" && nextCalled) {
+      console.log(`✅ ${label} → passed`);
+    } else {
+      console.log(`❌ ${label} → expected ${expect}, got success`);
     }
-  })();
-}
+  } catch (err) {
+    const match = err.code === TokenErrors[expect]?.code;
+    console.log(
+      match
+        ? `✅ ${label} threw ${err.code}`
+        : `❌ ${label} threw ${err.code}, expected ${TokenErrors[expect]?.code}`
+    );
+  }
 
+function buildToken(payload, secret) {
+  const header = { alg: "HS256", typ: "JWT" };
+  const headerB64 = Buffer.from(JSON.stringify(header)).toString("base64url");
+  const payloadB64 = Buffer.from(JSON.stringify(payload)).toString("base64url");
+  const signature = generateSignature(`${headerB64}.${payloadB64}`, secret);
+  return `Bearer ${headerB64}.${payloadB64}.${signature}`;
 }
-
-testAuth();
