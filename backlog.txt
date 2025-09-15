@@ -66,10 +66,10 @@ C:.
             ✅decodePayload() (lives in token.js)
             ✅isTokenExpired
         ) ✅
-│       errorHandler.js (❌)-----> working on it now
+│       errorHandler.js (✅)
 │
 ├───models
-│       loanModel.js (❌)
+│       loanModel.js (❌)-----> working on it now
 │       userModel.js (❌)
 │
 ├───repositories
