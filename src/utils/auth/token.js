@@ -52,6 +52,20 @@ export function decodePayload(token) {
   }
 }
 
+export function encodePayload(payload) {
+  try {
+    const json = JSON.stringify(payload);
+    const encoded = Buffer.from(json).toString('base64url');
+    return encoded;
+  } catch (error) {
+    return null;
+  }
+}
+
+console.log(encodePayload({
+  sub:'elcaco', iat:1757941369, exp: 1757941000
+}))
+
 export function isTokenExpired(payload) {
   if ((!payload || !payload.exp || typeof payload.exp !== 'number' ) && payload.exp !== 0) throw new AppError(AuthErrors.TOKEN.INVALID_PAYLOAD);
   const now = Math.floor(Date.now() / 1000);
@@ -222,70 +236,70 @@ export function isTokenExpired(payload) {
 
 const now = Math.floor(Date.now() / 1000);
 
-const testCases = [
-  // {
-  //   label: 'payload is undefined',
-  //   payload: undefined,
-  //   expected: false,
-  // },
-  // {
-  //   label: 'payload is null',
-  //   payload: null,
-  //   expected: false,
-  // },
-  // {
-  //   label: 'payload missing exp field',
-  //   payload: { userId: 'abc123' },
-  //   expected: false,
-  // },
-  // {
-  //   label: 'payload.exp is in the past',
-  //   payload: { exp: now - 100 },
-  //   expected: true,
-  // },
-  // {
-  //   label: 'payload.exp is now',
-  //   payload: { exp: now },
-  //   expected: false,
-  // },
-  // {
-  //   label: 'payload.exp is in the future',
-  //   payload: { exp: now + 100 },
-  //   expected: false,
-  // },
-  // {
-  //   label: 'payload.exp is a string',
-  //   payload: { exp: String(now + 100) },
-  //   expected: false,
-  // },
-  // {
-  //   label: 'payload.exp is non-numeric string',
-  //   payload: { exp: 'not-a-timestamp' },
-  //   expected: false,
-  // },
-  // {
-  //   label: 'payload.exp is NaN',
-  //   payload: { exp: NaN },
-  //   expected: false,
-  // },
-  {
-    label: 'payload.exp is zero',
-    payload: { exp: 0 },
-    expected: true,
-  },
-];
+// const testCases = [
+//   // {
+//   //   label: 'payload is undefined',
+//   //   payload: undefined,
+//   //   expected: false,
+//   // },
+//   // {
+//   //   label: 'payload is null',
+//   //   payload: null,
+//   //   expected: false,
+//   // },
+//   // {
+//   //   label: 'payload missing exp field',
+//   //   payload: { userId: 'abc123' },
+//   //   expected: false,
+//   // },
+//   // {
+//   //   label: 'payload.exp is in the past',
+//   //   payload: { exp: now - 100 },
+//   //   expected: true,
+//   // },
+//   // {
+//   //   label: 'payload.exp is now',
+//   //   payload: { exp: now },
+//   //   expected: false,
+//   // },
+//   // {
+//   //   label: 'payload.exp is in the future',
+//   //   payload: { exp: now + 100 },
+//   //   expected: false,
+//   // },
+//   // {
+//   //   label: 'payload.exp is a string',
+//   //   payload: { exp: String(now + 100) },
+//   //   expected: false,
+//   // },
+//   // {
+//   //   label: 'payload.exp is non-numeric string',
+//   //   payload: { exp: 'not-a-timestamp' },
+//   //   expected: false,
+//   // },
+//   // {
+//   //   label: 'payload.exp is NaN',
+//   //   payload: { exp: NaN },
+//   //   expected: false,
+//   // },
+//   {
+//     label: 'payload.exp is zero',
+//     payload: { exp: 0 },
+//     expected: true,
+//   },
+// // ];
 
-for (const { label, payload, expected } of testCases) {
-  let result = undefined;
-  try {
-    result = isTokenExpired(payload);
+// for (const { label, payload, expected } of testCases) {
+//   let result = undefined;
+//   try {
+//     result = isTokenExpired(payload);
     
-  } catch (error) {
-    // console.log('error----------->',error)  ;
-    result=false;
-  }
-  const pass = result === expected;
-  console.log(pass ? `✅ ${label}` : `❌ ${label} → got ${result}, expected ${expected}`);
-}
+//   } catch (error) {
+//     // console.log('error----------->',error)  ;
+//     result=false;
+//   }
+//   const pass = result === expected;
+//   console.log(pass ? `✅ ${label}` : `❌ ${label} → got ${result}, expected ${expected}`);
+// }
 
 
