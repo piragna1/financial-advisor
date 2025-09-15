@@ -8,7 +8,7 @@ C:.
 │   ├───auth
 │   │       extractToken.js (✅).
 │   │       tokenExists.js (✅)
-│   │       validatePayloadStrcture.js (❌)-----> working on it now...
+│   │       validatePayloadStrcture.js (✅)
 │   │       verifyPassword.js (✅)
 │   │
 │   ├───retrievers
@@ -65,8 +65,8 @@ C:.
             ✅verifyToken() 
             ✅decodePayload() (lives in token.js)
             ✅isTokenExpired
-        ) 
-│       errorHandler.js (❌)
+        ) ✅
+│       errorHandler.js (❌)-----> working on it now...
 │
 ├───models
 │       loanModel.js (❌)
