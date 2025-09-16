@@ -106,7 +106,6 @@ function fixedPaymentCalculation(loan){
             principal:principalPaid,
             balance:Math.balance(balance,0)
         }*/
-<<<<<<< HEAD
 function generateAmortizationSchedule(loan) {
   const principal = Number(loan.principal);
   const interestRate = Number(loan.interestRate);
@@ -150,28 +149,6 @@ function generateAmortizationSchedule(loan) {
     });
   }
   return schedule;
-=======
-
-            
-function generateAmortizationSchedule(loan){
-    const {principal, interestRate, termYears, paymentFrecuency} = loan;
-    const schedule = [];
-    const payment = fixedPaymentCalculation(loan);
-    let balance = principal;
-    for (let i = 1; i< termYears*paymentFrecuency; i++){
-        const interest = balance * (interestRate/paymentFrecuency);
-        const principalPaid = payment-interest;
-        balance-=principalPaid;
-        schedule.push({
-            period:i,
-            payment:payment,
-            interest:interest,
-            principal:principalPaid,
-            balance:Math.max(balance,0)
-        });
-    }
-    return schedule;
->>>>>>> parent of 21f5cc5 (Updates:)
 }
 
 function calculateInterestSaving(schedule, earlyRepaymentPeriod){
