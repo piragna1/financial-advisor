@@ -8,6 +8,10 @@ function calculateRepaymentCapacity(user, years){
     }
     years = Number(years);
     if (isNaN(years)) throw new Error('Invalid input received');
+    if (!user.annualSalary ||
+        !user.paymentRatio
+    ) 
+        throw new Error('The user has missing information.')
     const annualRepaymentCapacity = user.annualSalary*user.paymentRatio; //discounting the interest to the annual salary
     //annualRepaymentCapacity * years = maxRepaymentCapacity
     const repaymentCapacity = annualRepaymentCapacity*years;
