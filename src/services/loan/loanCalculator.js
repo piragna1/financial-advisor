@@ -185,7 +185,6 @@ for (const [label, user, years, expectedValue] of testCases) {
 
 //-------
 
-import { calculateMaxLoanCapacity } from "../services/loan/loanCalculator.js"; // ajustá el path si es necesario
 
 function assertMaxLoanCapacityCalculation(label, loan, expectedValue) {
   try {
