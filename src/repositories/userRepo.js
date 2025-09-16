@@ -30,8 +30,7 @@ export function deleteUser(id) {
 
 
 //------------------
-import { findUserById } from "../repositories/userRepo.js";
-import { mockUsers } from "../config/mock.db.config.js";
+
 
 // Setup: reset mockUsers before each test
 function resetMockUsers() {
