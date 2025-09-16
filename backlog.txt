@@ -70,10 +70,16 @@ C:.
 │
 ├───models
 │       loanModel.js (✅)
-│       userModel.js (❌)-----> working on it now
+│       userModel.js (✅)
 │
 ├───repositories
-│       userRepo.js (✅❌✅❌❌ 5 inner functions)
+│       userRepo.js (
+  ✅
+  ❌-----> working on it now
+  ✅
+  ❌
+  ❌
+   5 inner functions)
 │
 ├───routes
 │   ├───auth
