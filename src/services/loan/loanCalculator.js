@@ -229,10 +229,11 @@ const testCases = [
   ["missing loanTermYears", { repaymentCapacity: 100000, interestRate: 0.05 }, "error"],
   ["missing interestRate", { repaymentCapacity: 100000, loanTermYears: 10 }, "error"],
 
-  // ❌ Tipos incorrectos
-  ["repaymentCapacity = '100000'", { repaymentCapacity: "100000", loanTermYears: 10, interestRate: 0.05 }, "error"],
-  ["interestRate = '0.05'", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: "0.05" }, "error"],
-  ["loanTermYears = '10'", { repaymentCapacity: 100000, loanTermYears: "10", interestRate: 0.05 }, "error"]
+ // ✅ Tipos convertibles (antes marcados como incorrectos)
+["repaymentCapacity = '100000'", { repaymentCapacity: "100000", loanTermYears: 10, interestRate: 0.05 }, "95238"],
+["interestRate = '0.05'", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: "0.05" }, "95238"],
+["loanTermYears = '10'", { repaymentCapacity: 100000, loanTermYears: "10", interestRate: 0.05 }, "95238"],
+
 ];
 
 for (const [label, loan, expectedValue] of testCases) {
