@@ -74,11 +74,11 @@ C:.
 │
 ├───repositories
 │       userRepo.js (
-  ✅
-  ❌-----> working on it now
-  ✅
-  ❌
-  ❌
+  ✅findUserByEmail
+  ❌findUserById-----> working on it now
+  ✅saveUser
+  ❌listUsers
+  ❌deleteUser
    5 inner functions)
 │
 ├───routes
