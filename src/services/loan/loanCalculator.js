@@ -160,7 +160,7 @@ const testCases = [
   // ❌ years malformado
   ["years = null", validUser, null, "error"],
   ["years = undefined", validUser, undefined, "error"],
-  ["years = string", validUser, "10", 150000],
+  ["years = '10'", validUser, "10", 150000],
   ["years = object", validUser, { years: 10 }, "error"],
 
   // ❌ user malformado
