@@ -78,12 +78,12 @@ C:.
   ✅findUserById
   ✅saveUser
   ✅listUsers 
-  ❌deleteUser-----> working on it now
+  ✅deleteUser
    5 inner functions)
 │
 ├───routes
 │   ├───auth
-│   │       auth.route.js (❌)
+│   │       auth.route.js (❌)-----> working on it now
 │   │
 │   ├───loan
 │   │       loanRoutes.js (❌)
