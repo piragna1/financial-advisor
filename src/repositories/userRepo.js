@@ -31,6 +31,7 @@ export function deleteUser(id) {
 
 //------------------
 /* 
+
 // Setup: reset mockUsers before each test
 function resetMockUsers() {
   mockUsers.length = 0;
@@ -88,3 +89,8 @@ for (const [label, inputId, expectedUserId] of testCases) {
   runTest(label, inputId, expectedUserId);
 }
  */
+
+
+//--- listUsers(); -> working properly
+// console.log(listUsers())
+//---
