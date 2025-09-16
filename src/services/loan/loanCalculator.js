@@ -185,7 +185,6 @@ for (const [label, user, years, expectedValue] of testCases) {
 
 //-------
 
-
 function assertMaxLoanCapacityCalculation(label, loan, expectedValue) {
   try {
     const result = calculateMaxLoanCapacity(loan);
@@ -205,14 +204,14 @@ function assertMaxLoanCapacityCalculation(label, loan, expectedValue) {
 }
 
 const testCases = [
-  // ✅ Casos válidos
-  ["valid input (repayment 100k, rate 0.05)", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: 0.05 }, 95238],
-  ["valid input (repayment 50k, rate 0.1)", { repaymentCapacity: 50000, loanTermYears: 5, interestRate: 0.1 }, 45454],
-  ["valid input (repayment 1, rate 0.01)", { repaymentCapacity: 1, loanTermYears: 1, interestRate: 0.01 }, 1],
+  // ✅ Casos válidos (ahora comparando contra strings)
+  ["valid input (repayment 100k, rate 0.05)", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: 0.05 }, "95238"],
+  ["valid input (repayment 50k, rate 0.1)", { repaymentCapacity: 50000, loanTermYears: 5, interestRate: 0.1 }, "45454"],
+  ["valid input (repayment 1, rate 0.01)", { repaymentCapacity: 1, loanTermYears: 1, interestRate: 0.01 }, "1"],
 
   // ❌ Valores extremos
-  ["interestRate = 1", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: 1 }, 50000],
-  ["interestRate = 0.0001", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: 0.0001 }, 99990],
+  ["interestRate = 1", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: 1 }, "50000"],
+  ["interestRate = 0.0001", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: 0.0001 }, "99990"],
 
   // ❌ Valores inválidos
   ["repaymentCapacity = 0", { repaymentCapacity: 0, loanTermYears: 10, interestRate: 0.05 }, "error"],
