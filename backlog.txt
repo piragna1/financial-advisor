@@ -98,8 +98,8 @@ C:.
 │   ├───loan
 │   │       loanCalculator.js (
   ✅ calculateRepaymentCapacity
-  ❌calculateMaxLoanCapacity -----> working on it now
-  ❌calculateCompoundInterest
+  ✅calculateMaxLoanCapacity
+  ❌calculateCompoundInterest -----> working on it now
   ❌fixedPaymentCalculation
   ❌generateAmortizationSchedule
   ❌calculateInterestSaving
