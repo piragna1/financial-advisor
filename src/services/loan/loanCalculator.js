@@ -29,7 +29,7 @@ function calculateMaxLoanCapacity(loan){
     }
     const maxLoanCapacity = repaymentCapacity/(1+interestRate);
     console.log(`User max loan capacity over ${loanTermYears} years: $${maxLoanCapacity.toLocaleString()} with an interest rate of % ${interestRate*100}.`);
-    return Math.round(maxLoanCapacity.toFixed(0));
+    return Math.round(maxLoanCapacity).toFixed(0);
 };
 
 function calculateCompoundInterest(loan){
