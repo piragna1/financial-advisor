@@ -320,3 +320,50 @@ for (const [label, loan, expected] of testCases) {
   assertCompoundInterestCalculation(label, loan, expected);
 } */
 //-------
+function assertFixedPaymentCalculation(label, loan, expectedValue) {
+  try {
+    const result = fixedPaymentCalculation(loan);
+    const match = parseFloat(result.toFixed(2)) === expectedValue;
+    if (match) {
+      console.log(`✅ ${label} → result: ${result.toFixed(2)}`);
+    } else {
+      console.error(`❌ ${label} → expected: ${expectedValue}, got: ${result.toFixed(2)}`);
+    }
+  } catch (err) {
+    if (expectedValue === "error") {
+      console.log(`✅ ${label} → threw error`);
+    } else {
+      console.error(`❌ ${label} → threw error unexpectedly`);
+    }
+  }
+}
+
+const testCases = [
+  // ✅ Casos válidos
+  ["standard input (monthly)", { principal: 100000, interestRate: 0.05, termYears: 30, paymentFrecuency: 12 }, 536.82],
+  ["quarterly payments", { principal: 50000, interestRate: 0.04, termYears: 15, paymentFrecuency: 4 }, 1110.64],
+  ["annual payments", { principal: 20000, interestRate: 0.06, termYears: 10, paymentFrecuency: 1 }, 2710.68],
+
+  // ✅ Tipos convertibles
+  ["string inputs", { principal: "100000", interestRate: "0.05", termYears: "30", paymentFrecuency: "12" }, 536.82],
+
+  // ❌ Valores inválidos
+  ["principal = 0", { principal: 0, interestRate: 0.05, termYears: 30, paymentFrecuency: 12 }, "error"],
+  ["interestRate = 0", { principal: 100000, interestRate: 0, termYears: 30, paymentFrecuency: 12 }, "error"],
+  ["termYears = 0", { principal: 100000, interestRate: 0.05, termYears: 0, paymentFrecuency: 12 }, "error"],
+  ["paymentFrecuency = 0", { principal: 100000, interestRate: 0.05, termYears: 30, paymentFrecuency: 0 }, "error"],
+  ["negative principal", { principal: -100000, interestRate: 0.05, termYears: 30, paymentFrecuency: 12 }, "error"],
+  ["negative rate", { principal: 100000, interestRate: -0.05, termYears: 30, paymentFrecuency: 12 }, "error"],
+  ["negative term", { principal: 100000, interestRate: 0.05, termYears: -30, paymentFrecuency: 12 }, "error"],
+  ["negative frequency", { principal: 100000, interestRate: 0.05, termYears: 30, paymentFrecuency: -12 }, "error"],
+
+  // ❌ Tipos no convertibles
+  ["principal = 'abc'", { principal: "abc", interestRate: 0.05, termYears: 30, paymentFrecuency: 12 }, "error"],
+  ["interestRate = null", { principal: 100000, interestRate: null, termYears: 30, paymentFrecuency: 12 }, "error"],
+  ["termYears = undefined", { principal: 100000, interestRate: 0.05, termYears: undefined, paymentFrecuency: 12 }, "error"],
+  ["paymentFrecuency = object", { principal: 100000, interestRate: 0.05, termYears: 30, paymentFrecuency: {} }, "error"]
+];
+
+for (const [label, loan, expectedValue] of testCases) {
+  assertFixedPaymentCalculation(label, loan, expectedValue);
+}
