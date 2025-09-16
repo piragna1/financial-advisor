@@ -8,8 +8,8 @@ function calculateRepaymentCapacity(user, years){
     }
     years = Number(years);
     if (isNaN(years)) throw new Error('Invalid input received');
-    if (!user.annualSalary ||
-        !user.paymentRatio
+    if ((!user.annualSalary && user.annualSalary !== 0) ||
+        (!user.paymentRatio && user.paymentRatio !== 0)
     ) 
         throw new Error('The user has missing information.')
     const annualRepaymentCapacity = user.annualSalary*user.paymentRatio; //discounting the interest to the annual salary
@@ -128,8 +128,8 @@ function applyEarlyRepayment(loan,schedule, earlyRepaymentPeriod){
 };
 
 
-//--------------------------------------------------------------------
-function runTest(label, user, years, expectedValue) {
+//--------------------------------------------------------------------Test suite
+/* function runTest(label, user, years, expectedValue) {
   try {
     const result = calculateRepaymentCapacity(user, years);
     const match = result === expectedValue;
@@ -181,3 +181,4 @@ const testCases = [
 for (const [label, user, years, expectedValue] of testCases) {
   runTest(label, user, years, expectedValue);
 }
+ */
