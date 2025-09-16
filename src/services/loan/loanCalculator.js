@@ -6,6 +6,8 @@ function calculateRepaymentCapacity(user, years){
     if (years <=0 || years >= 30){
         throw new Error('Invalid input received.');
     }
+    years = Number(years);
+    if (isNaN(years)) throw new Error('Invalid input received');
     const annualRepaymentCapacity = user.annualSalary*user.paymentRatio; //discounting the interest to the annual salary
     //annualRepaymentCapacity * years = maxRepaymentCapacity
     const repaymentCapacity = annualRepaymentCapacity*years;
@@ -158,7 +160,7 @@ const testCases = [
   // ❌ years malformado
   ["years = null", validUser, null, "error"],
   ["years = undefined", validUser, undefined, "error"],
-  ["years = string", validUser, "10", "error"],
+  ["years = string", validUser, "10", 150000],
   ["years = object", validUser, { years: 10 }, "error"],
 
   // ❌ user malformado
