@@ -182,3 +182,57 @@ for (const [label, user, years, expectedValue] of testCases) {
   runTest(label, user, years, expectedValue);
 }
  */
+
+//-------
+
+import { calculateMaxLoanCapacity } from "../services/loan/loanCalculator.js"; // ajustá el path si es necesario
+
+function assertMaxLoanCapacityCalculation(label, loan, expectedValue) {
+  try {
+    const result = calculateMaxLoanCapacity(loan);
+    const match = result === expectedValue;
+    if (match) {
+      console.log(`✅ ${label} → result: ${result}`);
+    } else {
+      console.error(`❌ ${label} → expected: ${expectedValue}, got: ${result}`);
+    }
+  } catch (err) {
+    if (expectedValue === "error") {
+      console.log(`✅ ${label} → threw error`);
+    } else {
+      console.error(`❌ ${label} → threw error unexpectedly`);
+    }
+  }
+}
+
+const testCases = [
+  // ✅ Casos válidos
+  ["valid input (repayment 100k, rate 0.05)", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: 0.05 }, 95238.09523809524],
+  ["valid input (repayment 50k, rate 0.1)", { repaymentCapacity: 50000, loanTermYears: 5, interestRate: 0.1 }, 45454.545454545456],
+  ["valid input (repayment 1, rate 0.01)", { repaymentCapacity: 1, loanTermYears: 1, interestRate: 0.01 }, 0.9900990099009901],
+
+  // ❌ Valores extremos
+  ["interestRate = 1", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: 1 }, 50000],
+  ["interestRate = 0.0001", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: 0.0001 }, 99990.0009999],
+
+  // ❌ Valores inválidos
+  ["repaymentCapacity = 0", { repaymentCapacity: 0, loanTermYears: 10, interestRate: 0.05 }, "error"],
+  ["loanTermYears = 0", { repaymentCapacity: 100000, loanTermYears: 0, interestRate: 0.05 }, "error"],
+  ["interestRate = 0", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: 0 }, "error"],
+  ["repaymentCapacity = -100", { repaymentCapacity: -100, loanTermYears: 10, interestRate: 0.05 }, "error"],
+  ["interestRate = -0.05", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: -0.05 }, "error"],
+
+  // ❌ Campos faltantes
+  ["missing repaymentCapacity", { loanTermYears: 10, interestRate: 0.05 }, "error"],
+  ["missing loanTermYears", { repaymentCapacity: 100000, interestRate: 0.05 }, "error"],
+  ["missing interestRate", { repaymentCapacity: 100000, loanTermYears: 10 }, "error"],
+
+  // ❌ Tipos incorrectos
+  ["repaymentCapacity = '100000'", { repaymentCapacity: "100000", loanTermYears: 10, interestRate: 0.05 }, "error"],
+  ["interestRate = '0.05'", { repaymentCapacity: 100000, loanTermYears: 10, interestRate: "0.05" }, "error"],
+  ["loanTermYears = '10'", { repaymentCapacity: 100000, loanTermYears: "10", interestRate: 0.05 }, "error"]
+];
+
+for (const [label, loan, expectedValue] of testCases) {
+  assertMaxLoanCapacityCalculation(label, loan, expectedValue);
+}
