@@ -96,7 +96,15 @@ C:.
 │   │       registerUser.mjs (✅)
 │   │
 │   ├───loan
-│   │       loanCalculator.js (❌)-----> working on it now
+│   │       loanCalculator.js (
+  ❌ calculateRepaymentCapacity-----> working on it now
+  ❌calculateMaxLoanCapacity
+  ❌calculateCompoundInterest
+  ❌fixedPaymentCalculation
+  ❌generateAmortizationSchedule
+  ❌calculateInterestSaving
+  ❌applyEarlyRepayment
+  )
 │   │
 │   └───user
 │           generateUserId.js (✅)
