@@ -77,8 +77,8 @@ C:.
   ✅findUserByEmail
   ✅findUserById
   ✅saveUser
-  ❌listUsers -----> working on it now
-  ❌deleteUser
+  ✅listUsers 
+  ❌deleteUser-----> working on it now
    5 inner functions)
 │
 ├───routes
