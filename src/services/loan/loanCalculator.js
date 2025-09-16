@@ -186,9 +186,8 @@ for (const [label, user, years, expectedValue] of testCases) {
   runTest(label, user, years, expectedValue);
 }
  */
-
 //-------
-
+/* 
 function assertMaxLoanCapacityCalculation(label, loan, expectedValue) {
   try {
     const result = calculateMaxLoanCapacity(loan);
@@ -239,3 +238,5 @@ const testCases = [
 for (const [label, loan, expectedValue] of testCases) {
   assertMaxLoanCapacityCalculation(label, loan, expectedValue);
 }
+ */
+//-------
