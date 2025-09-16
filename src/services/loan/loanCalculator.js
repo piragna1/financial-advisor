@@ -20,10 +20,14 @@ function calculateRepaymentCapacity(user, years){
 }
 
 function calculateMaxLoanCapacity(loan){
-    const {repaymentCapacity, loanTermYears, interestRate} = loan;
-    if (repaymentCapacity == null || loanTermYears == null ||interestRate == null) {
+    const repaymentCapacity = Number(loan.repaymentCapacity);
+    const loanTermYears = Number(loan.loanTermYears);
+    const interestRate = Number(loan.interestRate);
+    if (!repaymentCapacity  || !loanTermYears ||!interestRate) {
         throw new Error('Invalid input received.');
     }
+    if (isNaN(repaymentCapacity) || isNaN(loanTermYears) || isNaN(interestRate))
+        throw new Error('Invalid input received.');
     if (repaymentCapacity <=0 || loanTermYears <=0 || interestRate <= 0){
         throw new Error('Invalid input received.')
     }
