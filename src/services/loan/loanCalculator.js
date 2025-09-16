@@ -18,7 +18,6 @@ function calculateRepaymentCapacity(user, years){
     console.log(`User repayment capacity over ${years} years: $${repaymentCapacity.toLocaleString()}`);
     return repaymentCapacity;
 }
-
 function calculateMaxLoanCapacity(loan){
     const repaymentCapacity = Number(loan.repaymentCapacity);
     const loanTermYears = Number(loan.loanTermYears);
@@ -35,7 +34,6 @@ function calculateMaxLoanCapacity(loan){
     console.log(`User max loan capacity over ${loanTermYears} years: $${maxLoanCapacity.toLocaleString()} with an interest rate of % ${interestRate*100}.`);
     return Math.round(maxLoanCapacity).toFixed(0);
 };
-
 function calculateCompoundInterest(loan){
     const { principal, annualRate, years, compoundsPerYear } = loan;
     if (
@@ -52,8 +50,8 @@ function calculateCompoundInterest(loan){
     const totalAmount = principal * Math.pow(1 + ratePerPeriod, totalPeriods);
 
     return {
-        totalAmount:parseFloat(totalAmount.toFixed(2)),
-        interestAccrued: parseFloat((totalAmount-principal).toFixed(2))       
+        totalAmount:Math.round(parseFloat(totalAmount)).toFixed(0),
+        interestAccrued: Math.round(parseFloat((totalAmount-principal))).toFixed(2)   
     };
 }
 
@@ -240,3 +238,54 @@ for (const [label, loan, expectedValue] of testCases) {
 }
  */
 //-------
+function assertCompoundInterestCalculation(label, loan, expected) {
+  try {
+    const result = calculateCompoundInterest(loan);
+    const match =
+      result.totalAmount === expected.totalAmount &&
+      result.interestAccrued === expected.interestAccrued;
+
+    if (match) {
+      console.log(`✅ ${label} → total: ${result.totalAmount}, interest: ${result.interestAccrued}`);
+    } else {
+      console.error(`❌ ${label} → expected total: ${expected.totalAmount}, interest: ${expected.interestAccrued}, got total: ${result.totalAmount}, interest: ${result.interestAccrued}`);
+    }
+  } catch (err) {
+    if (expected === "error") {
+      console.log(`✅ ${label} → threw error`);
+    } else {
+      console.error(`❌ ${label} → threw error unexpectedly`);
+    }
+  }
+}
+
+const testCases = [
+  // ✅ Casos válidos
+  ["standard input", { principal: 10000, annualRate: 0.05, years: 5, compoundsPerYear: 12 }, { totalAmount: 12834, interestAccrued: 2834 }],
+  ["quarterly compounding", { principal: 5000, annualRate: 0.04, years: 10, compoundsPerYear: 4 }, { totalAmount: 7401.22, interestAccrued: 2401.22 }],
+  ["annual compounding", { principal: 2000, annualRate: 0.06, years: 3, compoundsPerYear: 1 }, { totalAmount: 2382.03, interestAccrued: 382.03 }],
+  ["daily compounding", { principal: 1000, annualRate: 0.03, years: 1, compoundsPerYear: 365 }, { totalAmount: 1030.45, interestAccrued: 30.45 }],
+
+  // ✅ Tipos convertibles
+  ["string inputs", { principal: "10000", annualRate: "0.05", years: "5", compoundsPerYear: "12" }, { totalAmount: 12833.59, interestAccrued: 2833.59 }],
+
+  // ❌ Valores inválidos
+  ["principal = 0", { principal: 0, annualRate: 0.05, years: 5, compoundsPerYear: 12 }, "error"],
+  ["annualRate = 0", { principal: 10000, annualRate: 0, years: 5, compoundsPerYear: 12 }, "error"],
+  ["years = 0", { principal: 10000, annualRate: 0.05, years: 0, compoundsPerYear: 12 }, "error"],
+  ["compoundsPerYear = 0", { principal: 10000, annualRate: 0.05, years: 5, compoundsPerYear: 0 }, "error"],
+  ["negative principal", { principal: -10000, annualRate: 0.05, years: 5, compoundsPerYear: 12 }, "error"],
+  ["negative rate", { principal: 10000, annualRate: -0.05, years: 5, compoundsPerYear: 12 }, "error"],
+  ["negative years", { principal: 10000, annualRate: 0.05, years: -5, compoundsPerYear: 12 }, "error"],
+  ["negative compounds", { principal: 10000, annualRate: 0.05, years: 5, compoundsPerYear: -12 }, "error"],
+
+  // ❌ Tipos no convertibles
+  ["principal = 'abc'", { principal: "abc", annualRate: 0.05, years: 5, compoundsPerYear: 12 }, "error"],
+  ["annualRate = null", { principal: 10000, annualRate: null, years: 5, compoundsPerYear: 12 }, "error"],
+  ["years = undefined", { principal: 10000, annualRate: 0.05, years: undefined, compoundsPerYear: 12 }, "error"],
+  ["compoundsPerYear = object", { principal: 10000, annualRate: 0.05, years: 5, compoundsPerYear: {} }, "error"]
+];
+
+for (const [label, loan, expected] of testCases) {
+  assertCompoundInterestCalculation(label, loan, expected);
+}
