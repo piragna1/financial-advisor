@@ -35,7 +35,19 @@ function calculateMaxLoanCapacity(loan){
     return Math.round(maxLoanCapacity).toFixed(0);
 };
 function calculateCompoundInterest(loan){
-    const { principal, annualRate, years, compoundsPerYear } = loan;
+    const principal = Number(loan.principal);
+    const annualRate = Number(loan.annualRate);
+    const years = Number(loan.years);
+    const compoundsPerYear = Number(loan.compoundsPerYear);
+    if (!principal || !annualRate || !years || !compoundsPerYear)
+        throw new Error('Invalid input received.');
+    if (
+        isNaN(principal) ||
+        isNaN(annualRate) || 
+        isNaN(years) || 
+        isNaN(compoundsPerYear)
+    )
+        throw new Error('Invalid input received.');
     if (
         principal<=0 ||
         annualRate <= 0 ||
@@ -50,11 +62,10 @@ function calculateCompoundInterest(loan){
     const totalAmount = principal * Math.pow(1 + ratePerPeriod, totalPeriods);
 
     return {
-        totalAmount:Math.round(parseFloat(totalAmount)).toFixed(0),
-        interestAccrued: Math.round(parseFloat((totalAmount-principal))).toFixed(2)   
+        totalAmount:Math.round(parseFloat(totalAmount)),
+        interestAccrued: Math.round(parseFloat((totalAmount-principal))) 
     };
 }
-
 
 function fixedPaymentCalculation(loan){
     console.log('Entered in fixedPaymentCalculation execution:')
@@ -262,12 +273,12 @@ function assertCompoundInterestCalculation(label, loan, expected) {
 const testCases = [
   // ✅ Casos válidos
   ["standard input", { principal: 10000, annualRate: 0.05, years: 5, compoundsPerYear: 12 }, { totalAmount: 12834, interestAccrued: 2834 }],
-  ["quarterly compounding", { principal: 5000, annualRate: 0.04, years: 10, compoundsPerYear: 4 }, { totalAmount: 7401.22, interestAccrued: 2401.22 }],
-  ["annual compounding", { principal: 2000, annualRate: 0.06, years: 3, compoundsPerYear: 1 }, { totalAmount: 2382.03, interestAccrued: 382.03 }],
-  ["daily compounding", { principal: 1000, annualRate: 0.03, years: 1, compoundsPerYear: 365 }, { totalAmount: 1030.45, interestAccrued: 30.45 }],
+  ["quarterly compounding", { principal: 5000, annualRate: 0.04, years: 10, compoundsPerYear: 4 }, { totalAmount: 7444, interestAccrued: 2444 }],
+  ["annual compounding", { principal: 2000, annualRate: 0.06, years: 3, compoundsPerYear: 1 }, { totalAmount: 2382, interestAccrued: 382 }],
+  ["daily compounding", { principal: 1000, annualRate: 0.03, years: 1, compoundsPerYear: 365 }, { totalAmount: 1030, interestAccrued: 30 }],
 
   // ✅ Tipos convertibles
-  ["string inputs", { principal: "10000", annualRate: "0.05", years: "5", compoundsPerYear: "12" }, { totalAmount: 12833.59, interestAccrued: 2833.59 }],
+  ["string inputs", { principal: "10000", annualRate: "0.05", years: "5", compoundsPerYear: "12" }, { totalAmount: 12834, interestAccrued: 2834 }],
 
   // ❌ Valores inválidos
   ["principal = 0", { principal: 0, annualRate: 0.05, years: 5, compoundsPerYear: 12 }, "error"],
