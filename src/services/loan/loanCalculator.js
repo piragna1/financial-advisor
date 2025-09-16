@@ -114,12 +114,36 @@ function fixedPaymentCalculation(loan) {
             principal:principalPaid,
             balance:Math.balance(balance,0)
         }*/
-
 function generateAmortizationSchedule(loan) {
-  const { principal, interestRate, termYears, paymentFrecuency } = loan;
+  const principal = Number(loan.principal);
+  const interestRate = Number(loan.interestRate);
+  const termYears = Number(loan.termYears);
+  const paymentFrecuency = Number(loan.paymentFrecuency);
+
+  //validations
+  if (!principal || !interestRate || !termYears || !paymentFrecuency)
+    throw new Error("Invalid input received.");
+  if (
+    isNaN(principal) ||
+    isNaN(interestRate) ||
+    isNaN(termYears) ||
+    isNaN(paymentFrecuency)
+  )
+    throw new Error("Invalid input received.");
+  if (
+    principal <= 0 ||
+    interestRate <= 0 ||
+    termYears <= 0 ||
+    paymentFrecuency <= 0
+  )
+    throw new Error("Invalid input received.");
+
   const schedule = [];
+
   const payment = fixedPaymentCalculation(loan);
+
   let balance = principal;
+  
   for (let i = 1; i < termYears * paymentFrecuency; i++) {
     const interest = balance * (interestRate / paymentFrecuency);
     const principalPaid = payment - interest;
