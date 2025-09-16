@@ -1,118 +1,84 @@
-function calculateRepaymentCapacity(user, years){
-    //Supposing that the maximum term time period is 30 years
-    if (user == null || years == null){
-        throw new Error('Invalid input received.');
-    }
-    if (years <=0 || years >= 30){
-        throw new Error('Invalid input received.');
-    }
-    years = Number(years);
-    if (isNaN(years)) throw new Error('Invalid input received');
-    if ((!user.annualSalary && user.annualSalary !== 0) ||
-        (!user.paymentRatio && user.paymentRatio !== 0)
-    ) 
-        throw new Error('The user has missing information.')
-    const annualRepaymentCapacity = user.annualSalary*user.paymentRatio; //discounting the interest to the annual salary
-    //annualRepaymentCapacity * years = maxRepaymentCapacity
-    const repaymentCapacity = annualRepaymentCapacity*years;
-    console.log(`User repayment capacity over ${years} years: $${repaymentCapacity.toLocaleString()}`);
-    return repaymentCapacity;
+function calculateRepaymentCapacity(user, years) {
+  //Supposing that the maximum term time period is 30 years
+  if (user == null || years == null) {
+    throw new Error("Invalid input received.");
+  }
+  if (years <= 0 || years >= 30) {
+    throw new Error("Invalid input received.");
+  }
+  years = Number(years);
+  if (isNaN(years)) throw new Error("Invalid input received");
+  if (
+    (!user.annualSalary && user.annualSalary !== 0) ||
+    (!user.paymentRatio && user.paymentRatio !== 0)
+  )
+    throw new Error("The user has missing information.");
+  const annualRepaymentCapacity = user.annualSalary * user.paymentRatio; //discounting the interest to the annual salary
+  //annualRepaymentCapacity * years = maxRepaymentCapacity
+  const repaymentCapacity = annualRepaymentCapacity * years;
+  console.log(
+    `User repayment capacity over ${years} years: $${repaymentCapacity.toLocaleString()}`
+  );
+  return repaymentCapacity;
 }
-function calculateMaxLoanCapacity(loan){
-    const repaymentCapacity = Number(loan.repaymentCapacity);
-    const loanTermYears = Number(loan.loanTermYears);
-    const interestRate = Number(loan.interestRate);
-    if (!repaymentCapacity  || !loanTermYears ||!interestRate) {
-        throw new Error('Invalid input received.');
-    }
-    if (isNaN(repaymentCapacity) || isNaN(loanTermYears) || isNaN(interestRate))
-        throw new Error('Invalid input received.');
-    if (repaymentCapacity <=0 || loanTermYears <=0 || interestRate <= 0){
-        throw new Error('Invalid input received.')
-    }
-    const maxLoanCapacity = repaymentCapacity/(1+interestRate);
-    console.log(`User max loan capacity over ${loanTermYears} years: $${maxLoanCapacity.toLocaleString()} with an interest rate of % ${interestRate*100}.`);
-    return Math.round(maxLoanCapacity).toFixed(0);
-};
-function calculateCompoundInterest(loan){
-    const principal = Number(loan.principal);
-    const annualRate = Number(loan.annualRate);
-    const years = Number(loan.years);
-    const compoundsPerYear = Number(loan.compoundsPerYear);
-    if (!principal || !annualRate || !years || !compoundsPerYear)
-        throw new Error('Invalid input received.');
-    if (
-        isNaN(principal) ||
-        isNaN(annualRate) || 
-        isNaN(years) || 
-        isNaN(compoundsPerYear)
-    )
-        throw new Error('Invalid input received.');
-    if (
-        principal<=0 ||
-        annualRate <= 0 ||
-        years <= 0 ||
-        compoundsPerYear <=0
-    ) {
-        throw new Error('Invalid input received.');
-    };
-
-    const ratePerPeriod = annualRate/compoundsPerYear;
-    const totalPeriods = compoundsPerYear * years;
-    const totalAmount = principal * Math.pow(1 + ratePerPeriod, totalPeriods);
-
-    return {
-        totalAmount:Math.round(parseFloat(totalAmount)),
-        interestAccrued: Math.round(parseFloat((totalAmount-principal))) 
-    };
-}
-function fixedPaymentCalculation(loan){
-    console.log('Entered in fixedPaymentCalculation execution:')
-    const principal = Number(principal);
-    const interestRate = Number(interestRate);
-    const termYears = Number(termYears);
-    const paymentFrecuency = Number(paymentFrecuency);
-    if (!principal || !interestRate || !termYears || !paymentFrecuency)
-        throw new Error("Invalid input received.");
-    if (
-        isNaN(principal) ||
-        isNaN(interestRate) || 
-        isNaN(termYears) ||
-        isNaN(paymentFrecuency)
-    )
-        throw new Error("Invalid input received.");
-    if (
-        principal <= 0 ||
-        interestRate <= 0 ||
-        termYears <= 0 ||
-        paymentFrecuency <= 0
-    )
-        throw new Error ("Invalid input received.");
-
-    const r = interestRate/paymentFrecuency; //Rate value for individual periods.
-    const n = termYears * paymentFrecuency; //Total number of payments
-    
-    //Loan Payment Formula:
-    console.log('Loan Payment Formula result:',(r* principal) / (1- Math.pow(1+r, -n)))
-    return (r* principal) / (1- Math.pow(1+r, -n));
-}
-
-
-/* paymentBreakdownOnPeriod: 
-{
-            period:i,
-            payment:payment,
-            interest:interest,
-            principal:principalPaid,
-            balance:Math.balance(balance,0)
-        }*/
-function generateAmortizationSchedule(loan) {
-  const principal = Number(loan.principal);
+function calculateMaxLoanCapacity(loan) {
+  const repaymentCapacity = Number(loan.repaymentCapacity);
+  const loanTermYears = Number(loan.loanTermYears);
   const interestRate = Number(loan.interestRate);
-  const termYears = Number(loan.termYears);
-  const paymentFrecuency = Number(loan.paymentFrecuency);
+  if (!repaymentCapacity || !loanTermYears || !interestRate) {
+    throw new Error("Invalid input received.");
+  }
+  if (isNaN(repaymentCapacity) || isNaN(loanTermYears) || isNaN(interestRate))
+    throw new Error("Invalid input received.");
+  if (repaymentCapacity <= 0 || loanTermYears <= 0 || interestRate <= 0) {
+    throw new Error("Invalid input received.");
+  }
+  const maxLoanCapacity = repaymentCapacity / (1 + interestRate);
+  console.log(
+    `User max loan capacity over ${loanTermYears} years: $${maxLoanCapacity.toLocaleString()} with an interest rate of % ${
+      interestRate * 100
+    }.`
+  );
+  return Math.round(maxLoanCapacity).toFixed(0);
+}
+function calculateCompoundInterest(loan) {
+  const principal = Number(loan.principal);
+  const annualRate = Number(loan.annualRate);
+  const years = Number(loan.years);
+  const compoundsPerYear = Number(loan.compoundsPerYear);
+  if (!principal || !annualRate || !years || !compoundsPerYear)
+    throw new Error("Invalid input received.");
+  if (
+    isNaN(principal) ||
+    isNaN(annualRate) ||
+    isNaN(years) ||
+    isNaN(compoundsPerYear)
+  )
+    throw new Error("Invalid input received.");
+  if (
+    principal <= 0 ||
+    annualRate <= 0 ||
+    years <= 0 ||
+    compoundsPerYear <= 0
+  ) {
+    throw new Error("Invalid input received.");
+  }
 
-  //validations
+  const ratePerPeriod = annualRate / compoundsPerYear;
+  const totalPeriods = compoundsPerYear * years;
+  const totalAmount = principal * Math.pow(1 + ratePerPeriod, totalPeriods);
+
+  return {
+    totalAmount: Math.round(parseFloat(totalAmount)),
+    interestAccrued: Math.round(parseFloat(totalAmount - principal)),
+  };
+}
+function fixedPaymentCalculation(loan) {
+  console.log("Entered in fixedPaymentCalculation execution:");
+  const principal = Number(principal);
+  const interestRate = Number(interestRate);
+  const termYears = Number(termYears);
+  const paymentFrecuency = Number(paymentFrecuency);
   if (!principal || !interestRate || !termYears || !paymentFrecuency)
     throw new Error("Invalid input received.");
   if (
@@ -130,12 +96,57 @@ function generateAmortizationSchedule(loan) {
   )
     throw new Error("Invalid input received.");
 
+  const r = interestRate / paymentFrecuency; //Rate value for individual periods.
+  const n = termYears * paymentFrecuency; //Total number of payments
+
+  //Loan Payment Formula:
+  console.log(
+    "Loan Payment Formula result:",
+    (r * principal) / (1 - Math.pow(1 + r, -n))
+  );
+  return (r * principal) / (1 - Math.pow(1 + r, -n));
+}
+/* paymentBreakdownOnPeriod: 
+{
+            period:i,
+            payment:payment,
+            interest:interest,
+            principal:principalPaid,
+            balance:Math.balance(balance,0)
+        }*/
+function generateAmortizationSchedule(loan) {
+  const principal = Number(loan.principal);
+  const interestRate = Number(loan.interestRate);
+  const termYears = Number(loan.termYears);
+  const paymentFrecuency = Number(loan.paymentFrecuency);
+  console.log("a");
+
+  //validations
+  if (!principal || !interestRate || !termYears || !paymentFrecuency)
+    throw new Error("Invalid input received.");
+  console.log("b");
+  if (
+    isNaN(principal) ||
+    isNaN(interestRate) ||
+    isNaN(termYears) ||
+    isNaN(paymentFrecuency)
+  )
+    throw new Error("Invalid input received.");
+
+  if (
+    principal <= 0 ||
+    interestRate <= 0 ||
+    termYears <= 0 ||
+    paymentFrecuency <= 0
+  )
+    throw new Error("Invalid input received.");
+
   const schedule = [];
 
   const payment = fixedPaymentCalculation(loan);
 
   let balance = principal;
-  
+
   for (let i = 1; i < termYears * paymentFrecuency; i++) {
     const interest = balance * (interestRate / paymentFrecuency);
     const principalPaid = payment - interest;
@@ -150,39 +161,33 @@ function generateAmortizationSchedule(loan) {
   }
   return schedule;
 }
-
-function calculateInterestSaving(schedule, earlyRepaymentPeriod){
-    const futurePayments = schedule.slice(earlyRepaymentPeriod);
-    const interestSaved = futurePayments.reduce((sum, period)=>sum+=period.interest,0);
-    return parseFloat(interestSaved).toFixed(2);
+function calculateInterestSaving(schedule, earlyRepaymentPeriod) {
+  const futurePayments = schedule.slice(earlyRepaymentPeriod);
+  const interestSaved = futurePayments.reduce(
+    (sum, period) => (sum += period.interest),
+    0
+  );
+  return parseFloat(interestSaved).toFixed(2);
 }
+function applyEarlyRepayment(loan, schedule, earlyRepaymentPeriod) {
+  console.log("loan:", loan);
+  console.log("schedule:", schedule);
+  console.log("earlyRepaymentPeriod:", earlyRepaymentPeriod);
 
-
-
-function applyEarlyRepayment(loan,schedule, earlyRepaymentPeriod){
-
-    console.log('loan:',loan);
-    console.log('schedule:',schedule);
-    console.log('earlyRepaymentPeriod:',earlyRepaymentPeriod);
-
-
-
-    const scheduleCopy = schedule.slice(0, earlyRepaymentPeriod-1);
-    const periodBreakdown = schedule[earlyRepaymentPeriod-1];
-    const periodBreakdownCopy = {
-        period:earlyRepaymentPeriod,
-        payment:periodBreakdown.balance,
-        interest:0, // I am not sure here
-        principal:periodBreakdown.balance, //100% of payment is under principal?
-        balance:0//reduce the current remaining balance to 0
-    };
-    scheduleCopy[earlyRepaymentPeriod-1] = periodBreakdownCopy;
-    loan['earlyRepaymentPeriod'] = earlyRepaymentPeriod;
-    const interestSaved = calculateInterestSaving(schedule,earlyRepaymentPeriod);
-    return scheduleCopy;
-};
-
-
+  const scheduleCopy = schedule.slice(0, earlyRepaymentPeriod - 1);
+  const periodBreakdown = schedule[earlyRepaymentPeriod - 1];
+  const periodBreakdownCopy = {
+    period: earlyRepaymentPeriod,
+    payment: periodBreakdown.balance,
+    interest: 0, // I am not sure here
+    principal: periodBreakdown.balance, //100% of payment is under principal?
+    balance: 0, //reduce the current remaining balance to 0
+  };
+  scheduleCopy[earlyRepaymentPeriod - 1] = periodBreakdownCopy;
+  loan["earlyRepaymentPeriod"] = earlyRepaymentPeriod;
+  const interestSaved = calculateInterestSaving(schedule, earlyRepaymentPeriod);
+  return scheduleCopy;
+}
 //--------------------------------------------------------------------Test suite
 /* function runTest(label, user, years, expectedValue) {
   try {
@@ -343,7 +348,7 @@ for (const [label, loan, expected] of testCases) {
   assertCompoundInterestCalculation(label, loan, expected);
 } */
 //-------
-function assertFixedPaymentCalculation(label, loan, expectedValue) {
+/*function assertFixedPaymentCalculation(label, loan, expectedValue) {
   try {
     const result = fixedPaymentCalculation(loan);
     const match = parseFloat(result.toFixed(2)) === expectedValue;
@@ -360,7 +365,6 @@ function assertFixedPaymentCalculation(label, loan, expectedValue) {
     }
   }
 }
-
 const testCases = [
   // ✅ Casos válidos
   ["standard input (monthly)", { principal: 100000, interestRate: 0.05, termYears: 30, paymentFrecuency: 12 }, 536.82],
@@ -390,8 +394,168 @@ const testCases = [
 for (const [label, loan, expectedValue] of testCases) {
   assertFixedPaymentCalculation(label, loan, expectedValue);
 }
-<<<<<<< HEAD
- */
+*/
 //-------
-=======
->>>>>>> parent of 21f5cc5 (Updates:)
+
+function assertScheduleStructure(label, loan, expectedLength) {
+  try {
+    const schedule = generateAmortizationSchedule(loan);
+    const match = Array.isArray(schedule) && schedule.length === expectedLength;
+    if (!match) {
+      console.error(
+        `❌ ${label} → expected length: ${expectedLength}, got: ${schedule.length}`
+      );
+      return;
+    }
+
+    const sample = schedule[0];
+    const keys = ["period", "payment", "interest", "principal", "balance"];
+    const hasAllKeys = keys.every((k) => Object.hasOwn(sample, k));
+    if (!hasAllKeys) {
+      console.error(`❌ ${label} → missing keys in schedule entry`);
+      return;
+    }
+
+    console.log(`✅ ${label} → schedule length: ${expectedLength}, keys OK`);
+  } catch (err) {
+    if (expectedLength === "error") {
+      console.log(`✅ ${label} → threw error`);
+    } else {
+      console.error(`❌ ${label} → threw error unexpectedly`);
+    }
+  }
+}
+
+const testCases = [
+  // ✅ Casos válidos
+  [
+    "standard input (monthly, 30y)",
+    {
+      principal: 100000,
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    360,
+  ],
+  [
+    "quarterly payments (15y)",
+    {
+      principal: 50000,
+      interestRate: 0.04,
+      termYears: 15,
+      paymentFrecuency: 4,
+    },
+    60,
+  ],
+  [
+    "annual payments (10y)",
+    {
+      principal: 20000,
+      interestRate: 0.06,
+      termYears: 10,
+      paymentFrecuency: 1,
+    },
+    10,
+  ],
+
+  // ✅ Tipos convertibles
+  [
+    "string inputs",
+    {
+      principal: "100000",
+      interestRate: "0.05",
+      termYears: "30",
+      paymentFrecuency: "12",
+    },
+    360,
+  ],
+
+  // ❌ Valores inválidos
+  [
+    "principal = 0",
+    { principal: 0, interestRate: 0.05, termYears: 30, paymentFrecuency: 12 },
+    "error",
+  ],
+  [
+    "interestRate = 0",
+    { principal: 100000, interestRate: 0, termYears: 30, paymentFrecuency: 12 },
+    "error",
+  ],
+  [
+    "termYears = 0",
+    {
+      principal: 100000,
+      interestRate: 0.05,
+      termYears: 0,
+      paymentFrecuency: 12,
+    },
+    "error",
+  ],
+  [
+    "paymentFrecuency = 0",
+    {
+      principal: 100000,
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: 0,
+    },
+    "error",
+  ],
+  [
+    "negative principal",
+    {
+      principal: -100000,
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    "error",
+  ],
+
+  // ❌ Tipos no convertibles
+  [
+    "principal = 'abc'",
+    {
+      principal: "abc",
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    "error",
+  ],
+  [
+    "interestRate = null",
+    {
+      principal: 100000,
+      interestRate: null,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    "error",
+  ],
+  [
+    "termYears = undefined",
+    {
+      principal: 100000,
+      interestRate: 0.05,
+      termYears: undefined,
+      paymentFrecuency: 12,
+    },
+    "error",
+  ],
+  [
+    "paymentFrecuency = object",
+    {
+      principal: 100000,
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: {},
+    },
+    "error",
+  ],
+];
+
+for (const [label, loan, expectedLength] of testCases) {
+  assertScheduleStructure(label, loan, expectedLength);
+}
