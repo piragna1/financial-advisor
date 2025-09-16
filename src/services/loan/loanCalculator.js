@@ -66,10 +66,29 @@ function calculateCompoundInterest(loan){
         interestAccrued: Math.round(parseFloat((totalAmount-principal))) 
     };
 }
-
 function fixedPaymentCalculation(loan){
     console.log('Entered in fixedPaymentCalculation execution:')
-    const {principal, interestRate, termYears, paymentFrecuency} = loan;
+    const principal = Number(principal);
+    const interestRate = Number(interestRate);
+    const termYears = Number(termYears);
+    const paymentFrecuency = Number(paymentFrecuency);
+    if (!principal || !interestRate || !termYears || !paymentFrecuency)
+        throw new Error("Invalid input received.");
+    if (
+        isNaN(principal) ||
+        isNaN(interestRate) || 
+        isNaN(termYears) ||
+        isNaN(paymentFrecuency)
+    )
+        throw new Error("Invalid input received.");
+    if (
+        principal <= 0 ||
+        interestRate <= 0 ||
+        termYears <= 0 ||
+        paymentFrecuency <= 0
+    )
+        throw new Error ("Invalid input received.");
+        
     const r = interestRate/paymentFrecuency; //Rate value for individual periods.
     const n = termYears * paymentFrecuency; //Total number of payments
     
