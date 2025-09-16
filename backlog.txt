@@ -97,8 +97,8 @@ C:.
 │   │
 │   ├───loan
 │   │       loanCalculator.js (
-  ❌ calculateRepaymentCapacity-----> working on it now
-  ❌calculateMaxLoanCapacity
+  ✅ calculateRepaymentCapacity
+  ❌calculateMaxLoanCapacity -----> working on it now
   ❌calculateCompoundInterest
   ❌fixedPaymentCalculation
   ❌generateAmortizationSchedule
