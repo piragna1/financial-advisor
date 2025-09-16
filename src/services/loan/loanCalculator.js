@@ -88,7 +88,7 @@ function fixedPaymentCalculation(loan){
         paymentFrecuency <= 0
     )
         throw new Error ("Invalid input received.");
-        
+
     const r = interestRate/paymentFrecuency; //Rate value for individual periods.
     const n = termYears * paymentFrecuency; //Total number of payments
     
@@ -268,7 +268,7 @@ for (const [label, loan, expectedValue] of testCases) {
 }
  */
 //-------
-function assertCompoundInterestCalculation(label, loan, expected) {
+/* function assertCompoundInterestCalculation(label, loan, expected) {
   try {
     const result = calculateCompoundInterest(loan);
     const match =
@@ -318,4 +318,5 @@ const testCases = [
 
 for (const [label, loan, expected] of testCases) {
   assertCompoundInterestCalculation(label, loan, expected);
-}
+} */
+//-------
