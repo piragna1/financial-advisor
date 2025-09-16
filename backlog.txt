@@ -100,8 +100,8 @@ C:.
   ✅ calculateRepaymentCapacity
   ✅calculateMaxLoanCapacity
   ✅calculateCompoundInterest
-  ✅fixedPaymentCalculation
-  ❌generateAmortizationSchedule -----> working on it now
+  ❌fixedPaymentCalculation -----> working on it now
+  ❌generateAmortizationSchedule
   ❌calculateInterestSaving
   ❌applyEarlyRepayment
   )
