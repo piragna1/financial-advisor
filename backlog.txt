@@ -75,9 +75,9 @@ C:.
 ├───repositories
 │       userRepo.js (
   ✅findUserByEmail
-  ❌findUserById-----> working on it now
+  ✅findUserById
   ✅saveUser
-  ❌listUsers
+  ❌listUsers -----> working on it now
   ❌deleteUser
    5 inner functions)
 │
