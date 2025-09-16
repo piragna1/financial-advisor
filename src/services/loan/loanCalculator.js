@@ -121,40 +121,57 @@ function applyEarlyRepayment(loan,schedule, earlyRepaymentPeriod){
     return scheduleCopy;
 };
 
-//simulation
-const loan = {
-  principal: 100000,
-  interestRate: 0.06,
-  termYears: 2,
-  paymentFrecuency: 12,
-};
 
-const schedule = generateAmortizationSchedule(loan);
-
-const earlyRepaymentPeriod = 12; // after 1 years
-
-const modifiedSchedule = applyEarlyRepayment(loan, schedule, earlyRepaymentPeriod);
-const interestSaved = calculateInterestSaving(schedule, earlyRepaymentPeriod);
-
-console.log("Interest saved:", interestSaved);
-console.log("Modified schedule:", modifiedSchedule.slice(-3)); // last 3 entries
-
-
-
-/*Validation purposes:
-const totalPaid = schedule.reduce((sum, p) => sum + p.payment, 0);
-const totalPrincipal = schedule.reduce((sum, p) => sum + p.principal, 0);
-const totalInterest = schedule.reduce((sum, p) => sum + p.interest, 0);
-totalPaid === totalPrincipal + totalInterest
-payment === principal + interest
-*/
-
-/*Possible additional object: summary
-{
-  totalInterestSaved,
-  earlyRepaymentPeriod,
-  finalPayment,
-  modifiedSchedule
+//--------------------------------------------------------------------
+function runTest(label, user, years, expectedValue) {
+  try {
+    const result = calculateRepaymentCapacity(user, years);
+    const match = result === expectedValue;
+    if (match) {
+      console.log(`✅ ${label} → result: ${result}`);
+    } else {
+      console.error(`❌ ${label} → expected: ${expectedValue}, got: ${result}`);
+    }
+  } catch (err) {
+    if (expectedValue === "error") {
+      console.log(`✅ ${label} → threw error`);
+    } else {
+      console.error(`❌ ${label} → threw error unexpectedly`);
+    }
+  }
 }
 
-*/
+const validUser = { annualSalary: 50000, paymentRatio: 0.3 };
+
+const testCases = [
+  // ✅ Casos válidos
+  ["valid input (10 years)", validUser, 10, 150000],
+  ["valid input (1 year)", validUser, 1, 15000],
+  ["valid input (29 years)", validUser, 29, 435000],
+
+  // ❌ years fuera de rango
+  ["years = 0", validUser, 0, "error"],
+  ["years = 30", validUser, 30, "error"],
+  ["years = -5", validUser, -5, "error"],
+  ["years = 100", validUser, 100, "error"],
+
+  // ❌ years malformado
+  ["years = null", validUser, null, "error"],
+  ["years = undefined", validUser, undefined, "error"],
+  ["years = string", validUser, "10", "error"],
+  ["years = object", validUser, { years: 10 }, "error"],
+
+  // ❌ user malformado
+  ["user = null", null, 10, "error"],
+  ["user = undefined", undefined, 10, "error"],
+  ["user missing annualSalary", { paymentRatio: 0.3 }, 10, "error"],
+  ["user missing paymentRatio", { annualSalary: 50000 }, 10, "error"],
+  ["user with zero salary", { annualSalary: 0, paymentRatio: 0.3 }, 10, 0],
+  ["user with zero ratio", { annualSalary: 50000, paymentRatio: 0 }, 10, 0],
+  ["user with negative salary", { annualSalary: -50000, paymentRatio: 0.3 }, 10, -150000],
+  ["user with negative ratio", { annualSalary: 50000, paymentRatio: -0.3 }, 10, -150000]
+];
+
+for (const [label, user, years, expectedValue] of testCases) {
+  runTest(label, user, years, expectedValue);
+}
