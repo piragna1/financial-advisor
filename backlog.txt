@@ -83,20 +83,20 @@ C:.
 │
 ├───routes
 │   ├───auth
-│   │       auth.route.js (❌)-----> working on it now
+│   │       auth.route.js (❌)(in order to test this it is necessary to connect the methods to a real database.)
 │   │
 │   ├───loan
-│   │       loanRoutes.js (❌)
+│   │       loanRoutes.js (❌) (in order to test this it is necessary to connect the methods to a real database.)
 │   │
 │   └───profile
-│           profile.route.js (❌)
+│           profile.route.js (❌) (in order to test this it is necessary to connect the methods to a real database.)
 │
 ├───services
 │   ├───auth
 │   │       registerUser.mjs (✅)
 │   │
 │   ├───loan
-│   │       loanCalculator.js (❌)
+│   │       loanCalculator.js (❌)-----> working on it now
 │   │
 │   └───user
 │           generateUserId.js (✅)
