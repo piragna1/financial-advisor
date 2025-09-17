@@ -50,7 +50,7 @@ C:.
 │
 ├───errors
 │       AppError.js (✅)
-│       src\errors\authErrors.js (❌) -> working on it now...
+│       src\errors\authErrors.js (✅)
 │       errorRegistry.js (✅) 
 │       mapError.js (✅)
 │       profileErrors.js (✅)
