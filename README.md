@@ -20,5 +20,5 @@ The main idea is to help me (and maybe others) learn the basics of managing pers
 **Personal Finance Advisor**: Create a financial advisor application. Users can input their salary, preferred currency, and desired annual interest rate. The system calculates the maximum loan amount they can obtain, the repayment plan, and the total interest paid over the loan term.
 ##
 ### Summary
-This loan simulation system that handles JWT authentication, works connected to a database, can be reconstructed with Docker and handles http request through api.
+This loan simulation system that handles JWT authentication, works connected to a database, can be reconstructed with Docker and handles http requests through an api.
 ##
