@@ -396,7 +396,7 @@ for (const [label, loan, expectedValue] of testCases) {
 }
 */
 //-------
-
+/* 
 function assertScheduleStructure(label, loan, expectedLength) {
   try {
     const schedule = generateAmortizationSchedule(loan);
@@ -419,6 +419,7 @@ function assertScheduleStructure(label, loan, expectedLength) {
     }
 
     console.log(`✅ ${label} → schedule length: ${expectedLength}, keys OK`);
+    console.log(schedule[schedule.length-1]);
 
   } catch (err) {
     if (expectedLength === "error") {
@@ -430,26 +431,26 @@ function assertScheduleStructure(label, loan, expectedLength) {
 }
 const testCases = [
   // ✅ Casos válidos
-  // {
-  //   label: "standard input (monthly, 30y)",
-  //   loan: {
-  //     principal: 100000,
-  //     interestRate: 0.05,
-  //     termYears: 30,
-  //     paymentFrecuency: 12,
-  //   },
-  //   expectedLength: 360,
-  // },
-  // {
-  //   label: "quarterly payments (15y)",
-  //   loan: {
-  //     principal: 50000,
-  //     interestRate: 0.04,
-  //     termYears: 15,
-  //     paymentFrecuency: 4,
-  //   },
-  //   expectedLength: 60,
-  // },
+  {
+    label: "standard input (monthly, 30y)",
+    loan: {
+      principal: 100000,
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    expectedLength: 360,
+  },
+  {
+    label: "quarterly payments (15y)",
+    loan: {
+      principal: 50000,
+      interestRate: 0.04,
+      termYears: 15,
+      paymentFrecuency: 4,
+    },
+    expectedLength: 60,
+  },
   {
     label: "annual payments (10y)",
     loan: {
@@ -462,113 +463,115 @@ const testCases = [
   },
 
   // ✅ Tipos convertibles
-  // {
-  //   label: "string inputs",
-  //   loan: {
-  //     principal: "100000",
-  //     interestRate: "0.05",
-  //     termYears: "30",
-  //     paymentFrecuency: "12",
-  //   },
-  //   expectedLength: 360,
-  // },
+  {
+    label: "string inputs",
+    loan: {
+      principal: "100000",
+      interestRate: "0.05",
+      termYears: "30",
+      paymentFrecuency: "12",
+    },
+    expectedLength: 360,
+  },
 
-  // // ❌ Valores inválidos
-  // {
-  //   label: "principal = 0",
-  //   loan: {
-  //     principal: 0,
-  //     interestRate: 0.05,
-  //     termYears: 30,
-  //     paymentFrecuency: 12,
-  //   },
-  //   expectedLength: "error",
-  // },
-  // {
-  //   label: "interestRate = 0",
-  //   loan: {
-  //     principal: 100000,
-  //     interestRate: 0,
-  //     termYears: 30,
-  //     paymentFrecuency: 12,
-  //   },
-  //   expectedLength: "error",
-  // },
-  // {
-  //   label: "termYears = 0",
-  //   loan: {
-  //     principal: 100000,
-  //     interestRate: 0.05,
-  //     termYears: 0,
-  //     paymentFrecuency: 12,
-  //   },
-  //   expectedLength: "error",
-  // },
-  // {
-  //   label: "paymentFrecuency = 0",
-  //   loan: {
-  //     principal: 100000,
-  //     interestRate: 0.05,
-  //     termYears: 30,
-  //     paymentFrecuency: 0,
-  //   },
-  //   expectedLength: "error",
-  // },
-  // {
-  //   label: "negative principal",
-  //   loan: {
-  //     principal: -100000,
-  //     interestRate: 0.05,
-  //     termYears: 30,
-  //     paymentFrecuency: 12,
-  //   },
-  //   expectedLength: "error",
-  // },
+  // ❌ Valores inválidos
+  {
+    label: "principal = 0",
+    loan: {
+      principal: 0,
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    expectedLength: "error",
+  },
+  {
+    label: "interestRate = 0",
+    loan: {
+      principal: 100000,
+      interestRate: 0,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    expectedLength: "error",
+  },
+  {
+    label: "termYears = 0",
+    loan: {
+      principal: 100000,
+      interestRate: 0.05,
+      termYears: 0,
+      paymentFrecuency: 12,
+    },
+    expectedLength: "error",
+  },
+  {
+    label: "paymentFrecuency = 0",
+    loan: {
+      principal: 100000,
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: 0,
+    },
+    expectedLength: "error",
+  },
+  {
+    label: "negative principal",
+    loan: {
+      principal: -100000,
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    expectedLength: "error",
+  },
 
-  // // ❌ Tipos no convertibles
-  // {
-  //   label: "principal = 'abc'",
-  //   loan: {
-  //     principal: "abc",
-  //     interestRate: 0.05,
-  //     termYears: 30,
-  //     paymentFrecuency: 12,
-  //   },
-  //   expectedLength: "error",
-  // },
-  // {
-  //   label: "interestRate = null",
-  //   loan: {
-  //     principal: 100000,
-  //     interestRate: null,
-  //     termYears: 30,
-  //     paymentFrecuency: 12,
-  //   },
-  //   expectedLength: "error",
-  // },
-  // {
-  //   label: "termYears = undefined",
-  //   loan: {
-  //     principal: 100000,
-  //     interestRate: 0.05,
-  //     termYears: undefined,
-  //     paymentFrecuency: 12,
-  //   },
-  //   expectedLength: "error",
-  // },
-  // {
-  //   label: "paymentFrecuency = object",
-  //   loan: {
-  //     principal: 100000,
-  //     interestRate: 0.05,
-  //     termYears: 30,
-  //     paymentFrecuency: {},
-  //   },
-  //   expectedLength: "error",
-  // },
+  // ❌ Tipos no convertibles
+  {
+    label: "principal = 'abc'",
+    loan: {
+      principal: "abc",
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    expectedLength: "error",
+  },
+  {
+    label: "interestRate = null",
+    loan: {
+      principal: 100000,
+      interestRate: null,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    expectedLength: "error",
+  },
+  {
+    label: "termYears = undefined",
+    loan: {
+      principal: 100000,
+      interestRate: 0.05,
+      termYears: undefined,
+      paymentFrecuency: 12,
+    },
+    expectedLength: "error",
+  },
+  {
+    label: "paymentFrecuency = object",
+    loan: {
+      principal: 100000,
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: {},
+    },
+    expectedLength: "error",
+  },
 ];
 
 
 for (const {label, loan, expectedLength} of testCases) {
   assertScheduleStructure(label, loan, expectedLength);
 }
+ */
+//-------
