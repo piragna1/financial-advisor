@@ -75,12 +75,13 @@ function calculateCompoundInterest(loan) {
 }
 function fixedPaymentCalculation(loan) {
   console.log("Entered in fixedPaymentCalculation execution:");
-  const principal = Number(principal);
-  const interestRate = Number(interestRate);
-  const termYears = Number(termYears);
-  const paymentFrecuency = Number(paymentFrecuency);
-  if (!principal || !interestRate || !termYears || !paymentFrecuency)
+  if (!loan.principal || !loan.interestRate || !loan.termYears || !loan.paymentFrecuency)
     throw new Error("Invalid input received.");
+  const principal = Number(loan.principal);
+  const interestRate = Number(loan.interestRate);
+  const termYears = Number(loan.termYears);
+  const paymentFrecuency = Number(loan.paymentFrecuency);
+  
   if (
     isNaN(principal) ||
     isNaN(interestRate) ||
@@ -115,16 +116,15 @@ function fixedPaymentCalculation(loan) {
             balance:Math.balance(balance,0)
         }*/
 function generateAmortizationSchedule(loan) {
+  if (!loan.principal || !loan.interestRate || !loan.termYears || !loan.paymentFrecuency)
+    throw new Error("Invalid input received.");
   const principal = Number(loan.principal);
   const interestRate = Number(loan.interestRate);
   const termYears = Number(loan.termYears);
   const paymentFrecuency = Number(loan.paymentFrecuency);
-  console.log("a");
 
   //validations
-  if (!principal || !interestRate || !termYears || !paymentFrecuency)
-    throw new Error("Invalid input received.");
-  console.log("b");
+
   if (
     isNaN(principal) ||
     isNaN(interestRate) ||
@@ -147,7 +147,7 @@ function generateAmortizationSchedule(loan) {
 
   let balance = principal;
 
-  for (let i = 1; i < termYears * paymentFrecuency; i++) {
+  for (let i = 1; i < (termYears * paymentFrecuency)+1; i++) {
     const interest = balance * (interestRate / paymentFrecuency);
     const principalPaid = payment - interest;
     balance -= principalPaid;
@@ -400,7 +400,9 @@ for (const [label, loan, expectedValue] of testCases) {
 function assertScheduleStructure(label, loan, expectedLength) {
   try {
     const schedule = generateAmortizationSchedule(loan);
+
     const match = Array.isArray(schedule) && schedule.length === expectedLength;
+
     if (!match) {
       console.error(
         `❌ ${label} → expected length: ${expectedLength}, got: ${schedule.length}`
@@ -417,6 +419,7 @@ function assertScheduleStructure(label, loan, expectedLength) {
     }
 
     console.log(`✅ ${label} → schedule length: ${expectedLength}, keys OK`);
+
   } catch (err) {
     if (expectedLength === "error") {
       console.log(`✅ ${label} → threw error`);
@@ -425,137 +428,147 @@ function assertScheduleStructure(label, loan, expectedLength) {
     }
   }
 }
-
 const testCases = [
   // ✅ Casos válidos
-  [
-    "standard input (monthly, 30y)",
-    {
+  {
+    label: "standard input (monthly, 30y)",
+    loan: {
       principal: 100000,
       interestRate: 0.05,
       termYears: 30,
       paymentFrecuency: 12,
     },
-    360,
-  ],
-  [
-    "quarterly payments (15y)",
-    {
+    expectedLength: 360,
+  },
+  {
+    label: "quarterly payments (15y)",
+    loan: {
       principal: 50000,
       interestRate: 0.04,
       termYears: 15,
       paymentFrecuency: 4,
     },
-    60,
-  ],
-  [
-    "annual payments (10y)",
-    {
+    expectedLength: 60,
+  },
+  {
+    label: "annual payments (10y)",
+    loan: {
       principal: 20000,
       interestRate: 0.06,
       termYears: 10,
       paymentFrecuency: 1,
     },
-    10,
-  ],
+    expectedLength: 10,
+  },
 
   // ✅ Tipos convertibles
-  [
-    "string inputs",
-    {
+  {
+    label: "string inputs",
+    loan: {
       principal: "100000",
       interestRate: "0.05",
       termYears: "30",
       paymentFrecuency: "12",
     },
-    360,
-  ],
+    expectedLength: 360,
+  },
 
   // ❌ Valores inválidos
-  [
-    "principal = 0",
-    { principal: 0, interestRate: 0.05, termYears: 30, paymentFrecuency: 12 },
-    "error",
-  ],
-  [
-    "interestRate = 0",
-    { principal: 100000, interestRate: 0, termYears: 30, paymentFrecuency: 12 },
-    "error",
-  ],
-  [
-    "termYears = 0",
-    {
+  {
+    label: "principal = 0",
+    loan: {
+      principal: 0,
+      interestRate: 0.05,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    expectedLength: "error",
+  },
+  {
+    label: "interestRate = 0",
+    loan: {
+      principal: 100000,
+      interestRate: 0,
+      termYears: 30,
+      paymentFrecuency: 12,
+    },
+    expectedLength: "error",
+  },
+  {
+    label: "termYears = 0",
+    loan: {
       principal: 100000,
       interestRate: 0.05,
       termYears: 0,
       paymentFrecuency: 12,
     },
-    "error",
-  ],
-  [
-    "paymentFrecuency = 0",
-    {
+    expectedLength: "error",
+  },
+  {
+    label: "paymentFrecuency = 0",
+    loan: {
       principal: 100000,
       interestRate: 0.05,
       termYears: 30,
       paymentFrecuency: 0,
     },
-    "error",
-  ],
-  [
-    "negative principal",
-    {
+    expectedLength: "error",
+  },
+  {
+    label: "negative principal",
+    loan: {
       principal: -100000,
       interestRate: 0.05,
       termYears: 30,
       paymentFrecuency: 12,
     },
-    "error",
-  ],
+    expectedLength: "error",
+  },
 
   // ❌ Tipos no convertibles
-  [
-    "principal = 'abc'",
-    {
+  {
+    label: "principal = 'abc'",
+    loan: {
       principal: "abc",
       interestRate: 0.05,
       termYears: 30,
       paymentFrecuency: 12,
     },
-    "error",
-  ],
-  [
-    "interestRate = null",
-    {
+    expectedLength: "error",
+  },
+  {
+    label: "interestRate = null",
+    loan: {
       principal: 100000,
       interestRate: null,
       termYears: 30,
       paymentFrecuency: 12,
     },
-    "error",
-  ],
-  [
-    "termYears = undefined",
-    {
+    expectedLength: "error",
+  },
+  {
+    label: "termYears = undefined",
+    loan: {
       principal: 100000,
       interestRate: 0.05,
       termYears: undefined,
       paymentFrecuency: 12,
     },
-    "error",
-  ],
-  [
-    "paymentFrecuency = object",
-    {
+    expectedLength: "error",
+  },
+  {
+    label: "paymentFrecuency = object",
+    loan: {
       principal: 100000,
       interestRate: 0.05,
       termYears: 30,
       paymentFrecuency: {},
     },
-    "error",
-  ],
+    expectedLength: "error",
+  },
 ];
 
-for (const [label, loan, expectedLength] of testCases) {
+
+for (const {label, loan, expectedLength} of testCases) {
   assertScheduleStructure(label, loan, expectedLength);
 }
