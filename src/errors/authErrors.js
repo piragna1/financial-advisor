@@ -72,93 +72,93 @@ export const AuthErrors = {
   },
 };
 
-// const expectedKeys = ["code", "message", "status"];
-// const validStatusCodes = new Set([400, 401, 402, 403, 404, 409, 422, 500]);
+const expectedKeys = ["code", "message", "status"];
+const validStatusCodes = new Set([400, 401, 402, 403, 404, 409, 422, 500]);
 
-// const seenCodes = new Set();
-// const seenMessages = new Set();
+const seenCodes = new Set();
+const seenMessages = new Set();
 
-// for (const [key, errorObj] of Object.entries(AuthErrors)) {
-//   console.log(`🔍 Testing AuthErrors.${key}`);
+for (const [key, errorObj] of Object.entries(AuthErrors)) {
+  console.log(`🔍 Testing AuthErrors.${key}`);
 
-//   // ✅ Structural integrity
-//   for (const field of expectedKeys) {
-//     if (!(field in errorObj)) {
-//       console.error(`❌ Missing field "${field}" in ${key}`);
-//     }
-//   }
+  // ✅ Structural integrity
+  for (const field of expectedKeys) {
+    if (!(field in errorObj)) {
+      console.error(`❌ Missing field "${field}" in ${key}`);
+    }
+  }
 
-//   // ✅ Type checks
-//   if (typeof errorObj.code !== "string") {
-//     console.error(`❌ code must be a string in ${key}`);
-//   }
+  // ✅ Type checks
+  if (typeof errorObj.code !== "string") {
+    console.error(`❌ code must be a string in ${key}`);
+  }
 
-//   if (typeof errorObj.message !== "string") {
-//     console.error(`❌ message must be a string in ${key}`);
-//   }
+  if (typeof errorObj.message !== "string") {
+    console.error(`❌ message must be a string in ${key}`);
+  }
 
-//   if (typeof errorObj.status !== "number") {
-//     console.error(`❌ status must be a number in ${key}`);
-//   }
+  if (typeof errorObj.status !== "number") {
+    console.error(`❌ status must be a number in ${key}`);
+  }
 
-//   // ✅ Value checks
-//   if (!errorObj.code || errorObj.code.trim() === "") {
-//     console.error(`❌ code is empty or whitespace in ${key}`);
-//   }
+  // ✅ Value checks
+  if (!errorObj.code || errorObj.code.trim() === "") {
+    console.error(`❌ code is empty or whitespace in ${key}`);
+  }
 
-//   if (!errorObj.message || errorObj.message.trim() === "") {
-//     console.error(`❌ message is empty or whitespace in ${key}`);
-//   }
+  if (!errorObj.message || errorObj.message.trim() === "") {
+    console.error(`❌ message is empty or whitespace in ${key}`);
+  }
 
-//   if (!validStatusCodes.has(errorObj.status)) {
-//     console.error(
-//       `❌ status ${errorObj.status} is not a valid HTTP code in ${key}`
-//     );
-//   }
+  if (!validStatusCodes.has(errorObj.status)) {
+    console.error(
+      `❌ status ${errorObj.status} is not a valid HTTP code in ${key}`
+    );
+  }
 
-//   // ✅ Semantic alignment
-//   const prefix = key.split("_")[0];
-//   if (!errorObj.code.startsWith(prefix)) {
-//     console.warn(
-//       `⚠️ code "${errorObj.code}" may not match key prefix "${prefix}"`
-//     );
-//   }
+  // ✅ Semantic alignment
+  const prefix = key.split("_")[0];
+  if (!errorObj.code.startsWith(prefix)) {
+    console.warn(
+      `⚠️ code "${errorObj.code}" may not match key prefix "${prefix}"`
+    );
+  }
 
-//   if (errorObj.message.length < 10) {
-//     console.warn(`⚠️ message in ${key} may be too short or vague`);
-//   }
+  if (errorObj.message.length < 10) {
+    console.warn(`⚠️ message in ${key} may be too short or vague`);
+  }
 
-//   // ✅ Uniqueness checks
-//   if (seenCodes.has(errorObj.code)) {
-//     console.error(`❌ Duplicate code "${errorObj.code}" found in ${key}`);
-//   } else {
-//     seenCodes.add(errorObj.code);
-//   }
+  // ✅ Uniqueness checks
+  if (seenCodes.has(errorObj.code)) {
+    console.error(`❌ Duplicate code "${errorObj.code}" found in ${key}`);
+  } else {
+    seenCodes.add(errorObj.code);
+  }
 
-//   if (seenMessages.has(errorObj.message)) {
-//     console.warn(`⚠️ Duplicate message "${errorObj.message}" found in ${key}`);
-//   } else {
-//     seenMessages.add(errorObj.message);
-//   }
+  if (seenMessages.has(errorObj.message)) {
+    console.warn(`⚠️ Duplicate message "${errorObj.message}" found in ${key}`);
+  } else {
+    seenMessages.add(errorObj.message);
+  }
 
-//   // ✅ Extra field detection
-//   const extraFields = Object.keys(errorObj).filter(
-//     (k) => !expectedKeys.includes(k)
-//   );
-//   if (extraFields.length > 0) {
-//     console.warn(`⚠️ Extra fields in ${key}: ${extraFields.join(", ")}`);
-//   }
+  // ✅ Extra field detection
+  const extraFields = Object.keys(errorObj).filter(
+    (k) => !expectedKeys.includes(k)
+  );
+  if (extraFields.length > 0) {
+    console.warn(`⚠️ Extra fields in ${key}: ${extraFields.join(", ")}`);
+  }
 
-//   // ✅ Deep freeze test (immutability)
-//   try {
-//     Object.freeze(errorObj);
-//     errorObj.code = "MUTATED";
-//     if (errorObj.code === "MUTATED") {
-//       console.error(`❌ ${key} is mutable after freeze`);
-//     }
-//   } catch (e) {
-//     console.log(`✅ ${key} resisted mutation`);
-//   }
+  // ✅ Deep freeze test (immutability)
+  try {
+    Object.freeze(errorObj);
+    errorObj.code = "MUTATED";
+    if (errorObj.code === "MUTATED") {
+      console.error(`❌ ${key} is mutable after freeze`);
+    }
+  } catch (e) {
+    console.log(`✅ ${key} resisted mutation`);
+  }
 
-//   console.log("✅ Passed\n");
-// }
+  console.log("✅ Passed\n");
+}
