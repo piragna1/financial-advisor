@@ -8,7 +8,7 @@ This is a personal project for Solvd. company's LABA program for NodeJS backend 
 | [Overview](#overview)  |                                                                                                                                                             |
 | [Task Description](#Description)  |                                                                                                                                                             |
 | [Setup](#setup)        |                                                                                                                                                       |
-| [Summary](#summary-of-the-relationship-between-objects) |                                                                                                                     |
+| [Summary](#summary) |                                                                                                                     |
 | [Authentication](./documentation/AUTH-README.md#authentication) | 
 | [Relationships](./documentation/RELATIONSHIP-README.md#data-modeling) | 
 | [Endpoints API Documentation](./documentation/ENDPOINTS-README.md#endpoints-api-documentation) | 
@@ -18,4 +18,7 @@ The main idea is to help me (and maybe others) learn the basics of managing pers
 ## 
 ### Task Description
 **Personal Finance Advisor**: Create a financial advisor application. Users can input their salary, preferred currency, and desired annual interest rate. The system calculates the maximum loan amount they can obtain, the repayment plan, and the total interest paid over the loan term.
+##
+### Summary
+****: This task consists of a loan simulation system that handles JWT authentication, works connected to a database, is developed for being reconstructed through Docker and handling http request via an api. 
 ##
