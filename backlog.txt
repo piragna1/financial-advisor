@@ -108,7 +108,7 @@ C:.
 │   │
 │   └───user
 │           generateUserId.js (✅)
-│           user.service.js (❌)-----> working on it now
+│           user.service.js (✅)
 │
 ├───tests
 │       registerUser.test.mjs (❌)
