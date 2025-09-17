@@ -162,6 +162,13 @@ function generateAmortizationSchedule(loan) {
   return schedule;
 }
 function calculateInterestSaving(schedule, earlyRepaymentPeriod) {
+  if(!schedule || !earlyRepaymentPeriod ) 
+    throw new Error('Invalid input data received.');
+
+  earlyRepaymentPeriod = Number(earlyRepaymentPeriod);
+  if (isNaN(earlyRepaymentPeriod))
+    throw new Error('Invalid early repayment period received.');
+  
   const futurePayments = schedule.slice(earlyRepaymentPeriod);
   const interestSaved = futurePayments.reduce(
     (sum, period) => (sum += period.interest),
