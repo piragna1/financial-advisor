@@ -25,6 +25,6 @@ This loan simulation system that handles JWT authentication, works connected to 
 ### Authentication
 This system uses JWT authentication process with tokens.
 #### Sign up
-POST method should be executed with the corresponded information in order to successfully sign up to the system. Example below:
+POST method should be executed with the corresponded information in order to successfully sign up to the system. See the following example:
 #### Sign in
-POST method should be executed with the corresponded information in order to successfully sign in to the system. Example below:
+POST method should be executed with the corresponded information in order to successfully sign in to the system. See the following example:
