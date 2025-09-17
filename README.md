@@ -9,7 +9,7 @@ This is a personal project for Solvd. company's LABA program for NodeJS backend 
 | [Task Description](#Description)  |                                                                                                                                                             |
 | [Setup](#setup)        |                                                                                                                                                       |
 | [Summary](#summary) |                                                                                                                     |
-| [Authentication](./documentation/AUTH-README.md#authentication) | 
+| [Authentication](#authentication) | 
 | [Relationships](./documentation/RELATIONSHIP-README.md#data-modeling) | 
 | [Endpoints API Documentation](./documentation/ENDPOINTS-README.md#endpoints-api-documentation) | 
 ## 
@@ -22,3 +22,5 @@ The main idea is to help me (and maybe others) learn the basics of managing pers
 ### Summary
 This loan simulation system that handles JWT authentication, works connected to a database, can be reconstructed with Docker and handles http requests through an api.
 ##
+### Authentication
+This system uses JWT authentication process with tokens.
