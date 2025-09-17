@@ -629,25 +629,41 @@ function assertEarlyRepayment(label, loan, earlyRepaymentPeriod, expectedLength)
   const finalPeriod = modifiedSchedule[earlyRepaymentPeriod - 1];
   const originalBalance = fullSchedule[earlyRepaymentPeriod - 1].balance;
 
-  const isLengthCorrect = modifiedSchedule.length === earlyRepaymentPeriod;
+  const isLengthCorrect = modifiedSchedule.length === expectedLength;
+  console.log(`🔍 [${label}] schedule length → expected: ${expectedLength}, got: ${modifiedSchedule.length}`);
+  console.log(`     ✔ isLengthCorrect: ${isLengthCorrect}`);
+
   const isFinalPaymentCorrect = finalPeriod.payment === originalBalance;
+  console.log(`🔍 [${label}] final payment → expected: ${originalBalance}, got: ${finalPeriod.payment}`);
+  console.log(`     ✔ isFinalPaymentCorrect: ${isFinalPaymentCorrect}`);
+
   const isPrincipalCorrect = finalPeriod.principal === originalBalance;
+  console.log(`🔍 [${label}] principal → expected: ${originalBalance}, got: ${finalPeriod.principal}`);
+  console.log(`     ✔ isPrincipalCorrect: ${isPrincipalCorrect}`);
+
   const isInterestZero = finalPeriod.interest === 0;
+  console.log(`🔍 [${label}] interest → expected: 0, got: ${finalPeriod.interest}`);
+  console.log(`     ✔ isInterestZero: ${isInterestZero}`);
+
   const isBalanceZero = finalPeriod.balance === 0;
+  console.log(`🔍 [${label}] balance → expected: 0, got: ${finalPeriod.balance}`);
+  console.log(`     ✔ isBalanceZero: ${isBalanceZero}`);
 
   const allPass = isLengthCorrect && isFinalPaymentCorrect && isPrincipalCorrect && isInterestZero && isBalanceZero;
 
   if (allPass) {
-    console.log(`✅ ${label} → schedule length: ${modifiedSchedule.length}, final payment: ${finalPeriod.payment.toFixed(2)}`);
+    console.log(`✅ ${label} → schedule length: ${modifiedSchedule.length}, final payment: ${finalPeriod.payment.toFixed(2)}\n`);
   } else {
     console.error(`❌ ${label}`);
-    if (!isLengthCorrect) console.error(`  ✘ Expected length ${earlyRepaymentPeriod}, got ${modifiedSchedule.length}`);
-    if (!isFinalPaymentCorrect) console.error(`  ✘ Final payment mismatch: expected ${originalBalance}, got ${finalPeriod.payment}`);
-    if (!isPrincipalCorrect) console.error(`  ✘ Principal mismatch: expected ${originalBalance}, got ${finalPeriod.principal}`);
-    if (!isInterestZero) console.error(`  ✘ Interest should be 0, got ${finalPeriod.interest}`);
-    if (!isBalanceZero) console.error(`  ✘ Balance should be 0, got ${finalPeriod.balance}`);
+    if (!isLengthCorrect) console.error(`  ✘ Schedule length mismatch`);
+    if (!isFinalPaymentCorrect) console.error(`  ✘ Final payment mismatch`);
+    if (!isPrincipalCorrect) console.error(`  ✘ Principal mismatch`);
+    if (!isInterestZero) console.error(`  ✘ Interest should be 0`);
+    if (!isBalanceZero) console.error(`  ✘ Balance should be 0`);
+    console.log(""); // Espacio para separar bloques
   }
 }
+
 
 const baseLoan = {
   principal: 100000,
