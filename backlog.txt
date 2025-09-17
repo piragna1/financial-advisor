@@ -218,25 +218,25 @@ Please make sure that before each testing case actors are pure as much as possib
 
 -----------------------------------------------------------------------COURSE TASKS (must)
 
-  -GITHUB REPOSITORY (
+  1-GITHUB REPOSITORY (
     +Table of contents
       *Overview (✅)
       *Description (✅)
       *ERD (erd ✅, add it to the github REPOSITORY's content)
   )
 
-  -Implement authentication in your application.
+  2-Implement authentication in your application.
     Assignment: Choose and implement one of the authentication methods we covered in class:
       -JWT (JSON Web Tokens) (chosen)
       -OAuth 2.0
     Important: You must implement the authentication logic from scratch without using ready-made 
       authentication libraries. This will help you understand how these protocols 
       work under the hood. (login process ❌)
-  -Create DB schema as diagram. In your application u should have at list 3 DB tables.
-  -Your task is to implement the database you designed in your diagram by creating executable SQL scripts.
+  3-Create DB schema as diagram. In your application u should have at list 3 DB tables.
+  4-Your task is to implement the database you designed in your diagram by creating executable SQL scripts.
     It can be any SQL database. If you don't know which to use - I recommend to use PostgreSQL.
     Requirements:
-      -Create a comprehensive SQL script (.sql file) that generates all tables, relationships, indexes,
+      4.1-Create a comprehensive SQL script (.sql file) that generates all tables, relationships, indexes,
         and constraints from your database diagram
 --------------
 
