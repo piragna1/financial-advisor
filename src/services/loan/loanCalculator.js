@@ -625,3 +625,48 @@ for (const {label, loan, earlyRepaymentPeriod, expectedValue} of testCases) {
 }
  */
 //-------
+function assertEarlyRepayment(label, loan, earlyRepaymentPeriod, expectedLength) {
+  const fullSchedule = generateAmortizationSchedule(loan);
+  const modifiedSchedule = applyEarlyRepayment(loan, fullSchedule, earlyRepaymentPeriod);
+
+  const finalPeriod = modifiedSchedule[earlyRepaymentPeriod - 1];
+  const originalBalance = fullSchedule[earlyRepaymentPeriod - 1].balance;
+
+  const isLengthCorrect = modifiedSchedule.length === earlyRepaymentPeriod;
+  const isFinalPaymentCorrect = finalPeriod.payment === originalBalance;
+  const isPrincipalCorrect = finalPeriod.principal === originalBalance;
+  const isInterestZero = finalPeriod.interest === 0;
+  const isBalanceZero = finalPeriod.balance === 0;
+
+  const allPass = isLengthCorrect && isFinalPaymentCorrect && isPrincipalCorrect && isInterestZero && isBalanceZero;
+
+  if (allPass) {
+    console.log(`✅ ${label} → schedule length: ${modifiedSchedule.length}, final payment: ${finalPeriod.payment.toFixed(2)}`);
+  } else {
+    console.error(`❌ ${label}`);
+    if (!isLengthCorrect) console.error(`  ✘ Expected length ${earlyRepaymentPeriod}, got ${modifiedSchedule.length}`);
+    if (!isFinalPaymentCorrect) console.error(`  ✘ Final payment mismatch: expected ${originalBalance}, got ${finalPeriod.payment}`);
+    if (!isPrincipalCorrect) console.error(`  ✘ Principal mismatch: expected ${originalBalance}, got ${finalPeriod.principal}`);
+    if (!isInterestZero) console.error(`  ✘ Interest should be 0, got ${finalPeriod.interest}`);
+    if (!isBalanceZero) console.error(`  ✘ Balance should be 0, got ${finalPeriod.balance}`);
+  }
+}
+
+const baseLoan = {
+  principal: 100000,
+  interestRate: 0.05,
+  termYears: 30,
+  paymentFrecuency: 12
+};
+
+const testCases = [
+  { label: "repayment at period 1", earlyRepaymentPeriod: 1 },
+  { label: "repayment at period 60", earlyRepaymentPeriod: 60 },
+  { label: "repayment at period 180", earlyRepaymentPeriod: 180 },
+  { label: "repayment at period 359", earlyRepaymentPeriod: 359 },
+  { label: "repayment at period 360", earlyRepaymentPeriod: 360 }
+];
+
+for (const { label, earlyRepaymentPeriod } of testCases) {
+  assertEarlyRepayment(label, baseLoan, earlyRepaymentPeriod, earlyRepaymentPeriod);
+}
