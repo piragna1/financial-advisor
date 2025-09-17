@@ -176,9 +176,6 @@ function calculateInterestSaving(schedule, earlyRepaymentPeriod) {
   return parseFloat(interestSaved).toFixed(2);
 }
 function applyEarlyRepayment(loan, schedule, earlyRepaymentPeriod) {
-  console.log("loan:", loan);
-  console.log("schedule:", schedule);
-  console.log("earlyRepaymentPeriod:", earlyRepaymentPeriod);
 
   const scheduleCopy = schedule.slice(0, earlyRepaymentPeriod - 1);
   const periodBreakdown = schedule[earlyRepaymentPeriod - 1];
