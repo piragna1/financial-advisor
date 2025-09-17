@@ -100,15 +100,15 @@ C:.
   ✅ calculateRepaymentCapacity
   ✅calculateMaxLoanCapacity
   ✅calculateCompoundInterest
-  ❌fixedPaymentCalculation -----> working on it now
-  ❌generateAmortizationSchedule
-  ❌calculateInterestSaving
-  ❌applyEarlyRepayment
+  ✅fixedPaymentCalculation 
+  ✅generateAmortizationSchedule
+  ✅calculateInterestSaving
+  ✅applyEarlyRepayment
   )
 │   │
 │   └───user
 │           generateUserId.js (✅)
-│           user.service.js (❌)
+│           user.service.js (❌)-----> working on it now
 │
 ├───tests
 │       registerUser.test.mjs (❌)
