@@ -575,3 +575,48 @@ for (const {label, loan, expectedLength} of testCases) {
 }
  */
 //-------
+function assertInterestSaving(label, loan, earlyRepaymentPeriod, expectedValue) {
+  try {
+    const schedule = generateAmortizationSchedule(loan);
+    const result = calculateInterestSaving(schedule, earlyRepaymentPeriod);
+    const match = result === expectedValue;
+    if (match) {
+      console.log(`✅ ${label} → interest saved: ${result}`);
+    } else {
+      console.error(`❌ ${label} → expected: ${expectedValue}, got: ${result}`);
+    }
+  } catch (err) {
+    if (expectedValue === "error") {
+      console.log(`✅ ${label} → threw error`);
+    } else {
+      console.error(`❌ ${label} → threw error unexpectedly`);
+    }
+  }
+}
+
+const baseLoan = {
+  principal: 100000,
+  interestRate: 0.05,
+  termYears: 30,
+  paymentFrecuency: 12
+};
+
+const testCases = [
+  // ✅ Casos válidos
+  ["early repayment at period 1", baseLoan, 1, "23327.83"],
+  ["early repayment at period 60", baseLoan, 60, "21140.45"],
+  ["early repayment at period 180", baseLoan, 180, "12312.56"],
+  ["early repayment at period 359", baseLoan, 359, "3.73"],
+
+  // ❌ Períodos fuera de rango
+  ["early repayment at period 360 (last)", baseLoan, 360, "0.00"],
+  ["early repayment beyond schedule", baseLoan, 400, "0.00"],
+  ["early repayment at negative period", baseLoan, -1, "error"],
+  ["early repayment at null", baseLoan, null, "error"],
+  ["early repayment at undefined", baseLoan, undefined, "error"],
+  ["early repayment at string '100'", baseLoan, "100", "12738.27"]
+];
+
+for (const [label, loan, earlyRepaymentPeriod, expectedValue] of testCases) {
+  assertInterestSaving(label, loan, earlyRepaymentPeriod, expectedValue);
+}
