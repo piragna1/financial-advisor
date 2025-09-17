@@ -111,7 +111,6 @@ C:.
 │           user.service.js (✅)
 │
 ├───tests
-│       registerUser.test.mjs (❌)-----> working on it now
 │
 └───utils
     └───auth
