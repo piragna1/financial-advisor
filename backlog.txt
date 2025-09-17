@@ -50,7 +50,7 @@ C:.
 │
 ├───errors
 │       AppError.js (✅)
-│       src\errors\authErrors.js (❌) recently modified structure
+│       src\errors\authErrors.js (❌) -> working on it now...
 │       errorRegistry.js (✅) 
 │       mapError.js (✅)
 │       profileErrors.js (✅)
@@ -117,8 +117,8 @@ C:.
             comparePasswords.js (✅) 
             generateSignature.js (✅)
             hashPassword.js (✅)
-            invalidateUserToken.js (❌) -> working now
-            refreshToken.js (❌)
+            invalidateUserToken.js (✅)
+            refreshToken.js (✅)
             token.js (
               ✅tokenExists
               ✅verifyToken
