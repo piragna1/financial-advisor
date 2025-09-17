@@ -1,4 +1,4 @@
-Doing now: Focusing on checkUserUniqueness()
+Doing now: ERD
 -------------------------------------------------------------
 CHECK EVERY PART OF THE SYSTEM IN ISOLATION:
 C:.
