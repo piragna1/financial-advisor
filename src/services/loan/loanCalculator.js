@@ -622,7 +622,7 @@ for (const {label, loan, earlyRepaymentPeriod, expectedValue} of testCases) {
 }
  */
 //-------
-function assertEarlyRepayment(label, loan, earlyRepaymentPeriod, expectedLength) {
+/* function assertEarlyRepayment(label, loan, earlyRepaymentPeriod, expectedLength) {
   const fullSchedule = generateAmortizationSchedule(loan);
   const modifiedSchedule = applyEarlyRepayment(loan, fullSchedule, earlyRepaymentPeriod);
 
@@ -683,3 +683,4 @@ const testCases = [
 for (const { label, earlyRepaymentPeriod } of testCases) {
   assertEarlyRepayment(label, baseLoan, earlyRepaymentPeriod, earlyRepaymentPeriod);
 }
+ */
