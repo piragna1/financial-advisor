@@ -117,7 +117,7 @@ C:.
             comparePasswords.js (✅) 
             generateSignature.js (✅)
             hashPassword.js (✅)
-            invalidateUserToken.js (❌)
+            invalidateUserToken.js (❌) -> working now
             refreshToken.js (❌)
             token.js (
               ✅tokenExists
