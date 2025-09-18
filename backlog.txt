@@ -1,4 +1,4 @@
-Doing now: PROFILE MODEL
+Doing now: schedule MODEL
 -------------------------------------------------------------
 CHECK EVERY PART OF THE SYSTEM IN ISOLATION:
 C:.
