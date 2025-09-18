@@ -48,6 +48,6 @@ User - FinancialProfile -> 1:1 An user has a financial profile while that financ
 #### Profile
 Profile - User -> 1:1 The profile belongs to the user while the user owns the profile.
 #### FinancialProfile
-FinancialProfile - User -> 1:1 The financial profile belongs to the user that owns that profile.
+FinancialProfile - User -> 1:1 The financial profile belongs to the user that owns that profile.\n
 FinancialProfile - Loan -> 1:N A financial profile can simulate many or any loans while any loan belongs to that profile.
-##
+##  
