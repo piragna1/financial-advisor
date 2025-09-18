@@ -1,4 +1,4 @@
-Doing now: Checking schedule model
+Doing now: Checking user model
 -------------------------------------------------------------
 CHECK EVERY PART OF THE SYSTEM IN ISOLATION:
 C:.
