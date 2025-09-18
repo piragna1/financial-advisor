@@ -48,7 +48,7 @@ User - Profile -> (1:1) An user has a profile while a profile belongs to that us
 User - FinancialProfile -> (1:1) An user has a financial profile while that financial profile belongs to the user.
 #### Profile - x 
 Profile - User -> (1:1) The profile belongs to the user while the user owns the profile.
-#### FinancialProfile
+#### FinancialProfile - x
 FinancialProfile - User -> (1:1) The financial profile belongs to the user that owns that profile.
 
 FinancialProfile - Loan -> (1:N) A financial profile can simulate many or any loans while any loan belongs to that profile.
