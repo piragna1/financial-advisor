@@ -1,4 +1,4 @@
-Doing now: Payment MODEL
+Doing now: Checking schedule model
 -------------------------------------------------------------
 CHECK EVERY PART OF THE SYSTEM IN ISOLATION:
 C:.
