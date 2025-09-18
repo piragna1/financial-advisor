@@ -26,19 +26,23 @@ This loan simulation system that handles JWT authentication, works connected to 
 This system uses JWT authentication process with tokens.
 #### Sign up
 Send POST request to http://localhost:3000/auth/register  with the corresponded information in order to successfully sign up to the system. See the following example:
+
 {
     "name":"Gonzalo",
     "lastName":"Varela Alagna",
     "email":"gvalagna@gmail.com",
     "password":"gvalagnA$4"
 }
+
 ##### Example of response: 
 #### Sign in
 Send POST request to http://localhost:3000/auth/login  with the corresponded information in order to successfully sign in to the system. See the following example:
+
 {
   "email": "gvalagna@gmail.com",
   "password": "gvalagnA$4"
 }
+
 ##### Example of response:
 ##
 ### Relationships
