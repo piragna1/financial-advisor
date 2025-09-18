@@ -1,6 +1,6 @@
 export const schedule = {
     id:String,
-    userId:String,
+    loanId:String,
     plan: 'weekly'|'monthly'|'custom',
     startDate:String,
     totalAmount:Number,
