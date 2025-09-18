@@ -1,4 +1,4 @@
-Doing now: Checking user model
+Doing now: ERD relationships diagram
 -------------------------------------------------------------
 CHECK EVERY PART OF THE SYSTEM IN ISOLATION:
 C:.
@@ -133,7 +133,7 @@ C:.
 -----------------------------------------------------------------------WORKSPACE
 TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
 --------------
-
+MIRO:https://miro.com/welcomeonboard/WDh1Uy9JWlRjZUJQYkJuaS9wV2l2clVhbE1SVk5FVlVCbk1YSUVLRFhFY2VCdjUyN0h1VVdmNEZ0VFpxVGEwcHNDRjRvM3VHR3l4cUpoREdmRkFjdFp6b3R5dlZINCtLenBvV2s5WFlYb1Nmd0lRaGpVSVBlYkNCOStsZEtleVZyVmtkMG5hNDA3dVlncnBvRVB2ZXBnPT0hdjE=?share_link_id=208190572952
 -----------------------------------------------------------------------DAY'S BACKLOG
 
 - Use POSTMAN for register attempt [✅]
