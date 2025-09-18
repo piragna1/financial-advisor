@@ -8,5 +8,5 @@ export const payment = {
     paidAt:String,
     method:'credit-card'|'bank-transfer'|'cash',
     reference:String,
-    notres:String
+    notes:String
 }
