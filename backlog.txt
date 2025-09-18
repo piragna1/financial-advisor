@@ -1,4 +1,4 @@
-Doing now: ERD
+Doing now: PROFILE MODEL
 -------------------------------------------------------------
 CHECK EVERY PART OF THE SYSTEM IN ISOLATION:
 C:.
