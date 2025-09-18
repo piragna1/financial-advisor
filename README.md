@@ -49,12 +49,15 @@ User - FinancialProfile -> 1:1 An user has a financial profile while that financ
 Profile - User -> 1:1 The profile belongs to the user while the user owns the profile.
 #### FinancialProfile
 FinancialProfile - User -> 1:1 The financial profile belongs to the user that owns that profile.
+
 FinancialProfile - Loan -> 1:N A financial profile can simulate many or any loans while any loan belongs to that profile.
 #### Loan
 Loan - FinancialProfile -> 1:1 A loan belongs to a financial profile.
+
 Loan - Schedule -> 1:1 A loan has its own payments schedule.
 #### Schedule
 Schedule - Loan -> 1:1 A schedule belongs to a specific loan.
+
 Schedule - Payment -> 1:N A schedule may consists of 1 or more payments.
 #### Payment
 Payment - Schedule -> 1:1 A payment belongs to a specific loan schedule.
