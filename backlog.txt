@@ -1,4 +1,4 @@
-Doing now: ERD relationships diagram
+Next: integration of User, Profile, FinancialProfile, Loan, Schedule, Payment models into the system.
 -------------------------------------------------------------
 CHECK EVERY PART OF THE SYSTEM IN ISOLATION:
 C:.
