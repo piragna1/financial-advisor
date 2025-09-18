@@ -44,6 +44,7 @@ Send POST request to http://localhost:3000/auth/login  with the corresponded inf
 ### Relationships
 #### User
 User - Profile -> 1:1 An user has a profile while a profile belongs to that user.
+
 User - FinancialProfile -> 1:1 An user has a financial profile while that financial profile belongs to the user.
 #### Profile
 Profile - User -> 1:1 The profile belongs to the user while the user owns the profile.
