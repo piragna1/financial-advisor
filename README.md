@@ -8,8 +8,8 @@ This is a personal project for Solvd. company's LABA program for NodeJS backend 
 | [Overview](#overview)  |                                                                                                                                                             |
 | [Task Description](#Description)  |                                                                                                                                                             |
 | [Setup](#setup)        |                                                                                                                                                       |
-| [Summary](#summary-of-the-relationship-between-objects) |                                                                                                                     |
-| [Authentication](./documentation/AUTH-README.md#authentication) | 
+| [Summary](#summary) |                                                                                                                     |
+| [Authentication](#authentication) | 
 | [Relationships](./documentation/RELATIONSHIP-README.md#data-modeling) | 
 | [Endpoints API Documentation](./documentation/ENDPOINTS-README.md#endpoints-api-documentation) | 
 ## 
@@ -19,3 +19,24 @@ The main idea is to help me (and maybe others) learn the basics of managing pers
 ### Task Description
 **Personal Finance Advisor**: Create a financial advisor application. Users can input their salary, preferred currency, and desired annual interest rate. The system calculates the maximum loan amount they can obtain, the repayment plan, and the total interest paid over the loan term.
 ##
+### Summary
+This loan simulation system that handles JWT authentication, works connected to a database, can be reconstructed with Docker and handles http requests through an api.
+##
+### Authentication
+This system uses JWT authentication process with tokens.
+#### Sign up
+Send POST request to http://localhost:3000/auth/register  with the corresponded information in order to successfully sign up to the system. See the following example:
+{
+    "name":"Gonzalo",
+    "lastName":"Varela Alagna",
+    "email":"gvalagna@gmail.com",
+    "password":"gvalagnA$4"
+}
+##### Example of response: 
+#### Sign in
+Send POST request to http://localhost:3000/auth/login  with the corresponded information in order to successfully sign in to the system. See the following example:
+{
+  "email": "gvalagna@gmail.com",
+  "password": "gvalagnA$4"
+}
+##### Example of response:
