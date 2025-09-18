@@ -40,6 +40,7 @@ Send POST request to http://localhost:3000/auth/login  with the corresponded inf
   "password": "gvalagnA$4"
 }
 ##### Example of response:
+##
 ### Relationships
 #### User
 User - Profile -> 1:1 An user has a profile while a profile belongs to that user.
@@ -49,3 +50,4 @@ Profile - User -> 1:1 The profile belongs to the user while the user owns the pr
 #### FinancialProfile
 FinancialProfile - User -> 1:1 The financial profile belongs to the user that owns that profile.
 FinancialProfile - Loan -> 1:N A financial profile can simulate many or any loans while any loan belongs to that profile.
+##
