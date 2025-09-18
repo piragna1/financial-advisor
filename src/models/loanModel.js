@@ -1,4 +1,5 @@
 export const loan = {
+    id:String,
     financialProfileId:String,
     startDate: Date,
     termYears:Number,
