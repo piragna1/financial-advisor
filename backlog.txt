@@ -78,6 +78,7 @@ C:.
 │       errorHandler.js (✅)
 │
 ├───models
+│       financialProfileModel.js (❌)
 │       loanModel.js (✅)
 │       paymentModel.js (✅)
 │       profileModel.js (✅)
