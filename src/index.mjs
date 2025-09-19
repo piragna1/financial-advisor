@@ -3,6 +3,8 @@ import express from "express";
 import authRoutes from "./routes/auth/auth.route.js";
 import profileRoutes from "./routes/profile/profile.route.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import { updateProfileController } from "./controllers/profileController.mjs";
+import { authMiddleware as authtenticateUser } from "./middlewares/authMiddleware.js";
 
 const PORT = 3000;
 
@@ -12,7 +14,7 @@ app.use(express.json());
 
 app.use("/auth", authRoutes);
 
-app.use("/profile", profileRoutes);
+app.use("/profile", profileRoutes); //test
 
 app.get("/", (req, res) => {
   res.send(
