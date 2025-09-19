@@ -10,7 +10,8 @@ C:.
 │   │       tokenExists.js (✅)
 │   │       validatePayloadStrcture.js (✅)
 │   │       verifyPassword.js (✅)
-│   │
+│   ├───utils
+│   │       updateProfileFields.js (❌)
 │   ├───retrievers
 │   │       userRetriever.js (✅)🔁
 │   │
