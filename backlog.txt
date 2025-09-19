@@ -10,6 +10,8 @@ C:.
 │   │       tokenExists.js (✅)
 │   │       validatePayloadStrcture.js (✅)
 │   │       verifyPassword.js (✅)
+│   ├───financialProfile
+│   │       updateFinancialProfileFields.js (❌)
 │   ├───utils
 │   │       updateProfileFields.js (❌)
 │   ├───retrievers
@@ -43,6 +45,7 @@ C:.
           ✅registerUserController(),
           ✅loginUserController()
           ) 
+│       financialProfileController.mjs (❌)
 │       loanController.mjs (✅)
 │       profileController.mjs (✅) 
 │
@@ -93,7 +96,8 @@ C:.
 ├───routes
 │   ├───auth
 │   │       auth.route.js (❌)(in order to test this it is necessary to connect the methods to a real database.)
-│   │
+│   ├───financialProfile
+│   │       financialProfile.route.js (❌) (in order to test this it is necessary to connect the methods to a real database.)
 │   ├───loan
 │   │       loanRoutes.js (❌) (in order to test this it is necessary to connect the methods to a real database.)
 │   │
