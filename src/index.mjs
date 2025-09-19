@@ -5,6 +5,7 @@ import profileRoutes from "./routes/profile/profile.route.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import { updateProfileController } from "./controllers/profileController.mjs";
 import { authMiddleware as authtenticateUser } from "./middlewares/authMiddleware.js";
+import financialProfileRoutes from './routes/financialProfile/financialProfile.route.js'
 
 const PORT = 3000;
 
@@ -15,6 +16,8 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 
 app.use("/profile", profileRoutes); //test
+
+app.use('/financial-profile', financialProfileRoutes);//test
 
 app.get("/", (req, res) => {
   res.send(
