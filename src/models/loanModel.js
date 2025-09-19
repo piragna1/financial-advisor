@@ -7,7 +7,7 @@ export const loan = {
     interestRate:Number,
     paymentFrecuencyPerYear: Number,
     compoundingFrequencyPerYear:Number,
-    gracePeriods :Number,
+    gracePeriodMonths:Number,
     balloonPayment:Number,
     loanType:String,
     currency:String
