@@ -1,27 +1,24 @@
-function calculateRepaymentCapacity(user, years) {
+export function calculateRepaymentCapacity(salary, years) {
+
   //Supposing that the maximum term time period is 30 years
-  if (user == null || years == null) {
-    throw new Error("Invalid input received.");
-  }
   if (years <= 0 || years >= 30) {
     throw new Error("Invalid input received.");
   }
+
   years = Number(years);
+
   if (isNaN(years)) throw new Error("Invalid input received");
-  if (
-    (!user.annualSalary && user.annualSalary !== 0) ||
-    (!user.paymentRatio && user.paymentRatio !== 0)
-  )
-    throw new Error("The user has missing information.");
-  const annualRepaymentCapacity = user.annualSalary * user.paymentRatio; //discounting the interest to the annual salary
-  //annualRepaymentCapacity * years = maxRepaymentCapacity
-  const repaymentCapacity = annualRepaymentCapacity * years;
+
+  //maybe here is convenient to let the user set the percentage of his salary to be used in repayments
+  const repaymentCapacity = salary * 12 * years;
+
   console.log(
     `User repayment capacity over ${years} years: $${repaymentCapacity.toLocaleString()}`
   );
   return repaymentCapacity;
 }
-function calculateMaxLoanCapacity(loan) {
+
+export function calculateMaxLoanCapacity(loan) {
   const repaymentCapacity = Number(loan.repaymentCapacity);
   const loanTermYears = Number(loan.loanTermYears);
   const interestRate = Number(loan.interestRate);
@@ -41,7 +38,7 @@ function calculateMaxLoanCapacity(loan) {
   );
   return Math.round(maxLoanCapacity).toFixed(0);
 }
-function calculateCompoundInterest(loan) {
+export function calculateCompoundInterest(loan) {
   const principal = Number(loan.principal);
   const annualRate = Number(loan.annualRate);
   const years = Number(loan.years);
@@ -73,7 +70,7 @@ function calculateCompoundInterest(loan) {
     interestAccrued: Math.round(parseFloat(totalAmount - principal)),
   };
 }
-function fixedPaymentCalculation(loan) {
+export function fixedPaymentCalculation(loan) {
   console.log("Entered in fixedPaymentCalculation execution:");
   if (!loan.principal || !loan.interestRate || !loan.termYears || !loan.paymentFrecuency)
     throw new Error("Invalid input received.");
@@ -115,7 +112,7 @@ function fixedPaymentCalculation(loan) {
             principal:principalPaid,
             balance:Math.balance(balance,0)
         }*/
-function generateAmortizationSchedule(loan) {
+export function generateAmortizationSchedule(loan) {
   if (!loan.principal || !loan.interestRate || !loan.termYears || !loan.paymentFrecuency)
     throw new Error("Invalid input received.");
   const principal = Number(loan.principal);
@@ -161,7 +158,7 @@ function generateAmortizationSchedule(loan) {
   }
   return schedule;
 }
-function calculateInterestSaving(schedule, earlyRepaymentPeriod) {
+export function calculateInterestSaving(schedule, earlyRepaymentPeriod) {
   if(!schedule || !earlyRepaymentPeriod ) 
     throw new Error('Invalid input data received.');
 
@@ -175,7 +172,7 @@ function calculateInterestSaving(schedule, earlyRepaymentPeriod) {
   const interestSaved = totalInterest - interestPaid;
   return parseFloat(interestSaved).toFixed(2);
 }
-function applyEarlyRepayment(loan, schedule, earlyRepaymentPeriod) {
+export function applyEarlyRepayment(loan, schedule, earlyRepaymentPeriod) {
 
   const scheduleCopy = schedule.slice(0, earlyRepaymentPeriod - 1);
   const periodBreakdown = schedule[earlyRepaymentPeriod - 1];
@@ -192,7 +189,7 @@ function applyEarlyRepayment(loan, schedule, earlyRepaymentPeriod) {
   return scheduleCopy;
 }
 //--------------------------------------------------------------------Test suite
-/* function runTest(label, user, years, expectedValue) {
+/* export function runTest(label, user, years, expectedValue) {
   try {
     const result = calculateRepaymentCapacity(user, years);
     const match = result === expectedValue;
@@ -247,7 +244,7 @@ for (const [label, user, years, expectedValue] of testCases) {
  */
 //-------
 /* 
-function assertMaxLoanCapacityCalculation(label, loan, expectedValue) {
+export function assertMaxLoanCapacityCalculation(label, loan, expectedValue) {
   try {
     const result = calculateMaxLoanCapacity(loan);
     const match = result === expectedValue;
@@ -299,7 +296,7 @@ for (const [label, loan, expectedValue] of testCases) {
 }
  */
 //-------
-/* function assertCompoundInterestCalculation(label, loan, expected) {
+/* export function assertCompoundInterestCalculation(label, loan, expected) {
   try {
     const result = calculateCompoundInterest(loan);
     const match =
@@ -351,7 +348,7 @@ for (const [label, loan, expected] of testCases) {
   assertCompoundInterestCalculation(label, loan, expected);
 } */
 //-------
-/*function assertFixedPaymentCalculation(label, loan, expectedValue) {
+/*export function assertFixedPaymentCalculation(label, loan, expectedValue) {
   try {
     const result = fixedPaymentCalculation(loan);
     const match = parseFloat(result.toFixed(2)) === expectedValue;
@@ -400,7 +397,7 @@ for (const [label, loan, expectedValue] of testCases) {
 */
 //-------
 /* 
-function assertScheduleStructure(label, loan, expectedLength) {
+export function assertScheduleStructure(label, loan, expectedLength) {
   try {
     const schedule = generateAmortizationSchedule(loan);
 
@@ -578,7 +575,7 @@ for (const {label, loan, expectedLength} of testCases) {
 }
  */
 //-------
-/* function assertInterestSaving(label, loan, earlyRepaymentPeriod, expectedValue) {
+/* export function assertInterestSaving(label, loan, earlyRepaymentPeriod, expectedValue) {
   try {
     const schedule = generateAmortizationSchedule(loan);
     const result = calculateInterestSaving(schedule, earlyRepaymentPeriod);
@@ -622,7 +619,7 @@ for (const {label, loan, earlyRepaymentPeriod, expectedValue} of testCases) {
 }
  */
 //-------
-/* function assertEarlyRepayment(label, loan, earlyRepaymentPeriod, expectedLength) {
+/* export function assertEarlyRepayment(label, loan, earlyRepaymentPeriod, expectedLength) {
   const fullSchedule = generateAmortizationSchedule(loan);
   const modifiedSchedule = applyEarlyRepayment(loan, fullSchedule, earlyRepaymentPeriod);
 
