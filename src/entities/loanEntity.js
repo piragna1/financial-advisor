@@ -7,7 +7,7 @@ export function buildLoanEntity(data){
         typeof data.principal !== 'number' || 
         data.principal <=0
     ) 
-        throw new Error('Invalid principal amount')
+        throw new Error('Invalid principal input')
     if (
         typeof data.interestRate !== 'number' || 
         data.interestRate <=0
