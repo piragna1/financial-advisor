@@ -34,7 +34,7 @@ C:.
 │               validatePasswordInput.js (✅) 
 │               validateRegistrationInput.js (✅)
 │       └───loan
-│               validateLoanInput.js (❌)
+│               validateLoanInput.js (❌) needs implementation
 ├───config
 │       jwtConfig.js (🔁...) ✅
 │       loanConfig.js (✅)
@@ -114,7 +114,7 @@ C:.
 │   │
 │   ├───loan
 │   │       loanCalculator.js (
-  ✅ calculateRepaymentCapacity
+  ❌ calculateRepaymentCapacity 🔁
   ✅calculateMaxLoanCapacity
   ✅calculateCompoundInterest
   ✅fixedPaymentCalculation 
