@@ -12,6 +12,8 @@ C:.
 │   │       verifyPassword.js (✅)
 │   ├───financialProfile
 │   │       updateFinancialProfileFields.js (❌)
+│   ├───loan
+│   │       simulateLoan.js (❌)
 │   ├───utils
 │   │       updateProfileFields.js (❌)
 │   ├───retrievers
@@ -31,7 +33,8 @@ C:.
 │               validateName.js (✅)
 │               validatePasswordInput.js (✅) 
 │               validateRegistrationInput.js (✅)
-│
+│       └───loan
+│               validateLoanInput.js (❌)
 ├───config
 │       jwtConfig.js (🔁...) ✅
 │       loanConfig.js (✅)
