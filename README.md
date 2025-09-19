@@ -35,6 +35,16 @@ Send POST request to http://localhost:3000/auth/register  with the corresponded 
 }
 
 ##### Example of response: 
+
+{
+      message: "User registered",
+      user: {
+        id: "u1",
+        email: "gvalagna@example.con",
+      },
+    }
+
+    
 #### Sign in
 Send POST request to http://localhost:3000/auth/login  with the corresponded information in order to successfully sign in to the system. See the following example:
 
@@ -43,7 +53,11 @@ Send POST request to http://localhost:3000/auth/login  with the corresponded inf
   "password": "gvalagnA$4"
 }
 
+
 ##### Example of response:
+
+
+{ user, token } (upd)
 ##
 ### Relationships
 #### User - x
