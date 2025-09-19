@@ -1,6 +1,8 @@
 import { retrieveUserById, retrieveUserByEmail } from "../actors/retrievers/userRetriever.js";
 import { AppError } from "../errors/AppError.js";
 import { AuthErrors } from "../errors/authErrors.js";
+import { findUserById, saveUser } from "../repositories/userRepo.js";
+import {updateProfileFields } from '../actors/profile/updateProfileFields.js'
 
 export async function getProfile(req, res,next) {
   try{  
@@ -13,6 +15,22 @@ export async function getProfile(req, res,next) {
   }
 
 };
+
+// controllers/profileController.mjs
+export async function updateProfileController(req, res, next) { 
+  try {
+    const id = req.userId;
+    const profile = findUserById(id);
+    const updated = updateProfileFields(profile,req.body);
+    await saveUser(updated);
+    res.json({success:true,updated})
+  } catch (error) {
+    res.status(400).json({error:error.message});
+  }
+
+  
+}
+
 
 /* 
 const testInputs = [
