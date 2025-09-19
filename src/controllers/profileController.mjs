@@ -14,6 +14,7 @@ export async function getProfile(req, res,next) {
 
 };
 
+/* 
 const testInputs = [
   { userId: 'unicode-id' },
   { userId: 'nonexistent-id' },
@@ -50,3 +51,4 @@ for (const user of testInputs) {
   console.log('Response:', res.response);
   console.log('---');
 }
+ */
