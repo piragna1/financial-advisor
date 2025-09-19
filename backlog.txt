@@ -70,6 +70,9 @@ C:.
 │
 ├───models
 │       loanModel.js (✅)
+│       paymentModel.js (✅)
+│       profileModel.js (✅)
+│       scheduleModel.js (✅)
 │       userModel.js (✅)
 │
 ├───repositories
