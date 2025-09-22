@@ -16,6 +16,7 @@ C:.
 │   ├───financialProfile
 │   │       updateFinancialProfileFields.js (❌)
 │   ├───loan
+│   │       createLoan.js (❌)
 │   │       simulateLoan.js (❌)
 │   ├───utils
 │   │       updateProfileFields.js (❌)
