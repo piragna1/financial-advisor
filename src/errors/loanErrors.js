@@ -1,15 +1,93 @@
 export const LoanErrors = {
-  INVALID_STRUCTURE: { code: 'INVALID_STRUCTURE', status: 400 },
-  INVALID_LOAN_ID: { code: 'INVALID_LOAN_ID', status: 400 },
-  INVALID_FINANCIAL_PROFILE_ID: { code: 'INVALID_FINANCIAL_PROFILE_ID', status: 400 },
-  INVALID_START_DATE: { code: 'INVALID_START_DATE', status: 400 },
-  INVALID_TERM: { code: 'INVALID_TERM', status: 400 },
-  INVALID_PRINCIPAL: { code: 'INVALID_PRINCIPAL', status: 400 },
-  INVALID_RATE: { code: 'INVALID_RATE', status: 400 },
-  INVALID_PAYMENT_FREQUENCY: { code: 'INVALID_PAYMENT_FREQUENCY', status: 400 },
-  INVALID_COMPOUNDING_FREQUENCY: { code: 'INVALID_COMPOUNDING_FREQUENCY', status: 400 },
-  INVALID_GRACE_PERIOD: { code: 'INVALID_GRACE_PERIOD', status: 400 },
-  INVALID_BALLOON_PAYMENT: { code: 'INVALID_BALLOON_PAYMENT', status: 400 },
-  INVALID_LOAN_TYPE: { code: 'INVALID_LOAN_TYPE', status: 400 },
-  INVALID_CURRENCY: { code: 'INVALID_CURRENCY', status: 400 }
+  VALIDATION: {
+    INVALID_STRUCTURE: {
+      code: "VALIDATION_INVALID_STRUCTURE",
+      message: "Invalid loan structure received",
+      status: 400,
+    },
+    INVALID_LOAN_ID: {
+      code: "VALIDATION_INVALID_LOAN_ID",
+      message: "Invalid loan id",
+      status: 400,
+    },
+    INVALID_FINANCIAL_PROFILE_ID: {
+      code: "VALIDATION_INVALID_FINANCIAL_PROFILE_ID",
+      message: "Invalid financial profile id",
+      status: 400,
+    },
+    INVALID_START_DATE: {
+      code: "VALIDATION_INVALID_START_DATE",
+      message: "Invalid start date value received",
+      status: 400,
+    },
+    INVALID_TERM_YEARS: {
+      code: "VALIDATION_INVALID_TERM_YEARS",
+      message: "Invalid term years value received",
+      status: 400,
+    },
+    INVALID_PRINCIPAL: {
+      code: "VALIDATION_INVALID_PRINCIPAL",
+      message: "Invalid principal received",
+      status: 400,
+    },
+    INVALID_INTEREST_RATE: {
+      code: "VALIDATION_INVALID_INTEREST_RATE",
+      message: "Invalid loan's interest rate value received",
+      status: 400,
+    },
+    INVALID_PAYMENT_FREQUENCY: {
+      code: "VALIDATION_INVALID_PAYMENT_FREQUENCY",
+      message: "Invalid payment frequency per year received",
+      status: 400,
+    },
+    INVALID_COMPOUNDING_FREQUENCY: {
+      code: "VALIDATION_INVALID_COMPOUNDING_FREQUENCY",
+      message: "Invalid compounding frequency per year received",
+      status: 400,
+    },
+    INVALID_GRACE_PERIOD: {
+      code: "VALIDATION_INVALID_GRACE_PERIOD",
+      message: "Invalid grace periods' value received",
+      status: 400,
+    },
+    INVALID_BALLOON_PAYMENT: {
+      code: "VALIDATION_INVALID_BALLOON_PAYMENT",
+      message: "Invalid balloon payment's value received",
+      status: 400,
+    },
+    INVALID_LOAN_TYPE: {
+      code: "VALIDATION_INVALID_LOAN_TYPE",
+      message: "Invalid loan type received",
+      status: 400,
+    },
+    INVALID_CURRENCY: {
+      code: "VALIDATION_INVALID_CURRENCY",
+      message: "Invalid currency received",
+      status: 400,
+    },
+  },
+  SIMULATION: {
+    FAILED_CALCULATION: {
+      code: "SIMULATION_FAILED_CALCULATION",
+      message: "Loan simulation failed due to invalid parameters",
+      status: 422,
+    },
+    INSUFFICIENT_CAPACITY: {
+      code: "SIMULATION_INSUFFICIENT_CAPACITY",
+      message: "User's repayment capacity is insufficient for this loan",
+      status: 403,
+    },
+  },
+  CREATION: {
+    FAILED_CREATION: {
+      code: "CREATION_FAILED",
+      message: "An error occurred while creating the loan",
+      status: 500,
+    },
+    DUPLICATE_LOAN: {
+      code: "CREATION_DUPLICATE_LOAN",
+      message: "A loan with this ID already exists",
+      status: 409,
+    },
+  },
 };
