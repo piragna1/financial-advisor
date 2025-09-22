@@ -90,6 +90,26 @@ export const LoanErrors = {
       status: 409,
     },
   },
+  FIND: {
+    NOT_FOUND: {
+      code: "FIND_LOAN_NOT_FOUND",
+      message: "Loan not found",
+      status: 404,
+    },
+  },
+  DELETE: {
+  NOT_FOUND: {
+    code: "DELETE_LOAN_NOT_FOUND",
+    message: "Loan not found or already deleted",
+    status: 404,
+  },
+  FAILED: {
+    code: "DELETE_LOAN_FAILED",
+    message: "An error occurred while deleting the loan",
+    status: 500,
+  },
+}
+
 };
 
 
