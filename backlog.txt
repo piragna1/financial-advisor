@@ -17,6 +17,7 @@ C:.
 │   │       updateFinancialProfileFields.js (❌)
 │   ├───loan
 │   │       createLoan.js (❌)
+│   │       generateLoanId.js (❌)
 │   │       simulateLoan.js (❌)
 │   ├───utils
 │   │       updateProfileFields.js (❌)
@@ -48,6 +49,8 @@ C:.
 │       registerData.js (✅)
 │       userConfig.js (✅)
 │
+├───db
+│       pool.js (❌)
 ├───controllers
 │       authController.mjs (
           ✅registerUserController(),
@@ -95,6 +98,7 @@ C:.
 │       userModel.js (✅)
 │
 ├───repositories
+│       loanRepository.js (❌)
 │       userRepo.js (
   ✅findUserByEmail
   ✅findUserById
