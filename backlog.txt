@@ -42,7 +42,8 @@ C:.
 ├───config
 │       jwtConfig.js (🔁...) ✅
 │       loanConfig.js (✅)
-│       mock.db.config.js (✅)
+│       mock.loans.db.config.js (❌)
+│       mock.users.db.config.js (✅)
 │       passwordSecretConfig.js (✅)
 │       registerData.js (✅)
 │       userConfig.js (✅)
