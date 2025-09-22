@@ -1,6 +1,9 @@
 Next: integration of User, Profile, FinancialProfile, Loan, Schedule, Payment models into the system.
 -------------------------------------------------------------
 CHECK EVERY PART OF THE SYSTEM IN ISOLATION:
+
+(All files in here are created. The ones with the cross are not yet tested)
+
 C:.
 │   index.mjs
 │
