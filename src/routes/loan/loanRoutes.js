@@ -1,8 +1,9 @@
 import express from 'express';
-import { calculateLoan } from '../controllers/loanController.mjs';
+import { createLoanController, simulateLoanController } from '../../controllers/loanController.mjs';
 
 const router = express.Router();
 
-router.post('/calculate-loan', calculateLoan);
+router.post('/simulate-loan', simulateLoanController);
+router.post('/create-loan', createLoanController);
 
 export default router;
