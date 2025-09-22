@@ -2,9 +2,9 @@ import {validateLoanInput} from '../../actors/validators/loan/validateLoanInput.
 import { AppError } from '../../errors/AppError.js';
 import { LoanErrors } from '../../errors/loanErrors.js';
 import { simulateLoan } from './simulateLoan.js';
-export async function createLoan(input, financialProfileId){
+export async function createLoan(input, financialProfile){
     validateLoanInput(input);
-    const simulation = simulateLoan(input,financialProfileId);
+    const simulation = simulateLoan(input,financialProfile);
     if(!simulation.affordable){
         throw new AppError(LoanErrors.SIMULATION.INSUFFICIENT_CAPACITY);
     }
