@@ -91,3 +91,15 @@ export const LoanErrors = {
     },
   },
 };
+
+
+function deepFreeze(obj) {
+  Object.freeze(obj);
+  Object.values(obj).forEach((val) => {
+    if (typeof val === "object" && val !== null && !Object.isFrozen(val)) {
+      deepFreeze(val);
+    }
+  });
+}
+
+deepFreeze(LoanErrors);
