@@ -1,6 +1,6 @@
 // userRepo.js
 
-import { mockUsers } from "../config/mock.db.config.js";
+import { mockUsers } from "../config/mock.users.db.config.js";
 
 export async function findUserByEmail(email) {
   //checked
