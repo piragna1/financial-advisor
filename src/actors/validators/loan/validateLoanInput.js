@@ -9,6 +9,7 @@ export function validateLoanInput(loan){
     if (typeof loan.compoundingFrequencyPerYear !== 'number') // check
     if (typeof loan.gracePeriodMonths !== 'number' || loan.gracePeriodMonths < 0) loan.gracePeriodMonths = 0;
     if (typeof loan.balloonPayment !== 'number' || loan.balloonPayment < 0) loan.balloonPayment = 0;
-    //loanType
+    if (!loan.loanType || typeof loan.loanType !== 'string') throw new Error("Invalid loan type received")
+    if (!loan.currency || typeof loan.currency !== 'string') throw new Error('Invalid currency received')
     //currency
 }
