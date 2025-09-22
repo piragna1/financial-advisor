@@ -64,6 +64,7 @@ C:.
 │       AppError.js (✅)
 │       src\errors\authErrors.js (✅)
 │       errorRegistry.js (✅) 
+│       loanErrors.js (❌) 
 │       mapError.js (✅)
 │       profileErrors.js (✅)
 │       registrationErrors.js (✅)
