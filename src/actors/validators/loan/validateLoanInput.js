@@ -1,17 +1,42 @@
-import {AppError} from '../../../errors/AppError.js'
-import { LoanErrors } from '../../../errors/loanErrors.js';
-export function validateLoanInput(loan){
-    if (!loan || typeof loan !== 'object') throw new AppError(LoanErrors.INVALID_STRUCTURE);
-    if (!loan.id) throw new AppError(LoanErrors.INVALID_LOAN_ID);
-    if (!loan.financialProfileId) throw new AppError(LoanErrors.INVALID_FINANCIAL_PROFILE_ID);
-    if (!loan.startDate || typeof loan.startDate !== 'number') throw new AppError(LoanErrors.VALIDATION.INVALID_START_DATE);
-    if (typeof loan.termYears !== 'number' || loan.termYears <= 0) throw new AppError(LoanErrors.VALIDATION.INVALID_TERM)
-    if (typeof loan.principal !== 'number' || loan.principal <=0 ) throw new AppError(LoanErrors.VALIDATION.INVALID_PRINCIPAL);
-    if (typeof loan.interestRate !== 'number' || loan.interestRate<=0) throw new AppError(LoanErrors.VALIDATION.INVALID_RATE)
-    if (typeof loan.paymentFrequencyPerYear !== 'number' || loan.paymentFrequencyPerYear <= 0) throw new AppError(LoanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY);
-    if (typeof loan.compoundingFrequencyPerYear !== 'number' || loan.compoundingFrequencyPerYear <=0) throw new AppError(LoanErrors.VALIDATION.INVALID_COMPOUNDING_FREQUENCY);
-    if (typeof loan.gracePeriodMonths !== 'number' || loan.gracePeriodMonths < 0)throw new AppError(LoanErrors.VALIDATION.INVALID_GRACE_PERIOD);
-    if (typeof loan.balloonPayment !== 'number' || loan.balloonPayment < 0) throw new AppError(LoanErrors.VALIDATION.INVALID_BALLOON_PAYMENT);
-    if (!loan.loanType || typeof loan.loanType !== 'string') throw new AppError(LoanErrors.VALIDATION.INVALID_LOAN_TYPE);
-    if (!loan.currency || typeof loan.currency !== 'string') throw new AppError(LoanErrors.VALIDATION.INVALID_CURRENCY);
+// validators/validateLoanData.js
+export function validateLoanInput(loanData) {
+  if (!loanData || typeof loanData !== "object")
+    throw new Error("Invalid loan data received");
+
+  if (!loanData.id || typeof loanData.id !== "string")
+    throw new Error("Loan ID must be a string");
+
+  if (!loanData.financialProfileId || typeof loanData.financialProfileId !== "string")
+    throw new Error("Financial profile ID must be a string");
+
+  if (!(loanData.startDate instanceof Date) || isNaN(loanData.startDate.getTime()))
+    throw new Error("startDate must be a valid Date object");
+
+  if (typeof loanData.termYears !== "number" || isNaN(loanData.termYears))
+    throw new Error("termYears must be a valid number");
+
+  if (typeof loanData.principal !== "number" || isNaN(loanData.principal))
+    throw new Error("Principal must be a valid number");
+
+  if (typeof loanData.interestRate !== "number" || loanData.interestRate <= 0)
+    throw new Error("Interest rate must be a positive number");
+
+  if (typeof loanData.paymentFrequencyPerYear !== "number" || loanData.paymentFrequencyPerYear <= 0)
+    throw new Error("Payment frequency must be a positive number");
+
+  if (typeof loanData.compoundingFrequencyPerYear !== "number" || loanData.compoundingFrequencyPerYear <= 0)
+    throw new Error("Compounding frequency must be a positive number");
+
+  if (typeof loanData.gracePeriodMonths !== "number" || loanData.gracePeriodMonths < 0)
+    throw new Error("Grace period must be zero or positive");
+
+  if (typeof loanData.balloonPayment !== "number" || loanData.balloonPayment < 0)
+    throw new Error("Balloon payment must be zero or positive");
+
+  const allowedLoanTypes = ['personal', 'mortgage', 'auto', 'education', 'business'];
+  if (typeof loanData.loanType !== 'string' || !allowedLoanTypes.includes(loanData.loanType.toLowerCase()))
+    throw new Error(`Unsupported loan type: ${loanData.loanType}`);
+
+  if (typeof loanData.currency !== "string" || !/^[A-Z]{3}$/.test(loanData.currency))
+    throw new Error("Currency must be a 3-letter ISO code (e.g., USD, EUR)");
 }

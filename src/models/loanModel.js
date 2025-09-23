@@ -10,5 +10,6 @@ export const loan = {
     gracePeriodMonths:Number,
     balloonPayment:Number,
     loanType:String,
-    currency:String
+    currency:String,
+    savedAt:Date
 };

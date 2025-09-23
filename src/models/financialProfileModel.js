@@ -1,5 +1,7 @@
 export const financialProfile = {
     id:String,
     userId:String,
-    salary:Number
+    salary:Number,
+    createdAt:Date,
+    updatedAt:Date
 };

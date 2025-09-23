@@ -39,7 +39,7 @@ C:.
 │               validatePasswordInput.js (✅) 
 │               validateRegistrationInput.js (✅)
 │       └───loan
-│               validateLoanInput.js (❌) needs implementation
+│               validateLoanInput.js (❌)
 ├───config
 │       jwtConfig.js (🔁...) ✅
 │       loanConfig.js (✅)
@@ -281,3 +281,7 @@ Please make sure that before each testing case actors are pure as much as possib
 
 -----------------------------------------------------------------------NOT CORE FEATURES
 --------------
+Notes:
+- Test that CRUD functinalities are working for loan entity.
+- The only entity that already has the CRUD is loans, the entire others also need it. So that is pending...
+- Test that all CRUD functions are working for every entity.
