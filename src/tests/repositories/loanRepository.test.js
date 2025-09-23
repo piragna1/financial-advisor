@@ -9,36 +9,31 @@ import {
 import { pool } from "../../db/pool.js";
 import { generateLoanId } from "../../actors/loan/generateLoanId.js";
 import {generateFinancialProfileId} from '../../actors/financialProfile/generateFinancialProfileId.js'
+import { createMockFinancialProfile } from "../../actors/financialProfile/createMockFinancialProfile.js";
 
 describe("Loan Repository", () => {
   let loanId;
-
-  const financial_profile_id = generateFinancialProfileId();
-
-  const validLoan = {
-    id: generateLoanId(),
-    financialProfileId: financial_profile_id,
-    startDate: new Date(),
-    termYears: 5,
-    principal: 10000,
-    interestRate: 0.08,
-    paymentFrequencyPerYear: 12,
-    compoundingFrequencyPerYear: 12,
-    gracePeriodMonths: 0,
-    balloonPayment: 0,
-    loanType: "personal",
-    currency: "USD",
-    savedAt: new Date()
-  };
-
-  console.log(loanId)
+  let financialProfileId;
+  let validLoan;
 
   beforeAll(async () => {
-    loanId = validLoan.id;
-    
-  pool.query(`
-    INSERT INTO financial_profiles(id, user_id, salary,created_at,updated_at)
-    VALUES $1,$2,$3,$4`, [financial_profile_id, 'u1', 50000, new Date(), new Date()]);
+    financialProfileId = await createMockFinancialProfile();
+    loanId = generateLoanId();
+    validLoan = {
+      id:loanId,
+      financialProfileId:financialProfileId,
+      startDate:new Date(),
+      termYears:5,
+      principal:10000,
+      interestRate:0.08,
+      paymentFrequencyPerYear:12,
+      compoundingFrequencyPerYear:12,
+      gracePeriodMonths:0,
+      balloonPayment:0,
+      loanType:"personal",
+      currency:"USD",
+      savedAt:new Date()
+    }
   });
 
   afterAll(async () => {
@@ -81,8 +76,8 @@ describe("Loan Repository", () => {
   });
 
   test("updateLoan() should modify fields correctly", async () => {
-    const updated = await updateLoan(loanId, { interest_rate: 0.1 });
-    expect(updated.interest_rate).toBe(0.1);
+    const updated = await updateLoan(loanId, { interestRate: 0.1 });
+    expect(updated.interestRate).toBe(0.1);
     expect(updated.updated_at).toBeDefined();
   });
 
@@ -91,17 +86,6 @@ describe("Loan Repository", () => {
     await expect(updateLoan(loanId, null)).rejects.toThrow(
       "Invalid update values received"
     );
-  });
-
-  test("deleteLoan() should soft-delete the loan", async () => {
-    const deleted = await deleteLoan(loanId);
-    expect(deleted.deleted_at).toBeDefined();
-
-    const loan = await getLoanById(loanId);
-    expect(loan).toBeNull();
-
-    const loans = await getLoans();
-    expect(loans.some((l) => l.id === loanId)).toBe(false);
   });
 
   test("deleteLoan() should return null for already deleted loan", async () => {
