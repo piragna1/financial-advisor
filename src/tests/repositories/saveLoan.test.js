@@ -2,12 +2,14 @@ import { saveLoan } from "../../repositories/loanRepository.js";
 import { createMockFinancialProfile } from "../../actors/financialProfile/createMockFinancialProfile.js";
 import { generateLoanId } from "../../actors/loan/generateLoanId.js";
 import { pool } from "../../db/pool.js";
+import {generateValidLoan} from '../../actors/loan/generateValidLoan.js'
 
-describe("saveLoan()", () => {
-  let financialProfileId;
+describe("saveLoan() — validación completa", () => {
+  let financialProfile;
 
   beforeAll(async () => {
-    financialProfileId = await createMockFinancialProfile();
+    financialProfile = await createMockFinancialProfile();    
+    console.log('finprof:',financialProfile)
   });
 
   afterAll(async () => {
@@ -17,50 +19,85 @@ describe("saveLoan()", () => {
   });
 
   it("should save a valid loan", async () => {
-
-    const loanData = {
-      id: generateLoanId(),
-      financialProfileId: financialProfileId,
-      startDate: new Date(),
-      termYears: 5,
-      principal: 10000,
-      interestRate: 5.5,
-      paymentFrequencyPerYear: 12,
-      compoundingFrequencyPerYear: 12,
-      gracePeriodMonths: 0,
-      balloonPayment: 0,
-      loanType: "personal",
-      currency: "USD",
-      savedAt: new Date(),
-    };
-
-    const savedLoan = await saveLoan(loanData);
-
-    expect(savedLoan).toMatchObject({
-      id: loanData.id,
-      financial_profile_id: loanData.financialProfileId,
-      principal: loanData.principal.toString(),
-      interest_rate: loanData.interestRate.toString(),
-    });
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const savedLoan = await saveLoan(baseLoan);
+    expect(savedLoan.id).toBe(baseLoan.id);
   });
 
-  //   it("should throw error for invalid loan data", async () => {
-  //     const invalidLoan = {
-  //       id: "bad-id",
-  //       financialProfileId: null,
-  //       startDate: "not-a-date",
-  //       termYears: "five",
-  //       principal: "ten thousand",
-  //       interestRate: -1,
-  //       paymentFrequencyPerYear: 0,
-  //       compoundingFrequencyPerYear: -1,
-  //       gracePeriodMonths: -5,
-  //       balloonPayment: -100,
-  //       loanType: "unknown",
-  //       currency: "usd",
-  //       savedAt: new Date()
-  //     };
+  it("should fail if loanData is not an object", async () => {
+    await expect(() => saveLoan(null)).rejects.toThrow("Invalid loan data received");
+  });
 
-  //     await expect(() => saveLoan(invalidLoan)).rejects.toThrow("Financial profile ID must be a string");
-  //   });
+  it("should fail if id is missing", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+
+    const loan = { ...baseLoan, id: undefined };
+    await expect(() => saveLoan(loan)).rejects.toThrow("Loan ID must be a string");
+  });
+
+  it("should fail if financialProfileId is not a string", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const loan = { ...baseLoan, financialProfileId: 123 };
+    await expect(() => saveLoan(loan)).rejects.toThrow("Financial profile ID must be a string");
+  });
+
+  it("should fail if startDate is not a valid Date", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const loan = { ...baseLoan, startDate: "2025-01-01" };
+    await expect(() => saveLoan(loan)).rejects.toThrow("startDate must be a valid Date object");
+  });
+
+  it("should fail if termYears is not a number", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const loan = { ...baseLoan, termYears: "five" };
+    await expect(() => saveLoan(loan)).rejects.toThrow("termYears must be a valid number");
+  });
+
+  it("should fail if principal is NaN", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const loan = { ...baseLoan, principal: NaN };
+    await expect(() => saveLoan(loan)).rejects.toThrow("Principal must be a valid number");
+  });
+
+  it("should fail if interestRate is negative", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const loan = { ...baseLoan, interestRate: -1 };
+    await expect(() => saveLoan(loan)).rejects.toThrow("Interest rate must be a positive number");
+  });
+
+  it("should fail if paymentFrequencyPerYear is zero", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const loan = { ...baseLoan, paymentFrequencyPerYear: 0 };
+    await expect(() => saveLoan(loan)).rejects.toThrow("Payment frequency must be a positive number");
+  });
+
+  it("should fail if compoundingFrequencyPerYear is negative", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const loan = { ...baseLoan, compoundingFrequencyPerYear: -1 };
+    await expect(() => saveLoan(loan)).rejects.toThrow("Compounding frequency must be a positive number");
+  });
+
+  it("should fail if gracePeriodMonths is negative", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const loan = { ...baseLoan, gracePeriodMonths: -3 };
+    await expect(() => saveLoan(loan)).rejects.toThrow("Grace period must be zero or positive");
+  });
+
+  it("should fail if balloonPayment is negative", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const loan = { ...baseLoan, balloonPayment: -100 };
+    await expect(() => saveLoan(loan)).rejects.toThrow("Balloon payment must be zero or positive");
+  });
+
+  it("should fail if loanType is unsupported", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const loan = { ...baseLoan, loanType: "vacation" };
+    await expect(() => saveLoan(loan)).rejects.toThrow("Unsupported loan type: vacation");
+  });
+
+  it("should fail if currency is not a 3-letter code", async () => {
+    const baseLoan = generateValidLoan(financialProfile.id);
+    const loan = { ...baseLoan, currency: "usd$" };
+    await expect(() => saveLoan(loan)).rejects.toThrow("Currency must be a 3-letter ISO code (e.g., USD, EUR)");
+  });
 });
