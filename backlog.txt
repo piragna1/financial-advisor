@@ -285,3 +285,57 @@ Notes:
 - Test that CRUD functinalities are working for loan entity.
 - The only entity that already has the CRUD is loans, the entire others also need it. So that is pending...
 - Test that all CRUD functions are working for every entity.
+
+🧭 Roadmap mínimo funcional (4 días)
+🟢 Día 1: Persistencia básica
+[x] Crear tabla loans con columnas correctas y tipos consistentes
+
+[x] Crear tabla financial_profiles con id, user_id, salary
+
+[x] Foreign key entre loans.financial_profile_id y financial_profiles.id
+
+[x] Repositorio saveLoan() con validación y logging
+
+[x] Actor validateLoanInput() para datos completos
+
+[x] Test saveLoan() con datos válidos e inválidos
+
+🟡 Día 2: Lectura y consulta
+[x] Repositorio getLoanById(id)
+
+[x] Repositorio getLoans() ordenado por savedAt
+
+[x] Test getLoanById() válido e inválido
+
+[x] Test getLoans() incluye préstamo guardado
+
+🔵 Día 3: Actualización y eliminación
+[x] Repositorio updateLoan(id, updates) con validación
+
+[x] Repositorio deleteLoan(id) con DELETE real
+
+[x] Test updateLoan() válido e inválido
+
+[x] Test deleteLoan() efectivo e idempotente
+
+🟣 Día 4: Modularidad y helpers
+[x] Actor createMockFinancialProfile() para tests
+
+[x] Actor generateLoanId() y generateFinancialProfileId()
+
+[x] Refactor de tests para usar beforeAll y helpers
+
+[ ] (Opcional) createMockLoan() para setup completo
+
+[ ] (Opcional) validateLoanUpdate() para updates parciales
+
+🎯 Resultado final
+Con este roadmap, vas a tener:
+
+Un sistema que guarda, consulta, actualiza y elimina préstamos
+
+Validación explícita y modular
+
+Tests que cubren todos los flujos principales
+
+Separación clara entre actores, repositorios y datos
