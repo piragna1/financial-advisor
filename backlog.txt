@@ -285,85 +285,51 @@ Notes:
 - Test that CRUD functinalities are working for loan entity.
 - The only entity that already has the CRUD is loans, the entire others also need it. So that is pending...
 - Test that all CRUD functions are working for every entity.
-.
 
-🧭 Roadmap mínimo funcional extendido (4 días)
-🟢 Día 1: Persistencia y validación de préstamos
+
+
+
+
+
+
+
+
+
+
+
+
+
+Roadmap
+.🟢 Día 1: Persistencia y validación de préstamos
 ✅ Completado
 
 🟡 Día 2: Lectura y consulta + CRUD de usuarios
-📄 Loans
-[x] Repositorio getLoanById(id)
+📄 Loans ✅ D2-L1 Repositorio getLoanById(id) [ ] D2-L2 Repositorio getLoans() ordenado por savedAt ✅ D2-L3 Test getLoanById() válido e inválido [ ] D2-L4 Test getLoans() incluye préstamo guardado
 
-[x] Repositorio getLoans() ordenado por savedAt
-
-[x] Test getLoanById() válido e inválido
-
-[x] Test getLoans() incluye préstamo guardado
-
-👤 Users
-[ ] Tabla users con id, email, name, created_at
-
-[ ] Repositorio saveUser(), getUserById()
-
-[ ] Actor validateUserInput()
-
-[ ] Test saveUser() válido e inválido
-
-[ ] Test getUserById() válido e inexistente
+👤 Users [ ] D2-U1 Tabla users con id, email, name, created_at [ ] D2-U2 Repositorio saveUser(), getUserById() [ ] D2-U3 Actor validateUserInput() [ ] D2-U4 Test saveUser() válido e inválido [ ] D2-U5 Test getUserById() válido e inexistente
 
 🔵 Día 3: Actualización y eliminación + CRUD de perfiles y pagos
-📄 Loans
-[x] Repositorio updateLoan(id, updates) con validación
+📄 Loans [ ] D3-L1 Repositorio updateLoan(id, updates) con validación [ ] D3-L2 Repositorio deleteLoan(id) con DELETE real [ ] D3-L3 Test updateLoan() válido e inválido [ ] D3-L4 Test deleteLoan() efectivo e idempotente
 
-[x] Repositorio deleteLoan(id) con DELETE real
+🧾 Financial Profiles [ ] D3-F1 Repositorio updateFinancialProfile(id, updates) [ ] D3-F2 Test updateFinancialProfile() válido e inválido
 
-[x] Test updateLoan() válido e inválido
-
-[x] Test deleteLoan() efectivo e idempotente
-
-🧾 Financial Profiles
-[ ] Repositorio updateFinancialProfile(id, updates)
-
-[ ] Test updateFinancialProfile() válido e inválido
-
-💳 Payments
-[ ] Tabla payments con id, loan_id, amount, paid_at
-
-[ ] Repositorio savePayment(), getPaymentsByLoan()
-
-[ ] Actor validatePaymentInput()
-
-[ ] Test savePayment() válido e inválido
-
-[ ] Test getPaymentsByLoan() incluye pago guardado
+💳 Payments [ ] D3-P1 Tabla payments con id, loan_id, amount, paid_at [ ] D3-P2 Repositorio savePayment(), getPaymentsByLoan() [ ] D3-P3 Actor validatePaymentInput() [ ] D3-P4 Test savePayment() válido e inválido [ ] D3-P5 Test getPaymentsByLoan() incluye pago guardado
 
 🟣 Día 4: Modularidad final + CRUD de schedules
-🧩 Helpers y actores
-[x] Actor createMockFinancialProfile()
+🧩 Helpers y actores [ ] D4-H1 Actor createMockFinancialProfile() [ ] D4-H2 Actor generateLoanId() y generateFinancialProfileId() [ ] D4-H3 Refactor de tests con beforeAll y helpers [ ] D4-H4 createMockLoan() para setup completo [ ] D4-H5 validateLoanUpdate() para updates parciales [ ] D4-H6 generateValidUser(), generateValidPayment(), etc.
 
-[x] Actor generateLoanId() y generateFinancialProfileId()
-
-[x] Refactor de tests con beforeAll y helpers
-
-[ ] createMockLoan() para setup completo
-
-[ ] validateLoanUpdate() para updates parciales
-
-[ ] generateValidUser(), generateValidPayment(), etc.
-
-📅 Schedules
-[ ] Tabla schedules con id, loan_id, due_date, expected_amount
-
-[ ] Repositorio saveSchedule(), getScheduleByLoan()
-
-[ ] Actor validateScheduleInput()
-
-[ ] Test saveSchedule() válido e inválido
-
-[ ] Test getScheduleByLoan() incluye cronograma
+📅 Schedules [ ] D4-S1 Tabla schedules con id, loan_id, due_date, expected_amount [ ] D4-S2 Repositorio saveSchedule(), getScheduleByLoan() [ ] D4-S3 Actor validateScheduleInput() [ ] D4-S4 Test saveSchedule() válido e inválido [ ] D4-S5 Test getScheduleByLoan() incluye cronograma
 
 🎯 Resultado final en 4 días
+
+
+
+
+
+
+
+
+
 CRUD completo para loan, user, profile, payment, schedule
 
 Validación modular por entidad
