@@ -1,8 +1,8 @@
-import { saveLoan } from "../../repositories/loanRepository.js";
-import { createMockFinancialProfile } from "../../actors/financialProfile/createMockFinancialProfile.js";
-import { generateLoanId } from "../../actors/loan/generateLoanId.js";
-import { pool } from "../../db/pool.js";
-import {generateValidLoan} from '../../actors/loan/generateValidLoan.js'
+import { saveLoan } from "../../../repositories/loanRepository.js";
+import { createMockFinancialProfile } from "../../../actors/financialProfile/createMockFinancialProfile.js";
+import { generateLoanId } from "../../../actors/loan/generateLoanId.js";
+import { pool } from "../../../db/pool.js";
+import {generateValidLoan} from '../../../actors/loan/generateValidLoan.js'
 
 describe("saveLoan() — validación completa", () => {
   let financialProfile;
