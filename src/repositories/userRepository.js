@@ -1,6 +1,33 @@
 // userRepo.js
 
+import { checkEmailAvailability } from "../actors/users/checkEmailAvailability.js";
+import { validateRegistrationInput } from "../actors/validators/auth/validateRegistrationInput.js";
 import { mockUsers } from "../config/mock.users.db.config.js";
+
+import { pool } from "../db/pool.js";
+
+export async function saveUser(user) {
+  if (!user || typeof user !== "object") throw new Error("Invalid user input");
+
+  const query = `
+    INSERT INTO users (id, email, password_hash, created_at, updated_at)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *;
+  `;
+
+  const values = [
+    user.id,
+    user.email,
+    user.passwordHash,
+    user.createdAt || new Date(),
+    user.updatedAt || null
+  ];
+
+  const result = await pool.query(query, values);
+  return result.rows[0];
+}
+
+
 
 export async function findUserByEmail(email) {
   //checked
@@ -11,10 +38,6 @@ export async function findUserById(id) {
   return mockUsers.find((user) => user.id === id);
 }
 
-export function saveUser(user) {
-  mockUsers.push(user);
-  return user;
-}
 
 export function listUsers() {
   return mockUsers.slice();
