@@ -1,20 +1,26 @@
 import { AppError } from "../errors/AppError.js";
 import { LoanErrors } from "../errors/loanErrors.js";
-import { generateLoanId } from "../actors/loan/generateLoanId.js";
-import { mockLoans } from "../config/mock.loans.db.config.js";
-import { Pool } from "pg";
 import { pool } from "../db/pool.js";
 import { validateLoanInput } from "../actors/validators/loan/validateLoanInput.js";
-import { v4 } from "uuid";
 
 export async function saveLoan(loanData) {
   validateLoanInput(loanData);
-  console.log('valid data')
-
 
   try {
     const query = `INSERT INTO loans(
-            id,financial_profile_id,start_date,term_years,principal, interest_rate,payment_frequency_per_year,compounding_frequency_per_year,grace_period_months,balloon_payment,loan_type,currency,saved_at
+            id,
+            financial_profile_id,
+            start_date,
+            term_years,
+            principal,
+            interest_rate,
+            payment_frequency_per_year,
+            compounding_frequency_per_year,
+            grace_period_months,
+            balloon_payment,
+            loan_type,
+            currency,
+            saved_at
         )
         VALUES ($1, $2, $3, $4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
         RETURNING *;
@@ -36,11 +42,8 @@ export async function saveLoan(loanData) {
       loanData.savedAt
     ];
 
-    console.log(query)
-    console.log(values)
 
     const result = await pool.query(query, values);
-console.log(result)
     return result.rows[0];
   } catch (error) {
     console.error('DB Error:', error);
