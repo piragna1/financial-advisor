@@ -23,7 +23,7 @@ export function buildLoanEntity(data){
         paymentFrequencyPerYear: data.paymentFrequencyPerYear || 12,
         compoundingFrequencyPerYear:data.compoundingFrequencyPerYear || 12,
         gracePeriodMonths: data.gracePeriodMonths ?? 0,
-        balloonPayment: data.balloonPayment ?? 0,
+        balloonPayment: data.hasOwnProperty("balloonPayment") ? data.balloonPayment : 0,
         loanType: data.loanType || 'personal',
         currency: data.currency || 'USD',
         savedAt: new Date()
