@@ -14,5 +14,5 @@ export async function createMockFinancialProfile() {
     [id, "user-mock", 50000, now, now]
   );
 
-  return result.rows[0].id;
+  return result.rows[0];
 }
