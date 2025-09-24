@@ -1,168 +1,42 @@
-import { validateName } from "./validateName.js";
 import { validateEmailInput } from "./validateEmailInput.js";
 import { validatePasswordInput } from "./validatePasswordInput.js";
 import { AppError } from "../../../errors/AppError.js";
 import { AuthErrors } from "../../../errors/authErrors.js";
 
 export function validateRegistrationInput(input) {
-  // console.log('validateRegistrationInput()')
   const errors = {};
 
   if (!input) {
-    throw new AppError(AuthErrors.MISSING_CREDENTIALS, 'Empty input received')
+    throw new AppError(AuthErrors.MISSING_CREDENTIALS, "Empty input received");
+  } else {
+    console.log('else{}')
+    console.log('input:', input)
   }
-  else{
-
-  // console.log('else{}')
 
     if (!input.email) {
       errors["email"] = "Email is required";
     } else {
       try {
         const emailErrors = validateEmailInput(input.email);
-  // console.log('email passed')
-
       } catch (error) {
         errors.email = [error.details || error.message];
       }
     }
-  
+
     if (!input.password) {
       errors["password"] = "Password is required";
     } else {
       try {
         const passwordErrors = validatePasswordInput(input.password);
-  // console.log('pass passed')
       } catch (error) {
-        console.log('catching password error')
+        console.log("catching password error");
         errors.password = [error.details || error.message];
       }
     }
-  
-    if (!input.name) {
-      errors["name"] = "Name is required";
-    } else {
-      try {
-        const nameErrors = validateName(input.name);
-  // console.log('name passed')
-      } catch (error) {
-        errors.name = [error.details || error.message];
-      }
-    }
-  
-    if (!input.lastName) {
-      errors["lastName"] = "Last name is required";
-    } else {
-      try {
-        const lastNameErrors = validateName(input.lastName);
-  // console.log('last name passed')
-      } catch (error) {
-        error.details = error.details.replace('Name','Last name')
-        errors.lastName = [error.details || error.message];
-      }
-    }
-  
-    if (Object.keys(errors).length > 0){
-      // console.log('We have at least 1 error. Let us print it/them!');
-      // console.log(errors);
-      throw new AppError(
-        AuthErrors.INVALID_INPUT,
-        `Registration input is invalild.
-        See:
-        ${(errors["email"] ? errors["email"] : "correct")}
-        ${(errors["password"] ? errors["password"] : "correct")}
-        ${(errors["name"] ? errors["name"] : "correct")}
-        ${(errors["lastName"] ? errors["lastName"] : "correct")}`
-      );
-    }
-  }
 
+    if (Object.keys(errors).length > 0) {
+      console.log(errors);
+      throw new AppError(AuthErrors.REGISTER.INVALID_INPUT);
+    }
   return true;
-
 }
-
-// ----------TEST CASES
-// //✅ Valid Input
-// console.log(
-//   validateRegistrationInput({
-//     name: "Gonzalo",
-//     lastName: "Varela",
-//     email: "gonzalo@example.com",
-//     password: "securePass123",
-//   })
-// );
-// // → returns true
-
-// //❌ Missing Fields
-// try {
-//   validateRegistrationInput();
-// } catch (error) {
-//   console.error(error);
-// }
-// // → throws Error with:
-// // {
-// //   name: ["Name is required"],
-// //  lastName: ["Last name is required"],
-// //  email: ["Email is required"],
-// //  password: ["Password is required"]
-// // }
-
-// // ❌ Invalid Email Format
-// validateRegistrationInput({
-//   name: "Gonzalo",
-//   lastName: "Varela",
-//   email: "gonzalo@.com",
-//   password: "securePass123",
-// });
-// // → throws Error with: { email: ["Email format is invalid"] }
-
-// //❌ Email Not a String
-// validateRegistrationInput({
-//   name: "Gonzalo",
-//   lastName: "Varela",
-//   email: 12345,
-//   password: "securePass123",
-// });
-// // // → throws Error with: { email: ["Email must be a string."] }
-
-// //❌ Password Not a String
-// validateRegistrationInput({
-//   name: "Gonzalo",
-//   lastName: "Varela",
-//   email: "gonzalo@example.com",
-//   password: 12345,
-// });
-// → throws Error with: { password: ["Password must be a string."] }
-
-// //❌ Empty Strings
-// validateRegistrationInput({
-//   name: "",
-//   lastName: "",
-//   email: "",
-//   password: "",
-// });
-// // → throws Error with:
-// // {
-// //   name: ["Name is required"],
-// //  lastName: ["Last name is required"],
-// //  email: ["Email format is invalid"], -> ['Email is required']
-// //  password: ["Password must be a string"]
-// // }
-
-// //❌ Name Not a String
-// validateRegistrationInput({
-//   name: 123,
-//   lastName: "Varela",
-//   email: "gonzalo@example.com",
-//   password: "securePass123",
-// });
-// // → throws Error with: { name: ["Name must be a string."] }
-
-// //❌ Last Name Not a String
-// validateRegistrationInput({
-//   name: "Gonzalo",
-//   lastName: 456,
-//   email: "gonzalo@example.com",
-//   password: "securePass123",
-// });
-// // → throws Error with: { lastName: ["Last name must be a string."] }
