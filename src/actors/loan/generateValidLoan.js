@@ -1,4 +1,4 @@
-import { buildLoanEntity } from "../../entities/loanEntity.js";
+import { buildLoanEntity } from "../../entities/loanEntity";
 
 export function generateValidLoan(financialProfileId, overrides = {}) {
   if (!financialProfileId || typeof financialProfileId !== "string") {
