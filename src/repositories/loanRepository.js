@@ -2,6 +2,7 @@ import { AppError } from "../errors/AppError.js";
 import { LoanErrors } from "../errors/loanErrors.js";
 import { pool } from "../db/pool.js";
 import { validateLoanInput } from "../actors/validators/loan/validateLoanInput.js";
+import { validateLoanUpdate } from "../actors/validators/loan/validateLoanUpdate.js";
 
 export async function saveLoan(loanData) {
   validateLoanInput(loanData);
@@ -64,13 +65,29 @@ export async function getLoanById(id) {
 
 export async function updateLoan(id, updates) {
   if (!id || typeof id !== "string") throw new Error("Invalid loan id");
-  validateLoanInput(updates);
+  validateLoanUpdate(updates);
+
+const columnMap = {
+    financialProfileId: "financial_profile_id",
+    startDate: "start_date",
+    termYears: "term_years",
+    principal: "principal",
+    interestRate: "interest_rate",
+    paymentFrequencyPerYear: "payment_frequency_per_year",
+    compoundingFrequencyPerYear: "compounding_frequency_per_year",
+    gracePeriodMonths: "grace_period_months",
+    balloonPayment: "balloon_payment",
+    loanType: "loan_type",
+    currency: "currency",
+    savedAt: "saved_at",
+    updatedAt: "updated_at",
+  };
 
   const fields = [];
   const values = [];
   let index = 1;
   for (const [key, value] of Object.entries(updates)) {
-    fields.push(`${key} = $${index}`);
+    fields.push(`${columnMap[key]} = $${index}`);
     values.push(value);
     index++;
   }
@@ -89,23 +106,30 @@ export async function updateLoan(id, updates) {
 }
 
 export async function deleteLoan(id) {
-  //deletion requires implementation
   if (!id || typeof id !== "string") throw new Error("Invalid loan id");
 
   const query = `
-    UPDATE loans
-    WHERE id = $2
+    DELETE FROM loans
+    WHERE id = $1
     RETURNING *;
-    `;
-  const result = await pool.query(query, [new Date(), id]);
+  `;
+  const result = await pool.query(query, [id]);
   return result.rows[0] || null;
 }
+
 
 export async function getLoans() {
   const query = `
     SELECT * FROM loans
     ORDER BY saved_at DESC;
-    `;
+  `;
   const result = await pool.query(query);
-  return result.rows;
+
+  return result.rows.map(row => ({
+    ...row,
+    principal: parseFloat(row.principal),
+    interest_rate: parseFloat(row.interest_rate),
+    balloon_payment: row.balloon_payment !== null ? parseFloat(row.balloon_payment) : null
+  }));
 }
+
