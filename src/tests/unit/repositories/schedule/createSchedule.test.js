@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../db/pool.js";
+import { pool } from "../../../../db/pool.js";
 import {
   createSchedule
-} from "../../../repositories/scheduleRepository.js";
-import { createMockLoan } from "../../../actors/loans/createMockLoan.js";
-import { ScheduleErrors } from "../../../errors/scheduleErrors.js";
+} from "../../../../repositories/scheduleRepository.js";
+import { createMockLoan } from "../../../../actors/loan/createMockLoan.js";
+import { ScheduleErrors } from "../../../../../errors/scheduleErrors.js";
 
 describe("createSchedule(schedule)", () => {
   beforeEach(async () => {
