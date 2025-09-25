@@ -15,6 +15,7 @@ import { REGISTRATION_ERRORS } from "../errors/registrationErrors.js";
 import { comparePassword } from "../utils/auth/comparePasswords.js";
 import { passwordSecret } from "../config/passwordSecretConfig.js";
 import { retrieveUserByEmail, retrieveUserById } from '../actors/retrievers/userRetriever.js'
+import {normalizeEmail} from '../actors/users/normalizeEmail.js'
 
 export async function registerUserController(req, res) {
   try {
@@ -35,9 +36,11 @@ export async function registerUserController(req, res) {
 
     const hashedPassword = hashPassword(password);
 
+    const normalizedEmail = normalizeEmail(email);
+
     const id = generateUserId();
 
-    newUser = buildUserEntity({ id, name, lastName, email, hashedPassword });
+    newUser = buildUserEntity({ id, name, lastName, normalizeEmail, hashedPassword });
 
     const success = await registerUser(newUser);
 
