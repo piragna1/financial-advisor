@@ -23,7 +23,7 @@ export const AuthErrors = {
       status: 402,
     },
     USER_EXISTS: {
-      code: "REGISTER_USER_ALREADY_EXISTS",
+      code: "REGISTER_USER_EXISTS",
       message: "User is currently not available",
       status: 409,
     },
