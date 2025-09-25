@@ -30,8 +30,8 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
   });
 
   /**
-   * Prepara un préstamo y perfil financiero válidos.
-   * Devuelve: { loanId }
+   * Prepares a valid loan and financial profile.
+   * Returns: { loanId }
    */
   async function validBase() {
     const financialProfile = await createMockFinancialProfile();
@@ -42,11 +42,13 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
 
   it("creates a valid schedule with trimmed string fields", async () => {
     const { loanId } = await validBase();
+
     const input = {
       id: `  ${uuidv4()}  `,
       loanId: `  ${loanId}  `,
       plan: "monthly",
-      startDate: "2025-10-01",
+      // Use a UTC-based Date to avoid timezone shifts
+      startDate: new Date(Date.UTC(2025, 9, 1)), // October 1, 2025
       totalAmount: 5000,
       currency: " USD ",
       installments: 12,
@@ -55,9 +57,11 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
 
     const result = await createSchedule(input);
 
+    // basic field checks
     expect(result.id).toBe(input.id.trim());
     expect(result.loan_id).toBe(loanId);
 
+    // semantic match of main schedule fields
     expectScheduleMatch(result, {
       loanId,
       plan: "monthly",
@@ -67,14 +71,18 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       installments: 12,
     });
 
+    // extra fields should be dropped
     expect(result).not.toHaveProperty("extra");
+
+    // timestamps should be real Date instances
     expect(result.created_at).toBeInstanceOf(Date);
     expect(result.updated_at).toBeInstanceOf(Date);
   });
 
   it("accepts startDate as a Date object", async () => {
     const { loanId } = await validBase();
-    const dateObj = new Date("2025-12-25");
+    const dateObj = new Date(Date.UTC(2025, 11, 25)); // December 25, 2025 UTC
+
     const input = {
       id: uuidv4(),
       loanId,
@@ -106,7 +114,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
     const base = {
       loanId,
       plan: "weekly",
-      startDate: "2025-10-01",
+      startDate: new Date(Date.UTC(2025, 9, 1)),
       totalAmount: 1000,
       currency: "USD",
       installments: 4,
@@ -127,7 +135,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
     const base = {
       id: uuidv4(),
       plan: "weekly",
-      startDate: "2025-10-01",
+      startDate: new Date(Date.UTC(2025, 9, 1)),
       totalAmount: 1000,
       currency: "USD",
       installments: 4,
@@ -138,16 +146,16 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
     ).rejects.toMatchObject({
       code: ScheduleErrors.CREATE.INVALID_LOAN_ID,
     });
-    await expect(createSchedule({ ...base, loanId: "" })).rejects.toMatchObject(
-      {
-        code: ScheduleErrors.CREATE.INVALID_LOAN_ID,
-      }
-    );
-    await expect(createSchedule({ ...base, loanId: 42 })).rejects.toMatchObject(
-      {
-        code: ScheduleErrors.CREATE.INVALID_LOAN_ID,
-      }
-    );
+    await expect(
+      createSchedule({ ...base, loanId: "" })
+    ).rejects.toMatchObject({
+      code: ScheduleErrors.CREATE.INVALID_LOAN_ID,
+    });
+    await expect(
+      createSchedule({ ...base, loanId: 42 })
+    ).rejects.toMatchObject({
+      code: ScheduleErrors.CREATE.INVALID_LOAN_ID,
+    });
   });
 
   it("rejects unsupported plan values", async () => {
@@ -156,7 +164,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id: uuidv4(),
       loanId,
       plan: "Daily",
-      startDate: "2025-10-01",
+      startDate: new Date(Date.UTC(2025, 9, 1)),
       totalAmount: 1000,
       currency: "USD",
       installments: 4,
@@ -190,7 +198,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id: uuidv4(),
       loanId,
       plan: "weekly",
-      startDate: "2025-10-01",
+      startDate: new Date(Date.UTC(2025, 9, 1)),
       currency: "USD",
       installments: 4,
     };
@@ -218,7 +226,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id: uuidv4(),
       loanId,
       plan: "weekly",
-      startDate: "2025-10-01",
+      startDate: new Date(Date.UTC(2025, 9, 1)),
       totalAmount: 1000,
       installments: 4,
     };
@@ -246,7 +254,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id: uuidv4(),
       loanId,
       plan: "weekly",
-      startDate: "2025-10-01",
+      startDate: new Date(Date.UTC(2025, 9, 1)),
       totalAmount: 1000,
       currency: "USD",
     };
@@ -271,9 +279,9 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
   it("rejects loanId that does not exist (foreign key)", async () => {
     const input = {
       id: uuidv4(),
-      loanId: uuidv4(), // no existe
+      loanId: uuidv4(), // does not exist
       plan: "monthly",
-      startDate: "2025-10-01",
+      startDate: new Date(Date.UTC(2025, 9, 1)),
       totalAmount: 5000,
       currency: "USD",
       installments: 12,
@@ -291,7 +299,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id,
       loanId,
       plan: "monthly",
-      startDate: "2025-10-01",
+      startDate: new Date(Date.UTC(2025, 9, 1)),
       totalAmount: 5000,
       currency: "USD",
       installments: 12,
@@ -309,7 +317,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id: uuidv4(),
       loanId,
       plan: "custom",
-      startDate: "2030-01-01",
+      startDate: new Date(Date.UTC(2030, 0, 1)), // January 1, 2030 UTC
       totalAmount: 9999999999,
       currency: "JPY",
       installments: 360,
