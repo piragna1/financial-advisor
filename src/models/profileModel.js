@@ -1,5 +1,5 @@
 export const profile = {
-  userId: String,              // FK to User model (uuid)
+  userId: String,              
   firstName: String,
   lastName: String,
   birthDate: Date || undefined,
@@ -7,8 +7,4 @@ export const profile = {
   language: String || 'en',
   avatarUrl: String || undefined,
   bio: String,
-  // preferences: {
-  //   theme: String || 'light',
-  //   notifications: Boolean || true
-  // }
 }
