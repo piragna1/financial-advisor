@@ -102,6 +102,27 @@ export async function getProfileByUserId(userId) {
   return result.rows[0];
 }
 
+export async function getProfileById(id) {
+  if (!id || typeof id !== "string" || id.trim() === "") {
+    throw new AppError(ProfileErrors.READ.INVALID_ID, "Missing or invalid profile ID");
+  }
+
+  const query = `
+    SELECT * FROM profiles
+    WHERE id = $1
+    LIMIT 1;
+  `;
+
+  const result = await pool.query(query, [id.trim()]);
+
+  if (result.rowCount === 0) {
+    throw new AppError(ProfileErrors.READ.NOT_FOUND, "Profile not found");
+  }
+
+  return result.rows[0];
+}
+
+
 export async function updateProfile(profile) {
   if (!profile || typeof profile !== "object") {
     throw new AppError(ProfileErrors.UPDATE.INVALID_INPUT, "Profile must be a valid object");
@@ -151,6 +172,25 @@ export async function updateProfile(profile) {
 
   if (result.rowCount === 0) {
     throw new AppError(ProfileErrors.UPDATE.NOT_FOUND, "Profile not found");
+  }
+
+  return result.rows[0];
+}
+export async function deleteProfile(id) {
+  if (!id || typeof id !== "string" || id.trim() === "") {
+    throw new AppError(ProfileErrors.DELETE.INVALID_ID, "Missing or invalid profile ID");
+  }
+
+  const query = `
+    DELETE FROM profiles
+    WHERE id = $1
+    RETURNING *;
+  `;
+
+  const result = await pool.query(query, [id.trim()]);
+
+  if (result.rowCount === 0) {
+    throw new AppError(ProfileErrors.DELETE.NOT_FOUND, "Profile not found");
   }
 
   return result.rows[0];
