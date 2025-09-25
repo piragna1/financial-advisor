@@ -1,7 +1,4 @@
-// userRepo.js
-
-import { checkEmailAvailability } from "../actors/users/checkEmailAvailability.js";
-import { validateRegistrationInput } from "../actors/validators/auth/validateRegistrationInput.js";
+// userRepository.js
 import { mockUsers } from "../config/mock.users.db.config.js";
 import { AppError } from "../errors/AppError.js";
 import { AuthErrors } from "../errors/authErrors.js";
