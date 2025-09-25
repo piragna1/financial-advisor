@@ -81,3 +81,23 @@ export async function createProfile(profile) {
   const result = await pool.query(query, values);
   return result.rows[0];
 }
+
+export async function getProfileByUserId(userId) {
+  if (!userId || typeof userId !== "string" || userId.trim() === "") {
+    throw new AppError(ProfileErrors.READ.INVALID_ID, "Missing or invalid user ID");
+  }
+
+  const query = `
+    SELECT * FROM profiles
+    WHERE user_id = $1
+    LIMIT 1;
+  `;
+
+  const result = await pool.query(query, [userId.trim()]);
+
+  if (result.rowCount === 0) {
+    throw new AppError(ProfileErrors.READ.NOT_FOUND, "Profile not found");
+  }
+
+  return result.rows[0];
+}
