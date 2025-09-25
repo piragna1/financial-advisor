@@ -8,6 +8,9 @@ import { pool } from "../db/pool.js";
 
 export async function saveUser(user) {
   if (!user || typeof user !== "object") throw new Error("Invalid user input");
+  
+  user.email = user.email.toLocaleLowerCase();
+  user.email = user.email.trim();
 
   const query = `
     INSERT INTO users (id, email, password_hash, created_at, updated_at)
