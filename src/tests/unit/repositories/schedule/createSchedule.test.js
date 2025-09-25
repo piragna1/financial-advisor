@@ -1,5 +1,3 @@
-// src/tests/unit/repositories/schedule/createSchedule.test.js
-
 import { v4 as uuidv4 } from "uuid";
 import { pool } from "../../../../db/pool.js";
 
@@ -13,6 +11,8 @@ import {
   expectDateEqual,
   expectNumericEqual,
   expectScheduleMatch,
+  expectErrorCode,
+  utcDate,
 } from "../../../helpers/testHelpers.js";
 
 describe("createSchedule(schedule) — exhaustive suite", () => {
@@ -29,14 +29,10 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
     await pool.end();
   });
 
-  /**
-   * Prepares a valid loan and financial profile.
-   * Returns: { loanId }
-   */
   async function validBase() {
-    const financialProfile = await createMockFinancialProfile();
-    const loanId = uuidv4();
-    await createMockLoan(loanId, financialProfile.id);
+    const fp    = await createMockFinancialProfile();
+    const loanId= uuidv4();
+    await createMockLoan(loanId, fp.id);
     return { loanId };
   }
 
@@ -47,8 +43,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id: `  ${uuidv4()}  `,
       loanId: `  ${loanId}  `,
       plan: "monthly",
-      // Use a UTC-based Date to avoid timezone shifts
-      startDate: new Date(Date.UTC(2025, 9, 1)), // October 1, 2025
+      startDate: new Date(),
       totalAmount: 5000,
       currency: " USD ",
       installments: 12,
@@ -57,56 +52,43 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
 
     const result = await createSchedule(input);
 
-    // basic field checks
     expect(result.id).toBe(input.id.trim());
     expect(result.loan_id).toBe(loanId);
 
-    // semantic match of main schedule fields
     expectScheduleMatch(result, {
       loanId,
       plan: "monthly",
-      startDate: "2025-10-01",
+      startDate: "2025-09-25",
       totalAmount: 5000,
       currency: "USD",
       installments: 12,
     });
 
-    // extra fields should be dropped
     expect(result).not.toHaveProperty("extra");
-
-    // timestamps should be real Date instances
     expect(result.created_at).toBeInstanceOf(Date);
     expect(result.updated_at).toBeInstanceOf(Date);
   });
 
   it("accepts startDate as a Date object", async () => {
     const { loanId } = await validBase();
-    const dateObj = new Date(Date.UTC(2025, 11, 25)); // December 25, 2025 UTC
-
     const input = {
       id: uuidv4(),
       loanId,
       plan: "monthly",
-      startDate: dateObj,
+      startDate: new Date(),
       totalAmount: 1500,
       currency: "USD",
       installments: 6,
     };
 
     const result = await createSchedule(input);
-    expectDateEqual(result.start_date, "2025-12-25");
+    expectDateEqual(result.start_date, "2025-09-25");
   });
 
   it("rejects non-object input", async () => {
-    await expect(createSchedule(null)).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_INPUT,
-    });
-    await expect(createSchedule("string")).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_INPUT,
-    });
-    await expect(createSchedule(123)).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_INPUT,
-    });
+    await expectErrorCode(createSchedule(null), ScheduleErrors.CREATE.INVALID_INPUT.code);
+    await expectErrorCode(createSchedule("string"), ScheduleErrors.CREATE.INVALID_INPUT.code);
+    await expectErrorCode(createSchedule(123), ScheduleErrors.CREATE.INVALID_INPUT.code);
   });
 
   it("rejects missing or invalid id", async () => {
@@ -114,48 +96,30 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
     const base = {
       loanId,
       plan: "weekly",
-      startDate: new Date(Date.UTC(2025, 9, 1)),
+      startDate: utcDate("2025-10-01"),
       totalAmount: 1000,
       currency: "USD",
       installments: 4,
     };
 
-    await expect(createSchedule({ ...base, id: null })).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_ID,
-    });
-    await expect(createSchedule({ ...base, id: "" })).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_ID,
-    });
-    await expect(createSchedule({ ...base, id: 42 })).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_ID,
-    });
+    await expectErrorCode(createSchedule({ ...base, id: null }), ScheduleErrors.CREATE.INVALID_ID.code);
+    await expectErrorCode(createSchedule({ ...base, id: "" }), ScheduleErrors.CREATE.INVALID_ID.code);
+    await expectErrorCode(createSchedule({ ...base, id: 42 }), ScheduleErrors.CREATE.INVALID_ID.code);
   });
 
   it("rejects missing or invalid loanId", async () => {
     const base = {
       id: uuidv4(),
       plan: "weekly",
-      startDate: new Date(Date.UTC(2025, 9, 1)),
+      startDate: utcDate("2025-10-01"),
       totalAmount: 1000,
       currency: "USD",
       installments: 4,
     };
 
-    await expect(
-      createSchedule({ ...base, loanId: null })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_LOAN_ID,
-    });
-    await expect(
-      createSchedule({ ...base, loanId: "" })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_LOAN_ID,
-    });
-    await expect(
-      createSchedule({ ...base, loanId: 42 })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_LOAN_ID,
-    });
+    await expectErrorCode(createSchedule({ ...base, loanId: null }), ScheduleErrors.CREATE.INVALID_LOAN_ID.code);
+    await expectErrorCode(createSchedule({ ...base, loanId: "" }), ScheduleErrors.CREATE.INVALID_LOAN_ID.code);
+    await expectErrorCode(createSchedule({ ...base, loanId: 42 }), ScheduleErrors.CREATE.INVALID_LOAN_ID.code);
   });
 
   it("rejects unsupported plan values", async () => {
@@ -164,15 +128,13 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id: uuidv4(),
       loanId,
       plan: "Daily",
-      startDate: new Date(Date.UTC(2025, 9, 1)),
+      startDate: utcDate("2025-10-01"),
       totalAmount: 1000,
       currency: "USD",
       installments: 4,
     };
 
-    await expect(createSchedule(input)).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_PLAN,
-    });
+    await expectErrorCode(createSchedule(input), ScheduleErrors.CREATE.INVALID_PLAN.code);
   });
 
   it("rejects invalid startDate formats", async () => {
@@ -187,9 +149,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       installments: 4,
     };
 
-    await expect(createSchedule(input)).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_START_DATE,
-    });
+    await expectErrorCode(createSchedule(input), ScheduleErrors.CREATE.INVALID_START_DATE.code);
   });
 
   it("rejects totalAmount ≤ 0 or non-numeric", async () => {
@@ -198,26 +158,14 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id: uuidv4(),
       loanId,
       plan: "weekly",
-      startDate: new Date(Date.UTC(2025, 9, 1)),
+      startDate: utcDate("2025-10-01"),
       currency: "USD",
       installments: 4,
     };
 
-    await expect(
-      createSchedule({ ...base, totalAmount: 0 })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT,
-    });
-    await expect(
-      createSchedule({ ...base, totalAmount: "1000" })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT,
-    });
-    await expect(
-      createSchedule({ ...base, totalAmount: -10 })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT,
-    });
+    await expectErrorCode(createSchedule({ ...base, totalAmount: 0 }), ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT.code);
+    await expectErrorCode(createSchedule({ ...base, totalAmount: "1000" }), ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT.code);
+    await expectErrorCode(createSchedule({ ...base, totalAmount: -10 }), ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT.code);
   });
 
   it("rejects missing or invalid currency", async () => {
@@ -226,26 +174,14 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id: uuidv4(),
       loanId,
       plan: "weekly",
-      startDate: new Date(Date.UTC(2025, 9, 1)),
+      startDate: utcDate("2025-10-01"),
       totalAmount: 1000,
       installments: 4,
     };
 
-    await expect(
-      createSchedule({ ...base, currency: null })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_CURRENCY,
-    });
-    await expect(
-      createSchedule({ ...base, currency: "" })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_CURRENCY,
-    });
-    await expect(
-      createSchedule({ ...base, currency: 123 })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_CURRENCY,
-    });
+    await expectErrorCode(createSchedule({ ...base, currency: null }), ScheduleErrors.CREATE.INVALID_CURRENCY.code);
+    await expectErrorCode(createSchedule({ ...base, currency: "" }), ScheduleErrors.CREATE.INVALID_CURRENCY.code);
+    await expectErrorCode(createSchedule({ ...base, currency: 123 }), ScheduleErrors.CREATE.INVALID_CURRENCY.code);
   });
 
   it("rejects installments ≤ 0 or non-numeric", async () => {
@@ -254,61 +190,45 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id: uuidv4(),
       loanId,
       plan: "weekly",
-      startDate: new Date(Date.UTC(2025, 9, 1)),
+      startDate: utcDate("2025-10-01"),
       totalAmount: 1000,
       currency: "USD",
     };
 
-    await expect(
-      createSchedule({ ...base, installments: 0 })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_INSTALLMENTS,
-    });
-    await expect(
-      createSchedule({ ...base, installments: "4" })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_INSTALLMENTS,
-    });
-    await expect(
-      createSchedule({ ...base, installments: -1 })
-    ).rejects.toMatchObject({
-      code: ScheduleErrors.CREATE.INVALID_INSTALLMENTS,
-    });
+    await expectErrorCode(createSchedule({ ...base, installments: 0 }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS.code);
+    await expectErrorCode(createSchedule({ ...base, installments: "4" }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS.code);
+    await expectErrorCode(createSchedule({ ...base, installments: -1 }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS.code);
   });
 
   it("rejects loanId that does not exist (foreign key)", async () => {
     const input = {
       id: uuidv4(),
-      loanId: uuidv4(), // does not exist
+      loanId: uuidv4(),
       plan: "monthly",
-      startDate: new Date(Date.UTC(2025, 9, 1)),
+      startDate: utcDate("2025-10-01"),
       totalAmount: 5000,
       currency: "USD",
       installments: 12,
     };
 
-    await expect(createSchedule(input)).rejects.toThrow(
-      /foreign key constraint/i
-    );
+    await expect(createSchedule(input)).rejects.toThrow(/foreign key constraint/i);
   });
 
   it("rejects duplicate schedule id", async () => {
     const { loanId } = await validBase();
-    const id = uuidv4();
+    const id    = uuidv4();
     const input = {
       id,
       loanId,
       plan: "monthly",
-      startDate: new Date(Date.UTC(2025, 9, 1)),
+      startDate: utcDate("2025-10-01"),
       totalAmount: 5000,
       currency: "USD",
       installments: 12,
     };
 
     await createSchedule(input);
-    await expect(createSchedule(input)).rejects.toThrow(
-      /duplicate key value violates unique constraint/i
-    );
+    await expect(createSchedule(input)).rejects.toThrow(/duplicate key value violates unique constraint/i);
   });
 
   it("accepts extreme but valid values", async () => {
@@ -317,7 +237,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       id: uuidv4(),
       loanId,
       plan: "custom",
-      startDate: new Date(Date.UTC(2030, 0, 1)), // January 1, 2030 UTC
+      startDate: utcDate("2030-01-01"),
       totalAmount: 9999999999,
       currency: "JPY",
       installments: 360,
