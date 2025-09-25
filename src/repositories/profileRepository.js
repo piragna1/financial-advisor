@@ -101,3 +101,57 @@ export async function getProfileByUserId(userId) {
 
   return result.rows[0];
 }
+
+export async function updateProfile(profile) {
+  if (!profile || typeof profile !== "object") {
+    throw new AppError(ProfileErrors.UPDATE.INVALID_INPUT, "Profile must be a valid object");
+  }
+
+  const {
+    id,
+    firstName,
+    lastName,
+    birthDate,
+    location,
+    language,
+    avatarUrl,
+    bio
+  } = profile;
+
+  if (!id || typeof id !== "string" || id.trim() === "") {
+    throw new AppError(ProfileErrors.UPDATE.INVALID_ID, "Missing or invalid profile ID");
+  }
+
+  const query = `
+    UPDATE profiles SET
+      first_name = $1,
+      last_name = $2,
+      birth_date = $3,
+      location = $4,
+      language = $5,
+      avatar_url = $6,
+      bio = $7,
+      updated_at = NOW()
+    WHERE id = $8
+    RETURNING *;
+  `;
+
+  const values = [
+    firstName?.trim() ?? null,
+    lastName?.trim() ?? null,
+    birthDate ?? null,
+    location ?? null,
+    language ?? "en",
+    avatarUrl ?? null,
+    bio?.trim() ?? null,
+    id.trim()
+  ];
+
+  const result = await pool.query(query, values);
+
+  if (result.rowCount === 0) {
+    throw new AppError(ProfileErrors.UPDATE.NOT_FOUND, "Profile not found");
+  }
+
+  return result.rows[0];
+}
