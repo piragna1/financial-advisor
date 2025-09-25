@@ -59,3 +59,63 @@ export async function getFinancialProfileByUserId(userId) {
 
   return result.rows[0];
 }
+
+export async function updateFinancialProfile(id, updates) {
+  if (!id || typeof id !== "string" || id.trim() === "") {
+    throw new AppError(FinancialErrors.UPDATE.INVALID_ID, "Profile ID must be a valid string");
+  }
+
+  if (!updates || typeof updates !== "object" || Array.isArray(updates)) {
+    throw new AppError(FinancialErrors.UPDATE.INVALID_INPUT, "Updates must be a valid object");
+  }
+
+  const allowedFields = ["salary"];
+  const fields = Object.entries(updates).filter(([key]) => allowedFields.includes(key));
+
+  if (fields.length === 0) {
+    throw new AppError(FinancialErrors.UPDATE.NO_VALID_FIELDS, "No valid fields to update");
+  }
+
+  const setClause = fields.map(([key], i) => `${key} = $${i + 2}`).join(", ");
+  const values = [id.trim(), ...fields.map(([, value]) => value)];
+
+  const query = `
+    UPDATE financial_profiles
+    SET ${setClause}, updated_at = NOW()
+    WHERE id = $1
+    RETURNING *;
+  `;
+
+  const result = await pool.query(query, values);
+
+  if (result.rowCount === 0) {
+    throw new AppError(FinancialErrors.UPDATE.NOT_FOUND, "Financial profile not found");
+  }
+
+  const row = result.rows[0];
+  row.salary = Number(row.salary);
+  return row;
+}
+
+
+export async function deleteFinancialProfile(id) {
+  if (!id || typeof id !== "string" || id.trim() === "") {
+    throw new AppError(FinancialErrors.DELETE.INVALID_ID, "Profile ID must be a valid string");
+  }
+
+  const query = `
+    DELETE FROM financial_profiles
+    WHERE id = $1
+    RETURNING *;
+  `;
+
+  const result = await pool.query(query, [id.trim()]);
+
+  if (result.rowCount === 0) {
+    throw new AppError(FinancialErrors.DELETE.NOT_FOUND, "Financial profile not found");
+  }
+
+  const row = result.rows[0];
+  row.salary = Number(row.salary);
+  return row;
+}
