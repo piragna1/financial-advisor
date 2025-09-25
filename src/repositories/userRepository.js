@@ -72,7 +72,6 @@ export async function findUserById(id) {
   return result.rows[0];
 }
 
-//update
 export async function updateUser(id, updates) {
   if (!id || typeof id !== "string" || id.trim() === "") {
     throw new AppError(AuthErrors.LOGIN.USER_NOT_FOUND, "User ID must be a valid string");
