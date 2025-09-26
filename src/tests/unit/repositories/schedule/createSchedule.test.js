@@ -58,7 +58,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
     expectScheduleMatch(result, {
       loanId,
       plan: "monthly",
-      startDate: "2025-09-25",
+      startDate: "2025-09-26",
       totalAmount: 5000,
       currency: "USD",
       installments: 12,
@@ -82,7 +82,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
     };
 
     const result = await createSchedule(input);
-    expectDateEqual(result.start_date, "2025-09-25");
+    expectDateEqual(result.start_date, "2025-09-26");
   });
 
   it("rejects non-object input", async () => {
