@@ -1,12 +1,40 @@
+import { validatePaymentInput } from "../actors/validators/payment/validatePaymentInput.js";
 import { pool } from "../db/pool.js";
 import { AppError } from "../errors/appError.js";
 import { PaymentErrors } from "../errors/paymentErrors.js";
 import { isValidUUID } from "../tests/helpers/testHelpers.js";
 
 export async function createPayment(payment) {
+  // Validación semántica completa
+  validatePaymentInput(payment);
+
+  const { id, scheduleId } = payment;
+
+  // Validación de formato UUID
+  if (!isValidUUID(id) || !isValidUUID(scheduleId)) {
+    throw new AppError(PaymentErrors.CREATE.INVALID_ID);
+  }
+
+  // Validación de existencia de schedule
+  const { rows: scheduleRows } = await pool.query(
+    "SELECT id FROM schedules WHERE id = $1",
+    [scheduleId]
+  );
+  if (scheduleRows.length === 0) {
+    throw PaymentErrors.CREATE.INVALID_ID;
+  }
+
+  // Validación de duplicado
+  const { rows: existingPayment } = await pool.query(
+    "SELECT id FROM payments WHERE id = $1",
+    [id]
+  );
+  if (existingPayment.length > 0) {
+    throw PaymentErrors.CREATE.INVALID_ID;
+  }
+
+  // INSERT final
   const {
-    id,
-    scheduleId,
     dueDate,
     amount,
     currency,
@@ -16,10 +44,6 @@ export async function createPayment(payment) {
     reference,
     notes
   } = payment;
-
-  if (!isValidUUID(id) || !isValidUUID(scheduleId)) {
-    throw new AppError(PaymentErrors.CREATE.INVALID_ID);
-  }
 
   const result = await pool.query(
     `INSERT INTO payments (
