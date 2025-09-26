@@ -1,11 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../db/pool.js";
+import { pool } from "../../../../db/pool.js";
 import {
   createSchedule,
-  updateSchedule
-} from "../../../repositories/scheduleRepository.js";
-import { createMockLoan } from "../../../actors/loans/createMockLoan.js";
-import { ScheduleErrors } from "../../../errors/scheduleErrors.js";
+  updateSchedule,
+} from "../../../../repositories/scheduleRepository.js";
+import { createMockLoan } from "../../../../actors/loan/createMockLoan.js";
+import { ScheduleErrors } from "../../../../errors/scheduleErrors.js";
+import { createMockScheduleChain } from "../../../../actors/schedule/createMockScheduleChain.js";
+import { expectDateEqual } from "../../../helpers/testHelpers.js";
+import { expectErrorCode } from "../../../helpers/testHelpers.js";
 
 describe("updateSchedule(schedule)", () => {
   beforeEach(async () => {
@@ -20,18 +23,14 @@ describe("updateSchedule(schedule)", () => {
   });
 
   it("should update all editable fields", async () => {
-    const loanId = uuidv4();
     const id = uuidv4();
-    await createMockLoan(loanId);
-
-    await createSchedule({
+    const { schedule } = await createMockScheduleChain({
       id,
-      loanId,
       plan: "custom",
       startDate: "2025-06-01",
       totalAmount: 2000,
       currency: "USD",
-      installments: 10
+      installments: 10,
     });
 
     const updated = {
@@ -40,151 +39,156 @@ describe("updateSchedule(schedule)", () => {
       startDate: "2025-06-15",
       totalAmount: 2500,
       currency: "GBP",
-      installments: 5
+      installments: 5,
     };
 
     const result = await updateSchedule(updated);
+
     expect(result.plan).toBe("monthly");
-    expect(result.total_amount).toBe(2500);
+    expect(result.total_amount).toBe("2500");
     expect(result.currency).toBe("GBP");
     expect(result.installments).toBe(5);
-    expect(result.start_date.toISOString().slice(0, 10)).toBe("2025-06-15");
+    expectDateEqual(result.start_date, "2025-06-15");
   });
 
   it("should allow partial updates (leave others unchanged)", async () => {
-    const loanId = uuidv4();
     const id = uuidv4();
-    await createMockLoan(loanId);
-
-    await createSchedule({
+    const { schedule } = await createMockScheduleChain({
       id,
-      loanId,
       plan: "weekly",
       startDate: "2025-05-01",
       totalAmount: 1000,
       currency: "USD",
-      installments: 4
+      installments: 4,
     });
 
     const result = await updateSchedule({
       id,
-      totalAmount: 1100
+      totalAmount: 1100,
     });
 
-    expect(result.total_amount).toBe(1100);
+    expect(result.total_amount).toBe("1100"); // ← string por tipo NUMERIC
     expect(result.plan).toBe("weekly");
   });
 
   it("should throw INVALID_INPUT if schedule is not an object", async () => {
-    await expect(updateSchedule(null)).rejects.toMatchObject({
-      code: ScheduleErrors.UPDATE.INVALID_INPUT
-    });
+    await expectErrorCode(
+      updateSchedule(null),
+      ScheduleErrors.UPDATE.INVALID_INPUT.code
+    );
   });
 
   it("should throw INVALID_ID if id is missing or invalid", async () => {
-    await expect(updateSchedule({})).rejects.toMatchObject({
-      code: ScheduleErrors.UPDATE.INVALID_ID
-    });
-    await expect(updateSchedule({ id: "" })).rejects.toMatchObject({
-      code: ScheduleErrors.UPDATE.INVALID_ID
-    });
+    const code = ScheduleErrors.UPDATE.INVALID_ID.code;
+
+    await expectErrorCode(updateSchedule({}), code);
+    await expectErrorCode(updateSchedule({ id: "" }), code);
   });
 
   it("should throw INVALID_PLAN for unsupported plan", async () => {
-    const loanId = uuidv4();
     const id = uuidv4();
-    await createMockLoan(loanId);
-    await createSchedule({
+    await createMockScheduleChain({
       id,
-      loanId,
       plan: "weekly",
       startDate: "2025-04-01",
       totalAmount: 900,
       currency: "USD",
-      installments: 9
+      installments: 9,
     });
-    await expect(updateSchedule({ id, plan: "daily" })).rejects.toMatchObject({
-      code: ScheduleErrors.UPDATE.INVALID_PLAN
-    });
+
+    await expectErrorCode(
+      updateSchedule({ id, plan: "daily" }),
+      ScheduleErrors.UPDATE.INVALID_PLAN.code
+    );
   });
 
   it("should throw INVALID_START_DATE for invalid date", async () => {
-    const loanId = uuidv4();
     const id = uuidv4();
-    await createMockLoan(loanId);
-    await createSchedule({
+    await createMockScheduleChain({
       id,
-      loanId,
       plan: "weekly",
       startDate: "2025-04-01",
       totalAmount: 900,
       currency: "USD",
-      installments: 9
+      installments: 9,
     });
-    await expect(updateSchedule({ id, startDate: "bad-date" })).rejects
-      .toMatchObject({ code: ScheduleErrors.UPDATE.INVALID_START_DATE });
+
+    await expectErrorCode(
+      updateSchedule({ id, startDate: "bad-date" }),
+      ScheduleErrors.UPDATE.INVALID_START_DATE.code
+    );
   });
 
   it("should throw INVALID_TOTAL_AMOUNT for non-number or ≤ 0", async () => {
-    const loanId = uuidv4();
     const id = uuidv4();
-    await createMockLoan(loanId);
-    await createSchedule({
+    await createMockScheduleChain({
       id,
-      loanId,
       plan: "weekly",
       startDate: "2025-04-01",
       totalAmount: 900,
       currency: "USD",
-      installments: 9
+      installments: 9,
     });
-    await expect(updateSchedule({ id, totalAmount: "100" })).rejects
-      .toMatchObject({ code: ScheduleErrors.UPDATE.INVALID_TOTAL_AMOUNT });
-    await expect(updateSchedule({ id, totalAmount: 0 })).rejects
-      .toMatchObject({ code: ScheduleErrors.UPDATE.INVALID_TOTAL_AMOUNT });
+
+    await expectErrorCode(
+      updateSchedule({ id, totalAmount: "100" }),
+      ScheduleErrors.UPDATE.INVALID_TOTAL_AMOUNT.code
+    );
+
+    await expectErrorCode(
+      updateSchedule({ id, totalAmount: 0 }),
+      ScheduleErrors.UPDATE.INVALID_TOTAL_AMOUNT.code
+    );
   });
 
   it("should throw INVALID_CURRENCY for empty or non-string currency", async () => {
-    const loanId = uuidv4();
     const id = uuidv4();
-    await createMockLoan(loanId);
-    await createSchedule({
+    await createMockScheduleChain({
       id,
-      loanId,
       plan: "weekly",
       startDate: "2025-04-01",
       totalAmount: 900,
       currency: "USD",
-      installments: 9
+      installments: 9,
     });
-    await expect(updateSchedule({ id, currency: "" })).rejects
-      .toMatchObject({ code: ScheduleErrors.UPDATE.INVALID_CURRENCY });
-    await expect(updateSchedule({ id, currency: 123 })).rejects
-      .toMatchObject({ code: ScheduleErrors.UPDATE.INVALID_CURRENCY });
+
+    await expectErrorCode(
+      updateSchedule({ id, currency: "" }),
+      ScheduleErrors.UPDATE.INVALID_CURRENCY.code
+    );
+
+    await expectErrorCode(
+      updateSchedule({ id, currency: 123 }),
+      ScheduleErrors.UPDATE.INVALID_CURRENCY.code
+    );
   });
 
   it("should throw INVALID_INSTALLMENTS for non-number or ≤ 0", async () => {
-    const loanId = uuidv4();
     const id = uuidv4();
-    await createMockLoan(loanId);
-    await createSchedule({
+    await createMockScheduleChain({
       id,
-      loanId,
       plan: "weekly",
       startDate: "2025-04-01",
       totalAmount: 900,
       currency: "USD",
-      installments: 9
+      installments: 9,
     });
-    await expect(updateSchedule({ id, installments: 0 })).rejects
-      .toMatchObject({ code: ScheduleErrors.UPDATE.INVALID_INSTALLMENTS });
-    await expect(updateSchedule({ id, installments: "5" })).rejects
-      .toMatchObject({ code: ScheduleErrors.UPDATE.INVALID_INSTALLMENTS });
-  });
 
+    await expectErrorCode(
+      updateSchedule({ id, installments: 0 }),
+      ScheduleErrors.UPDATE.INVALID_INSTALLMENTS.code
+    );
+
+    await expectErrorCode(
+      updateSchedule({ id, installments: "5" }),
+      ScheduleErrors.UPDATE.INVALID_INSTALLMENTS.code
+    );
+  });
   it("should throw NOT_FOUND if schedule does not exist", async () => {
     const id = uuidv4();
-    await expect(updateSchedule({ id, totalAmount: 100 })).rejects
-      .toMatchObject({ code: ScheduleErrors.UPDATE.NOT_FOUND });
+    await expectErrorCode(
+      updateSchedule({ id, totalAmount: 100 }),
+      ScheduleErrors.UPDATE.NOT_FOUND.code
+    );
   });
 });
