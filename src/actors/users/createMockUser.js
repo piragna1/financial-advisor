@@ -7,5 +7,6 @@ export async function createMockUser(userId) {
     INSERT INTO users (id, email, password_hash, created_at)
     VALUES ($1, $2, $3, NOW())
   `, [userId, email, "hashed-password"]);
+    return { id: userId, email };
 }
 
