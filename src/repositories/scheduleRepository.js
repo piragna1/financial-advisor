@@ -3,6 +3,7 @@
 import { pool } from "../db/pool.js";
 import { AppError } from "../errors/AppError.js";
 import { ScheduleErrors } from "../errors/scheduleErrors.js";
+import { isValidUUID } from "../tests/helpers/testHelpers.js";
 
 const ALLOWED_PLANS = ["weekly", "monthly", "custom"];
 
@@ -225,23 +226,19 @@ export async function updateSchedule(schedule) {
 }
 
 export async function deleteSchedule(id) {
-  if (!id || typeof id !== "string" || id.trim() === "") {
-    throw new AppError(
-      ScheduleErrors.DELETE.INVALID_ID,
-      "Missing or invalid schedule ID"
-    );
+  const trimmedId = typeof id === "string" ? id.trim() : "";
+
+  if (!trimmedId || !isValidUUID(trimmedId)) {
+    throw new AppError(ScheduleErrors.DELETE.INVALID_ID, "Missing or invalid schedule ID");
   }
 
   const result = await pool.query(
     `DELETE FROM schedules WHERE id = $1 RETURNING *;`,
-    [id.trim()]
+    [trimmedId]
   );
 
   if (result.rowCount === 0) {
-    throw new AppError(
-      ScheduleErrors.DELETE.NOT_FOUND,
-      "Schedule not found"
-    );
+    throw new AppError(ScheduleErrors.DELETE.NOT_FOUND, "Schedule not found");
   }
 
   return result.rows[0];
