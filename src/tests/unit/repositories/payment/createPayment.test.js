@@ -9,43 +9,76 @@ import {
 } from "../../../helpers/testHelpers.js";
 
 describe("createPayment(payment)", () => {
+  let validScheduleId;
+  let validLoanId;
+  let validFinancialProfileId;
+
+  let basePayment;
+
   beforeEach(async () => {
     await pool.query("DELETE FROM payments;");
     await pool.query("DELETE FROM schedules;");
+    await pool.query("DELETE FROM loans;");
+    await pool.query("DELETE FROM financial_profiles;");
+
+    validScheduleId = uuidv4();
+    validLoanId = uuidv4();
+    validFinancialProfileId = uuidv4();
+
+    await pool.query(
+      `INSERT INTO financial_profiles (
+        id, user_id, salary, created_at, updated_at
+      ) VALUES (
+        $1, $2, 5000, NOW(), NOW()
+      )`,
+      [validFinancialProfileId, uuidv4()]
+    );
+
+    await pool.query(
+      `INSERT INTO loans (
+        id, financial_profile_id, start_date, term_years, principal,
+        interest_rate, payment_frequency_per_year, compounding_frequency_per_year,
+        grace_period_months, balloon_payment, loan_type, currency,
+        saved_at, updated_at
+      ) VALUES (
+        $1, $2, '2025-10-01', 5, 10000,
+        0.07, 12, 12,
+        0, null, 'personal', 'USD',
+        NOW(), NOW()
+      )`,
+      [validLoanId, validFinancialProfileId]
+    );
+
+    await pool.query(
+      `INSERT INTO schedules (
+        id, plan, start_date, total_amount, currency, installments, loan_id, created_at, updated_at
+      ) VALUES (
+        $1, 'monthly', '2025-10-01', 1000, 'USD', 2, $2, NOW(), NOW()
+      )`,
+      [validScheduleId, validLoanId]
+    );
+
+    basePayment = {
+      id: uuidv4(),
+      scheduleId: validScheduleId,
+      dueDate: new Date("2025-11-01"),
+      amount: 500,
+      currency: "USD",
+      status: "pending",
+      paidAt: null,
+      method: "bank-transfer",
+      reference: "TX-123",
+      notes: "Initial payment",
+    };
   });
 
   afterAll(async () => {
     await pool.query("DELETE FROM payments;");
     await pool.query("DELETE FROM schedules;");
+    await pool.query("DELETE FROM loans;");
+    await pool.query("DELETE FROM financial_profiles;");
     await pool.end();
   });
-
-  const validScheduleId = uuidv4();
-  const validLoanId = uuidv4();
-
-  beforeEach(async () => {
-    await pool.query(
-      `INSERT INTO schedules (
-    id, plan, start_date, total_amount, currency, installments, loan_id, created_at, updated_at
-  ) VALUES (
-    $1, 'monthly', '2025-10-01', 1000, 'USD', 2, $2, NOW(), NOW()
-  )`,
-      [validScheduleId, validLoanId]
-    );
-  });
-
-  const basePayment = {
-    id: uuidv4(),
-    scheduleId: validScheduleId,
-    dueDate: new Date("2025-11-01"),
-    amount: 500,
-    currency: "USD",
-    status: "pending",
-    paidAt: null,
-    method: "bank-transfer",
-    reference: "TX-123",
-    notes: "Initial payment",
-  };
 
   it("should create a payment with valid data", async () => {
     const result = await createPayment(basePayment);
@@ -111,13 +144,13 @@ describe("createPayment(payment)", () => {
   it("should reject duplicate payment ID", async () => {
     await createPayment(basePayment);
     await expectErrorCode(
-      createPayment(basePayment),
+      createPayment({ ...basePayment }),
       PaymentErrors.CREATE.INVALID_ID.code
     );
   });
 
   it("should accept null paidAt for pending payments", async () => {
-    const pending = { ...basePayment, status: "pending", paidAt: null };
+    const pending = { ...basePayment, id: uuidv4(), status: "pending", paidAt: null };
     const result = await createPayment(pending);
     expect(result.status).toBe("pending");
     expect(result.paid_at).toBe(null);
@@ -126,6 +159,7 @@ describe("createPayment(payment)", () => {
   it("should accept paidAt only if status is 'paid'", async () => {
     const paid = {
       ...basePayment,
+      id: uuidv4(),
       status: "paid",
       paidAt: new Date("2025-11-02"),
     };
@@ -137,6 +171,7 @@ describe("createPayment(payment)", () => {
   it("should reject paidAt if status is not 'paid'", async () => {
     const invalid = {
       ...basePayment,
+      id: uuidv4(),
       status: "pending",
       paidAt: new Date("2025-11-02"),
     };
