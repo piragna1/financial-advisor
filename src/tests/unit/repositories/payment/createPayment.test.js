@@ -1,0 +1,148 @@
+import { v4 as uuidv4 } from "uuid";
+import { pool } from "../../../../db/pool.js";
+import { createPayment } from "../../../../repositories/paymentRepository.js";
+import { PaymentErrors } from "../../../../errors/paymentErrors.js";
+import {
+  expectErrorCode,
+  expectDateEqual,
+  expectNumericEqual,
+} from "../../../helpers/testHelpers.js";
+
+describe("createPayment(payment)", () => {
+  beforeEach(async () => {
+    await pool.query("DELETE FROM payments;");
+    await pool.query("DELETE FROM schedules;");
+  });
+
+  afterAll(async () => {
+    await pool.query("DELETE FROM payments;");
+    await pool.query("DELETE FROM schedules;");
+    await pool.end();
+  });
+
+  const validScheduleId = uuidv4();
+  const validLoanId = uuidv4();
+
+  beforeEach(async () => {
+    await pool.query(
+      `INSERT INTO schedules (
+    id, plan, start_date, total_amount, currency, installments, loan_id, created_at, updated_at
+  ) VALUES (
+    $1, 'monthly', '2025-10-01', 1000, 'USD', 2, $2, NOW(), NOW()
+  )`,
+      [validScheduleId, validLoanId]
+    );
+  });
+
+  const basePayment = {
+    id: uuidv4(),
+    scheduleId: validScheduleId,
+    dueDate: new Date("2025-11-01"),
+    amount: 500,
+    currency: "USD",
+    status: "pending",
+    paidAt: null,
+    method: "bank-transfer",
+    reference: "TX-123",
+    notes: "Initial payment",
+  };
+
+  it("should create a payment with valid data", async () => {
+    const result = await createPayment(basePayment);
+    expect(result.id).toBe(basePayment.id);
+    expect(result.schedule_id).toBe(basePayment.scheduleId);
+    expectDateEqual(result.due_date, basePayment.dueDate);
+    expectNumericEqual(result.amount, basePayment.amount);
+    expect(result.currency).toBe("USD");
+    expect(result.status).toBe("pending");
+    expect(result.method).toBe("bank-transfer");
+    expect(result.reference).toBe("TX-123");
+    expect(result.notes).toBe("Initial payment");
+  });
+
+  it("should reject malformed UUIDs", async () => {
+    const invalid = { ...basePayment, id: "bad-id", scheduleId: "also-bad" };
+    await expectErrorCode(
+      createPayment(invalid),
+      PaymentErrors.CREATE.INVALID_ID.code
+    );
+  });
+
+  it("should reject missing required fields", async () => {
+    const incomplete = { id: uuidv4(), scheduleId: validScheduleId };
+    await expectErrorCode(
+      createPayment(incomplete),
+      PaymentErrors.CREATE.INVALID_DATA.code
+    );
+  });
+
+  it("should reject invalid status values", async () => {
+    const invalid = { ...basePayment, status: "unknown" };
+    await expectErrorCode(
+      createPayment(invalid),
+      PaymentErrors.CREATE.INVALID_DATA.code
+    );
+  });
+
+  it("should reject invalid method values", async () => {
+    const invalid = { ...basePayment, method: "paypal" };
+    await expectErrorCode(
+      createPayment(invalid),
+      PaymentErrors.CREATE.INVALID_DATA.code
+    );
+  });
+
+  it("should reject negative amounts", async () => {
+    const invalid = { ...basePayment, amount: -100 };
+    await expectErrorCode(
+      createPayment(invalid),
+      PaymentErrors.CREATE.INVALID_DATA.code
+    );
+  });
+
+  it("should reject non-existent scheduleId", async () => {
+    const invalid = { ...basePayment, scheduleId: uuidv4() };
+    await expectErrorCode(
+      createPayment(invalid),
+      PaymentErrors.CREATE.INVALID_ID.code
+    );
+  });
+
+  it("should reject duplicate payment ID", async () => {
+    await createPayment(basePayment);
+    await expectErrorCode(
+      createPayment(basePayment),
+      PaymentErrors.CREATE.INVALID_ID.code
+    );
+  });
+
+  it("should accept null paidAt for pending payments", async () => {
+    const pending = { ...basePayment, status: "pending", paidAt: null };
+    const result = await createPayment(pending);
+    expect(result.status).toBe("pending");
+    expect(result.paid_at).toBe(null);
+  });
+
+  it("should accept paidAt only if status is 'paid'", async () => {
+    const paid = {
+      ...basePayment,
+      status: "paid",
+      paidAt: new Date("2025-11-02"),
+    };
+    const result = await createPayment(paid);
+    expect(result.status).toBe("paid");
+    expectDateEqual(result.paid_at, paid.paidAt);
+  });
+
+  it("should reject paidAt if status is not 'paid'", async () => {
+    const invalid = {
+      ...basePayment,
+      status: "pending",
+      paidAt: new Date("2025-11-02"),
+    };
+    await expectErrorCode(
+      createPayment(invalid),
+      PaymentErrors.CREATE.INVALID_DATA.code
+    );
+  });
+});
