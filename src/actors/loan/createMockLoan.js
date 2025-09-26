@@ -1,4 +1,3 @@
-// src/actors/loans/createMockLoan.js
 import { pool } from "../../db/pool.js";
 
 export async function createMockLoan(loanId, financialProfileId) {
@@ -25,15 +24,30 @@ export async function createMockLoan(loanId, financialProfileId) {
       loanId,
       financialProfileId,
       new Date("2025-10-01"),
-      5,               // term_years
-      10000,           // principal
-      0.07,            // interest_rate
-      12,              // payment_frequency_per_year
-      12,              // compounding_frequency_per_year
-      0,               // grace_period_months
-      null,            // balloon_payment
-      "personal",      // loan_type
-      "USD"            // currency
+      5,
+      10000,
+      0.07,
+      12,
+      12,
+      0,
+      null,
+      "personal",
+      "USD"
     ]
   );
+
+  return {
+    id: loanId,
+    financialProfileId,
+    startDate: new Date("2025-10-01"),
+    termYears: 5,
+    principal: 10000,
+    interestRate: 0.07,
+    paymentFrequencyPerYear: 12,
+    compoundingFrequencyPerYear: 12,
+    gracePeriodMonths: 0,
+    balloonPayment: null,
+    loanType: "personal",
+    currency: "USD"
+  };
 }
