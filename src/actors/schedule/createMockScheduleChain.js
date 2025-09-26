@@ -4,26 +4,27 @@ import { createMockFinancialProfile } from "../financialProfile/createMockFinanc
 import { createMockLoan } from "../loan/createMockLoan";
 import { createSchedule } from "../../repositories/scheduleRepository";
 
-export async function createMockScheduleChain(scheduleOverrides = {}){
-    const user = await createMockUser(uuidv4());
+export async function createMockScheduleChain(scheduleOverrides = {}) {
+  const user = await createMockUser(uuidv4());
+  const financialProfile = await createMockFinancialProfile(user.id);
+  const loan = await createMockLoan(uuidv4(), financialProfile.id);
 
-    const financialProfile = await createMockFinancialProfile(user.id);
+  const schedule = await createSchedule({
+    id: scheduleOverrides.id || uuidv4(),
+    loanId: loan.id,
+    plan: "weekly",
+    startDate: "2025-08-01",
+    totalAmount: 800,
+    currency: "USD",
+    installments: 8,
+    ...scheduleOverrides,
+  });
 
-    const loanId = uuidv4();
-    const loan =await createMockLoan(loanId, financialProfile.id);
-
-    const scheduleId = scheduleOverrides.id || uuidv4();
-
-    const schedule = await createSchedule({
-        id:scheduleId,
-        loanId,
-        plan:'weekly',
-        startDate:'2025-08-01',
-        totalAmount:800,
-        currency:"USD",
-        installments:8,
-        ...scheduleOverrides,
-    });
-
-    return {schedule, loanId};
+  return {
+    schedule,
+    loanId: loan.id, // ← mantiene compatibilidad
+    loan,
+    financialProfile,
+    user
+  };
 }
