@@ -5,6 +5,9 @@ import { createPayment } from "../../repositories/paymentRepository.js";
 export async function createMockPaymentChain(paymentOverrides = {}) {
   const { schedule, loan, financialProfile, user } = await createMockScheduleChain();
 
+
+
+  // user -> (profile) -> fincancialProfile -> loan -> schedule -> payment
   const payment = await createPayment({
     id: paymentOverrides.id || uuidv4(),
     scheduleId: schedule.id,
