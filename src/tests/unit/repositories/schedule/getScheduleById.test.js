@@ -2,10 +2,12 @@ import { v4 as uuidv4 } from "uuid";
 import { pool } from "../../../../db/pool.js";
 import {
   createSchedule,
-  getScheduleById
+  getScheduleById,
 } from "../../../../repositories/scheduleRepository.js";
 import { createMockLoan } from "../../../../actors/loan/createMockLoan.js";
 import { ScheduleErrors } from "../../../../errors/scheduleErrors.js";
+import { createMockScheduleChain } from "../../../../actors/schedule/createMockScheduleChain.js";
+import { expectErrorCode } from "../../../helpers/testHelpers.js";
 
 describe("getScheduleById(id)", () => {
   beforeEach(async () => {
@@ -20,52 +22,35 @@ describe("getScheduleById(id)", () => {
   });
 
   it("should return the schedule for a valid id", async () => {
-    const loanId = uuidv4();
-    const id = uuidv4();
-    await createMockLoan(loanId);
-    await createSchedule({
-      id, loanId, plan: "weekly",
-      startDate: "2025-08-01",
-      totalAmount: 800,
-      currency: "USD",
-      installments: 8
-    });
-
-    const result = await getScheduleById(id);
-    expect(result.id).toBe(id);
+    const { schedule, loanId } = await createMockScheduleChain();
+    const result = await getScheduleById(schedule.id);
+    expect(result.id).toBe(schedule.id);
     expect(result.loan_id).toBe(loanId);
   });
 
-  it("should throw INVALID_ID for null, undefined, empty or non-string id", async () => {
-    await expect(getScheduleById(null)).rejects.toMatchObject({
-      code: ScheduleErrors.READ.INVALID_ID
-    });
-    await expect(getScheduleById("")).rejects.toMatchObject({
-      code: ScheduleErrors.READ.INVALID_ID
-    });
-    await expect(getScheduleById(123)).rejects.toMatchObject({
-      code: ScheduleErrors.READ.INVALID_ID
-    });
-  });
+ it("should throw INVALID_ID for null, undefined, empty or non-string id", async () => {
+  const code = ScheduleErrors.READ.INVALID_ID.code;
+
+  await expectErrorCode(getScheduleById(null), code);
+  await expectErrorCode(getScheduleById(""), code);
+  await expectErrorCode(getScheduleById(undefined), code);
+  await expectErrorCode(getScheduleById(123), code);
+});
+
 
   it("should throw NOT_FOUND if schedule does not exist", async () => {
-    await expect(getScheduleById(uuidv4())).rejects.toMatchObject({
-      code: ScheduleErrors.READ.NOT_FOUND
-    });
-  });
+  const expectedCode = ScheduleErrors.READ.NOT_FOUND.code;
+  await expectErrorCode(getScheduleById(uuidv4()), expectedCode);
+});
 
-  it("should return trimmed id match", async () => {
-    const loanId = uuidv4();
-    const id = uuidv4();
-    await createMockLoan(loanId);
-    await createSchedule({
-      id, loanId, plan: "monthly",
-      startDate: "2025-07-15",
-      totalAmount: 1200,
-      currency: "EUR",
-      installments: 6
-    });
-    const result = await getScheduleById(`  ${id}  `);
-    expect(result.id).toBe(id);
-  });
+
+ it("should return trimmed id match", async () => {
+  const rawId = uuidv4();
+  const paddedId = `   ${rawId}   `;
+
+  const { schedule } = await createMockScheduleChain({ id: rawId });
+  const result = await getScheduleById(paddedId);
+
+  expect(result.id).toBe(rawId);
+});
 });
