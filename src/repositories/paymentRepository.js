@@ -1,6 +1,7 @@
 import { normalizePayment } from "../actors/normalizers/payment/normalizePayment.js";
 import { validatePaymentId } from "../actors/validators/payment/validatePaymentId.js";
 import { validatePaymentInput } from "../actors/validators/payment/validatePaymentInput.js";
+import { validatePaymentUpdate } from "../actors/validators/payment/validatePaymentUpdate.js";
 import { pool } from "../db/pool.js";
 import { AppError } from "../errors/appError.js";
 import { PaymentErrors } from "../errors/paymentErrors.js";
@@ -44,20 +45,29 @@ export async function createPayment(payment) {
     paidAt,
     method,
     reference,
-    notes
+    notes,
   } = payment;
 
   const result = await pool.query(
     `INSERT INTO payments (
-      id, schedule_id, due_date, amount, currency,
-      status, paid_at, method, reference, notes,
-      saved_at, updated_at
-    ) VALUES (
-      $1, $2, $3, $4, $5,
-      $6, $7, $8, $9, $10,
-      NOW(), NOW()
-    ) RETURNING *`,
-    [id, scheduleId, dueDate, amount, currency, status, paidAt, method, reference, notes]
+  id, schedule_id, due_date, amount, currency, status, paid_at, method, reference, notes, updated_at
+) VALUES (
+  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW()
+)
+
+ RETURNING *`,
+    [
+      id,
+      scheduleId,
+      dueDate,
+      amount,
+      currency,
+      status,
+      paidAt,
+      method,
+      reference,
+      notes,
+    ]
   );
 
   return result.rows[0];
@@ -66,10 +76,7 @@ export async function createPayment(payment) {
 export async function getPayment(id) {
   validatePaymentId(id);
 
-  const result = await pool.query(
-    `SELECT * FROM payments WHERE id = $1`,
-    [id]
-  );
+  const result = await pool.query(`SELECT * FROM payments WHERE id = $1`, [id]);
 
   if (result.rowCount === 0) {
     throw new AppError(PaymentErrors.READ.NOT_FOUND);
@@ -79,6 +86,12 @@ export async function getPayment(id) {
 }
 
 export async function updatePayment(payment) {
+  if (!isValidUUID(payment.id)) {
+    throw new AppError(PaymentErrors.UPDATE.INVALID_ID);
+  }
+
+  validatePaymentUpdate(payment);
+
   const {
     id,
     scheduleId,
@@ -89,12 +102,8 @@ export async function updatePayment(payment) {
     paidAt,
     method,
     reference,
-    notes
+    notes,
   } = payment;
-
-  if (!isValidUUID(id)) {
-    throw new AppError(PaymentErrors.UPDATE.INVALID_ID);
-  }
 
   const result = await pool.query(
     `UPDATE payments SET
@@ -110,7 +119,18 @@ export async function updatePayment(payment) {
       updated_at = NOW()
     WHERE id = $1
     RETURNING *`,
-    [id, scheduleId, dueDate, amount, currency, status, paidAt, method, reference, notes]
+    [
+      id,
+      scheduleId,
+      dueDate,
+      amount,
+      currency,
+      status,
+      paidAt,
+      method,
+      reference,
+      notes,
+    ]
   );
 
   if (result.rowCount === 0) {
@@ -121,6 +141,8 @@ export async function updatePayment(payment) {
 }
 
 export async function deletePayment(id) {
+  console.log("Deleting payment ID:", id);
+
   if (!isValidUUID(id)) {
     throw new AppError(PaymentErrors.DELETE.INVALID_ID);
   }
