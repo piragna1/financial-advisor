@@ -1,12 +1,20 @@
 import { PaymentErrors } from "../../../errors/paymentErrors.js";
 
-
 export function validatePaymentInput(payment) {
+
+
+
+  // Assign default dueDate if missing
+  if (!payment.dueDate) {
+    const defaultDueDate = new Date();
+    defaultDueDate.setMonth(defaultDueDate.getMonth() + 1);
+    payment.dueDate = defaultDueDate;
+  }
+
   // Check for required fields
   if (
     !payment.id ||
     !payment.scheduleId ||
-    !payment.dueDate ||
     payment.amount == null ||
     !payment.currency ||
     !payment.status ||
@@ -53,23 +61,38 @@ export function validatePaymentInput(payment) {
   }
 
   // Validate reference length
-  if (payment.reference && typeof payment.reference === "string" && payment.reference.length > 50) {
+  if (
+    payment.reference &&
+    typeof payment.reference === "string" &&
+    payment.reference.length > 50
+  ) {
     throw PaymentErrors.CREATE.INVALID_DATA;
   }
 
   // Validate notes length
-  if (payment.notes && typeof payment.notes === "string" && payment.notes.length > 255) {
+  if (
+    payment.notes &&
+    typeof payment.notes === "string" &&
+    payment.notes.length > 255
+  ) {
     throw PaymentErrors.CREATE.INVALID_DATA;
   }
 
-  // Validate dueDate is not in the past
+  // Validate dueDate is at least one month in the future
   const now = new Date();
-  if (payment.dueDate && new Date(payment.dueDate) < now) {
+  const minDueDate = new Date(now);
+  minDueDate.setMonth(minDueDate.getMonth() + 1);
+
+  if (new Date(payment.dueDate) < minDueDate) {
     throw PaymentErrors.CREATE.INVALID_DATA;
   }
 
   // Validate paidAt is not before dueDate
-  if (payment.paidAt && payment.dueDate && new Date(payment.paidAt) < new Date(payment.dueDate)) {
+  if (
+    payment.paidAt &&
+    payment.dueDate &&
+    new Date(payment.paidAt) < new Date(payment.dueDate)
+  ) {
     throw PaymentErrors.CREATE.INVALID_DATA;
   }
 }
