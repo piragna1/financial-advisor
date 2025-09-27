@@ -1,7 +1,7 @@
 import { retrieveUserById, retrieveUserByEmail } from "../actors/retrievers/userRetriever.js";
 import { AppError } from "../errors/AppError.js";
 import { AuthErrors } from "../errors/authErrors.js";
-import { findUserById, saveUser } from "../repositories/userRepo.js";
+import { findUserById, saveUser } from "../repositories/userRepository.js";
 import {updateProfileFields } from '../actors/profile/updateProfileFields.js'
 
 export async function getProfile(req, res,next) {
