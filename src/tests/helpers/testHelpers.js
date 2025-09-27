@@ -21,8 +21,9 @@ export function expectDateEqual(actual, expected) {
 
 
 export function expectNumericEqual(actual, expected) {
-  expect(Number(actual)).toBe(expected);
+  expect(Number(actual)).toBe(Number(expected));
 }
+
 
 export function expectScheduleMatch(actual, expected) {
   expect(actual.loan_id).toBe(expected.loanId);
