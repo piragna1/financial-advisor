@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { createMockScheduleChain } from "./createMockScheduleChain.js";
+import { createMockScheduleChain } from "../schedule/createMockScheduleChain.js";
 import { createPayment } from "../../repositories/paymentRepository.js";
 
 export async function createMockPaymentChain(paymentOverrides = {}) {
