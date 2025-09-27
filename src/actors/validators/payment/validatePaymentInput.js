@@ -50,14 +50,29 @@ export function validatePaymentInput(payment) {
     throw PaymentErrors.CREATE.INVALID_DATA;
   }
 
-  // Validate paidAt only exists if status is 'paid'
-  if (payment.paidAt && payment.status !== "paid") {
+// Validate paidAt only allowed if status is 'paid'
+if (payment.status !== "paid") {
+  if (payment.paidAt instanceof Date || typeof payment.paidAt === "string") {
     throw PaymentErrors.CREATE.INVALID_DATA;
   }
+}
 
-  // Validate status 'paid' must include paidAt
-  if (payment.status === "paid" && !payment.paidAt) {
-    throw PaymentErrors.CREATE.INVALID_DATA;
+
+  // Validate status 'paid' must include valid paidAt
+  if (payment.status === "paid") {
+    if (payment.paidAt === null || payment.paidAt === undefined) {
+      throw PaymentErrors.CREATE.INVALID_DATA;
+    }
+
+    const paid = new Date(payment.paidAt);
+    if (!(paid instanceof Date) || isNaN(paid)) {
+      throw PaymentErrors.CREATE.INVALID_DATA;
+    }
+
+    const now = new Date();
+    if (paid > now) {
+      throw PaymentErrors.CREATE.INVALID_DATA;
+    }
   }
 
   // Validate reference length
@@ -83,16 +98,10 @@ export function validatePaymentInput(payment) {
   const minDueDate = new Date(now);
   minDueDate.setMonth(minDueDate.getMonth() + 1);
 
-  if (new Date(payment.dueDate) < minDueDate) {
+  const dueDate = new Date(payment.dueDate);
+  if (dueDate < minDueDate) {
     throw PaymentErrors.CREATE.INVALID_DATA;
   }
 
-  // Validate paidAt is not before dueDate
-  if (
-    payment.paidAt &&
-    payment.dueDate &&
-    new Date(payment.paidAt) < new Date(payment.dueDate)
-  ) {
-    throw PaymentErrors.CREATE.INVALID_DATA;
-  }
+  // ✅ No need to reject paidAt before dueDate — early payments are valid
 }
