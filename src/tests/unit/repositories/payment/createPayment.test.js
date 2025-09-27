@@ -180,4 +180,24 @@ describe("createPayment(payment)", () => {
       PaymentErrors.CREATE.INVALID_DATA.code
     );
   });
+
+it("should assign default dueDate at least one month ahead if missing", async () => {
+  const input = {
+    ...basePayment,
+    id: uuidv4(),
+  };
+  delete input.dueDate; // omitido a propósito
+
+  const result = await createPayment(input);
+
+  const now = new Date();
+  const minDueDate = new Date(now);
+  minDueDate.setMonth(minDueDate.getMonth() + 1);
+
+const resultDate = new Date(result.due_date);
+expect(resultDate.getFullYear()).toBeGreaterThanOrEqual(minDueDate.getFullYear());
+expect(resultDate.getMonth()).toBeGreaterThanOrEqual(minDueDate.getMonth());
+});
+
+
 });
