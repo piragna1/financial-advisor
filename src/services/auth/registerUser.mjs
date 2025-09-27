@@ -1,5 +1,5 @@
-import { mockUsers } from "../../config/mock.db.config.js";
-import {  saveUser } from "../../repositories/userRepo.js";
+import { mockUsers } from "../../config/mock.users.db.config.js";
+import {  saveUser } from "../../repositories/userRepository.js";
 
 export async function registerUser(user) {
   const wasSaved = await saveUser(user);
