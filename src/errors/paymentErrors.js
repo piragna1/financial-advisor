@@ -33,7 +33,12 @@ export const PaymentErrors = {
       code: "PAYMENT_UPDATE_NOT_FOUND",
       message: "Payment not found",
       status: 404
-    }
+    },INVALID_DATA: {
+  code: "UPDATE_INVALID_DATA",
+  message: "Missing or invalid payment data for update",
+  status: 400
+}
+
   },
   DELETE: {
     INVALID_ID: {
