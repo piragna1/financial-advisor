@@ -1,5 +1,5 @@
 //userRetriever.js
-import { findUserByEmail, findUserById } from "../../repositories/userRepo.js";
+import { findUserByEmail, findUserById } from "../../repositories/userRepository.js";
 import {AppError} from '../../errors/AppError.js';
 import {AuthErrors} from '../../errors/authErrors.js'
 
