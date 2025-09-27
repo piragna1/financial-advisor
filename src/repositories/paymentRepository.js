@@ -1,3 +1,5 @@
+import { normalizePayment } from "../actors/normalizers/payment/normalizePayment.js";
+import { validatePaymentId } from "../actors/validators/payment/validatePaymentId.js";
 import { validatePaymentInput } from "../actors/validators/payment/validatePaymentInput.js";
 import { pool } from "../db/pool.js";
 import { AppError } from "../errors/appError.js";
@@ -62,9 +64,7 @@ export async function createPayment(payment) {
 }
 
 export async function getPayment(id) {
-  if (!isValidUUID(id)) {
-    throw new AppError(PaymentErrors.READ.INVALID_ID);
-  }
+  validatePaymentId(id);
 
   const result = await pool.query(
     `SELECT * FROM payments WHERE id = $1`,
@@ -75,7 +75,7 @@ export async function getPayment(id) {
     throw new AppError(PaymentErrors.READ.NOT_FOUND);
   }
 
-  return result.rows[0];
+  return normalizePayment(result.rows[0]);
 }
 
 export async function updatePayment(payment) {
