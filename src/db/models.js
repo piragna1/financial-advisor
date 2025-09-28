@@ -8,6 +8,7 @@ const User = {
 
 
 export const profile = {
+  id:String,
   userId: String,              
   firstName: String,
   lastName: String,
