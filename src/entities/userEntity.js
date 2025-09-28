@@ -2,20 +2,15 @@ import { AppError } from "../errors/AppError.js";
 import { AuthErrors } from "../errors/authErrors.js";
 import assert from "assert";
 
-export function buildUserEntity({
-  id,
-  name,
-  lastName = "",
-  email,
-  hashedPassword,
-}) {
-  if (!id || !name || !email || !hashedPassword) {
+export function buildUserEntity({ id, email, hashedPassword }) {
+
+console.log('receiving in buildUserEntity', {id,email,hashedPassword})
+
+  if (!id || !email || !hashedPassword) {
     throw new AppError(AuthErrors.MISSING_CREDENTIALS);
   }
   if (
     typeof id != "string" ||
-    typeof name != "string" ||
-    typeof lastName != "string" ||
     typeof email != "string" ||
     typeof hashedPassword != "string"
   ) {
@@ -23,8 +18,6 @@ export function buildUserEntity({
   }
   const user = {
     id,
-    name,
-    lastName,
     email,
     hashedPassword,
     createdAt: Date.now(),
