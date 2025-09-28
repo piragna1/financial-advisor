@@ -2,6 +2,8 @@ import { mockUsers } from "../../config/mock.users.db.config.js";
 import {  saveUser } from "../../repositories/userRepository.js";
 
 export async function registerUser(user) {
+
+  console.log('user received on registerUser', user)
   const wasSaved = await saveUser(user);
   return wasSaved
     ? { success: true, user }
