@@ -54,6 +54,7 @@ export async function findUserByEmail(email) {
 
   if (result.rowCount === 0) return null;
 
+  console.log('return value in findUserByEmail()', result.rows)
   return result.rows[0];
 }
 export async function findUserById(id) {
