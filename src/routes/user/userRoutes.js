@@ -1,8 +1,11 @@
 import express from "express";
-import { deleteUserController } from "../../controllers/userController.mjs";
+import { deleteUserController, listUsersController } from "../../controllers/userController.mjs";
+
 
 const router = express.Router();
 
 router.delete("/:email", deleteUserController);
+
+router.get("/", listUsersController);
 
 export default router;
