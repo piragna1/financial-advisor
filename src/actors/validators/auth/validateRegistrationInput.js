@@ -9,8 +9,6 @@ export function validateRegistrationInput(input) {
   if (!input) {
     throw new AppError(AuthErrors.MISSING_CREDENTIALS, "Empty input received");
   } else {
-    console.log('else{}')
-    console.log('input:', input)
   }
 
     if (!input.email) {
@@ -38,5 +36,6 @@ export function validateRegistrationInput(input) {
       console.log(errors);
       throw new AppError(AuthErrors.REGISTER.INVALID_INPUT);
     }
+    console.log('validateRegistrationInput returning true')
   return true;
 }
