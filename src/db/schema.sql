@@ -1,6 +1,20 @@
 -- Enable UUID generation
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
+-- DROP INDEXES
+DROP INDEX IF EXISTS idx_users_email;
+DROP INDEX IF EXISTS idx_financial_profiles_user_id;
+DROP INDEX IF EXISTS idx_loans_financial_profile_id;
+DROP INDEX IF EXISTS idx_payments_schedule_id;
+
+-- DROP TABLES (in reverse dependency order)
+DROP TABLE IF EXISTS payments CASCADE;
+DROP TABLE IF EXISTS schedules CASCADE;
+DROP TABLE IF EXISTS loans CASCADE;
+DROP TABLE IF EXISTS financial_profiles CASCADE;
+DROP TABLE IF EXISTS profiles CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
 -- USERS
 CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -12,7 +26,8 @@ CREATE TABLE users (
 
 -- PROFILES
 CREATE TABLE profiles (
-  user_id UUID PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID UNIQUE NOT NULL,
   first_name VARCHAR(100) NOT NULL,
   last_name VARCHAR(100) NOT NULL,
   birth_date DATE,
@@ -20,6 +35,8 @@ CREATE TABLE profiles (
   language VARCHAR(10) DEFAULT 'en',
   avatar_url TEXT,
   bio TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
