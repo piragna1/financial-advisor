@@ -110,22 +110,6 @@ npm install
 npm start
 ```
 
-#### Docker Setup
-```bash
-docker compose up --build
-```
-This will start:
-
-🐘 PostgreSQL on port 5432
-
-⚙️ Backend on http://localhost:3000
-
-Confirm it's working: Check the logs for:
-```bash
-Server running on port 3000
-Database system is ready to accept connections
-```
-
 #### Environment Variables
 Create a .env file in the root of the project with the following content:
 ```bash
@@ -170,3 +154,186 @@ Create prestamos_db if it doesn't exist
 
 Execute schema.sql to create all tables, relationships, and constraints
 ####
+
+#### Docker Setup
+```bash
+docker compose up --build
+```
+This will start:
+
+🐘 PostgreSQL on port 5432
+
+⚙️ Backend on http://localhost:3000
+
+Confirm it's working: Check the logs for:
+```bash
+Server running on port 3000
+Database system is ready to accept connections
+```
+##
+### Endpoints
+🔐 Authentication
+POST /auth/register
+Registers a new user.
+
+Request:
+{
+  "name": "Gonzalo",
+  "lastName": "Varela Alagna",
+  "email": "gvalagna@gmail.com",
+  "password": "gvalagnA$4"
+}
+
+Response:
+{
+  "message": "User registered",
+  "user": {
+    "id": "u1",
+    "email": "gvalagna@example.com"
+  }
+}
+
+
+POST /auth/login
+Authenticates a user and returns a JWT token.
+
+Request:
+
+{
+  "email": "gvalagna@gmail.com",
+  "password": "gvalagnA$4"
+}
+
+
+Response:
+
+{
+  "user": {
+    "id": "u1",
+    "email": "gvalagna@example.com"
+  },
+  "token": "..."
+}
+
+
+
+👤 Profile
+POST /profiles
+Creates a profile for a user.
+
+Request:
+
+{
+  "userId": "user-uuid",
+  "firstName": "Gonzalo",
+  "lastName": "Varela",
+  "birthDate": "1990-01-01"
+}
+
+Response:
+
+{
+  "message": "Profile created",
+  "profile": { ... }
+}
+
+
+GET /profiles/email/:email
+Retrieves a profile by email.
+
+Response:
+
+{
+  "profile": { ... }
+}
+
+
+
+DELETE /profiles
+Deletes a profile by ID.
+
+Request:
+
+{
+  "id": "profile-uuid"
+}
+
+
+
+Response:
+
+{
+  "message": "Profile deleted",
+  "deleted": { ... }
+}
+
+
+
+💰 Financial Profile
+POST /financial-profiles
+Creates a financial profile for a user
+
+Request:
+
+{
+  "userId": "user-uuid",
+  "salary": 85000
+}
+
+
+Response:
+
+{
+  "message": "Financial profile created",
+  "profile": { ... }
+}
+
+
+
+💸 Loans
+POST /loans
+Creates a loan tied to a financial profile.
+
+Request:
+
+{
+  "financialProfileId": "fp-uuid",
+  "startDate": "2025-10-01",
+  "termYears": 5,
+  "principal": 10000,
+  "interestRate": 4.5,
+  "paymentFrequencyPerYear": 12,
+  "compoundingFrequencyPerYear": 12,
+  "gracePeriodMonths": 0,
+  "balloonPayment": 0,
+  "loanType": "personal",
+  "currency": "USD"
+}
+
+
+Response:
+
+{
+  "message": "Loan saved",
+  "loan": { ... }
+}
+
+
+DELETE /loans
+Deletes a loan by ID.
+
+Request:
+
+{
+  "id": "loan-uuid"
+}
+
+Response:
+
+{
+  "message": "Loan deleted",
+  "deleted": { ... }
+}
+
+
+
