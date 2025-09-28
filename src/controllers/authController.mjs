@@ -14,34 +14,36 @@ import { TokenGenerationError } from "../errors/tokenGenerationError.js";
 import { REGISTRATION_ERRORS } from "../errors/registrationErrors.js";
 import { comparePassword } from "../utils/auth/comparePasswords.js";
 import { passwordSecret } from "../config/passwordSecretConfig.js";
-import { retrieveUserByEmail, retrieveUserById } from '../actors/retrievers/userRetriever.js'
-import {normalizeEmail} from '../actors/users/normalizeEmail.js'
+import {
+  retrieveUserByEmail,
+  retrieveUserById,
+} from "../actors/retrievers/userRetriever.js";
+import { normalizeEmail } from "../actors/users/normalizeEmail.js";
 
 export async function registerUserController(req, res) {
   try {
     let newUser = {};
 
-
     const { email, password } = req.body;
-
 
     if (!validateRegistrationInput({ email, password }))
       throw new AppError(REGISTRATION_ERRORS.INVALID_INPUT);
 
+    if (await retrieveUserByEmail(email))
+      throw new AppError(AuthErrors.REGISTER.USER_EXISTS);
 
-    if (await retrieveUserByEmail(email)) throw new AppError(AuthErrors.REGISTER.USER_EXISTS);
-
-
-    const hashedPassword = hashPassword(password, passwordSecret.PASSWORD_SECRET);
+    const hashedPassword = hashPassword(
+      password,
+      passwordSecret.PASSWORD_SECRET
+    );
 
     const normalizedEmail = normalizeEmail(email);
 
     const id = generateUserId();
 
-    newUser = buildUserEntity({ id, email:normalizedEmail, hashedPassword });
+    newUser = buildUserEntity({ id, email: normalizedEmail, hashedPassword });
 
     const success = await registerUser(newUser);
-
 
     if (!success) throw new AppError(REGISTRATION_ERRORS.CREATION_FAILED);
 
@@ -53,12 +55,12 @@ export async function registerUserController(req, res) {
       },
     });
   } catch (error) {
-    res.status(400).json({ 
+    res.status(400).json({
       // err:error,
-      code:error.code,
-      status:error.status,
+      code: error.code,
+      status: error.status,
       message: error.message,
-      details:error.details
+      details: error.details,
     });
   }
 }
@@ -73,27 +75,39 @@ export async function loginUserController(req, res, next) {
     if (!valid) throw new AppError(AuthErrors.INVALID_INPUT);
 
     //userRetrieve
-    let user = await retrieveUserByEmail(email);//checked
+    let user = await retrieveUserByEmail(email); //checked
     if (!user) throw new AppError(AuthErrors.USER_NOT_FOUND);
 
-    console.log('hi i AM USING THIS SECRET', passwordSecret)
+    console.log("hi i AM USING THIS SECRET", passwordSecret);
 
     //password hashing comparing
-    const validPass = comparePassword(//checked
-      user.passwordHash,
+    const validPass = comparePassword(
+      //checked
+      user.password_hash,
       password,
       passwordSecret.PASSWORD_SECRET
     );
 
-    console.log('validpass?', validPass)
+    console.log("validpass?", validPass);
 
     if (!validPass) throw new AppError(AuthErrors.LOGIN.INVALID_CREDENTIALS);
     //issue token
-    const token = issueToken(user);//checked
+    const token = issueToken(user); //checked
+    console.log("token issued", token);
+
     if (!token) throw new TokenGenerationError(TokenErrors.TOKEN_GEN_ERROR);
 
     //status return
-    res.status(200).json({ user, token });
+    console.log("res.status200");
+
+    console.log("what is user", user);
+    console.log("what is token", token);
+
+    const cleanToken =
+      typeof token === "string" ? token.replace(/[\n\r]/g, "") : token;
+    res.status(200).json({ user, token: cleanToken });
+
+    
   } catch (error) {
     const { code, message, status, details } = mapError(error);
     res.status(status).json({ code, message, status });
