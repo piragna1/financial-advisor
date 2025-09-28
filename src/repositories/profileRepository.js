@@ -1,9 +1,14 @@
 import { pool } from "../db/pool.js";
 import { AppError } from "../errors/AppError.js";
 import { ProfileErrors } from "../errors/profileErrors.js";
-import {createMockUser} from '../actors/users/createMockUser.js'
+import { v4 } from "uuid";
 
 export async function createProfile(profile) {
+
+  console.log('createProfile()')
+  console.log('incoming profile:', profile)
+
+  
   if (!profile || typeof profile !== "object") {
     throw new AppError(
       ProfileErrors.CREATE.INVALID_INPUT,
@@ -22,6 +27,10 @@ export async function createProfile(profile) {
     avatarUrl,
     bio,
   } = profile;
+  
+  // const profileId = v4();
+  // profile.id = profileId;
+  
 
   if (!id || typeof id !== "string" || id.trim() === "") {
     throw new AppError(
@@ -78,7 +87,12 @@ export async function createProfile(profile) {
     bio.trim(),
   ];
 
+  console.log('values', values)
+
   const result = await pool.query(query, values);
+
+  console.log('result!', result.rows)
+
   return result.rows[0];
 }
 
