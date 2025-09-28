@@ -32,7 +32,7 @@ export async function registerUserController(req, res) {
     if (await retrieveUserByEmail(email)) throw new AppError(AuthErrors.REGISTER.USER_EXISTS);
 
 
-    const hashedPassword = hashPassword(password, passwordSecret);
+    const hashedPassword = hashPassword(password, passwordSecret.PASSWORD_SECRET);
 
     const normalizedEmail = normalizeEmail(email);
 
