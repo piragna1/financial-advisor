@@ -171,76 +171,6 @@ Please make sure that before each testing case actors are pure as much as possib
   +registerController[✅]
   +loginController[✅]
 
-- CHECK TESTCASES:
-  + TC-001 [] -> Valid registration -> login -> access to protected route.
-    -> Input / Preconditions:
-      + Purify actors as much as possible [solved]
-    -> Actor: AuthService (encapsulation needed because AuthService is missing)
-    -> Expected result: 200 OK + resource data.
-    -> Status: Pending.
-    RESULTS:
-      -ERROR WHEN TRYING TO REGISTER WITH THE SAME INPUT MORE THAN ONCE
-        ~check what happens when find an existing email in registering process [solved]
-  + TC-002 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
-  + TC-003 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
-  + TC-004 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
-  + TC-005 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
-  + TC-006 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
-  + TC-007 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
-  + TC-008 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
-  + TC-009 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
-  + TC-010 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
-  + TC-011 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
-  + TC-012 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
-  + TC-013 [] ->
-    -> Input / Preconditions:
-    -> Actor:
-    -> Expected result:
-    -> Status:
 --------------
 
 -----------------------------------------------------------------------COURSE TASKS (must)
@@ -250,17 +180,19 @@ Please make sure that before each testing case actors are pure as much as possib
       *Overview (✅)
       *Description (✅)
       *ERD (erd ✅, add it to the github REPOSITORY's content)
-  )
+  ) ✅
 
-  2-Implement authentication in your application.
+  2-Implement authentication in your application. ✅
     Assignment: Choose and implement one of the authentication methods we covered in class:
       -JWT (JSON Web Tokens) (chosen)
       -OAuth 2.0
     Important: You must implement the authentication logic from scratch without using ready-made 
       authentication libraries. This will help you understand how these protocols 
       work under the hood. (login process ❌)
-  3-Create DB schema as diagram. In your application u should have at list 3 DB tables.
-  4-Your task is to implement the database you designed in your diagram by creating executable SQL scripts.
+
+  3-Create DB schema as diagram. In your application u should have at list 3 DB tables.✅
+  
+  4-Your task is to implement the database you designed in your diagram by creating executable SQL scripts.❌
     It can be any SQL database. If you don't know which to use - I recommend to use PostgreSQL.
     Requirements:
       4.1-Create a comprehensive SQL script (.sql file) that generates all tables, relationships, indexes,
