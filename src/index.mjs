@@ -1,10 +1,9 @@
 //index.mjs;
 import express from "express";
 import authRoutes from "./routes/auth/auth.route.js";
+import userRoutes from './routes/user/userRoutes.js'
 import profileRoutes from "./routes/profile/profile.route.js";
 import errorHandler from "./middlewares/errorHandler.js";
-import { updateProfileController } from "./controllers/profileController.mjs";
-import { authMiddleware as authtenticateUser } from "./middlewares/authMiddleware.js";
 import financialProfileRoutes from './routes/financialProfile/financialProfile.route.js'
 
 const PORT = 3000;
@@ -15,13 +14,15 @@ app.use(express.json());
 
 app.use("/auth", authRoutes);
 
-app.use("/profile", profileRoutes); //test
+app.use("/users", userRoutes);
 
-app.use('/financial-profile', financialProfileRoutes);//test
+app.use("/profile", profileRoutes);
+
+app.use('/financial-profile', financialProfileRoutes);
 
 app.get("/", (req, res) => {
   res.send(
-    `<h1 style='color:red'>Express server active</h1><p>Hola que tal soy un parrafado</p>`
+    `<h1 style='color:red'>Express server active</h1>`
   );
 });
 
