@@ -2,7 +2,9 @@
 import express from "express";
 import authRoutes from "./routes/auth/auth.route.js";
 import userRoutes from './routes/user/userRoutes.js'
+
 import profileRoutes from "./routes/profile/profile.route.js";
+
 import errorHandler from "./middlewares/errorHandler.js";
 import financialProfileRoutes from './routes/financialProfile/financialProfile.route.js'
 
@@ -16,9 +18,20 @@ app.use("/auth", authRoutes);
 
 app.use("/users", userRoutes);
 
-app.use("/profile", profileRoutes);
+app.use("/profiles", profileRoutes);
 
-app.use('/financial-profile', financialProfileRoutes);
+app.use('/financial-profiles', financialProfileRoutes);
+
+
+
+app.use((req, res, next) => {
+  console.log("Unhandled route:", req.method, req.url);
+  next();
+});
+
+
+
+
 
 app.get("/", (req, res) => {
   res.send(
