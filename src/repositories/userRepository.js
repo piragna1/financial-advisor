@@ -6,8 +6,11 @@ import { AuthErrors } from "../errors/authErrors.js";
 import { pool } from "../db/pool.js";
 
 export async function saveUser(user) {
+  console.log('user received on saveUser', user)
+
+
   if (!user || typeof user !== "object") throw new Error("Invalid user input");
-  
+
   user.email = user.email.toLocaleLowerCase();
   user.email = user.email.trim();
 
@@ -20,21 +23,24 @@ export async function saveUser(user) {
   const values = [
     user.id,
     user.email,
-    user.passwordHash,
-    user.createdAt || new Date(),
-    user.updatedAt || null
+    user.hashedPassword,
+    new Date(),
+    new Date()
   ];
 
   const result = await pool.query(query, values);
+  console.log('result:', result)
   return result.rows[0];
 }
 
 export async function findUserByEmail(email) {
+  console.log('findUserByEmail()')
   if (!email || typeof email !== "string" || email.trim() === "") {
     throw new AppError(AuthErrors.REGISTER.INVALID_INPUT, "Email must be a valid string");
   }
 
   const normalizedEmail = email.trim().toLowerCase();
+  console.log('normalize emaiL', normalizedEmail)
 
   const query = `
     SELECT * FROM users
@@ -43,6 +49,8 @@ export async function findUserByEmail(email) {
   `;
 
   const result = await pool.query(query, [normalizedEmail]);
+  console.log('result',result.rows)
+
 
   if (result.rowCount === 0) return null;
 
@@ -125,6 +133,20 @@ export async function deleteUser(id) {
   return result.rows[0];
 }
 
-export function listUsers() {
-  return mockUsers.slice();
+
+export async function deleteUserByEmail(email) {
+  console.log('deleteUserByEmail')
+
+  const query = `DELETE FROM users WHERE email = $1`;
+  const result = await pool.query(query, [email]);
+
+  console.log('result.rows', result.rows)
+
+  return result.rowCount > 0;
+}
+
+export async function listAllUsers() {
+  const query = `SELECT id, email, created_at FROM users ORDER BY created_at DESC`;
+  const result = await pool.query(query);
+  return result.rows;
 }
