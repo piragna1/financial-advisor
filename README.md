@@ -91,3 +91,57 @@ Schedule - Payment -> (1:N) A schedule may consists of 1 or more payments.
 #### Payment - x
 Payment - Schedule -> (1:1) A payment belongs to a specific loan schedule.
 ##  
+### Setup
+
+#### Local Setup
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/financial-advisor1.2.git
+cd financial-advisor1.2
+```
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Execute the server locally
+```bash
+npm start
+```
+
+#### Docker Setup
+```bash
+docker compose up --build
+```
+This will start:
+
+🐘 PostgreSQL on port 5432
+
+⚙️ Backend on http://localhost:3000
+
+Confirm it's working: Check the logs for:
+```bash
+Server running on port 3000
+Database system is ready to accept connections
+```
+
+#### Environment Variables
+Create a .env file in the root of the project with the following content:
+```bash
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=yourpassword
+DB_NAME=prestamos_db
+```
+These variables are used in src/config/db.config.js or its equivalent.
+
+#### Troubleshooting
+nodemon: not found → Run npm install --save-dev nodemon
+
+Cannot find module → Check import paths and file names
+
+Docker not connecting to the database → Make sure depends_on is set in docker-compose.yml
+
+####
