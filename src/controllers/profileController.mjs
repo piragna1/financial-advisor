@@ -3,6 +3,9 @@ import { AppError } from "../errors/AppError.js";
 import { AuthErrors } from "../errors/authErrors.js";
 import { findUserById, saveUser } from "../repositories/userRepository.js";
 import {updateProfileFields } from '../actors/profile/updateProfileFields.js'
+import { createProfile } from "../repositories/profileRepository.js";
+import { v4 } from "uuid";
+
 
 export async function getProfile(req, res,next) {
   try{  
@@ -15,6 +18,51 @@ export async function getProfile(req, res,next) {
   }
 
 };
+
+//----
+export async function createProfileController(req, res) {
+console.log("Incoming body:", req.body);
+
+
+
+  try {
+    const {
+      userId,
+      firstName,
+      lastName,
+      birthDate,
+      location,
+      language,
+      avatarUrl,
+      bio,
+    } = req.body;
+
+    const profile = {
+      id: v4(),
+      userId,
+      firstName,
+      lastName,
+      birthDate,
+      location,
+      language,
+      avatarUrl,
+      bio,
+    };
+
+    console.log('profile being sent from controller to repository:', profile)
+    const result = await createProfile(profile);
+    console.log('here in the controller we have this result', result)
+
+    res.status(201).json({ message: "Profile created", profile: result });
+  } catch (error) {
+    res.status(error.status || 500).json({
+      code: error.code || "UNHANDLED_ERROR",
+      message: error.message || "Unexpected error",
+    });
+  }
+}
+
+//----
 
 // controllers/profileController.mjs
 export async function updateProfileController(req, res, next) { 
@@ -30,43 +78,3 @@ export async function updateProfileController(req, res, next) {
 
   
 }
-
-
-/* 
-const testInputs = [
-  { userId: 'unicode-id' },
-  { userId: 'nonexistent-id' },
-  { userId: '' },
-  { userId: 'u1' },
-  { userId: null },
-  { userId: undefined },
-  { userId: 123 },
-];
-
-for (const user of testInputs) {
-  const req=user;// {uesrId:'value'} format
-  const res = {
-    code: undefined,
-    response: undefined,
-    status(code) {
-      this.code = code;
-      return this;
-    },
-    json(payload) {
-      this.response = payload;
-    },
-  };
-
-  const next = (err) => {
-    res.code = 500;
-    res.response = { error: err.message || 'Unknown error' };
-  };
-
-  await getProfile(req, res, next);
-
-  console.log('Input:', req);
-  console.log('Status:', res.code);
-  console.log('Response:', res.response);
-  console.log('---');
-}
- */
