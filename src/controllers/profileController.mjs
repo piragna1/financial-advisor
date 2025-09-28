@@ -5,7 +5,9 @@ import { findUserById, saveUser } from "../repositories/userRepository.js";
 import {updateProfileFields } from '../actors/profile/updateProfileFields.js'
 import { createProfile } from "../repositories/profileRepository.js";
 import { v4 } from "uuid";
+import { getProfileByEmail } from "../repositories/profileRepository.js";
 
+import { deleteProfile } from "../repositories/profileRepository.js";
 
 export async function getProfile(req, res,next) {
   try{  
@@ -49,6 +51,9 @@ console.log("Incoming body:", req.body);
       bio,
     };
 
+console.log('userId hex:', Buffer.from(userId).toString('hex'));
+
+
     console.log('profile being sent from controller to repository:', profile)
     const result = await createProfile(profile);
     console.log('here in the controller we have this result', result)
@@ -64,6 +69,34 @@ console.log("Incoming body:", req.body);
 
 //----
 
+
+export async function getProfileByEmailController(req, res, next) {
+  try {
+    const { email } = req.params;
+
+    if (!email || typeof email !== "string" || email.trim() === "") {
+      throw new AppError(AuthErrors.INVALID_EMAIL, "Missing or invalid email");
+    }
+
+    const profile = await getProfileByEmail(email);
+
+    res.status(200).json({ profile });
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 // controllers/profileController.mjs
 export async function updateProfileController(req, res, next) { 
   try {
@@ -77,4 +110,20 @@ export async function updateProfileController(req, res, next) {
   }
 
   
+}
+
+
+
+
+
+export async function deleteProfileController(req, res, next) {
+  try {
+    const { id } = req.body;
+
+    const deleted = await deleteProfile(id);
+
+    res.status(200).json({ message: "Profile deleted", deleted });
+  } catch (error) {
+    next(error);
+  }
 }

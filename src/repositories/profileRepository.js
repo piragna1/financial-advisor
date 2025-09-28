@@ -5,6 +5,13 @@ import { v4 } from "uuid";
 
 export async function createProfile(profile) {
 
+
+const res = await pool.query("SELECT current_database()"); 
+console.log("Connected to DB:", res.rows[0].current_database);
+
+
+
+
   console.log('createProfile()')
   console.log('incoming profile:', profile)
 
@@ -67,6 +74,17 @@ export async function createProfile(profile) {
     );
   }
 
+
+
+  await pool.query('DISCARD ALL');
+
+
+const check = await pool.query('SELECT 1 FROM users WHERE id = $1', [userId]);
+console.log('User exists in DB:', check.rowCount > 0);
+
+
+
+
   const query = `
     INSERT INTO profiles (
       id,user_id, first_name, last_name, birth_date, location, language, avatar_url, bio, created_at, updated_at
@@ -89,6 +107,11 @@ export async function createProfile(profile) {
 
   console.log('values', values)
 
+  console.log('values[0]',values[0])
+  console.log('values[1]',values[1])
+  console.log(typeof values[0] === 'string')
+  console.log(typeof values[1] === 'string')
+  
   const result = await pool.query(query, values);
 
   console.log('result!', result.rows)
@@ -135,6 +158,37 @@ export async function getProfileById(id) {
 
   return result.rows[0];
 }
+
+
+
+export async function getProfileByEmail(email) {
+  if (!email || typeof email !== "string" || email.trim() === "") {
+    throw new AppError(ProfileErrors.READ.INVALID_EMAIL, "Missing or invalid email");
+  }
+
+  const query = `
+    SELECT p.*
+    FROM profiles p
+    JOIN users u ON p.user_id = u.id
+    WHERE u.email = $1;
+  `;
+
+  const values = [email.trim().toLowerCase()];
+
+  try {
+    const result = await pool.query(query, values);
+
+    if (result.rowCount === 0) {
+      throw new AppError(ProfileErrors.READ.NOT_FOUND, "No profile found for this email");
+    }
+
+    return result.rows[0];
+  } catch (err) {
+    console.error("getProfileByEmail error:", err);
+    throw new AppError(ProfileErrors.READ.DB_ERROR, err.message);
+  }
+}
+
 
 
 export async function updateProfile(profile) {

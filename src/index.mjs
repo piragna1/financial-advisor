@@ -5,9 +5,10 @@ import userRoutes from './routes/user/userRoutes.js'
 
 import profileRoutes from "./routes/profile/profile.route.js";
 
-import errorHandler from "./middlewares/errorHandler.js";
 import financialProfileRoutes from './routes/financialProfile/financialProfile.route.js'
+import loanRoutes from "./routes/loan/loanRoutes.js";
 
+import errorHandler from "./middlewares/errorHandler.js";
 const PORT = 3000;
 
 const app = express();
@@ -23,12 +24,15 @@ app.use("/profiles", profileRoutes);
 app.use('/financial-profiles', financialProfileRoutes);
 
 
+app.use("/loans", loanRoutes);
+
+
+
 
 app.use((req, res, next) => {
   console.log("Unhandled route:", req.method, req.url);
   next();
 });
-
 
 
 

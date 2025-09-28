@@ -1,6 +1,6 @@
 import express from 'express';
 import { authMiddleware } from '../../middlewares/authMiddleware.js';
-import { getProfile, updateProfileController, createProfileController } from '../../controllers/profileController.mjs';
+import { getProfile, updateProfileController, createProfileController, getProfileByEmailController, deleteProfileController } from '../../controllers/profileController.mjs';
 
 const router = express.Router();
 
@@ -10,13 +10,22 @@ router.post("/", (req, res, next) => {
   next();
 }, createProfileController);
 
-
-
-
-router.post("/", createProfileController);
-
 router.get(`/`, authMiddleware, getProfile);
 
+
+router.get("/email/:email", (req, res, next) => {
+  console.log("GET /profiles/email/:email hit with:", req.params.email);
+  next();
+}, getProfileByEmailController);
+
+
 router.patch('/', authMiddleware, updateProfileController) //test
+
+
+
+router.delete("/", deleteProfileController);
+
+
+
 
 export default router;

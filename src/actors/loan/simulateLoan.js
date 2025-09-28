@@ -1,4 +1,4 @@
-import {fixedPaymentCalculation,generateAmortizationSchedule,calculateRepaymentCapacity} from '../../../services/loan/loanCalculator.js'
+import {fixedPaymentCalculation,generateAmortizationSchedule,calculateRepaymentCapacity} from '../../services/loan/loanCalculator.js'
 
 //simulateLoan.js
 export function simulateLoan(input, financialProfile){
