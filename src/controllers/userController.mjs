@@ -1,4 +1,4 @@
-import { deleteUserByEmail } from "../repositories/userRepository.js";
+import { deleteUserByEmail, listAllUsers } from "../repositories/userRepository.js";
 import { AppError } from "../errors/AppError.js";
 import { AuthErrors } from "../errors/authErrors.js";
 
@@ -18,6 +18,20 @@ export async function deleteUserController(req, res) {
 
     if (!success) throw new AppError(AuthErrors.USER_NOT_FOUND);
     res.status(200).json({ message: "User deleted", email });
+  } catch (error) {
+    res.status(error.status || 500).json({
+      code: error.code || "UNHANDLED_ERROR",
+      message: error.message || "Unexpected error",
+    });
+  }
+}
+
+
+
+export async function listUsersController(req, res) {
+  try {
+    const users = await listAllUsers();
+    res.status(200).json({ users });
   } catch (error) {
     res.status(error.status || 500).json({
       code: error.code || "UNHANDLED_ERROR",
