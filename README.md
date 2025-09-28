@@ -144,4 +144,29 @@ Cannot find module → Check import paths and file names
 
 Docker not connecting to the database → Make sure depends_on is set in docker-compose.yml
 
-####
+#### Database Initialization
+### Database Initialization
+
+To initialize the database schema from scratch:
+
+1. Make sure PostgreSQL is running and accessible
+
+2. Create a `.env` file in the root of the project with the following variables:
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=yourpassword
+DB_NAME=prestamos_db
+```
+3. Run the setup script :
+```bash
+node database/setupDatabase.js
+```
+This will:
+
+Connect to the default postgres database
+
+Create prestamos_db if it doesn't exist
+
+Execute schema.sql to create all tables, relationships, and constraints
