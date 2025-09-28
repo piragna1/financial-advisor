@@ -21,28 +21,27 @@ export async function registerUserController(req, res) {
   try {
     let newUser = {};
 
-    // console.log('ho I am', req.body);//debug
 
-    const { name, lastName, email, password } = req.body;
+    const { email, password } = req.body;
 
 
-    if (!validateRegistrationInput({ name, lastName, email, password }))
+    if (!validateRegistrationInput({ email, password }))
       throw new AppError(REGISTRATION_ERRORS.INVALID_INPUT);
 
 
-  // console.log('do ',req.body['name'],'exists?',await findUserByEmail(email));//debug
+    if (await retrieveUserByEmail(email)) throw new AppError(AuthErrors.REGISTER.USER_EXISTS);
 
-    if (await retrieveUserByEmail(email)) throw new AppError(AuthErrors.USER_EXISTS);
 
-    const hashedPassword = hashPassword(password);
+    const hashedPassword = hashPassword(password, passwordSecret);
 
     const normalizedEmail = normalizeEmail(email);
 
     const id = generateUserId();
 
-    newUser = buildUserEntity({ id, name, lastName, normalizeEmail, hashedPassword });
+    newUser = buildUserEntity({ id, email:normalizedEmail, hashedPassword });
 
     const success = await registerUser(newUser);
+
 
     if (!success) throw new AppError(REGISTRATION_ERRORS.CREATION_FAILED);
 
@@ -54,7 +53,6 @@ export async function registerUserController(req, res) {
       },
     });
   } catch (error) {
-    // console.log('i am logging the error here for debug purposes', error)
     res.status(400).json({ 
       // err:error,
       code:error.code,
@@ -78,14 +76,18 @@ export async function loginUserController(req, res, next) {
     let user = await retrieveUserByEmail(email);//checked
     if (!user) throw new AppError(AuthErrors.USER_NOT_FOUND);
 
+    console.log('hi i AM USING THIS SECRET', passwordSecret)
+
     //password hashing comparing
     const validPass = comparePassword(//checked
       user.passwordHash,
       password,
       passwordSecret.PASSWORD_SECRET
     );
-    if (!validPass) throw new AppError(AuthErrors.INVALID_CREDENTIALS);
 
+    console.log('validpass?', validPass)
+
+    if (!validPass) throw new AppError(AuthErrors.LOGIN.INVALID_CREDENTIALS);
     //issue token
     const token = issueToken(user);//checked
     if (!token) throw new TokenGenerationError(TokenErrors.TOKEN_GEN_ERROR);
@@ -97,119 +99,3 @@ export async function loginUserController(req, res, next) {
     res.status(status).json({ code, message, status });
   }
 }
-
-// async function test() {
-//   const testInputs = [
-//     {
-//       name: "Gonzalo",
-//       lastName: "Varela",
-//       email: "gonzalo@example.com",
-//       password: "gvalagnA$4",
-//     },
-//     {
-//       name: "Ana",
-//       lastName: "Lopez",
-//       email: "ana@example.com",
-//       password: "Ana123!",
-//     },
-//     {
-//       name: "",
-//       lastName: "NoName",
-//       email: "noname@example.com",
-//       password: "pass123",
-//     },
-//     { name: "Luis", lastName: "Martinez", email: "", password: "pass123" },
-//     {
-//       name: "Sara",
-//       lastName: "Smith",
-//       email: "sara@example.com",
-//       password: "",
-//     },
-//     {
-//       name: "Gonzalo",
-//       lastName: "Varela",
-//       email: "gvalagna@gmail.com",
-//       password: "gvalagnA$4",
-//     }, // duplicate
-//     { name: "李", lastName: "王", email: "li@example.cn", password: "密码123" },
-//     {
-//       name: "Omar",
-//       lastName: "",
-//       email: "omar@example.com",
-//       password: "omarpass",
-//     },
-//     {
-//       name: "Test",
-//       lastName: "User",
-//       email: "test@example.com",
-//       password: null,
-//     },
-//     {
-//       name: null,
-//       lastName: "Null",
-//       email: "null@example.com",
-//       password: "nullpass",
-//     },
-//   ];
-
-//   for (const body of testInputs) {
-//     const res = {
-//       code: undefined,
-//       status(code) {
-//         this.code = code;
-//         return this;
-//       },
-//       json(payload) {
-//         this.response = payload;
-//       },
-//     };
-
-//     const req = { body };
-
-//     await registerUserController(req, res);
-//     console.log("input", req);
-//     console.log("response", res["response"]);
-//   }
-// }
-
-// await test();
-
-
-// (async function testLoginController(){
-  /* body type:
-  {
-    "email": "gvalagna@gmail.com",
-    "password": "gvalagnA$4"
-  }
-  */
-//  const testInputs = [
-//   //Valid login
-//   {email:'gonzalo@example.com', password:'SuperSecure123!'},
-//   // {email:'gonzalo@example.com', password:'WronPass!123'},
-//   // {email:'nonexistinguser@example.com',password:'notimportantpasswordkeymasteresecrets'},
-//   // {email:'',password:'password'},
-//   // {email:'emmail@example.com',password:''},
-//   // {email:'jemai@gmail.com',password:null},
-//   // {email:'gonzalo@example.com', password:'SuperSecure123'},
-//   // {email:'gonzalo@examplee.com', password:'SuperSecure123!'},
-//   // {email:null,password:'pass'},
-//  ];
-//  for (const body of testInputs) {
-//   const req = {body};
-//   const res = {
-//     code:undefined,
-//     response:undefined,
-//     status(code){
-//       this.code=code;
-//       return this;
-//     },
-//     json(paylaod){
-//       this.response=paylaod;
-//     }
-//   }
-//   await loginUserController(req,res);
-//   console.log('input',body);
-//   console.log('status', res.code);
-//   console.log('response',res.response);
-//  }
-// })();
