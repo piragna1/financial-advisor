@@ -203,8 +203,8 @@ Response:
 POST /auth/login
 Authenticates a user and returns a JWT token.
 
-```json
 Request:
+```json
 
 {
   "email": "gvalagna@gmail.com",
@@ -298,8 +298,8 @@ Response:
 💰 Financial Profile
 POST /financial-profiles
 Creates a financial profile for a user
-```json
 Request:
+```json
 
 {
   "userId": "user-uuid",
