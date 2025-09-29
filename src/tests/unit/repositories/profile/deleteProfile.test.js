@@ -94,7 +94,9 @@ describe("deleteProfile(id)", () => {
     };
 
     await createMockUser(userA);
+    console.log('user A', userA)
     await createMockUser(userB);
+    console.log('user B', userB)
     await createProfile(profileA);
     await createProfile(profileB);
 
@@ -104,4 +106,6 @@ describe("deleteProfile(id)", () => {
     expect(remaining.rowCount).toBe(1);
     expect(remaining.rows[0].bio).toBe("Bio B");
   });
+
+
 });

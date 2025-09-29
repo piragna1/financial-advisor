@@ -18,7 +18,6 @@ describe("updateProfile(profile)", () => {
   });
 
   it("should update all editable fields", async () => {
-    const userId = uuidv4();
     const profile = {
       id: uuidv4(),
       userId,
@@ -26,7 +25,8 @@ describe("updateProfile(profile)", () => {
       lastName: "Name",
       bio: "Original bio",
     };
-
+    
+    const userId = uuidv4();
     await createMockUser(userId);
     await createProfile(profile);
 
@@ -63,12 +63,14 @@ expect(new Date(result.birth_date).toISOString().slice(0, 10)).toBe("1995-05-05"
     const profile = {
       id: uuidv4(),
       userId,
-      firstName: "Trim",
-      lastName: "Test",
-      bio: "Trim test",
+      firstName: "Trim ",
+      lastName: "Test ",
+      bio: "  T rim test ",
     };
 
+    console.log('the error is being thrown with createMockUser maybe?')
     await createMockUser(userId);
+    console.log('not confirmed!')
     await createProfile(profile);
 
     const updated = {
@@ -101,7 +103,6 @@ expect(new Date(result.birth_date).toISOString().slice(0, 10)).toBe("1995-05-05"
       id: profile.id,
       firstName: "Minimal",
       lastName: "User",
-      bio: "Still minimal",
     };
 
     const result = await updateProfile(updated);
@@ -109,6 +110,7 @@ expect(new Date(result.birth_date).toISOString().slice(0, 10)).toBe("1995-05-05"
     expect(result.birth_date).toBeNull();
     expect(result.location).toBeNull();
     expect(result.avatar_url).toBeNull();
+    expect(result.bio).toBeNull();
   });
 
   it("should throw INVALID_INPUT if profile is null", async () => {

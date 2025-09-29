@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../db/pool.js";
-import { saveUser } from "../../../repositories/userRepository.js";
+import { pool } from "../../../../db/pool.js";
+import { saveUser } from "../../../../repositories/userRepository.js";
 
 describe("saveUser(user)", () => {
   const baseUser = {
