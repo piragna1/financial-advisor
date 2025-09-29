@@ -1,11 +1,7 @@
 export default {
   testEnvironment: 'node',
-  transform:{},
-  setupFilesAfterEnv: ["<rootDir>/testSetup.js"],
+  transform: {},
+  setupFilesAfterEnv: ['<rootDir>/testSetup.js'],
+  globalSetup: './src/tests/globalSetup.js',
+  globalTeardown: './src/tests/globalTeardown.js'
 };
-
-
-module.exports={
-  globalSetup:'./test/globalSetup.js',
-  globalTearDown:'./test/globalTearDown.js'
-}
