@@ -11,7 +11,7 @@ This is a personal project for Solvd. company's LABA program for NodeJS backend 
 | [Setup](#setup)        |                                                                                                                                                       |
 | [Authentication](#authentication) | 
 | [Relationships](#relationships) | 
-| [Endpoints API Documentation](./documentation/ENDPOINTS-README.md#endpoints-api-documentation) | 
+| [Endpoints](#endpoints) | 
 ## 
 ### Overview
 The main idea is to help me (and maybe others) learn the basics of managing personal finances with some simple tools and calculators. Since I’m still learning, the features are pretty basic, and I’m figuring things out as I go. The application lets users try out different financial strategies and see how their decisions might affect their money over time. It’s a work in progress, and I hope to improve it as I learn more!
@@ -26,16 +26,16 @@ This loan simulation system that handles JWT authentication, works connected to 
 This system uses JWT authentication process with tokens.
 #### Sign up
 Send POST request to http://localhost:3000/auth/register  with the corresponded information in order to successfully sign up to the system. See the following example:
-
+```code
 {
     "name":"Gonzalo",
     "lastName":"Varela Alagna",
     "email":"gvalagna@gmail.com",
     "password":"gvalagnA$4"
 }
-
+```
 ##### Example of response: 
-
+```code
 {
       message: "User registered",
       user: {
@@ -43,24 +43,25 @@ Send POST request to http://localhost:3000/auth/register  with the corresponded 
         email: "gvalagna@example.con",
       },
     }
-
+```
     
 #### Sign in
 Send POST request to http://localhost:3000/auth/login  with the corresponded information in order to successfully sign in to the system. See the following example:
-
+```code
 {
   "email": "gvalagna@gmail.com",
   "password": "gvalagnA$4"
 }
-
+```
 
 ##### Example of response:
-
-
+```code
 { user, token } (upd)
+```
 ##
 ### Relationships
 #### User - x
+
 User - Profile -> (1:1) An user has a profile while the profile belongs to that user.
 
 User - FinancialProfile -> (1:1) An user has a financial profile while that financial profile belongs to the user.
@@ -122,11 +123,11 @@ DB_NAME=prestamos_db
 These variables are used in src/config/db.config.js or its equivalent.
 
 #### Troubleshooting
-nodemon: not found → Run npm install --save-dev nodemon
-
-Cannot find module → Check import paths and file names
-
-Docker not connecting to the database → Make sure depends_on is set in docker-compose.yml
+```code
+- nodemon: not found → Run npm install --save-dev nodemon
+- Cannot find module → Check import paths and file names
+- Docker not connecting to the database → Make sure depends_on is set in docker-compose.yml
+```
 
 ### Database Initialization
 
@@ -177,14 +178,18 @@ POST /auth/register
 Registers a new user.
 
 Request:
+```json
 {
   "name": "Gonzalo",
   "lastName": "Varela Alagna",
   "email": "gvalagna@gmail.com",
   "password": "gvalagnA$4"
 }
+```
 
 Response:
+
+```json
 {
   "message": "User registered",
   "user": {
@@ -192,21 +197,24 @@ Response:
     "email": "gvalagna@example.com"
   }
 }
+```
 
 
 POST /auth/login
 Authenticates a user and returns a JWT token.
 
 Request:
+```json
 
 {
   "email": "gvalagna@gmail.com",
   "password": "gvalagnA$4"
 }
-
+```
 
 Response:
 
+```json
 {
   "user": {
     "id": "u1",
@@ -214,7 +222,25 @@ Response:
   },
   "token": "..."
 }
+```
 
+🔐 PUT /users — Update Authenticated User
+Description: Allows an authenticated user to update their own email and/or password. Password is automatically hashed before storage. 
+Email must be unique — duplicates are rejected.
+
+Authentication: ✅ Requires valid token in Authorization header ✅ Enforces ownership: users can only update their own account
+```code
+Authorization: Bearer <token (obtained when logging in)>
+Content-Type: application/json
+```
+
+Request body:
+```json
+{
+  "email": "newemail@example.com",       // optional
+  "password": "newSecurePassword123!"    // optional
+}
+```
 
 
 👤 Profile
@@ -222,72 +248,72 @@ POST /profiles
 Creates a profile for a user.
 
 Request:
-
+```json
 {
   "userId": "user-uuid",
   "firstName": "Gonzalo",
   "lastName": "Varela",
   "birthDate": "1990-01-01"
 }
-
+```
 Response:
-
+```json
 {
   "message": "Profile created",
   "profile": { ... }
 }
-
+```
 
 GET /profiles/email/:email
 Retrieves a profile by email.
 
 Response:
-
+```json
 {
   "profile": { ... }
 }
-
+```
 
 
 DELETE /profiles
 Deletes a profile by ID.
 
 Request:
-
+```json
 {
   "id": "profile-uuid"
 }
-
+```
 
 
 Response:
-
+```json
 {
   "message": "Profile deleted",
   "deleted": { ... }
 }
-
+```
 
 
 💰 Financial Profile
 POST /financial-profiles
 Creates a financial profile for a user
-
 Request:
+```json
 
 {
   "userId": "user-uuid",
   "salary": 85000
 }
-
+```
 
 Response:
-
+```json
 {
   "message": "Financial profile created",
   "profile": { ... }
 }
-
+```
 
 
 💸 Loans
@@ -295,7 +321,7 @@ POST /loans
 Creates a loan tied to a financial profile.
 
 Request:
-
+```json
 {
   "financialProfileId": "fp-uuid",
   "startDate": "2025-10-01",
@@ -309,31 +335,31 @@ Request:
   "loanType": "personal",
   "currency": "USD"
 }
-
+```
 
 Response:
-
+```json
 {
   "message": "Loan saved",
   "loan": { ... }
 }
-
+```
 
 DELETE /loans
 Deletes a loan by ID.
 
 Request:
-
+```json
 {
   "id": "loan-uuid"
 }
-
+```
 Response:
-
+```json
 {
   "message": "Loan deleted",
   "deleted": { ... }
 }
-
+```
 
 
