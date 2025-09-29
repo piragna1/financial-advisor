@@ -16,7 +16,6 @@ describe("updateLoan()", () => {
   afterAll(async () => {
     await pool.query("DELETE FROM loans;");
     await pool.query("DELETE FROM financial_profiles;");
-    await pool.end();
   });
 
   it("should update loan field and return updated loan", async () => {

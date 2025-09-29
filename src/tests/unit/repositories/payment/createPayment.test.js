@@ -77,7 +77,6 @@ describe("createPayment(payment)", () => {
     await pool.query("DELETE FROM schedules;");
     await pool.query("DELETE FROM loans;");
     await pool.query("DELETE FROM financial_profiles;");
-    await pool.end();
   });
 
   it("should create a payment with valid data", async () => {

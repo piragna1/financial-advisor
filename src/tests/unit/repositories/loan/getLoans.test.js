@@ -45,7 +45,6 @@ describe("getLoans() – cobertura total", () => {
   afterAll(async () => {
     await pool.query("DELETE FROM loans;");
     await pool.query("DELETE FROM financial_profiles;");
-    await pool.end();
   });
 
   it("should return all loans ordered by savedAt descending", async () => {

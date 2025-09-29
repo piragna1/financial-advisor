@@ -12,7 +12,6 @@ describe("checkEmailAvailability(email)", () => {
 
   afterAll(async () => {
     await pool.query("DELETE FROM users;");
-    await pool.end();
   });
 
   it("should return true if email is available", async () => {

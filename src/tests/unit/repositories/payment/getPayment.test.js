@@ -46,7 +46,6 @@ describe("getPayment(id) – full suite", () => {
     await pool.query("DELETE FROM schedules;");
     await pool.query("DELETE FROM loans;");
     await pool.query("DELETE FROM financial_profiles;");
-    await pool.end();
   });
 
   const createValidPayment = async (overrides = {}) => {

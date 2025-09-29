@@ -15,7 +15,6 @@ describe("getProfileByUserId(userId)", () => {
   afterAll(async () => {
     await pool.query("DELETE FROM profiles;");
     await pool.query("DELETE FROM users;");
-    await pool.end();
   });
 
   it("should return the profile for a valid userId", async () => {

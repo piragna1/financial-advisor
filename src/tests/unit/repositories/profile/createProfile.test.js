@@ -12,7 +12,6 @@ describe("createProfile(profile)", () => {
   afterAll(async () => {
     await pool.query("DELETE FROM profiles;");
     await pool.query("DELETE FROM users;");
-    await pool.end();
   });
 
   it("should create and return a valid profile", async () => {

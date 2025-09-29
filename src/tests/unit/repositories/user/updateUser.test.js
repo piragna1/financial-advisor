@@ -17,7 +17,6 @@ describe("updateUser(id, updates)", () => {
 
   afterAll(async () => {
     await pool.query("DELETE FROM users;");
-    await pool.end();
   });
 
   it("should update email and return updated user", async () => {

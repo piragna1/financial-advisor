@@ -15,7 +15,6 @@ describe("updateProfile(profile)", () => {
   afterAll(async () => {
     await pool.query("DELETE FROM profiles;");
     await pool.query("DELETE FROM users;");
-    await pool.end();
   });
 
   it("should update all editable fields", async () => {

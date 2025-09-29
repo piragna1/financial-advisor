@@ -17,7 +17,6 @@ describe("createFinancialProfile(profile)", () => {
 
   afterAll(async () => {
     await pool.query("DELETE FROM financial_profiles;");
-    await pool.end();
   });
 
   it("should create and return a valid financial profile", async () => {

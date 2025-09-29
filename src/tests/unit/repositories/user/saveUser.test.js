@@ -17,7 +17,6 @@ describe("saveUser(user)", () => {
 
   afterAll(async () => {
     await pool.query("DELETE FROM users;");
-    await pool.end();
   });
 
   it("should save a valid user and return it", async () => {

@@ -18,7 +18,6 @@ describe("findUserByEmail(email)", () => {
 
   afterAll(async () => {
     await pool.query("DELETE FROM users;");
-    await pool.end();
   });
 
   it("should return the user if email exists", async () => {
