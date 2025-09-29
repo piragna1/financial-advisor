@@ -1,7 +1,7 @@
 // src/repositories/scheduleRepository.js
 
 import { pool } from "../db/pool.js";
-import { AppError } from "../errors/AppError.js";
+import { AppError } from "../errors/appError.js";
 import { ScheduleErrors } from "../errors/scheduleErrors.js";
 import { isValidUUID } from "../tests/helpers/testHelpers.js";
 
