@@ -273,10 +273,55 @@ Response:
   "profile": { ... }
 }
 ```
+🔐 PUT /profiles — Update Authenticated User's Profile
+Description: Allows an authenticated user to update their own profile. All fields are optional and sanitized before storage.
 
+Authentication: ✅ Requires valid token ✅ Enforces ownership via req.userId
+
+Headers:
 
 DELETE /profiles
 Deletes a profile by ID.
+```code
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+Request body:
+```json
+{
+  "firstName": "Gonzalo",
+  "lastName": "Varela",
+  "birthDate": "1990-05-12",
+  "location": "Mar del Plata",
+  "language": "es",
+  "avatarUrl": "https://example.com/avatar.jpg",
+  "bio": "Backend architect and validation freak"
+}
+```
+Response:
+```json
+{
+  "message": "Profile updated",
+  "updated": {
+    "user_id": "e44596fa-c4a5-460b-8ce6-97d9f516610b",
+    "first_name": "Gonzalo",
+    "last_name": "Varela",
+    ...
+  }
+}
+
+```
+Errors:
+```code
+
+401 UNAUTHORIZED — missing or invalid token
+
+403 FORBIDDEN — trying to update another user’s profile
+
+404 NOT FOUND — profile not found
+
+400 BAD REQUEST — invalid input structure
+```
 
 Request:
 ```json
