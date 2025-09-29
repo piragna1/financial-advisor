@@ -1,6 +1,31 @@
-import { deleteUserByEmail, listAllUsers } from "../repositories/userRepository.js";
+import { deleteUserByEmail, listAllUsers, updateUser } from "../repositories/userRepository.js";
 import { AppError } from "../errors/AppError.js";
 import { AuthErrors } from "../errors/authErrors.js";
+import { hashPassword } from "../utils/auth/hashPassword.js";
+import { passwordSecret } from "../config/passwordSecretConfig.js";
+
+
+export async function updateUserController(req,res,next) {
+
+  
+  
+  try {
+    const {id, email, password} = req.body;
+    
+    if (req.userId !== id) {
+      throw new AppError(AuthErrors.LOGIN.UNAUTHORIZED, "You can only update your own account");
+    }
+    const updates = {};
+    if (email) updates.email = email;
+    if (password) updates.password = hashPassword(password, passwordSecret.PASSWORD_SECRET);
+
+    const updated = await updateUser(id, updates);
+    res.status(200).json({id, updates});
+  } catch (error) {
+    next(error)
+  }
+}
+
 
 export async function deleteUserController(req, res) {
   try {
