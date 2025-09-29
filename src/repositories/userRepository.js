@@ -93,6 +93,8 @@ export async function updateUser(id, updates) {
       "Updates must be a valid object"
     );
   }
+console.log("🧠 Updates received:", updates);
+
 
   const allowedFields = ["email", "passwordHash"];
 

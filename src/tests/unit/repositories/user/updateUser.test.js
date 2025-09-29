@@ -27,7 +27,16 @@ describe("updateUser(id, updates)", () => {
   });
 
   it("should update passwordHash and return updated user", async () => {
-    const result = await updateUser(baseUser.id, { password_hash: "new-hash" });
+
+
+    console.log("🔧 Running passwordHash update test");
+
+
+    console.log("Sending:", { passwordHash: "combo-hash" });
+
+    const result = await updateUser(baseUser.id, { passwordHash: "new-hash" });
+
+
     expect(result.passwordHash).toBe("new-hash");
   });
 
