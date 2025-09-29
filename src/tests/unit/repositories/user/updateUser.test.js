@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
+import { pool } from "../../../../db/pool.mjs";
 import { saveUser, updateUser } from "../../../../repositories/userRepository.js";
+import {createMockUser} from '../../../../actors/users/createMockUser.js'
 
 describe("updateUser(id, updates)", () => {
   const baseUser = {
@@ -30,14 +31,24 @@ describe("updateUser(id, updates)", () => {
     expect(result.passwordHash).toBe("new-hash");
   });
 
+
+
   it("should update both email and passwordHash", async () => {
+
+    const userId = uuidv4();
+
+    await createMockUser(userId);
+
     const result = await updateUser(baseUser.id, {
       email: "combo@example.com",
-      hashedPassword: "combo-hash"
+      passwordHash: "combo-hash"
     });
     expect(result.email).toBe("combo@example.com");
     expect(result.passwordHash).toBe("combo-hash");
   });
+
+
+
 
   it("should throw USER_NOT_FOUND if ID does not exist", async () => {
     const fakeId = uuidv4();
@@ -77,7 +88,10 @@ describe("updateUser(id, updates)", () => {
   });
 
   it("should trim ID before updating", async () => {
-    const result = await updateUser(`  ${baseUser.id}  `, { email: "trimmed@example.com" });
-    expect(result.email).toBe("trimmed@example.com");
+
+    const baseUser = await createMockUser(uuidv4());
+    const email = `trimmed-${baseUser.id}@example.com`
+    const result = await updateUser(`  ${baseUser.id}  `, { email: email });
+    expect(result.email).toBe(email);
   });
 });
