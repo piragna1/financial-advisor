@@ -15,6 +15,8 @@ export async function createSchedule(schedule) {
     );
   }
 
+  schedule.id = schedule.id.trim();
+
   const {
     id,
     loanId,
