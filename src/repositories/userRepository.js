@@ -3,7 +3,7 @@ import { mockUsers } from "../config/mock.users.db.config.js";
 import { AppError } from "../errors/AppError.js";
 import { AuthErrors } from "../errors/authErrors.js";
 
-import { pool } from "../db/pool.js";
+import { pool } from "../db/pool.mjs";
 
 export async function saveUser(user) {
   console.log("user received on saveUser", user);
@@ -33,7 +33,6 @@ export async function saveUser(user) {
 }
 
 export async function findUserByEmail(email) {
-  console.log("findUserByEmail()");
   if (!email || typeof email !== "string" || email.trim() === "") {
     throw new AppError(
       AuthErrors.REGISTER.INVALID_INPUT,
@@ -42,8 +41,6 @@ export async function findUserByEmail(email) {
   }
 
   const normalizedEmail = email.trim().toLowerCase();
-  console.log("normalize emaiL", normalizedEmail);
-
   const query = `
     SELECT * FROM users
     WHERE LOWER(email) = $1
@@ -51,7 +48,6 @@ export async function findUserByEmail(email) {
   `;
 
   const result = await pool.query(query, [normalizedEmail]);
-  console.log("result", result.rows);
 
   if (result.rowCount === 0) return null;
 
@@ -82,17 +78,14 @@ export async function findUserById(id) {
 }
 
 export async function updateUser(id, updates) {
-
-  console.log('id received:',id)
-    id = id.trim();
-  console.log('id trimmed:',id)
-
   if (!id || typeof id !== "string" || id.trim() === "") {
     throw new AppError(
       AuthErrors.LOGIN.USER_NOT_FOUND,
       "User ID must be a valid string"
     );
   }
+
+    id = id.trim();
 
   if (!updates || typeof updates !== "object" || Array.isArray(updates)) {
     throw new AppError(
@@ -107,15 +100,13 @@ export async function updateUser(id, updates) {
   ([key, value]) => allowedFields.includes(key) && value !== undefined
 );
 
-
-
-
   if (fields.length === 0) {
     throw new AppError(
       AuthErrors.REGISTER.INVALID_INPUT,
       "No valid fields to update"
     );
   }
+  console.log("Final fields:", fields);
 
   const setClause = fields
     .map(
@@ -125,8 +116,6 @@ export async function updateUser(id, updates) {
     .join(", ");
   const values = [id.trim(), ...fields.map(([, value]) => value)];
 
-  console.log('values:' ,values);
-
   const query = `
     UPDATE users
     SET ${setClause}, updated_at = NOW()
@@ -135,7 +124,9 @@ export async function updateUser(id, updates) {
   `;
 
   try {
+
     const existing = await findUserByEmail(updates.email);
+
     if (existing && existing.id !== id) {
       throw new AppError(
         AuthErrors.REGISTER.EMAIL_IN_USE,
