@@ -6,7 +6,12 @@ import { createSchedule } from "../../repositories/scheduleRepository";
 
 export async function createMockScheduleChain(scheduleOverrides = {}) {
   const user = await createMockUser(uuidv4());
-  const financialProfile = await createMockFinancialProfile(user.id);
+  console.log('created mock user. Let us check the id of it')
+  console.log(user)
+  console.log(user.id)
+
+  const financialProfile = await createMockFinancialProfile({userId:user.id});
+
   const loan = await createMockLoan(uuidv4(), financialProfile.id);
 
   const schedule = await createSchedule({
