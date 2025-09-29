@@ -5,6 +5,8 @@ import { PaymentErrors } from "../../../../errors/paymentErrors.js";
 import { expectErrorCode, expectDateEqual } from "../../../helpers/testHelpers.js";
 import { normalizePaymentRow } from "../../../helpers/payment/normalizePaymentRow.js";
 
+import {createMockUser} from '../../../../actors/users/createMockUser.js'
+
 describe("updatePayment(payment)", () => {
   let payment;
 
@@ -15,6 +17,8 @@ describe("updatePayment(payment)", () => {
     await pool.query("DELETE FROM financial_profiles;");
 
     const userId = uuidv4();
+    await createMockUser(userId);
+    
     const financialProfileId = uuidv4();
     const loanId = uuidv4();
     const scheduleId = uuidv4();

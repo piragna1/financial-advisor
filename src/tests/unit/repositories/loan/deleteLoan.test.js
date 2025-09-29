@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../db/pool.js";
+import { pool } from "../../../../db/pool.js";
 import { saveLoan, deleteLoan, getLoans } from "../../../repositories/loanRepository.js";
 import { createMockFinancialProfile } from "../../../actors/financialProfile/createMockFinancialProfile.js";
 import { generateValidLoan } from "../../../actors/loan/generateValidLoan.js";

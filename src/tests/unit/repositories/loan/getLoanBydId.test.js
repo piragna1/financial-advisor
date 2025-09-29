@@ -1,4 +1,4 @@
-import { saveLoan, getLoanById } from "../../../repositories/loanRepository.js";
+import { saveLoan, getLoanById } from "../../../../repositories/loanRepository.js";
 import { createMockFinancialProfile } from "../../../actors/financialProfile/createMockFinancialProfile.js";
 import { generateValidLoan } from "../../../actors/loan/generateValidLoan.js";
 import { pool } from "../../../db/pool.js";
