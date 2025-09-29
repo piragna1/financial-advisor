@@ -10,8 +10,6 @@ const res = await pool.query("SELECT current_database()");
 console.log("Connected to DB:", res.rows[0].current_database);
 
 
-
-
   console.log('createProfile()')
   console.log('incoming profile:', profile)
 
@@ -74,16 +72,11 @@ console.log("Connected to DB:", res.rows[0].current_database);
     );
   }
 
-
-
-  await pool.query('DISCARD ALL');
-
-
 const check = await pool.query('SELECT 1 FROM users WHERE id = $1', [userId]);
-console.log('User exists in DB:', check.rowCount > 0);
 
-
-
+if (check.rowCount === 0) {
+  throw new AppError(ProfileErrors.CREATE.INVALID_USER_ID, "User does not exist");
+}
 
   const query = `
     INSERT INTO profiles (
@@ -94,15 +87,15 @@ console.log('User exists in DB:', check.rowCount > 0);
   `;
 
   const values = [
-    id,
+    id.trim(),
     userId.trim(),
     firstName.trim(),
     lastName.trim(),
-    birthDate ?? null,
-    location ?? null,
-    language ?? "en",
-    avatarUrl ?? null,
-    bio.trim(),
+    birthDate.trim() ?? null,
+    location.trim() ?? null,
+    language.trim() ?? "en",
+    avatarUrl.trim() ?? null,
+    bio.trim() || null,
   ];
 
   console.log('values', values)
@@ -112,11 +105,14 @@ console.log('User exists in DB:', check.rowCount > 0);
   console.log(typeof values[0] === 'string')
   console.log(typeof values[1] === 'string')
   
+try {
   const result = await pool.query(query, values);
-
   console.log('result!', result.rows)
-
   return result.rows[0];
+} catch (error) {
+  console.error('Error creting profile:', error)
+}
+
 }
 
 export async function getProfileByUserId(userId) {
