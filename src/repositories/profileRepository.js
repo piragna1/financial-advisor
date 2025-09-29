@@ -207,6 +207,8 @@ export async function updateProfile(profile) {
     bio
   } = profile;
 
+  console.log('id:', id)
+
   if (!id || typeof id !== "string" || id.trim() === "") {
     throw new AppError(ProfileErrors.UPDATE.INVALID_ID, "Missing or invalid profile ID");
   }
@@ -221,7 +223,7 @@ export async function updateProfile(profile) {
       avatar_url = $6,
       bio = $7,
       updated_at = NOW()
-    WHERE id = $8
+    WHERE user_id = $8
     RETURNING *;
   `;
 
