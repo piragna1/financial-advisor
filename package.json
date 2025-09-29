@@ -16,9 +16,6 @@
   "author": "",
   "license": "ISC",
   "type": "module",
-  "jest":{
-    "transform":{}
-  },
   "bugs": {
     "url": "https://github.com/piragna1/financial-advisor-/issues"
   },
