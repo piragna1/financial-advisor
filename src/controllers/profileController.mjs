@@ -7,6 +7,7 @@ import { createProfile } from "../repositories/profileRepository.js";
 import { v4 } from "uuid";
 import { getProfileByEmail } from "../repositories/profileRepository.js";
 
+import { updateProfile } from "../repositories/profileRepository.js";
 import { deleteProfile } from "../repositories/profileRepository.js";
 
 export async function getProfile(req, res,next) {
@@ -92,27 +93,28 @@ export async function getProfileByEmailController(req, res, next) {
 
 
 
-
-
-
-
-
-// controllers/profileController.mjs
-export async function updateProfileController(req, res, next) { 
+export async function updateProfileController(req, res, next) {
   try {
-    const id = req.userId;
-    const profile = findUserById(id);
-    const updated = updateProfileFields(profile,req.body);
-    await saveUser(updated);
-    res.json({success:true,updated})
+    const profile = {
+      id: req.userId, // ownership enforced via token
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      birthDate: req.body.birthDate,
+      location: req.body.location,
+      language: req.body.language,
+      avatarUrl: req.body.avatarUrl,
+      bio: req.body.bio
+    };
+
+    console.log('id received with token:', req.userId);
+
+    const updated = await updateProfile(profile);
+
+    res.status(200).json({ message: "Profile updated", updated });
   } catch (error) {
-    res.status(400).json({error:error.message});
+    next(error);
   }
-
-  
 }
-
-
 
 
 
