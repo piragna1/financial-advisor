@@ -20,26 +20,23 @@ describe("updateUser(id, updates)", () => {
   });
 
   it("should update email and return updated user", async () => {
-    await saveUser(baseUser);
     const result = await updateUser(baseUser.id, { email: "new@example.com" });
     expect(result.email).toBe("new@example.com");
     expect(result.updated_at).toBeInstanceOf(Date);
   });
 
   it("should update passwordHash and return updated user", async () => {
-    await saveUser(baseUser);
-    const result = await updateUser(baseUser.id, { passwordHash: "new-hash" });
-    expect(result.password_hash).toBe("new-hash");
+    const result = await updateUser(baseUser.id, { password_hash: "new-hash" });
+    expect(result.passwordHash).toBe("new-hash");
   });
 
   it("should update both email and passwordHash", async () => {
-    await saveUser(baseUser);
     const result = await updateUser(baseUser.id, {
       email: "combo@example.com",
-      passwordHash: "combo-hash"
+      hashedPassword: "combo-hash"
     });
     expect(result.email).toBe("combo@example.com");
-    expect(result.password_hash).toBe("combo-hash");
+    expect(result.passwordHash).toBe("combo-hash");
   });
 
   it("should throw USER_NOT_FOUND if ID does not exist", async () => {
@@ -80,7 +77,6 @@ describe("updateUser(id, updates)", () => {
   });
 
   it("should trim ID before updating", async () => {
-    await saveUser(baseUser);
     const result = await updateUser(`  ${baseUser.id}  `, { email: "trimmed@example.com" });
     expect(result.email).toBe("trimmed@example.com");
   });
