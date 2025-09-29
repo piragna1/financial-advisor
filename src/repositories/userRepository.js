@@ -82,6 +82,11 @@ export async function findUserById(id) {
 }
 
 export async function updateUser(id, updates) {
+
+  console.log('id received:',id)
+    id = id.trim();
+  console.log('id trimmed:',id)
+
   if (!id || typeof id !== "string" || id.trim() === "") {
     throw new AppError(
       AuthErrors.LOGIN.USER_NOT_FOUND,
@@ -97,9 +102,13 @@ export async function updateUser(id, updates) {
   }
 
   const allowedFields = ["email", "passwordHash"];
-  const fields = Object.entries(updates).filter(([key]) =>
-    allowedFields.includes(key)
-  );
+ 
+  const fields = Object.entries(updates).filter(
+  ([key, value]) => allowedFields.includes(key) && value !== undefined
+);
+
+
+
 
   if (fields.length === 0) {
     throw new AppError(
@@ -115,6 +124,8 @@ export async function updateUser(id, updates) {
     )
     .join(", ");
   const values = [id.trim(), ...fields.map(([, value]) => value)];
+
+  console.log('values:' ,values);
 
   const query = `
     UPDATE users
@@ -137,7 +148,9 @@ export async function updateUser(id, updates) {
     if (result.rowCount === 0) {
       throw new AppError(AuthErrors.LOGIN.USER_NOT_FOUND, "User not found");
     }
+
     return result.rows[0];
+
   } catch (error) {
     if (error.code === "23505") {
       throw new AppError(
