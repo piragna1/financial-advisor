@@ -85,7 +85,7 @@ export async function updateUser(id, updates) {
     );
   }
 
-    id = id.trim();
+  id = id.trim();
 
   if (!updates || typeof updates !== "object" || Array.isArray(updates)) {
     throw new AppError(
@@ -95,10 +95,10 @@ export async function updateUser(id, updates) {
   }
 
   const allowedFields = ["email", "passwordHash"];
- 
+
   const fields = Object.entries(updates).filter(
-  ([key, value]) => allowedFields.includes(key) && value !== undefined
-);
+    ([key, value]) => allowedFields.includes(key) && value !== undefined
+  );
 
   if (fields.length === 0) {
     throw new AppError(
@@ -124,7 +124,6 @@ export async function updateUser(id, updates) {
   `;
 
   try {
-
     const existing = await findUserByEmail(updates.email);
 
     if (existing && existing.id !== id) {
@@ -137,11 +136,17 @@ export async function updateUser(id, updates) {
     const result = await pool.query(query, values);
 
     if (result.rowCount === 0) {
-      throw new AppError(AuthErrors.LOGIN.USER_NOT_FOUND, "User not found");
+      throw new AppError(AuthErrors.LOGIN.USER_NOT_FOUND);
     }
 
-    return result.rows[0];
-
+    const updatedUser = result.rows[0];
+    return {
+      id: updatedUser.id,
+      email: updatedUser.email,
+      passwordHash: updatedUser.password_hash,
+      createdAt: updatedUser.created_at,
+      updatedAt: updatedUser.updated_at,
+    };
   } catch (error) {
     if (error.code === "23505") {
       throw new AppError(

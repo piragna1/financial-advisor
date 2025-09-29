@@ -36,14 +36,15 @@ describe("updateUser(id, updates)", () => {
   it("should update both email and passwordHash", async () => {
 
     const userId = uuidv4();
-
-    await createMockUser(userId);
+    const baseUser = await createMockUser(userId, 'original@example.com');
 
     const result = await updateUser(baseUser.id, {
       email: "combo@example.com",
       passwordHash: "combo-hash"
     });
+    
     expect(result.email).toBe("combo@example.com");
+
     expect(result.passwordHash).toBe("combo-hash");
   });
 
@@ -90,8 +91,14 @@ describe("updateUser(id, updates)", () => {
   it("should trim ID before updating", async () => {
 
     const baseUser = await createMockUser(uuidv4());
+
     const email = `trimmed-${baseUser.id}@example.com`
     const result = await updateUser(`  ${baseUser.id}  `, { email: email });
+
+    console.log('result',result)
+
     expect(result.email).toBe(email);
   });
+
+  
 });
