@@ -216,6 +216,23 @@ Response:
 }
 
 
+🔐 PUT /users — Update Authenticated User
+Description: Allows an authenticated user to update their own email and/or password. Password is automatically hashed before storage. 
+Email must be unique — duplicates are rejected.
+
+Authentication: ✅ Requires valid token in Authorization header ✅ Enforces ownership: users can only update their own account
+```code
+Authorization: Bearer <token (obtained when logging in)>
+Content-Type: application/json
+```
+
+Request body:
+{
+  "email": "newemail@example.com",       // optional
+  "password": "newSecurePassword123!"    // optional
+}
+
+
 
 👤 Profile
 POST /profiles
