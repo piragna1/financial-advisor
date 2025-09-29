@@ -19,9 +19,7 @@ router.get("/email/:email", (req, res, next) => {
 }, getProfileByEmailController);
 
 
-router.patch('/', authMiddleware, updateProfileController) //test
-
-
+router.put('/', authMiddleware, updateProfileController);
 
 router.delete("/", deleteProfileController);
 
