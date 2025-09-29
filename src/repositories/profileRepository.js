@@ -1,5 +1,5 @@
 import { pool } from "../db/pool.js";
-import { AppError } from "../errors/AppError.js";
+import { AppError } from "../errors/appError.js";
 import { ProfileErrors } from "../errors/profileErrors.js";
 import { v4 } from "uuid";
 
