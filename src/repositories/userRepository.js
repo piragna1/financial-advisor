@@ -33,6 +33,8 @@ export async function saveUser(user) {
 }
 
 export async function findUserByEmail(email) {
+  console.log("received email in findUserByEmail:", email);
+
   if (!email || typeof email !== "string" || email.trim() === "") {
     throw new AppError(
       AuthErrors.REGISTER.INVALID_INPUT,
@@ -78,6 +80,9 @@ export async function findUserById(id) {
 }
 
 export async function updateUser(id, updates) {
+  console.log("updateUser() receiving id:", id);
+  console.log("updateUser() receiving updates:", updates);
+
   if (!id || typeof id !== "string" || id.trim() === "") {
     throw new AppError(
       AuthErrors.LOGIN.USER_NOT_FOUND,
@@ -93,8 +98,8 @@ export async function updateUser(id, updates) {
       "Updates must be a valid object"
     );
   }
-console.log("🧠 Updates received:", updates);
 
+  console.log("🧠 Updates received:", updates);
 
   const allowedFields = ["email", "passwordHash"];
 
@@ -125,8 +130,11 @@ console.log("🧠 Updates received:", updates);
     RETURNING *;
   `;
 
+  const email = updates.email;
   try {
-    const existing = await findUserByEmail(updates.email);
+    console.log("sending email", email);
+    const existing = await findUserByEmail(email);
+    console.log("existing:", existing);
 
     if (existing && existing.id !== id) {
       throw new AppError(
@@ -136,6 +144,8 @@ console.log("🧠 Updates received:", updates);
     }
 
     const result = await pool.query(query, values);
+
+    console.log("query result", result);
 
     if (result.rowCount === 0) {
       throw new AppError(AuthErrors.LOGIN.USER_NOT_FOUND);
