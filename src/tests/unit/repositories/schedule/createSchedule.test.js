@@ -4,7 +4,7 @@ import { pool } from "../../../../db/pool.mjs";
 import { createSchedule } from "../../../../repositories/scheduleRepository.js";
 import { createMockFinancialProfile } from "../../../../actors/financialProfile/createMockFinancialProfile.js";
 import { createMockLoan } from "../../../../actors/loan/createMockLoan.js";
-
+import {createMockUser} from '../../../../actors/users/createMockUser.js'
 import { ScheduleErrors } from "../../../../errors/scheduleErrors.js";
 
 import {
@@ -232,11 +232,14 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
 
   it("accepts extreme but valid values", async () => {
 
-    const { loanId } = await validBase();
-    
+    const user = await createMockUser(uuidv4());
+    const financial = await createMockFinancialProfile({userId:user.id});
+    const loan = await createMockLoan(financial.id);
+
+
     const input = {
       id: uuidv4(),
-      loanId,
+      loanId: loan.id,
       plan: "custom",
       startDate: utcDate("2030-01-01"),
       totalAmount: 9999999999,
