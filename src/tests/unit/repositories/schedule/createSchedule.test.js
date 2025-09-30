@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
+import { pool } from "../../../../db/pool.mjs";
 
 import { createSchedule } from "../../../../repositories/scheduleRepository.js";
 import { createMockFinancialProfile } from "../../../../actors/financialProfile/createMockFinancialProfile.js";
@@ -231,7 +231,9 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
   });
 
   it("accepts extreme but valid values", async () => {
+
     const { loanId } = await validBase();
+    
     const input = {
       id: uuidv4(),
       loanId,
