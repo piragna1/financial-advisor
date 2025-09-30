@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../db/pool.js";
+import { pool } from "../../db/pool.mjs";
 
 export async function createMockFinancialProfile(overrides = {}) {
 
@@ -12,8 +12,6 @@ if (!overrides.userId || typeof overrides.userId !== 'string') {
   const id = overrides.id || uuidv4();
 
 
-  console.log('id received:', overrides.id);
-  console.log('user id received:', overrides.userId);
   
 
   const userId = overrides.userId || "user-mock";
