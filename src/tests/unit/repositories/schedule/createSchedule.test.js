@@ -6,6 +6,7 @@ import { createMockFinancialProfile } from "../../../../actors/financialProfile/
 import { createMockLoan } from "../../../../actors/loan/createMockLoan.js";
 import {createMockUser} from '../../../../actors/users/createMockUser.js'
 import { ScheduleErrors } from "../../../../errors/scheduleErrors.js";
+import {} from '../../../../actors/schedule/createMockScheduleChain.js'
 
 import {
   expectDateEqual,
@@ -193,7 +194,6 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       totalAmount: 1000,
       currency: "USD",
     };
-
     await expectErrorCode(createSchedule({ ...base, installments: 0 }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS.code);
     await expectErrorCode(createSchedule({ ...base, installments: "4" }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS.code);
     await expectErrorCode(createSchedule({ ...base, installments: -1 }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS.code);
@@ -214,27 +214,36 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
   });
 
   it("rejects duplicate schedule id", async () => {
-    const { loanId } = await validBase();
-    const id    = uuidv4();
+    
+    const user = await createMockUser(uuidv4());
+
+    console.log('user', user);
+
+    const financialProfile = await createMockFinancialProfile({userId:user.id});
+    const loan = await createMockLoan(uuidv4(), financialProfile.id);
     const input = {
-      id,
-      loanId,
+      id:uuidv4(),
+      loanId:loan.id,
       plan: "monthly",
       startDate: utcDate("2025-10-01"),
       totalAmount: 5000,
       currency: "USD",
       installments: 12,
     };
-
     await createSchedule(input);
     await expect(createSchedule(input)).rejects.toThrow(/duplicate key value violates unique constraint/i);
   });
 
   it("accepts extreme but valid values", async () => {
 
+    console.log('accepts extreme but valid values')
     const user = await createMockUser(uuidv4());
+    console.log('user.id',user.id)
+
     const financial = await createMockFinancialProfile({userId:user.id});
-    const loan = await createMockLoan(financial.id);
+    
+    const loanId = uuidv4();
+    const loan = await createMockLoan(loanId,financial.id);
 
 
     const input = {
