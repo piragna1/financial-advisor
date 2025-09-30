@@ -22,7 +22,7 @@ export async function saveUser(user) {
   const values = [
     user.id,
     user.email,
-    user.hashedPassword,
+    user.passwordHash,
     new Date(),
     new Date(),
   ];
@@ -80,8 +80,6 @@ export async function findUserById(id) {
 }
 
 export async function updateUser(id, updates) {
-  console.log("updateUser() receiving id:", id);
-  console.log("updateUser() receiving updates:", updates);
 
   if (!id || typeof id !== "string" || id.trim() === "") {
     throw new AppError(
@@ -99,7 +97,6 @@ export async function updateUser(id, updates) {
     );
   }
 
-  console.log("🧠 Updates received:", updates);
 
   const allowedFields = ["email", "passwordHash"];
 
@@ -113,7 +110,6 @@ export async function updateUser(id, updates) {
       "No valid fields to update"
     );
   }
-  console.log("Final fields:", fields);
 
   const setClause = fields
     .map(
@@ -130,11 +126,8 @@ export async function updateUser(id, updates) {
     RETURNING *;
   `;
 
-  const email = updates.email;
   try {
-    console.log("sending email", email);
-    const existing = await findUserByEmail(email);
-    console.log("existing:", existing);
+    const existing = await findUserById(id);
 
     if (existing && existing.id !== id) {
       throw new AppError(
@@ -145,7 +138,6 @@ export async function updateUser(id, updates) {
 
     const result = await pool.query(query, values);
 
-    console.log("query result", result);
 
     if (result.rowCount === 0) {
       throw new AppError(AuthErrors.LOGIN.USER_NOT_FOUND);
