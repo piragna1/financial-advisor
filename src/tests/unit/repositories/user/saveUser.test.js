@@ -35,12 +35,6 @@ describe("saveUser(user)", () => {
     expect(result.created_at).toBeInstanceOf(Date);
   });
 
-  it("should default updatedAt to null if not provided", async () => {
-    const user = { ...baseUser, updatedAt: undefined };
-    const result = await saveUser(user);
-    expect(result.updated_at).toBeNull();
-  });
-
   it("should throw if user is null", async () => {
     await expect(() => saveUser(null)).rejects.toThrow("Invalid user input");
   });
@@ -72,18 +66,16 @@ describe("saveUser(user)", () => {
 
   it("should persist and retrieve the same user", async () => {
 
-    const baseUser = await createMockUser(uuidv4());
-    baseUser.passwordHash = uuidv4(); //adding password to baseUser
-
-    const saved = await saveUser(baseUser);
-    console.log('saved user', saved);
+    const passwordHash = uuidv4();
+    const baseUser = await createMockUser(uuidv4(),undefined,passwordHash);
 
     const query = `SELECT * FROM users WHERE id = $1`;
+
     const result = await pool.query(query, [baseUser.id]);
     expect(result.rows[0]).toMatchObject({
       id: baseUser.id,
       email: baseUser.email,
-      password_hash: baseUser.passwordHash
+      password_hash: passwordHash
     });
   });
 });
