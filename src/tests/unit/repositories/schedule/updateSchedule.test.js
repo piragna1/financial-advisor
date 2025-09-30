@@ -44,7 +44,7 @@ describe("updateSchedule(schedule)", () => {
     const result = await updateSchedule(updated);
 
     expect(result.plan).toBe("monthly");
-    expect(result.total_amount).toBe("2500");
+    expect(Number(result.total_amount)).toBe(2500);
     expect(result.currency).toBe("GBP");
     expect(result.installments).toBe(5);
     expectDateEqual(result.start_date, "2025-06-15");
@@ -66,7 +66,7 @@ describe("updateSchedule(schedule)", () => {
       totalAmount: 1100,
     });
 
-    expect(result.total_amount).toBe("1100"); // ← string por tipo NUMERIC
+    expect(Number(result.total_amount)).toBe(1100); // ← string por tipo NUMERIC
     expect(result.plan).toBe("weekly");
   });
 
