@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
+import { pool } from "../../../../db/pool.mjs";
 import { saveUser } from "../../../../repositories/userRepository.js";
+import {createMockUser} from '../../../../actors/users/createMockUser.js'
 
 describe("saveUser(user)", () => {
   const baseUser = {
@@ -70,7 +71,13 @@ describe("saveUser(user)", () => {
   });
 
   it("should persist and retrieve the same user", async () => {
+
+    const baseUser = await createMockUser(uuidv4());
+    baseUser.passwordHash = uuidv4(); //adding password to baseUser
+
     const saved = await saveUser(baseUser);
+    console.log('saved user', saved);
+
     const query = `SELECT * FROM users WHERE id = $1`;
     const result = await pool.query(query, [baseUser.id]);
     expect(result.rows[0]).toMatchObject({
