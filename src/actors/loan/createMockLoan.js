@@ -15,10 +15,9 @@ export async function createMockLoan(loanId, financialProfileId) {
       balloon_payment,
       loan_type,
       currency,
-      saved_at,
-      updated_at
+      saved_at
     ) VALUES (
-      $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW(), NOW()
+      $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW()
     )`,
     [
       loanId,
