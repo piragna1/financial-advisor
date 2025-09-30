@@ -7,12 +7,7 @@ if (!overrides.userId || typeof overrides.userId !== 'string') {
   throw new Error('Missing or invalid userId in financial profile mock');
 }
 
-
-
   const id = overrides.id || uuidv4();
-
-
-  
 
   const userId = overrides.userId || "user-mock";
   const salary = overrides.salary || 50000;
