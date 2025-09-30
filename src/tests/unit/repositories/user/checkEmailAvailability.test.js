@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
-import { checkEmailAvailability } from "../../../actors/users/checkEmailAvailability.js";
-import { saveUser } from "../../../repositories/userRepository.js";
+import { pool } from "../../../../db/pool.mjs";
+import { checkEmailAvailability } from "../../../../actors/users/checkEmailAvailability.js";
+import { saveUser } from "../../../../repositories/userRepository.js";
 
 describe("checkEmailAvailability(email)", () => {
   const testEmail = "test@example.com";
