@@ -15,7 +15,6 @@ if (!email || typeof email !== "string") {
 
   
 const check = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
-console.log("Inserted user:", check.rows[0]);
 
 
 
