@@ -21,24 +21,20 @@ describe("updateUser(id, updates)", () => {
   });
 
   it("should update email and return updated user", async () => {
+    const baseUser = await createMockUser(uuidv4());
     const result = await updateUser(baseUser.id, { email: "new@example.com" });
     expect(result.email).toBe("new@example.com");
-    expect(result.updated_at).toBeInstanceOf(Date);
+    expect(result.updatedAt).toBeInstanceOf(Date);
   });
 
   it("should update passwordHash and return updated user", async () => {
 
 
-    console.log("🔧 Running passwordHash update test");
-
-    console.log("Sending:", { passwordHash: "new-hash" });
 
     const baseUser = await createMockUser(uuidv4())
-    console.log('baseUser', baseUser)
 
     const result = await updateUser(baseUser.id, { passwordHash: "new-hash" });
 
-    console.log("Result:",result);
 
     expect(result.passwordHash).toBe("new-hash");
   });
@@ -109,7 +105,6 @@ describe("updateUser(id, updates)", () => {
     const email = `trimmed-${baseUser.id}@example.com`
     const result = await updateUser(`  ${baseUser.id}  `, { email: email });
 
-    console.log('result',result)
 
     expect(result.email).toBe(email);
   });
