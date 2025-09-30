@@ -31,15 +31,20 @@ describe("updateUser(id, updates)", () => {
 
     console.log("🔧 Running passwordHash update test");
 
+    console.log("Sending:", { passwordHash: "new-hash" });
 
-    console.log("Sending:", { passwordHash: "combo-hash" });
+    const baseUser = await createMockUser(uuidv4())
+    console.log('baseUser', baseUser)
 
     const result = await updateUser(baseUser.id, { passwordHash: "new-hash" });
 
+    console.log("Result:",result);
 
     expect(result.passwordHash).toBe("new-hash");
   });
 
+
+  
 
 
   it("should update both email and passwordHash", async () => {
