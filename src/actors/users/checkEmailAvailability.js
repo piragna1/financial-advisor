@@ -1,4 +1,4 @@
-import { pool } from "../../db/pool.js";
+import { pool } from "../../db/pool.mjs";
 import { AppError } from "../../errors/AppError.js";
 import { AuthErrors } from "../../errors/authErrors.js";
 
