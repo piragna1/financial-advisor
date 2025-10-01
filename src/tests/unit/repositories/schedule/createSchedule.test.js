@@ -29,15 +29,23 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
     await pool.query("DELETE FROM financial_profiles;");
   });
 
-  async function validBase() {
-    const fp    = await createMockFinancialProfile();
+  async function validBase(userId) {
+
+    console.log('validBase() userId', userId)
+
+    const fp    = await createMockFinancialProfile({userId});
+
     const loanId= uuidv4();
     await createMockLoan(loanId, fp.id);
     return { loanId };
   }
 
   it("creates a valid schedule with trimmed string fields", async () => {
-    const { loanId } = await validBase();
+
+    console.log('creates a valid schedule with trimmed string fields')
+
+    const baseUser = await createMockUser(uuidv4());
+    const { loanId } = await validBase(baseUser.id);
 
     const input = {
       id: `  ${uuidv4()}  `,
@@ -58,7 +66,7 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
     expectScheduleMatch(result, {
       loanId,
       plan: "monthly",
-      startDate: "2025-09-26",
+      startDate: new Date(),
       totalAmount: 5000,
       currency: "USD",
       installments: 12,
@@ -70,7 +78,8 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
   });
 
   it("accepts startDate as a Date object", async () => {
-    const { loanId } = await validBase();
+    const baseUser = await createMockUser(uuidv4());
+    const { loanId } = await validBase(baseUser.id);
     const input = {
       id: uuidv4(),
       loanId,
@@ -82,17 +91,21 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
     };
 
     const result = await createSchedule(input);
-    expectDateEqual(result.start_date, "2025-09-26");
+    expectDateEqual(result.start_date, new Date());
   });
 
   it("rejects non-object input", async () => {
-    await expectErrorCode(createSchedule(null), ScheduleErrors.CREATE.INVALID_INPUT.code);
-    await expectErrorCode(createSchedule("string"), ScheduleErrors.CREATE.INVALID_INPUT.code);
-    await expectErrorCode(createSchedule(123), ScheduleErrors.CREATE.INVALID_INPUT.code);
+    await expectErrorCode(createSchedule(null), ScheduleErrors.CREATE.INVALID_INPUT);
+    await expectErrorCode(createSchedule("string"), ScheduleErrors.CREATE.INVALID_INPUT);
+    await expectErrorCode(createSchedule(123), ScheduleErrors.CREATE.INVALID_INPUT);
   });
 
   it("rejects missing or invalid id", async () => {
-    const { loanId } = await validBase();
+
+    console.log('rejects missing or invalid ')
+
+    const baseUser = await createMockUser(uuidv4());
+    const { loanId } = await validBase(baseUser.id);
     const base = {
       loanId,
       plan: "weekly",
@@ -102,9 +115,9 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       installments: 4,
     };
 
-    await expectErrorCode(createSchedule({ ...base, id: null }), ScheduleErrors.CREATE.INVALID_ID.code);
-    await expectErrorCode(createSchedule({ ...base, id: "" }), ScheduleErrors.CREATE.INVALID_ID.code);
-    await expectErrorCode(createSchedule({ ...base, id: 42 }), ScheduleErrors.CREATE.INVALID_ID.code);
+    await expectErrorCode(createSchedule({ ...base, id: null }), ScheduleErrors.CREATE.INVALID_ID);
+    await expectErrorCode( createSchedule({ ...base, id: "" }), ScheduleErrors.CREATE.INVALID_ID);
+    await expectErrorCode( createSchedule({ ...base, id: 42 }), ScheduleErrors.CREATE.INVALID_ID);
   });
 
   it("rejects missing or invalid loanId", async () => {
@@ -117,13 +130,14 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       installments: 4,
     };
 
-    await expectErrorCode(createSchedule({ ...base, loanId: null }), ScheduleErrors.CREATE.INVALID_LOAN_ID.code);
-    await expectErrorCode(createSchedule({ ...base, loanId: "" }), ScheduleErrors.CREATE.INVALID_LOAN_ID.code);
-    await expectErrorCode(createSchedule({ ...base, loanId: 42 }), ScheduleErrors.CREATE.INVALID_LOAN_ID.code);
+    await expectErrorCode(createSchedule({ ...base, loanId: null }), ScheduleErrors.CREATE.INVALID_LOAN_ID);
+    await expectErrorCode(createSchedule({ ...base, loanId: "" }), ScheduleErrors.CREATE.INVALID_LOAN_ID);
+    await expectErrorCode(createSchedule({ ...base, loanId: 42 }), ScheduleErrors.CREATE.INVALID_LOAN_ID);
   });
 
   it("rejects unsupported plan values", async () => {
-    const { loanId } = await validBase();
+    const baseUser = await createMockUser(uuidv4());
+    const { loanId } = await validBase(baseUser.id);
     const input = {
       id: uuidv4(),
       loanId,
@@ -134,11 +148,12 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       installments: 4,
     };
 
-    await expectErrorCode(createSchedule(input), ScheduleErrors.CREATE.INVALID_PLAN.code);
+    await expectErrorCode(createSchedule(input), ScheduleErrors.CREATE.INVALID_PLAN);
   });
 
   it("rejects invalid startDate formats", async () => {
-    const { loanId } = await validBase();
+    const baseUser = await createMockUser(uuidv4());
+    const { loanId } = await validBase(baseUser.id);
     const input = {
       id: uuidv4(),
       loanId,
@@ -149,11 +164,12 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       installments: 4,
     };
 
-    await expectErrorCode(createSchedule(input), ScheduleErrors.CREATE.INVALID_START_DATE.code);
+    await expectErrorCode(createSchedule(input), ScheduleErrors.CREATE.INVALID_START_DATE);
   });
 
   it("rejects totalAmount ≤ 0 or non-numeric", async () => {
-    const { loanId } = await validBase();
+    const baseUser = await createMockUser(uuidv4());
+    const { loanId } = await validBase(baseUser.id);
     const base = {
       id: uuidv4(),
       loanId,
@@ -163,13 +179,14 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       installments: 4,
     };
 
-    await expectErrorCode(createSchedule({ ...base, totalAmount: 0 }), ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT.code);
-    await expectErrorCode(createSchedule({ ...base, totalAmount: "1000" }), ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT.code);
-    await expectErrorCode(createSchedule({ ...base, totalAmount: -10 }), ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT.code);
+    await expectErrorCode(createSchedule({ ...base, totalAmount: 0 }), ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT);
+    await expectErrorCode(createSchedule({ ...base, totalAmount: "1000" }), ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT);
+    await expectErrorCode(createSchedule({ ...base, totalAmount: -10 }), ScheduleErrors.CREATE.INVALID_TOTAL_AMOUNT);
   });
 
   it("rejects missing or invalid currency", async () => {
-    const { loanId } = await validBase();
+    const baseUser = await createMockUser(uuidv4());
+    const { loanId } = await validBase(baseUser.id);
     const base = {
       id: uuidv4(),
       loanId,
@@ -179,13 +196,21 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       installments: 4,
     };
 
-    await expectErrorCode(createSchedule({ ...base, currency: null }), ScheduleErrors.CREATE.INVALID_CURRENCY.code);
-    await expectErrorCode(createSchedule({ ...base, currency: "" }), ScheduleErrors.CREATE.INVALID_CURRENCY.code);
-    await expectErrorCode(createSchedule({ ...base, currency: 123 }), ScheduleErrors.CREATE.INVALID_CURRENCY.code);
+    await expectErrorCode(createSchedule({ ...base, currency: null }), ScheduleErrors.CREATE.INVALID_CURRENCY);
+    await expectErrorCode(createSchedule({ ...base, currency: "" }), ScheduleErrors.CREATE.INVALID_CURRENCY);
+    await expectErrorCode(createSchedule({ ...base, currency: 123 }), ScheduleErrors.CREATE.INVALID_CURRENCY);
   });
 
   it("rejects installments ≤ 0 or non-numeric", async () => {
-    const { loanId } = await validBase();
+
+    console.log('rejects installments ≤ 0 or non-numeric')
+
+    const baseUser = await createMockUser(uuidv4());
+
+    const { loanId } = await validBase(baseUser.id);
+
+    console.log('loanId', loanId)
+
     const base = {
       id: uuidv4(),
       loanId,
@@ -194,9 +219,10 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
       totalAmount: 1000,
       currency: "USD",
     };
-    await expectErrorCode(createSchedule({ ...base, installments: 0 }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS.code);
-    await expectErrorCode(createSchedule({ ...base, installments: "4" }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS.code);
-    await expectErrorCode(createSchedule({ ...base, installments: -1 }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS.code);
+    
+    await expectErrorCode(createSchedule({ ...base, installments: 0 }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS);
+    await expectErrorCode(createSchedule({ ...base, installments: "4" }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS);
+    await expectErrorCode(createSchedule({ ...base, installments: -1 }), ScheduleErrors.CREATE.INVALID_INSTALLMENTS);
   });
 
   it("rejects loanId that does not exist (foreign key)", async () => {
@@ -236,12 +262,9 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
 
   it("accepts extreme but valid values", async () => {
 
-    console.log('accepts extreme but valid values')
     const user = await createMockUser(uuidv4());
-    console.log('user.id',user.id)
 
     const financial = await createMockFinancialProfile({userId:user.id});
-    
     const loanId = uuidv4();
     const loan = await createMockLoan(loanId,financial.id);
 
