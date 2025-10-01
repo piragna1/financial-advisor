@@ -5,6 +5,8 @@ import {
   updateProfile,
 } from "../../../../repositories/profileRepository.js";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
+import { ProfileErrors } from "../../../../errors/profileErrors.js";
+import { AppError } from "../../../../errors/appError.js";
 
 describe("updateProfile(profile)", () => {
   beforeEach(async () => {
@@ -68,9 +70,7 @@ expect(new Date(result.birth_date).toISOString().slice(0, 10)).toBe("1995-05-05"
       bio: "  T rim test ",
     };
 
-    console.log('the error is being thrown with createMockUser maybe?')
     await createMockUser(userId);
-    console.log('not confirmed!')
     await createProfile(profile);
 
     const updated = {
@@ -90,25 +90,28 @@ expect(new Date(result.birth_date).toISOString().slice(0, 10)).toBe("1995-05-05"
 
     console.log('should default missing optional fields to null or "en"')
 
-    const userId = uuidv4();
+    const baseUser = await createMockUser(uuidv4());
+
     const profile = {
       id: uuidv4(),
-      userId,
+      userId:baseUser.id,
       firstName: "Minimal",
       lastName: "User",
       bio: "Minimal bio",
     };
 
-    await createMockUser(userId);
-    await createProfile(profile);
+    const baseProfile = await createProfile(profile);
 
+    
     const updated = {
-      id: profile.id,
+      id: baseProfile.id,
+      userId:profile.userId,
       firstName: "Minimal",
       lastName: "User",
     };
 
     const result = await updateProfile(updated);
+
     expect(result.language).toBe("en");
     expect(result.birth_date).toBeNull();
     expect(result.location).toBeNull();
@@ -144,6 +147,8 @@ expect(new Date(result.birth_date).toISOString().slice(0, 10)).toBe("1995-05-05"
 
     await expect(updateProfile(profile)).rejects.toMatchObject({
       code: "PROFILE_UPDATE_NOT_FOUND",
+      message: "Profile not found",
+      status: 404
     });
   });
 });
