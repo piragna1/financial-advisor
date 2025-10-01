@@ -4,12 +4,21 @@ import { ProfileErrors } from "../errors/profileErrors.js";
 import { v4 } from "uuid";
 
 export async function createProfile(profile) {
-
   if (!profile || typeof profile !== "object") {
     throw new AppError(
       ProfileErrors.CREATE.INVALID_INPUT,
       "Profile must be a valid object"
     );
+  }
+
+  for (const key of Object.keys(profile)) {
+    if (
+      profile[key] != null &&
+      typeof profile[key] === "string" &&
+      profile[key].trim() !== ""
+    ) {
+      profile[key] = profile[key].trim();
+    }
   }
 
   const {
@@ -23,7 +32,6 @@ export async function createProfile(profile) {
     avatarUrl,
     bio,
   } = profile;
-  
 
   if (!id || typeof id !== "string" || id.trim() === "") {
     throw new AppError(
@@ -60,11 +68,14 @@ export async function createProfile(profile) {
     );
   }
 
-const check = await pool.query('SELECT 1 FROM users WHERE id = $1', [userId]);
+  const check = await pool.query("SELECT 1 FROM users WHERE id = $1", [userId]);
 
-if (check.rowCount === 0) {
-  throw new AppError(ProfileErrors.CREATE.INVALID_USER_ID, "User does not exist");
-}
+  if (check.rowCount === 0) {
+    throw new AppError(
+      ProfileErrors.CREATE.INVALID_USER_ID,
+      "User does not exist"
+    );
+  }
 
   const query = `
     INSERT INTO profiles (
@@ -86,19 +97,20 @@ if (check.rowCount === 0) {
     bio || null,
   ];
 
-  
   try {
     const result = await pool.query(query, values);
-  return result.rows[0];
-} catch (error) {
-  console.error('Error creting profile:', error)
-}
-
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error creting profile:", error);
+  }
 }
 
 export async function getProfileByUserId(userId) {
   if (!userId || typeof userId !== "string" || userId.trim() === "") {
-    throw new AppError(ProfileErrors.READ.INVALID_ID, "Missing or invalid user ID");
+    throw new AppError(
+      ProfileErrors.READ.INVALID_ID,
+      "Missing or invalid user ID"
+    );
   }
 
   const query = `
@@ -118,7 +130,10 @@ export async function getProfileByUserId(userId) {
 
 export async function getProfileById(id) {
   if (!id || typeof id !== "string" || id.trim() === "") {
-    throw new AppError(ProfileErrors.READ.INVALID_ID, "Missing or invalid profile ID");
+    throw new AppError(
+      ProfileErrors.READ.INVALID_ID,
+      "Missing or invalid profile ID"
+    );
   }
 
   const query = `
@@ -136,11 +151,12 @@ export async function getProfileById(id) {
   return result.rows[0];
 }
 
-
-
 export async function getProfileByEmail(email) {
   if (!email || typeof email !== "string" || email.trim() === "") {
-    throw new AppError(ProfileErrors.READ.INVALID_EMAIL, "Missing or invalid email");
+    throw new AppError(
+      ProfileErrors.READ.INVALID_EMAIL,
+      "Missing or invalid email"
+    );
   }
 
   const query = `
@@ -156,7 +172,10 @@ export async function getProfileByEmail(email) {
     const result = await pool.query(query, values);
 
     if (result.rowCount === 0) {
-      throw new AppError(ProfileErrors.READ.NOT_FOUND, "No profile found for this email");
+      throw new AppError(
+        ProfileErrors.READ.NOT_FOUND,
+        "No profile found for this email"
+      );
     }
 
     return result.rows[0];
@@ -166,15 +185,15 @@ export async function getProfileByEmail(email) {
   }
 }
 
-
-
 export async function updateProfile(profile) {
-
-  console.log('updateProfile()');
-  console.log('profile received:', profile)
+  console.log("updateProfile()");
+  console.log("profile received:", profile);
 
   if (!profile || typeof profile !== "object") {
-    throw new AppError(ProfileErrors.UPDATE.INVALID_INPUT, "Profile must be a valid object");
+    throw new AppError(
+      ProfileErrors.UPDATE.INVALID_INPUT,
+      "Profile must be a valid object"
+    );
   }
 
   const {
@@ -186,20 +205,22 @@ export async function updateProfile(profile) {
     location,
     language,
     avatarUrl,
-    bio
+    bio,
   } = profile;
 
-
   if (!id || typeof id !== "string" || id.trim() === "") {
-    throw new AppError(ProfileErrors.UPDATE.INVALID_ID, "Missing or invalid profile ID");
+    throw new AppError(
+      ProfileErrors.UPDATE.INVALID_ID,
+      "Missing or invalid profile ID"
+    );
   }
 
-const checkQuery = `SELECT id FROM profiles WHERE user_id = $1`;
-const checkResult = await pool.query(checkQuery, [userId]);
+  const checkQuery = `SELECT id FROM profiles WHERE user_id = $1`;
+  const checkResult = await pool.query(checkQuery, [userId]);
 
-if (checkResult.rowCount === 0) {
-  throw new AppError(ProfileErrors.UPDATE.NOT_FOUND, "Profile not found");
-}
+  if (checkResult.rowCount === 0) {
+    throw new AppError(ProfileErrors.UPDATE.NOT_FOUND, "Profile not found");
+  }
   const query = `
     UPDATE profiles SET
       first_name = $1,
@@ -225,7 +246,7 @@ if (checkResult.rowCount === 0) {
     userId,
   ];
 
-  console.log('New values for update:', values)
+  console.log("New values for update:", values);
 
   const result = await pool.query(query, values);
 
@@ -236,7 +257,10 @@ if (checkResult.rowCount === 0) {
 }
 export async function deleteProfile(id) {
   if (!id || typeof id !== "string" || id.trim() === "") {
-    throw new AppError(ProfileErrors.DELETE.INVALID_ID, "Missing or invalid profile ID");
+    throw new AppError(
+      ProfileErrors.DELETE.INVALID_ID,
+      "Missing or invalid profile ID"
+    );
   }
 
   const query = `
