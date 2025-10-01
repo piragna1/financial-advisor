@@ -6,7 +6,7 @@ import {
 import { PaymentErrors } from "../../../../errors/paymentErrors.js";
 import { expectErrorCode } from "../../../helpers/testHelpers.js";
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
+import { pool } from "../../../../db/pool.mjs";
 
 describe("deletePayment(id)", () => {
   let userId, profileId, loanId, scheduleId, payment;
@@ -72,14 +72,14 @@ describe("deletePayment(id)", () => {
   it("rejects invalid UUID", async () => {
     await expectErrorCode(
       deletePayment("not-a-uuid"),
-      PaymentErrors.DELETE.INVALID_ID.code
+      PaymentErrors.DELETE.INVALID_ID
     );
   });
 
   it("rejects non-existent ID", async () => {
     await expectErrorCode(
       deletePayment(uuidv4()),
-      PaymentErrors.DELETE.NOT_FOUND.code
+      PaymentErrors.DELETE.NOT_FOUND
     );
   });
 
@@ -87,7 +87,7 @@ describe("deletePayment(id)", () => {
     await deletePayment(payment.id);
     await expectErrorCode(
       deletePayment(payment.id),
-      PaymentErrors.DELETE.NOT_FOUND.code
+      PaymentErrors.DELETE.NOT_FOUND
     );
   });
 
