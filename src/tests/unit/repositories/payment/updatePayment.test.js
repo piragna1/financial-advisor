@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
+import { pool } from "../../../../db/pool.mjs";
 import { createPayment, updatePayment } from "../../../../repositories/paymentRepository.js";
 import { PaymentErrors } from "../../../../errors/paymentErrors.js";
 import { expectErrorCode, expectDateEqual } from "../../../helpers/testHelpers.js";
@@ -33,9 +33,9 @@ describe("updatePayment(payment)", () => {
       `INSERT INTO loans (id, financial_profile_id, start_date, term_years, principal,
         interest_rate, payment_frequency_per_year, compounding_frequency_per_year,
         grace_period_months, balloon_payment, loan_type, currency,
-        saved_at, updated_at)
+        saved_at)
        VALUES ($1, $2, '2025-10-01', 5, 10000,
-        0.07, 12, 12, 0, null, 'personal', 'USD', NOW(), NOW())`,
+        0.07, 12, 12, 0, null, 'personal', 'USD', NOW())`,
       [loanId, financialProfileId]
     );
 
@@ -74,7 +74,7 @@ describe("updatePayment(payment)", () => {
 
   it("updates amount and method", async () => {
     const updated = await updatePayment({ ...base(), amount: 750, method: "cash" });
-    expect(updated.amount).toBe("750");
+    expect(Number(updated.amount)).toBe(750);
     expect(updated.method).toBe("cash");
   });
 
@@ -110,7 +110,7 @@ it("updates status to pending and clears paidAt", async () => {
 
 
   it("rejects invalid UUID", async () => {
-    await expectErrorCode(updatePayment({ ...base(), id: "invalid-id" }), PaymentErrors.UPDATE.INVALID_ID.code);
+    await expectErrorCode(updatePayment({ ...base(), id: "invalid-id" }), PaymentErrors.UPDATE.INVALID_ID);
   });
 
 it("rejects non-existent ID", async () => {
@@ -132,13 +132,16 @@ it("rejects non-existent ID", async () => {
       reference: "ref123",
       notes: "test"
     }),
-    PaymentErrors.UPDATE.NOT_FOUND.code
+    PaymentErrors.UPDATE.NOT_FOUND
   );
 });
 
  it("accepts paidAt before dueDate (early payment)", async () => {
+
+  console.log('accepts paidAt before dueDate (early payment)')
+
   const paidAt = new Date();
-  paidAt.setDate(paidAt.getDate() - 1); // ayer
+  paidAt.setDate(paidAt.getDate() +21); // ayer
 
   const dueDate = new Date();
   dueDate.setDate(dueDate.getDate() + 31); // mínimo un mes en el futuro
@@ -163,7 +166,7 @@ it("rejects non-existent ID", async () => {
   it("rejects status: paid without paidAt", async () => {
     await expectErrorCode(
       updatePayment({ ...base(), status: "paid", paidAt: null }),
-      PaymentErrors.UPDATE.INVALID_DATA.code
+      PaymentErrors.UPDATE.INVALID_DATA
     );
   });
 
@@ -173,46 +176,46 @@ it("rejects non-existent ID", async () => {
 
     await expectErrorCode(
       updatePayment({ ...base(), status: "pending", paidAt }),
-      PaymentErrors.UPDATE.INVALID_DATA.code
+      PaymentErrors.UPDATE.INVALID_DATA
     );
   });
 
   it("rejects amount negative", async () => {
-    await expectErrorCode(updatePayment({ ...base(), amount: -100 }), PaymentErrors.UPDATE.INVALID_DATA.code);
+    await expectErrorCode(updatePayment({ ...base(), amount: -100 }), PaymentErrors.UPDATE.INVALID_DATA);
   });
 
   it("rejects currency invalid", async () => {
-    await expectErrorCode(updatePayment({ ...base(), currency: "BTC" }), PaymentErrors.UPDATE.INVALID_DATA.code);
+    await expectErrorCode(updatePayment({ ...base(), currency: "BTC" }), PaymentErrors.UPDATE.INVALID_DATA);
   });
 
   it("rejects method invalid", async () => {
-    await expectErrorCode(updatePayment({ ...base(), method: "paypal" }), PaymentErrors.UPDATE.INVALID_DATA.code);
+    await expectErrorCode(updatePayment({ ...base(), method: "paypal" }), PaymentErrors.UPDATE.INVALID_DATA);
   });
 
   it("rejects status invalid", async () => {
-    await expectErrorCode(updatePayment({ ...base(), status: "processing" }), PaymentErrors.UPDATE.INVALID_DATA.code);
+    await expectErrorCode(updatePayment({ ...base(), status: "processing" }), PaymentErrors.UPDATE.INVALID_DATA);
   });
 
   it("rejects reference > 50 chars", async () => {
-    await expectErrorCode(updatePayment({ ...base(), reference: "X".repeat(51) }), PaymentErrors.UPDATE.INVALID_DATA.code);
+    await expectErrorCode(updatePayment({ ...base(), reference: "X".repeat(51) }), PaymentErrors.UPDATE.INVALID_DATA);
   });
 
   it("rejects notes > 255 chars", async () => {
-    await expectErrorCode(updatePayment({ ...base(), notes: "N".repeat(256) }), PaymentErrors.UPDATE.INVALID_DATA.code);
+    await expectErrorCode(updatePayment({ ...base(), notes: "N".repeat(256) }), PaymentErrors.UPDATE.INVALID_DATA);
   });
 
   it("rejects dueDate in the past", async () => {
     const past = new Date();
     past.setMonth(past.getMonth() - 1);
 
-    await expectErrorCode(updatePayment({ ...base(), dueDate: past }), PaymentErrors.UPDATE.INVALID_DATA.code);
+    await expectErrorCode(updatePayment({ ...base(), dueDate: past }), PaymentErrors.UPDATE.INVALID_DATA);
   });
 
   it("rejects dueDate less than one month ahead", async () => {
     const near = new Date();
     near.setDate(near.getDate() + 10);
 
-    await expectErrorCode(updatePayment({ ...base(), dueDate: near }), PaymentErrors.UPDATE.INVALID_DATA.code);
+    await expectErrorCode(updatePayment({ ...base(), dueDate: near }), PaymentErrors.UPDATE.INVALID_DATA);
   });
 
   it("rejects paidAt in the future", async () => {
@@ -221,7 +224,7 @@ it("rejects non-existent ID", async () => {
 
     await expectErrorCode(
       updatePayment({ ...base(), status: "paid", paidAt: future }),
-      PaymentErrors.UPDATE.INVALID_DATA.code
+      PaymentErrors.UPDATE.INVALID_DATA
     );
   });
 });
