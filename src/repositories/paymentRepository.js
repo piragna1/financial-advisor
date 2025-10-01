@@ -2,7 +2,7 @@ import { normalizePayment } from "../actors/normalizers/payment/normalizePayment
 import { validatePaymentId } from "../actors/validators/payment/validatePaymentId.js";
 import { validatePaymentInput } from "../actors/validators/payment/validatePaymentInput.js";
 import { validatePaymentUpdate } from "../actors/validators/payment/validatePaymentUpdate.js";
-import { pool } from "../db/pool.js";
+import { pool } from "../db/pool.mjs";
 import { AppError } from "../errors/appError.js";
 import { PaymentErrors } from "../errors/paymentErrors.js";
 import { isValidUUID } from "../tests/helpers/testHelpers.js";
@@ -50,9 +50,9 @@ export async function createPayment(payment) {
 
   const result = await pool.query(
     `INSERT INTO payments (
-  id, schedule_id, due_date, amount, currency, status, paid_at, method, reference, notes, updated_at
+  id, schedule_id, due_date, amount, currency, status, paid_at, method, reference, notes
 ) VALUES (
-  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, NOW()
+  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10
 )
 
  RETURNING *`,
@@ -115,8 +115,7 @@ export async function updatePayment(payment) {
       paid_at = $7,
       method = $8,
       reference = $9,
-      notes = $10,
-      updated_at = NOW()
+      notes = $10
     WHERE id = $1
     RETURNING *`,
     [
