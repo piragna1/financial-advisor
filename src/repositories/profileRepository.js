@@ -1,4 +1,4 @@
-import { pool } from "../db/pool.js";
+import { pool } from "../db/pool.mjs";
 import { AppError } from "../errors/appError.js";
 import { ProfileErrors } from "../errors/profileErrors.js";
 import { v4 } from "uuid";
@@ -91,11 +91,11 @@ if (check.rowCount === 0) {
     userId.trim(),
     firstName.trim(),
     lastName.trim(),
-    birthDate.trim() ?? null,
-    location.trim() ?? null,
-    language.trim() ?? "en",
-    avatarUrl.trim() ?? null,
-    bio.trim() || null,
+    birthDate ?? null,
+    location ?? null,
+    language ?? "en",
+    avatarUrl ?? null,
+    bio || null,
   ];
 
   console.log('values', values)
