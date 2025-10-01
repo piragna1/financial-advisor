@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
+import { pool } from "../../../../db/pool.mjs";
 import {
   createProfile,
   updateProfile,
@@ -87,6 +87,9 @@ expect(new Date(result.birth_date).toISOString().slice(0, 10)).toBe("1995-05-05"
   });
 
   it("should default missing optional fields to null or 'en'", async () => {
+
+    console.log('should default missing optional fields to null or "en"')
+
     const userId = uuidv4();
     const profile = {
       id: uuidv4(),
