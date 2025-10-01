@@ -1,8 +1,11 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
+import { pool } from "../../../../db/pool.mjs";
 import { createPayment, getPayment } from "../../../../repositories/paymentRepository.js";
 import { PaymentErrors } from "../../../../errors/paymentErrors.js";
 import { expectErrorCode, expectDateEqual, expectNumericEqual } from "../../../helpers/testHelpers.js";
+import { createMockUser } from "../../../../actors/users/createMockUser.js";
+import {createmockFinancialProfile} from '../../../../actors/financialProfile/createMockFinancialProfile.js'
+import {createMockLoan} from '../../../../actors/loan/createMockLoan.js'
 
 describe("getPayment(id) – full suite", () => {
   let scheduleId;
@@ -13,26 +16,31 @@ describe("getPayment(id) – full suite", () => {
     await pool.query("DELETE FROM loans;");
     await pool.query("DELETE FROM financial_profiles;");
 
+
     const userId = uuidv4();
+    const user = await createMockUser(userId);
     const financialProfileId = uuidv4();
+    const fp =  await createmockFinancialProfile(financialProfileId);
     const loanId = uuidv4();
+    const loan = await createMockLoan(loanId, financialProfileId);
+    
     scheduleId = uuidv4();
 
-    await pool.query(
-      `INSERT INTO financial_profiles (id, user_id, salary, created_at, updated_at)
-       VALUES ($1, $2, 5000, NOW(), NOW())`,
-      [financialProfileId, userId]
-    );
+    // await pool.query(
+    //   `INSERT INTO financial_profiles (id, user_id, salary, created_at, updated_at)
+    //    VALUES ($1, $2, 5000, NOW(), NOW())`,
+    //   [financialProfileId, userId]
+    // );
 
-    await pool.query(
-      `INSERT INTO loans (id, financial_profile_id, start_date, term_years, principal,
-        interest_rate, payment_frequency_per_year, compounding_frequency_per_year,
-        grace_period_months, balloon_payment, loan_type, currency,
-        saved_at, updated_at)
-       VALUES ($1, $2, '2025-10-01', 5, 10000,
-        0.07, 12, 12, 0, null, 'personal', 'USD', NOW(), NOW())`,
-      [loanId, financialProfileId]
-    );
+    // await pool.query(
+    //   `INSERT INTO loans (id, financial_profile_id, start_date, term_years, principal,
+    //     interest_rate, payment_frequency_per_year, compounding_frequency_per_year,
+    //     grace_period_months, balloon_payment, loan_type, currency,
+    //     saved_at, updated_at)
+    //    VALUES ($1, $2, '2025-10-01', 5, 10000,
+    //     0.07, 12, 12, 0, null, 'personal', 'USD', NOW(), NOW())`,
+    //   [loanId, financialProfileId]
+    // );
 
     await pool.query(
       `INSERT INTO schedules (id, plan, start_date, total_amount, currency, installments, loan_id, created_at, updated_at)
