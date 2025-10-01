@@ -170,6 +170,9 @@ export async function getProfileByEmail(email) {
 
 export async function updateProfile(profile) {
 
+  console.log('updateProfile()');
+  console.log('profile received:', profile)
+
   if (!profile || typeof profile !== "object") {
     throw new AppError(ProfileErrors.UPDATE.INVALID_INPUT, "Profile must be a valid object");
   }
@@ -186,7 +189,6 @@ export async function updateProfile(profile) {
     bio
   } = profile;
 
-  console.log('updateProfile() profile received', profile)
 
   if (!id || typeof id !== "string" || id.trim() === "") {
     throw new AppError(ProfileErrors.UPDATE.INVALID_ID, "Missing or invalid profile ID");
@@ -198,8 +200,6 @@ const checkResult = await pool.query(checkQuery, [userId]);
 if (checkResult.rowCount === 0) {
   throw new AppError(ProfileErrors.UPDATE.NOT_FOUND, "Profile not found");
 }
-
-
   const query = `
     UPDATE profiles SET
       first_name = $1,
@@ -225,12 +225,13 @@ if (checkResult.rowCount === 0) {
     userId,
   ];
 
+  console.log('New values for update:', values)
+
   const result = await pool.query(query, values);
 
   if (result.rowCount === 0) {
     throw new AppError(ProfileErrors.UPDATE.NOT_FOUND, "Profile not found");
   }
-
   return result.rows[0];
 }
 export async function deleteProfile(id) {
