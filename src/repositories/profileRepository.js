@@ -5,15 +5,6 @@ import { v4 } from "uuid";
 
 export async function createProfile(profile) {
 
-
-const res = await pool.query("SELECT current_database()"); 
-console.log("Connected to DB:", res.rows[0].current_database);
-
-
-  console.log('createProfile()')
-  console.log('incoming profile:', profile)
-
-  
   if (!profile || typeof profile !== "object") {
     throw new AppError(
       ProfileErrors.CREATE.INVALID_INPUT,
@@ -32,9 +23,6 @@ console.log("Connected to DB:", res.rows[0].current_database);
     avatarUrl,
     bio,
   } = profile;
-  
-  // const profileId = v4();
-  // profile.id = profileId;
   
 
   if (!id || typeof id !== "string" || id.trim() === "") {
@@ -98,16 +86,9 @@ if (check.rowCount === 0) {
     bio || null,
   ];
 
-  console.log('values', values)
-
-  console.log('values[0]',values[0])
-  console.log('values[1]',values[1])
-  console.log(typeof values[0] === 'string')
-  console.log(typeof values[1] === 'string')
   
-try {
-  const result = await pool.query(query, values);
-  console.log('result!', result.rows)
+  try {
+    const result = await pool.query(query, values);
   return result.rows[0];
 } catch (error) {
   console.error('Error creting profile:', error)
@@ -188,12 +169,14 @@ export async function getProfileByEmail(email) {
 
 
 export async function updateProfile(profile) {
+
   if (!profile || typeof profile !== "object") {
     throw new AppError(ProfileErrors.UPDATE.INVALID_INPUT, "Profile must be a valid object");
   }
 
   const {
     id,
+    userId,
     firstName,
     lastName,
     birthDate,
@@ -203,11 +186,19 @@ export async function updateProfile(profile) {
     bio
   } = profile;
 
-  console.log('id:', id)
+  console.log('updateProfile() profile received', profile)
 
   if (!id || typeof id !== "string" || id.trim() === "") {
     throw new AppError(ProfileErrors.UPDATE.INVALID_ID, "Missing or invalid profile ID");
   }
+
+const checkQuery = `SELECT id FROM profiles WHERE user_id = $1`;
+const checkResult = await pool.query(checkQuery, [userId]);
+
+if (checkResult.rowCount === 0) {
+  throw new AppError(ProfileErrors.UPDATE.NOT_FOUND, "Profile not found");
+}
+
 
   const query = `
     UPDATE profiles SET
@@ -231,7 +222,7 @@ export async function updateProfile(profile) {
     language ?? "en",
     avatarUrl ?? null,
     bio?.trim() ?? null,
-    id.trim()
+    userId,
   ];
 
   const result = await pool.query(query, values);
