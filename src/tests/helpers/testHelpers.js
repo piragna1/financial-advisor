@@ -34,8 +34,8 @@ export function expectScheduleMatch(actual, expected) {
   expect(actual.installments).toBe(expected.installments);
 }
 
-export async function expectErrorCode(promise, expectedCode) {
-  await expect(promise).rejects.toMatchObject({ code: expectedCode });
+export async function expectErrorCode(promise, expected) {
+  await expect(promise).rejects.toMatchObject(expected);
 }
 
 export function utcDate(ymd) {
