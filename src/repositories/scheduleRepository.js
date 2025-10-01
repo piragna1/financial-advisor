@@ -1,5 +1,6 @@
 // src/repositories/scheduleRepository.js
 
+import { v4 } from "uuid";
 import { pool } from "../db/pool.mjs";
 import { AppError } from "../errors/appError.js";
 import { ScheduleErrors } from "../errors/scheduleErrors.js";
@@ -8,6 +9,11 @@ import { isValidUUID } from "../tests/helpers/testHelpers.js";
 const ALLOWED_PLANS = ["weekly", "monthly", "custom"];
 
 export async function createSchedule(schedule) {
+
+  console.log('createSchedule');
+  console.log(schedule)
+
+
   if (!schedule || typeof schedule !== "object") {
     throw new AppError(
       ScheduleErrors.CREATE.INVALID_INPUT,
@@ -15,7 +21,9 @@ export async function createSchedule(schedule) {
     );
   }
 
+  if (!schedule.id || typeof schedule.id !== 'string') throw new AppError(ScheduleErrors.CREATE.INVALID_ID);
   schedule.id = schedule.id.trim();
+
 
   const {
     id,
@@ -55,6 +63,8 @@ export async function createSchedule(schedule) {
       "Missing or invalid start date"
     );
   }
+
+  console.log('parsedDate', parsedDate)
 
   if (typeof totalAmount !== "number" || totalAmount <= 0) {
     throw new AppError(
