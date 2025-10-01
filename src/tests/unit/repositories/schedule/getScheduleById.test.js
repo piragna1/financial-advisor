@@ -28,7 +28,7 @@ describe("getScheduleById(id)", () => {
   });
 
  it("should throw INVALID_ID for null, undefined, empty or non-string id", async () => {
-  const code = ScheduleErrors.READ.INVALID_ID.code;
+  const code = ScheduleErrors.READ.INVALID_ID;
 
   await expectErrorCode(getScheduleById(null), code);
   await expectErrorCode(getScheduleById(""), code);
@@ -38,7 +38,7 @@ describe("getScheduleById(id)", () => {
 
 
   it("should throw NOT_FOUND if schedule does not exist", async () => {
-  const expectedCode = ScheduleErrors.READ.NOT_FOUND.code;
+  const expectedCode = ScheduleErrors.READ.NOT_FOUND;
   await expectErrorCode(getScheduleById(uuidv4()), expectedCode);
 });
 
