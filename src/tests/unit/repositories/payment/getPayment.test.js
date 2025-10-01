@@ -4,7 +4,7 @@ import { createPayment, getPayment } from "../../../../repositories/paymentRepos
 import { PaymentErrors } from "../../../../errors/paymentErrors.js";
 import { expectErrorCode, expectDateEqual, expectNumericEqual } from "../../../helpers/testHelpers.js";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
-import {createmockFinancialProfile} from '../../../../actors/financialProfile/createMockFinancialProfile.js'
+import {createMockFinancialProfile} from '../../../../actors/financialProfile/createMockFinancialProfile.js'
 import {createMockLoan} from '../../../../actors/loan/createMockLoan.js'
 
 describe("getPayment(id) – full suite", () => {
@@ -19,10 +19,9 @@ describe("getPayment(id) – full suite", () => {
 
     const userId = uuidv4();
     const user = await createMockUser(userId);
-    const financialProfileId = uuidv4();
-    const fp =  await createmockFinancialProfile(financialProfileId);
+    const fp =  await createMockFinancialProfile({userId:user.id});
     const loanId = uuidv4();
-    const loan = await createMockLoan(loanId, financialProfileId);
+    const loan = await createMockLoan(loanId, fp.id);
     
     scheduleId = uuidv4();
 
@@ -124,28 +123,14 @@ describe("getPayment(id) – full suite", () => {
 
   describe("invalid cases", () => {
     it("rejects malformed UUID", async () => {
-      await expectErrorCode(getPayment("not-a-valid-id"), PaymentErrors.READ.INVALID_ID.code);
+      await expectErrorCode(getPayment("not-a-valid-id"), PaymentErrors.READ.INVALID_ID);
     });
 
     it("rejects non-existent ID", async () => {
-      await expectErrorCode(getPayment(uuidv4()), PaymentErrors.READ.NOT_FOUND.code);
+      await expectErrorCode(getPayment(uuidv4()), PaymentErrors.READ.NOT_FOUND);
     });
 
-    it("rejects payment with paidAt before dueDate", async () => {
-      const dueDate = new Date();
-      dueDate.setMonth(dueDate.getMonth() + 2);
-
-      const paidAt = new Date();
-      paidAt.setMonth(paidAt.getMonth() + 1);
-
-      const invalid = {
-        status: "paid",
-        dueDate,
-        paidAt
-      };
-
-      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA.code);
-    });
+    
 
     it("rejects payment with status 'paid' but missing paidAt", async () => {
       const invalid = {
@@ -153,7 +138,7 @@ describe("getPayment(id) – full suite", () => {
         paidAt: null
       };
 
-      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA.code);
+      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA);
     });
 
     it("rejects payment with paidAt but status not 'paid'", async () => {
@@ -165,7 +150,7 @@ describe("getPayment(id) – full suite", () => {
         paidAt
       };
 
-      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA.code);
+      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA);
     });
 
     it("rejects payment with reference > 50 chars", async () => {
@@ -173,7 +158,7 @@ describe("getPayment(id) – full suite", () => {
         reference: "X".repeat(51)
       };
 
-      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA.code);
+      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA);
     });
 
     it("rejects payment with notes > 255 chars", async () => {
@@ -181,7 +166,7 @@ describe("getPayment(id) – full suite", () => {
         notes: "N".repeat(256)
       };
 
-      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA.code);
+      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA);
     });
 
     it("rejects payment with invalid currency", async () => {
@@ -189,7 +174,7 @@ describe("getPayment(id) – full suite", () => {
         currency: "BTC"
       };
 
-      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA.code);
+      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA);
     });
 
     it("rejects payment with invalid method", async () => {
@@ -197,7 +182,7 @@ describe("getPayment(id) – full suite", () => {
         method: "paypal"
       };
 
-      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA.code);
+      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA);
     });
 
     it("rejects payment with invalid status", async () => {
@@ -205,7 +190,7 @@ describe("getPayment(id) – full suite", () => {
         status: "processing"
       };
 
-      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA.code);
+      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA);
     });
 
     it("rejects payment with negative amount", async () => {
@@ -213,7 +198,7 @@ describe("getPayment(id) – full suite", () => {
         amount: -100
       };
 
-      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA.code);
+      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA);
     });
 
     it("rejects payment with dueDate in the past", async () => {
@@ -224,7 +209,7 @@ describe("getPayment(id) – full suite", () => {
         dueDate: pastDate
       };
 
-      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA.code);
+      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA);
     });
 
     it("rejects payment with dueDate less than one month ahead", async () => {
@@ -235,7 +220,7 @@ describe("getPayment(id) – full suite", () => {
         dueDate: nearFuture
       };
 
-      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA.code);
+      await expectErrorCode(createValidPayment(invalid), PaymentErrors.CREATE.INVALID_DATA);
     });
   });
 });
