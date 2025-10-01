@@ -10,9 +10,6 @@ const ALLOWED_PLANS = ["weekly", "monthly", "custom"];
 
 export async function createSchedule(schedule) {
 
-  console.log('createSchedule');
-  console.log(schedule)
-
 
   if (!schedule || typeof schedule !== "object") {
     throw new AppError(
@@ -64,7 +61,6 @@ export async function createSchedule(schedule) {
     );
   }
 
-  console.log('parsedDate', parsedDate)
 
   if (typeof totalAmount !== "number" || totalAmount <= 0) {
     throw new AppError(
