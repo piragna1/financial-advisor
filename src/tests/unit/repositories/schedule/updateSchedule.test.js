@@ -73,12 +73,12 @@ describe("updateSchedule(schedule)", () => {
   it("should throw INVALID_INPUT if schedule is not an object", async () => {
     await expectErrorCode(
       updateSchedule(null),
-      ScheduleErrors.UPDATE.INVALID_INPUT.code
+      ScheduleErrors.UPDATE.INVALID_INPUT
     );
   });
 
   it("should throw INVALID_ID if id is missing or invalid", async () => {
-    const code = ScheduleErrors.UPDATE.INVALID_ID.code;
+    const code = ScheduleErrors.UPDATE.INVALID_ID;
 
     await expectErrorCode(updateSchedule({}), code);
     await expectErrorCode(updateSchedule({ id: "" }), code);
@@ -97,7 +97,7 @@ describe("updateSchedule(schedule)", () => {
 
     await expectErrorCode(
       updateSchedule({ id, plan: "daily" }),
-      ScheduleErrors.UPDATE.INVALID_PLAN.code
+      ScheduleErrors.UPDATE.INVALID_PLAN
     );
   });
 
@@ -114,7 +114,7 @@ describe("updateSchedule(schedule)", () => {
 
     await expectErrorCode(
       updateSchedule({ id, startDate: "bad-date" }),
-      ScheduleErrors.UPDATE.INVALID_START_DATE.code
+      ScheduleErrors.UPDATE.INVALID_START_DATE
     );
   });
 
@@ -131,12 +131,12 @@ describe("updateSchedule(schedule)", () => {
 
     await expectErrorCode(
       updateSchedule({ id, totalAmount: "100" }),
-      ScheduleErrors.UPDATE.INVALID_TOTAL_AMOUNT.code
+      ScheduleErrors.UPDATE.INVALID_TOTAL_AMOUNT
     );
 
     await expectErrorCode(
       updateSchedule({ id, totalAmount: 0 }),
-      ScheduleErrors.UPDATE.INVALID_TOTAL_AMOUNT.code
+      ScheduleErrors.UPDATE.INVALID_TOTAL_AMOUNT
     );
   });
 
@@ -153,12 +153,12 @@ describe("updateSchedule(schedule)", () => {
 
     await expectErrorCode(
       updateSchedule({ id, currency: "" }),
-      ScheduleErrors.UPDATE.INVALID_CURRENCY.code
+      ScheduleErrors.UPDATE.INVALID_CURRENCY
     );
 
     await expectErrorCode(
       updateSchedule({ id, currency: 123 }),
-      ScheduleErrors.UPDATE.INVALID_CURRENCY.code
+      ScheduleErrors.UPDATE.INVALID_CURRENCY
     );
   });
 
@@ -175,19 +175,19 @@ describe("updateSchedule(schedule)", () => {
 
     await expectErrorCode(
       updateSchedule({ id, installments: 0 }),
-      ScheduleErrors.UPDATE.INVALID_INSTALLMENTS.code
+      ScheduleErrors.UPDATE.INVALID_INSTALLMENTS
     );
 
     await expectErrorCode(
       updateSchedule({ id, installments: "5" }),
-      ScheduleErrors.UPDATE.INVALID_INSTALLMENTS.code
+      ScheduleErrors.UPDATE.INVALID_INSTALLMENTS
     );
   });
   it("should throw NOT_FOUND if schedule does not exist", async () => {
     const id = uuidv4();
     await expectErrorCode(
       updateSchedule({ id, totalAmount: 100 }),
-      ScheduleErrors.UPDATE.NOT_FOUND.code
+      ScheduleErrors.UPDATE.NOT_FOUND
     );
   });
 });
