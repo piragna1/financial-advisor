@@ -1,21 +1,15 @@
 import { v4 as uuidv4 } from "uuid";
 import { pool } from "../../db/pool.mjs";
-import { isValidUUID } from "../../tests/helpers/testHelpers";
+import { isValidUUID } from "../../tests/helpers/testHelpers.js";
 
 export async function createMockFinancialProfile(overrides = {}) {
-    console.log('createMockFinancialProfile')
-    console.log('overrides', overrides);
-    console.log('overrides.userId', overrides.userId);
 
-  if (!overrides.userId) overrides.userId = uuidv4();
-
-  if (!isValidUUID(overrides.userId)) {
+  if (!overrides.userId || !isValidUUID(overrides.userId)) {
     throw new Error('Missing or invalid userId in financial profile mock');
   }
   
-  const id = overrides.id;
-
-  const userId = overrides.userId || "user-mock";
+  const id = uuidv4();
+  const userId = overrides.userId;
   const salary = overrides.salary || 50000;
   const now = new Date();
 
