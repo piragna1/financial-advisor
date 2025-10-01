@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
+import { pool } from "../../../../db/pool.mjs";
 import { createPayment } from "../../../../repositories/paymentRepository.js";
 import { PaymentErrors } from "../../../../errors/paymentErrors.js";
 import {
@@ -7,12 +7,14 @@ import {
   expectDateEqual,
   expectNumericEqual,
 } from "../../../helpers/testHelpers.js";
+import { createMockUser } from "../../../../actors/users/createMockUser.js";
+import { createMockFinancialProfile } from "../../../../actors/financialProfile/createMockFinancialProfile.js";
+import { createMockLoan } from "../../../../actors/loan/createMockLoan.js";
+import { createMockScheduleChain } from '../../../../actors/schedule/createMockScheduleChain.js'
 
 describe("createPayment(payment)", () => {
   let validScheduleId;
-  let validLoanId;
-  let validFinancialProfileId;
-
+  let schedule;
   let basePayment;
 
   beforeEach(async () => {
@@ -21,42 +23,7 @@ describe("createPayment(payment)", () => {
     await pool.query("DELETE FROM loans;");
     await pool.query("DELETE FROM financial_profiles;");
 
-    validScheduleId = uuidv4();
-    validLoanId = uuidv4();
-    validFinancialProfileId = uuidv4();
-
-    await pool.query(
-      `INSERT INTO financial_profiles (
-        id, user_id, salary, created_at, updated_at
-      ) VALUES (
-        $1, $2, 5000, NOW(), NOW()
-      )`,
-      [validFinancialProfileId, uuidv4()]
-    );
-
-    await pool.query(
-      `INSERT INTO loans (
-        id, financial_profile_id, start_date, term_years, principal,
-        interest_rate, payment_frequency_per_year, compounding_frequency_per_year,
-        grace_period_months, balloon_payment, loan_type, currency,
-        saved_at, updated_at
-      ) VALUES (
-        $1, $2, '2025-10-01', 5, 10000,
-        0.07, 12, 12,
-        0, null, 'personal', 'USD',
-        NOW(), NOW()
-      )`,
-      [validLoanId, validFinancialProfileId]
-    );
-
-    await pool.query(
-      `INSERT INTO schedules (
-        id, plan, start_date, total_amount, currency, installments, loan_id, created_at, updated_at
-      ) VALUES (
-        $1, 'monthly', '2025-10-01', 1000, 'USD', 2, $2, NOW(), NOW()
-      )`,
-      [validScheduleId, validLoanId]
-    );
+    schedule = await createMockScheduleChain();
 
     basePayment = {
       id: uuidv4(),
@@ -181,7 +148,11 @@ describe("createPayment(payment)", () => {
   });
 
 it("should assign default dueDate at least one month ahead if missing", async () => {
+
+  console.log('should assign default dueDate at least one month ahead if missing')
+
   const input = {
+    ...schedule,
     ...basePayment,
     id: uuidv4(),
   };
