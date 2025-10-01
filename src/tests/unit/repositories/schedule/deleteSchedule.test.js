@@ -39,14 +39,14 @@ describe("deleteSchedule(id)", () => {
   });
 
   it("should throw INVALID_ID for null, undefined, empty, non-string, or malformed UUID", async () => {
-    await expectErrorCode(deleteSchedule(null), ScheduleErrors.DELETE.INVALID_ID.code);
-    await expectErrorCode(deleteSchedule(""), ScheduleErrors.DELETE.INVALID_ID.code);
-    await expectErrorCode(deleteSchedule(123), ScheduleErrors.DELETE.INVALID_ID.code);
-    await expectErrorCode(deleteSchedule("not-a-uuid"), ScheduleErrors.DELETE.INVALID_ID.code);
+    await expectErrorCode(deleteSchedule(null), ScheduleErrors.DELETE.INVALID_ID);
+    await expectErrorCode(deleteSchedule(""), ScheduleErrors.DELETE.INVALID_ID);
+    await expectErrorCode(deleteSchedule(123), ScheduleErrors.DELETE.INVALID_ID);
+    await expectErrorCode(deleteSchedule("not-a-uuid"), ScheduleErrors.DELETE.INVALID_ID);
   });
 
   it("should throw NOT_FOUND if schedule does not exist", async () => {
-    await expectErrorCode(deleteSchedule(uuidv4()), ScheduleErrors.DELETE.NOT_FOUND.code);
+    await expectErrorCode(deleteSchedule(uuidv4()), ScheduleErrors.DELETE.NOT_FOUND);
   });
 
   it("should not affect other schedules", async () => {
@@ -95,6 +95,6 @@ describe("deleteSchedule(id)", () => {
     await createMockScheduleChain({ id });
     await deleteSchedule(id);
 
-    await expectErrorCode(deleteSchedule(id), ScheduleErrors.DELETE.NOT_FOUND.code);
+    await expectErrorCode(deleteSchedule(id), ScheduleErrors.DELETE.NOT_FOUND);
   });
 });
