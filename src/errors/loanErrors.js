@@ -93,6 +93,11 @@ export const LoanErrors = {
       code:"CREATION_MISSING_FINANCIAL_PROFILE_ID",
       message:"Financial profile id is missing",
       status:410
+    },
+    MISSING_LOAN_ID:{
+      code:"CREATION_MISSING_LOAN_ID",
+      message:"Loan id is missing",
+      status:411
     }
   },
   FIND: {
@@ -113,7 +118,18 @@ export const LoanErrors = {
     message: "An error occurred while deleting the loan",
     status: 500,
   },
-}
+},UPDATE:{
+    MISSING_DATA:{
+      code: "UPDATE_MISSING_DATA",
+      message: "No data received for updating the loan",
+      status:412
+    },
+    INVALID_LOAN_ID:{
+      code:"UPDATE_INVALID_LOAN_ID",
+      message: "The id received is not valid",
+      status:413
+    },
+  }
 
 };
 
