@@ -40,14 +40,13 @@ export async function saveLoan(loanData) {
       loanData.balloonPayment,
       loanData.loanType,
       loanData.currency,
-      loanData.savedAt
+      loanData.savedAt,
     ];
-
 
     const result = await pool.query(query, values);
     return result.rows[0];
   } catch (error) {
-    console.error('DB Error:', error);
+    console.error("DB Error:", error);
     throw new AppError(LoanErrors.CREATION.FAILED_CREATION, error);
   }
 }
@@ -65,16 +64,24 @@ export async function getLoanById(id) {
 
 export async function updateLoan(id, updates) {
 
-  console.log('updates received:', updates)
 
-  if (!updates || typeof updates !== "object" || Object.keys(updates).length === 0) {
-  throw new Error("No valid fields to update");
-}
+  if (
+    !updates ||
+    typeof updates !== "object" ||
+    Object.keys(updates).length === 0
+  ) {
+    throw new AppError(LoanErrors.UPDATE.MISSING_DATA);
+  }
 
-  if (!id || typeof id !== "string") throw new Error("Invalid loan id");
+  if (!id || typeof id !== "string")
+    throw new AppError(LoanErrors.UPDATE.INVALID_LOAN_ID);
   validateLoanUpdate(updates);
 
-const columnMap = {
+  for (const key of Object.keys(updates)) {
+    if (updates[key] == null) delete updates[key];
+  }
+
+  const columnMap = {
     financialProfileId: "financial_profile_id",
     startDate: "start_date",
     termYears: "term_years",
@@ -102,12 +109,22 @@ const columnMap = {
   const query = `
     UPDATE loans
     SET ${fields.join(", ")}
-    WHERE id = $${index + 1}
+    WHERE id = $${index}
     RETURNING *;
     `;
 
-  const result = await pool.query(query, values);
-  return result.rows[0] || null;
+ const result = await pool.query(query, values);
+
+
+if (result.rowCount === 0) {
+  throw new AppError(
+    LoanErrors.CREATION.MISSING_LOAN_ID,
+    "Loan id is missing",
+    411
+  );
+}
+
+return result.rows[0];
 }
 
 export async function deleteLoan(id) {
@@ -122,7 +139,6 @@ export async function deleteLoan(id) {
   return result.rows[0] || null;
 }
 
-
 export async function getLoans() {
   const query = `
     SELECT * FROM loans
@@ -130,11 +146,11 @@ export async function getLoans() {
   `;
   const result = await pool.query(query);
 
-  return result.rows.map(row => ({
+  return result.rows.map((row) => ({
     ...row,
     principal: parseFloat(row.principal),
     interest_rate: parseFloat(row.interest_rate),
-    balloon_payment: row.balloon_payment !== null ? parseFloat(row.balloon_payment) : null
+    balloon_payment:
+      row.balloon_payment !== null ? parseFloat(row.balloon_payment) : null,
   }));
 }
-
