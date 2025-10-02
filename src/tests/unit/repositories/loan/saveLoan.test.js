@@ -1,14 +1,17 @@
 import { saveLoan } from "../../../../repositories/loanRepository.js";
-import { createMockFinancialProfile } from "../../../actors/financialProfile/createMockFinancialProfile.js";
-import { generateLoanId } from "../../../actors/loan/generateLoanId.js";
-import { pool } from "../../../db/pool.js";
-import {generateValidLoan} from '../../../actors/loan/generateValidLoan.js'
+import { createMockFinancialProfile } from "../../../../actors/financialProfile/createMockFinancialProfile.js";
+import { generateLoanId } from "../../../../actors/loan/generateLoanId.js";
+import { pool } from "../../../../db/pool.mjs";
+import {generateValidLoan} from '../../../../actors/loan/generateValidLoan.js'
+import { v4 } from "uuid";
+import {createMockUser} from '../../../../actors/users/createMockUser.js'
 
 describe("saveLoan() — validación completa", () => {
   let financialProfile;
-
+  let baseUser;
   beforeAll(async () => {
-    financialProfile = await createMockFinancialProfile();    
+    baseUser = await createMockUser(v4());
+    financialProfile = await createMockFinancialProfile({userId:baseUser.id});
     console.log('finprof:',financialProfile)
   });
 
