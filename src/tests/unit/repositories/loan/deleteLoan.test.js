@@ -1,14 +1,16 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
-import { saveLoan, deleteLoan, getLoans } from "../../../repositories/loanRepository.js";
-import { createMockFinancialProfile } from "../../../actors/financialProfile/createMockFinancialProfile.js";
-import { generateValidLoan } from "../../../actors/loan/generateValidLoan.js";
+import { pool } from "../../../../db/pool.mjs";
+import { saveLoan, deleteLoan, getLoans } from "../../../../repositories/loanRepository.js";
+import { createMockFinancialProfile } from "../../../../actors/financialProfile/createMockFinancialProfile.js";
+import { generateValidLoan } from "../../../../actors/loan/generateValidLoan.js";
+import { createMockUser } from "../../../../actors/users/createMockUser.js";
 
 describe("deleteLoan(id) – cobertura total", () => {
-  let profile, loan;
+  let baseUser,profile, loan;
 
   beforeEach(async () => {
-    profile = await createMockFinancialProfile();
+    baseUser = await createMockUser(uuidv4());
+    profile = await createMockFinancialProfile({userId:baseUser.id});
     loan = generateValidLoan(profile.id);
     await saveLoan(loan);
   });
