@@ -1,15 +1,17 @@
 import { saveLoan, getLoanById } from "../../../../repositories/loanRepository.js";
-import { createMockFinancialProfile } from "../../../actors/financialProfile/createMockFinancialProfile.js";
-import { generateValidLoan } from "../../../actors/loan/generateValidLoan.js";
-import { pool } from "../../../db/pool.js";
+import { createMockFinancialProfile } from "../../../../actors/financialProfile/createMockFinancialProfile.js";
+import { generateValidLoan } from "../../../../actors/loan/generateValidLoan.js";
+import { pool } from "../../../../db/pool.mjs";
 import { v4 as uuidv4 } from "uuid";
+import { createMockUser } from "../../../../actors/users/createMockUser.js";
 
 describe("getLoanById() — robust validation", () => {
-  let financialProfile;
+  let baseUser,financialProfile;
   let savedLoan;
 
   beforeAll(async () => {
-    financialProfile = await createMockFinancialProfile();
+    baseUser = await createMockUser(uuidv4());
+    financialProfile = await createMockFinancialProfile({userId:baseUser.id});
     const loanData = generateValidLoan(financialProfile.id);
     savedLoan = await saveLoan(loanData);
   });
