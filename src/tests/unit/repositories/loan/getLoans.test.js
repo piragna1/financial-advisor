@@ -1,14 +1,18 @@
 import { getLoans, saveLoan } from "../../../../repositories/loanRepository.js";
-import { createMockFinancialProfile } from "../../../actors/financialProfile/createMockFinancialProfile.js";
-import { generateValidLoan } from "../../../actors/loan/generateValidLoan.js";
-import { pool } from "../../../db/pool.js";
+import { createMockFinancialProfile } from "../../../../actors/financialProfile/createMockFinancialProfile.js";
+import { generateValidLoan } from "../../../../actors/loan/generateValidLoan.js";
+import { pool } from "../../../../db/pool.mjs";
+import { v4 } from "uuid";
+import {createMockUser} from '../../../../actors/users/createMockUser.js'
 
 describe("getLoans() – cobertura total", () => {
-  let profileA, profileB;
+  let baseUserA, baseUserB,profileA, profileB;
 
   beforeAll(async () => {
-    profileA = await createMockFinancialProfile();
-    profileB = await createMockFinancialProfile();
+    baseUserA = await createMockUser(v4());
+    baseUserB = await createMockUser(v4());
+    profileA = await createMockFinancialProfile({userId:baseUserA.id});
+    profileB = await createMockFinancialProfile({userId:baseUserB.id});
 
     const loans = [
       generateValidLoan(profileA.id, {
