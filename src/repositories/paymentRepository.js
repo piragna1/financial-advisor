@@ -9,7 +9,6 @@ import { isValidUUID } from "../tests/helpers/testHelpers.js";
 
 export async function createPayment(payment) {
 
-  console.log('createPayment() payment received:', payment)
 
   // Validación semántica completa
   validatePaymentInput(payment);

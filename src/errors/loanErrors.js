@@ -89,6 +89,11 @@ export const LoanErrors = {
       message: "A loan with this ID already exists",
       status: 409,
     },
+    MISSING_FINANCIAL_PROFILE_ID:{
+      code:"CREATION_MISSING_FINANCIAL_PROFILE_ID",
+      message:"Financial profile id is missing",
+      status:410
+    }
   },
   FIND: {
     NOT_FOUND: {

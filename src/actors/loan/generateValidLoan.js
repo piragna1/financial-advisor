@@ -1,8 +1,10 @@
 import { buildLoanEntity } from "../../entities/loanEntity";
+import { AppError } from "../../errors/AppError";
+import { LoanErrors } from "../../errors/loanErrors";
 
 export function generateValidLoan(financialProfileId, overrides = {}) {
   if (!financialProfileId || typeof financialProfileId !== "string") {
-    throw new Error("generateValidLoan: financialProfileId must be a string");
+    throw new AppError(LoanErrors.CREATION.MISSING_FINANCIAL_PROFILE_ID);
   }
 
   return buildLoanEntity({

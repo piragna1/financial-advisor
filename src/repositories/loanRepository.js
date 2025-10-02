@@ -1,6 +1,6 @@
 import { AppError } from "../errors/AppError.js";
 import { LoanErrors } from "../errors/loanErrors.js";
-import { pool } from "../db/pool.js";
+import { pool } from "../db/pool.mjs";
 import { validateLoanInput } from "../actors/validators/loan/validateLoanInput.js";
 import { validateLoanUpdate } from "../actors/validators/loan/validateLoanUpdate.js";
 
@@ -64,6 +64,13 @@ export async function getLoanById(id) {
 }
 
 export async function updateLoan(id, updates) {
+
+  console.log('updates received:', updates)
+
+  if (!updates || typeof updates !== "object" || Object.keys(updates).length === 0) {
+  throw new Error("No valid fields to update");
+}
+
   if (!id || typeof id !== "string") throw new Error("Invalid loan id");
   validateLoanUpdate(updates);
 
@@ -80,7 +87,6 @@ const columnMap = {
     loanType: "loan_type",
     currency: "currency",
     savedAt: "saved_at",
-    updatedAt: "updated_at",
   };
 
   const fields = [];
@@ -91,12 +97,11 @@ const columnMap = {
     values.push(value);
     index++;
   }
-  values.push(new Date());
   values.push(id);
 
   const query = `
     UPDATE loans
-    SET ${fields.join(", ")}, updated_at = $${index}
+    SET ${fields.join(", ")}
     WHERE id = $${index + 1}
     RETURNING *;
     `;

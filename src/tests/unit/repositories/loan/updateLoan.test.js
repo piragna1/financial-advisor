@@ -1,16 +1,19 @@
 import { saveLoan, updateLoan, getLoanById } from "../../../../repositories/loanRepository.js";
-import { createMockFinancialProfile } from "../../../actors/financialProfile/createMockFinancialProfile.js";
-import { generateValidLoan } from "../../../actors/loan/generateValidLoan.js";
-import { pool } from "../../../db/pool.js";
+import { createMockFinancialProfile } from "../../../../actors/financialProfile/createMockFinancialProfile.js";
+import { generateValidLoan } from "../../../../actors/loan/generateValidLoan.js";
+import { pool } from "../../../../db/pool.mjs";
+import {createMockUser} from '../../../../actors/users/createMockUser.js'
+import { v4 } from "uuid";
 
 describe("updateLoan()", () => {
-  let financialProfile;
   let savedLoan;
 
   beforeAll(async () => {
-    financialProfile = await createMockFinancialProfile();
+    const baseUser = await createMockUser(v4());
+    const financialProfile = await createMockFinancialProfile({userId:baseUser.id});
     const loanData = generateValidLoan(financialProfile.id);
     savedLoan = await saveLoan(loanData);
+    console.log('savedLoan', savedLoan)
   });
 
   afterAll(async () => {
@@ -39,7 +42,8 @@ describe("updateLoan()", () => {
   });
 
   it("should update updated_at timestamp", async () => {
-    const before = new Date(savedLoan.updated_at || savedLoan.saved_at).getTime();
+    console.log('should update updated_at timestamp')
+    const before = new Date(savedLoan.saved_at).getTime();
     const updated = await updateLoan(savedLoan.id, { termYears: 25 });
     const after = new Date(updated.updated_at).getTime();
     expect(after).toBeGreaterThan(before);

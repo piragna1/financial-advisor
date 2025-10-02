@@ -3,10 +3,6 @@ import { PaymentErrors } from "../../../errors/paymentErrors.js";
 
 export function validatePaymentInput(payment, updating = false) {
 
-  console.log('validatePaymentInput')
-  console.log('payment',payment)
-  console.log('updating',updating)
-  
   // Assign default dueDate if missing
   if (!payment.dueDate) {
     const defaultDueDate = new Date();

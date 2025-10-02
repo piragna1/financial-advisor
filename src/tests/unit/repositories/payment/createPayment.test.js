@@ -13,7 +13,6 @@ import { createMockLoan } from "../../../../actors/loan/createMockLoan.js";
 import { createMockScheduleChain } from '../../../../actors/schedule/createMockScheduleChain.js'
 
 describe("createPayment(payment)", () => {
-  let validScheduleId;
   let schedule;
   let basePayment;
 
@@ -27,7 +26,7 @@ describe("createPayment(payment)", () => {
 
     basePayment = {
       id: uuidv4(),
-      scheduleId: validScheduleId,
+      scheduleId: schedule.schedule.id,
       dueDate: new Date("2025-11-01"),
       amount: 500,
       currency: "USD",
@@ -63,15 +62,15 @@ describe("createPayment(payment)", () => {
     const invalid = { ...basePayment, id: "bad-id", scheduleId: "also-bad" };
     await expectErrorCode(
       createPayment(invalid),
-      PaymentErrors.CREATE.INVALID_ID.code
+      PaymentErrors.CREATE.INVALID_ID
     );
   });
 
   it("should reject missing required fields", async () => {
-    const incomplete = { id: uuidv4(), scheduleId: validScheduleId };
+    const incomplete = { id: uuidv4(), scheduleId: schedule.schedule.id };
     await expectErrorCode(
       createPayment(incomplete),
-      PaymentErrors.CREATE.INVALID_DATA.code
+      PaymentErrors.CREATE.INVALID_DATA
     );
   });
 
@@ -79,7 +78,7 @@ describe("createPayment(payment)", () => {
     const invalid = { ...basePayment, status: "unknown" };
     await expectErrorCode(
       createPayment(invalid),
-      PaymentErrors.CREATE.INVALID_DATA.code
+      PaymentErrors.CREATE.INVALID_DATA
     );
   });
 
@@ -87,7 +86,7 @@ describe("createPayment(payment)", () => {
     const invalid = { ...basePayment, method: "paypal" };
     await expectErrorCode(
       createPayment(invalid),
-      PaymentErrors.CREATE.INVALID_DATA.code
+      PaymentErrors.CREATE.INVALID_DATA
     );
   });
 
@@ -95,7 +94,7 @@ describe("createPayment(payment)", () => {
     const invalid = { ...basePayment, amount: -100 };
     await expectErrorCode(
       createPayment(invalid),
-      PaymentErrors.CREATE.INVALID_DATA.code
+      PaymentErrors.CREATE.INVALID_DATA
     );
   });
 
@@ -103,7 +102,7 @@ describe("createPayment(payment)", () => {
     const invalid = { ...basePayment, scheduleId: uuidv4() };
     await expectErrorCode(
       createPayment(invalid),
-      PaymentErrors.CREATE.INVALID_ID.code
+      PaymentErrors.CREATE.INVALID_ID
     );
   });
 
@@ -111,7 +110,7 @@ describe("createPayment(payment)", () => {
     await createPayment(basePayment);
     await expectErrorCode(
       createPayment({ ...basePayment }),
-      PaymentErrors.CREATE.INVALID_ID.code
+      PaymentErrors.CREATE.INVALID_ID
     );
   });
 
@@ -135,6 +134,7 @@ describe("createPayment(payment)", () => {
   });
 
   it("should reject paidAt if status is not 'paid'", async () => {
+    console.log('should reject paidAt if status is not "paid"');
     const invalid = {
       ...basePayment,
       id: uuidv4(),
@@ -143,20 +143,21 @@ describe("createPayment(payment)", () => {
     };
     await expectErrorCode(
       createPayment(invalid),
-      PaymentErrors.CREATE.INVALID_DATA.code
+      PaymentErrors.CREATE.INVALID_DATA
     );
   });
 
 it("should assign default dueDate at least one month ahead if missing", async () => {
 
-  console.log('should assign default dueDate at least one month ahead if missing')
 
   const input = {
+    scheduleId: schedule.id,
     ...schedule,
     ...basePayment,
     id: uuidv4(),
   };
   delete input.dueDate; // omitido a propósito
+
 
   const result = await createPayment(input);
 
