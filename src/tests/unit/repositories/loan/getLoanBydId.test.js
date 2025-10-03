@@ -4,6 +4,7 @@ import { generateValidLoan } from "../../../../actors/loan/generateValidLoan.js"
 import { pool } from "../../../../db/pool.mjs";
 import { v4 as uuidv4 } from "uuid";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("getLoanById() — robust validation", () => {
   let baseUser,financialProfile;
