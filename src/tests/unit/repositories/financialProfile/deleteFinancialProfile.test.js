@@ -1,18 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
+import { pool } from "../../../../db/pool.mjs";
 import {
   createFinancialProfile,
   deleteFinancialProfile
-} from "../../../repositories/financialProfileRepository.js";
+} from "../../../../repositories/financialProfileRepository.js";
+import { createMockUser } from "../../../../actors/users/createMockUser.js";
 
 describe("deleteFinancialProfile(id)", () => {
-  const baseProfile = {
-    id: uuidv4(),
-    userId: uuidv4(),
-    salary: 70000,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  };
 
   beforeEach(async () => {
     await pool.query("DELETE FROM financial_profiles;");
@@ -23,6 +17,14 @@ describe("deleteFinancialProfile(id)", () => {
   });
 
   it("should delete the profile and return it", async () => {
+    const baseUser = await createMockUser(uuidv4());
+  const baseProfile = {
+    id: uuidv4(),
+    userId: baseUser.id,
+    salary: 70000,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
     await createFinancialProfile(baseProfile);
     const result = await deleteFinancialProfile(baseProfile.id);
     expect(result).toMatchObject({
@@ -67,18 +69,41 @@ describe("deleteFinancialProfile(id)", () => {
   });
 
   it("should throw INVALID_ID if ID is an object", async () => {
+    const baseProfile = {
+    id: uuidv4(),
+    userId: baseUser.id,
+    salary: 70000,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
     await expect(deleteFinancialProfile({ id: baseProfile.id })).rejects.toMatchObject({
       code: "FINANCIAL_DELETE_INVALID_ID"
     });
   });
 
   it("should throw INVALID_ID if ID is an array", async () => {
+    const baseProfile = {
+    id: uuidv4(),
+    userId: baseUser.id,
+    salary: 70000,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
     await expect(deleteFinancialProfile([baseProfile.id])).rejects.toMatchObject({
       code: "FINANCIAL_DELETE_INVALID_ID"
     });
   });
 
   it("should trim ID before deleting", async () => {
+    const baseUser = await createMockUser(uuidv4());
+    
+  const baseProfile = {
+    id: uuidv4(),
+    userId: baseUser.id,
+    salary: 70000,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
     await createFinancialProfile(baseProfile);
     const result = await deleteFinancialProfile(`  ${baseProfile.id}  `);
     expect(result.id).toBe(baseProfile.id);

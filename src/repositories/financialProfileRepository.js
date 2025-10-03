@@ -1,4 +1,4 @@
-import { pool } from "../db/pool.js";
+import { pool } from "../db/pool.mjs";
 import { AppError } from "../errors/AppError.js";
 import { FinancialErrors } from "../errors/financialProfileErrors.js";
 
@@ -32,7 +32,7 @@ export async function createFinancialProfile(profile) {
     userId.trim(),
     salary,
     profile.createdAt || new Date(),
-    profile.updatedAt || null
+    profile.updatedAt || new Date()
   ];
 
   const result = await pool.query(query, values);

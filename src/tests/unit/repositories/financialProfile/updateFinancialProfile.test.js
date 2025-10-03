@@ -1,18 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
-import { pool } from "../../../../db/pool.js";
+import { pool } from "../../../../db/pool.mjs";
 import {
   createFinancialProfile,
   updateFinancialProfile
-} from "../../../repositories/financialProfileRepository.js";
+} from "../../../../repositories/financialProfileRepository.js";
+import { createMockUser } from "../../../../actors/users/createMockUser.js";
 
 describe("updateFinancialProfile(id, updates)", () => {
-  const baseProfile = {
-    id: uuidv4(),
-    userId: uuidv4(),
-    salary: 60000,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  };
+  
 
   beforeEach(async () => {
     await pool.query("DELETE FROM financial_profiles;");
@@ -23,6 +18,15 @@ describe("updateFinancialProfile(id, updates)", () => {
   });
 
   it("should update salary and return updated profile", async () => {
+    const baseUser = await createMockUser(uuidv4());
+
+    const baseProfile = {
+    id: uuidv4(),
+    userId: baseUser.id,
+    salary: 60000,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
     await createFinancialProfile(baseProfile);
     const result = await updateFinancialProfile(baseProfile.id, { salary: 75000 });
     expect(result.salary).toBe(75000);
@@ -49,30 +53,74 @@ describe("updateFinancialProfile(id, updates)", () => {
   });
 
   it("should throw INVALID_INPUT if updates is null", async () => {
+    const baseUser = await createMockUser(uuidv4());
+
+    const baseProfile = {
+    id: uuidv4(),
+    userId: baseUser.id,
+    salary: 60000,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
     await expect(updateFinancialProfile(baseProfile.id, null)).rejects.toMatchObject({
       code: "FINANCIAL_UPDATE_INVALID_INPUT"
     });
   });
 
   it("should throw INVALID_INPUT if updates is not an object", async () => {
+    const baseUser = await createMockUser(uuidv4());
+    const baseProfile = {
+    id: uuidv4(),
+    userId: baseUser.id,
+    salary: 60000,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
     await expect(updateFinancialProfile(baseProfile.id, "invalid")).rejects.toMatchObject({
       code: "FINANCIAL_UPDATE_INVALID_INPUT"
     });
   });
 
   it("should throw INVALID_INPUT if updates is an array", async () => {
+    const baseUser = await createMockUser(uuidv4());
+    
+    const baseProfile = {
+    id: uuidv4(),
+    userId: baseUser.id,
+    salary: 60000,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
     await expect(updateFinancialProfile(baseProfile.id, ["salary"])).rejects.toMatchObject({
       code: "FINANCIAL_UPDATE_INVALID_INPUT"
     });
   });
 
   it("should throw NO_VALID_FIELDS if updates has no valid fields", async () => {
+    const baseUser = await createMockUser(uuidv4());
+
+    const baseProfile = {
+    id: uuidv4(),
+    userId: baseUser.id,
+    salary: 60000,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
     await expect(updateFinancialProfile(baseProfile.id, { foo: "bar" })).rejects.toMatchObject({
       code: "FINANCIAL_UPDATE_NO_VALID_FIELDS"
     });
   });
 
   it("should trim ID before updating", async () => {
+    const baseUser = await createMockUser(uuidv4());
+
+    const baseProfile = {
+    id: uuidv4(),
+    userId: baseUser.id,
+    salary: 60000,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
     await createFinancialProfile(baseProfile);
     const result = await updateFinancialProfile(`  ${baseProfile.id}  `, { salary: 90000 });
     expect(result.salary).toBe(90000);
