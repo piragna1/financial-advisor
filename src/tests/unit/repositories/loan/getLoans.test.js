@@ -9,6 +9,7 @@ describe("getLoans() – cobertura total", () => {
   let baseUserA, baseUserB,profileA, profileB;
 
   beforeAll(async () => {
+    resetDatabase();
     baseUserA = await createMockUser(v4());
     baseUserB = await createMockUser(v4());
     profileA = await createMockFinancialProfile({userId:baseUserA.id});
