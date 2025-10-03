@@ -1,3 +1,5 @@
+import { pool } from "../db/pool.mjs";
+import { resetDatabase } from "./helpers/resetDatabase";
 export default async () => {
-  // Si necesitás preparar algo antes de los tests (crear DB, seed, etc.)
+  await resetDatabase();
 };
