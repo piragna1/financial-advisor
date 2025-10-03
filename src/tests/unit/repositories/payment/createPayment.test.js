@@ -17,6 +17,7 @@ describe("createPayment(payment)", () => {
   let basePayment;
 
   beforeEach(async () => {
+    resetDatabase();
     await pool.query("DELETE FROM payments;");
     await pool.query("DELETE FROM schedules;");
     await pool.query("DELETE FROM loans;");
