@@ -10,6 +10,7 @@ describe("getFinancialProfileByUserId(userId)", () => {
 
   beforeEach(async () => {
     await pool.query("DELETE FROM financial_profiles;");
+    resetDatabase();
   });
 
   afterAll(async () => {
