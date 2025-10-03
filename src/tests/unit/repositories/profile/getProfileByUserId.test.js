@@ -10,8 +10,6 @@ import { resetDatabase } from "../../../helpers/resetDatabase.js";
 describe("getProfileByUserId(userId)", () => {
   beforeEach(async () => {
     resetDatabase();
-    await pool.query("DELETE FROM profiles;");
-    await pool.query("DELETE FROM users;");
   });
 
   afterAll(async () => {

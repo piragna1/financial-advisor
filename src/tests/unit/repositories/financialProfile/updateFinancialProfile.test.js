@@ -11,7 +11,6 @@ describe("updateFinancialProfile(id, updates)", () => {
   
 
   beforeEach(async () => {
-    await pool.query("DELETE FROM financial_profiles;");
     resetDatabase();
   });
 

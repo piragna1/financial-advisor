@@ -19,10 +19,6 @@ describe("createPayment(payment)", () => {
 
   beforeEach(async () => {
     resetDatabase();
-    await pool.query("DELETE FROM payments;");
-    await pool.query("DELETE FROM schedules;");
-    await pool.query("DELETE FROM loans;");
-    await pool.query("DELETE FROM financial_profiles;");
 
     schedule = await createMockScheduleChain();
 

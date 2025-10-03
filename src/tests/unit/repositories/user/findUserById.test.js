@@ -14,7 +14,6 @@ describe("findUserById(id)", () => {
 
   beforeEach(async () => {
     resetDatabase();
-    await pool.query("DELETE FROM users;");
   });
 
   afterAll(async () => {

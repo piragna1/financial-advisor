@@ -14,8 +14,6 @@ import { resetDatabase } from "../../../helpers/resetDatabase.js";
 describe("updateSchedule(schedule)", () => {
   beforeEach(async () => {
     resetDatabase();
-    await pool.query("DELETE FROM schedules;");
-    await pool.query("DELETE FROM loans;");
   });
 
   afterAll(async () => {

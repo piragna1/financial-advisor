@@ -7,7 +7,6 @@ import { resetDatabase } from "../../../helpers/resetDatabase.js";
 describe("createFinancialProfile(profile)", () => {
 
   beforeEach(async () => {
-    await pool.query("DELETE FROM financial_profiles;");
     resetDatabase();
   });
 
