@@ -4,6 +4,7 @@ import { generateValidLoan } from "../../../../actors/loan/generateValidLoan.js"
 import { pool } from "../../../../db/pool.mjs";
 import { v4 } from "uuid";
 import {createMockUser} from '../../../../actors/users/createMockUser.js'
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("getLoans() – cobertura total", () => {
   let baseUserA, baseUserB,profileA, profileB;
