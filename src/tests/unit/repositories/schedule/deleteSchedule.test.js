@@ -4,6 +4,7 @@ import { deleteSchedule } from "../../../../repositories/scheduleRepository.js";
 import { createMockScheduleChain } from "../../../../actors/schedule/createMockScheduleChain.js";
 import { ScheduleErrors } from "../../../../errors/scheduleErrors.js";
 import { expectErrorCode } from "../../../helpers/testHelpers.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("deleteSchedule(id)", () => {
   beforeEach(async () => {

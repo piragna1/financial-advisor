@@ -5,6 +5,7 @@ import {
   getProfileById
 } from "../../../../repositories/profileRepository.js";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("getProfileById(id)", () => {
   beforeEach(async () => {

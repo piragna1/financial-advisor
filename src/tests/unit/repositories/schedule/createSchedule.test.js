@@ -7,6 +7,7 @@ import { createMockLoan } from "../../../../actors/loan/createMockLoan.js";
 import {createMockUser} from '../../../../actors/users/createMockUser.js'
 import { ScheduleErrors } from "../../../../errors/scheduleErrors.js";
 import {} from '../../../../actors/schedule/createMockScheduleChain.js'
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 import {
   expectDateEqual,

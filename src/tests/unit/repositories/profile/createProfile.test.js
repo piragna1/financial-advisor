@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { pool } from "../../../../db/pool.mjs";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
 import { createProfile } from "../../../../repositories/profileRepository.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("createProfile(profile)", () => {
   beforeEach(async () => {

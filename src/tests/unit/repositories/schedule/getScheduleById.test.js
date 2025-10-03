@@ -8,6 +8,7 @@ import { createMockLoan } from "../../../../actors/loan/createMockLoan.js";
 import { ScheduleErrors } from "../../../../errors/scheduleErrors.js";
 import { createMockScheduleChain } from "../../../../actors/schedule/createMockScheduleChain.js";
 import { expectErrorCode } from "../../../helpers/testHelpers.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("getScheduleById(id)", () => {
   beforeEach(async () => {

@@ -5,6 +5,7 @@ import { pool } from "../../../../db/pool.mjs";
 import {generateValidLoan} from '../../../../actors/loan/generateValidLoan.js'
 import { v4 } from "uuid";
 import {createMockUser} from '../../../../actors/users/createMockUser.js'
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("saveLoan() — validación completa", () => {
   let financialProfile;

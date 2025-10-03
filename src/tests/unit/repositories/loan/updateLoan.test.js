@@ -8,6 +8,7 @@ import { v4 } from "uuid";
 import { AppError } from "../../../../errors/AppError.js";
 import { LoanErrors } from "../../../../errors/loanErrors.js";
 import { expectErrorCode } from "../../../helpers/testHelpers.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 
 describe("updateLoan() — exhaustive suite", () => {

@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { pool } from "../../../../db/pool.mjs";
 import { findUserByEmail,saveUser } from "../../../../repositories/userRepository.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("findUserByEmail(email)", () => {
   const baseUser = {

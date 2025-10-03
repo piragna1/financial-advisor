@@ -5,6 +5,7 @@ import { PaymentErrors } from "../../../../errors/paymentErrors.js";
 import { expectErrorCode, expectDateEqual, expectNumericEqual } from "../../../helpers/testHelpers.js";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
 import {createMockFinancialProfile} from '../../../../actors/financialProfile/createMockFinancialProfile.js'
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 import {createMockLoan} from '../../../../actors/loan/createMockLoan.js'
 
 describe("getPayment(id) – full suite", () => {

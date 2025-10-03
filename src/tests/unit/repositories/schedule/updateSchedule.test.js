@@ -9,6 +9,7 @@ import { ScheduleErrors } from "../../../../errors/scheduleErrors.js";
 import { createMockScheduleChain } from "../../../../actors/schedule/createMockScheduleChain.js";
 import { expectDateEqual } from "../../../helpers/testHelpers.js";
 import { expectErrorCode } from "../../../helpers/testHelpers.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("updateSchedule(schedule)", () => {
   beforeEach(async () => {

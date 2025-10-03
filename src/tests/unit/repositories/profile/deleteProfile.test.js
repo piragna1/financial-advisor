@@ -5,6 +5,7 @@ import {
   deleteProfile
 } from "../../../../repositories/profileRepository.js";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("deleteProfile(id)", () => {
   beforeEach(async () => {

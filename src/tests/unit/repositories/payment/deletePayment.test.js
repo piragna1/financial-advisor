@@ -7,6 +7,7 @@ import { PaymentErrors } from "../../../../errors/paymentErrors.js";
 import { expectErrorCode } from "../../../helpers/testHelpers.js";
 import { v4 as uuidv4 } from "uuid";
 import { pool } from "../../../../db/pool.mjs";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("deletePayment(id)", () => {
   let userId, profileId, loanId, scheduleId, payment;

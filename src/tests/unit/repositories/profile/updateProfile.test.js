@@ -5,6 +5,7 @@ import {
   updateProfile,
 } from "../../../../repositories/profileRepository.js";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("updateProfile(profile)", () => {
   beforeEach(async () => {

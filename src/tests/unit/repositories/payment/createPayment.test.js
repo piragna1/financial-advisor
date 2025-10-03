@@ -11,6 +11,7 @@ import { createMockUser } from "../../../../actors/users/createMockUser.js";
 import { createMockFinancialProfile } from "../../../../actors/financialProfile/createMockFinancialProfile.js";
 import { createMockLoan } from "../../../../actors/loan/createMockLoan.js";
 import { createMockScheduleChain } from '../../../../actors/schedule/createMockScheduleChain.js'
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("createPayment(payment)", () => {
   let schedule;

@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { pool } from "../../../../db/pool.mjs";
 import { checkEmailAvailability } from "../../../../actors/users/checkEmailAvailability.js";
 import { saveUser } from "../../../../repositories/userRepository.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("checkEmailAvailability(email)", () => {
   const testEmail = "test@example.com";
