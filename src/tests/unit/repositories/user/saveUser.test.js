@@ -13,6 +13,7 @@ describe("saveUser(user)", () => {
   };
 
   beforeEach(async () => {
+    resetDatabase();
     await pool.query("DELETE FROM users;");
   });
 

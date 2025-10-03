@@ -7,6 +7,7 @@ describe("checkEmailAvailability(email)", () => {
   const testEmail = "test@example.com";
 
   beforeEach(async () => {
+    resetDatabase();
     await pool.query("DELETE FROM users;");
   });
 

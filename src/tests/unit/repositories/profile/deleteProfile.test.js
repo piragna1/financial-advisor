@@ -8,6 +8,7 @@ import { createMockUser } from "../../../../actors/users/createMockUser.js";
 
 describe("deleteProfile(id)", () => {
   beforeEach(async () => {
+    resetDatabase();
     await pool.query("DELETE FROM profiles;");
     await pool.query("DELETE FROM users;");
   });

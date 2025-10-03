@@ -5,11 +5,10 @@ import {
   updateProfile,
 } from "../../../../repositories/profileRepository.js";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
-import { ProfileErrors } from "../../../../errors/profileErrors.js";
-import { AppError } from "../../../../errors/appError.js";
 
 describe("updateProfile(profile)", () => {
   beforeEach(async () => {
+    resetDatabase();
     await pool.query("DELETE FROM profiles;");
     await pool.query("DELETE FROM users;");
   });

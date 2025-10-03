@@ -5,6 +5,7 @@ import { createProfile } from "../../../../repositories/profileRepository.js";
 
 describe("createProfile(profile)", () => {
   beforeEach(async () => {
+    resetDatabase();
     await pool.query("DELETE FROM profiles;");
     await pool.query("DELETE FROM users;");
   });
