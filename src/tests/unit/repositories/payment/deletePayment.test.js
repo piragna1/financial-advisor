@@ -12,6 +12,7 @@ describe("deletePayment(id)", () => {
   let userId, profileId, loanId, scheduleId, payment;
 
   beforeEach(async () => {
+    resetDatabase();
     userId = uuidv4();
     profileId = uuidv4();
     loanId = uuidv4();
