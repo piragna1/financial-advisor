@@ -5,6 +5,7 @@ import {
   getFinancialProfileByUserId
 } from "../../../../repositories/financialProfileRepository.js";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("getFinancialProfileByUserId(userId)", () => {
 
