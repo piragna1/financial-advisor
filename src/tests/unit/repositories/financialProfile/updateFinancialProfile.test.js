@@ -5,6 +5,7 @@ import {
   updateFinancialProfile
 } from "../../../../repositories/financialProfileRepository.js";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("updateFinancialProfile(id, updates)", () => {
   
