@@ -4,6 +4,7 @@ import { saveLoan, deleteLoan, getLoans } from "../../../../repositories/loanRep
 import { createMockFinancialProfile } from "../../../../actors/financialProfile/createMockFinancialProfile.js";
 import { generateValidLoan } from "../../../../actors/loan/generateValidLoan.js";
 import { createMockUser } from "../../../../actors/users/createMockUser.js";
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("deleteLoan(id) – cobertura total", () => {
   let baseUser,profile, loan;
