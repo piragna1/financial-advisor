@@ -1,5 +1,4 @@
-import { pool } from "../db/pool.mjs";
-import { resetDatabase } from "./helpers/resetDatabase";
+import { resetDatabase } from "./helpers/resetDatabase.js";
 export default async () => {
   await resetDatabase();
 };
