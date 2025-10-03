@@ -10,6 +10,7 @@ describe("saveLoan() — validación completa", () => {
   let financialProfile;
   let baseUser;
   beforeAll(async () => {
+    resetDatabase();
     baseUser = await createMockUser(v4());
     financialProfile = await createMockFinancialProfile({userId:baseUser.id});
     console.log('finprof:',financialProfile)
