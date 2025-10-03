@@ -2,11 +2,13 @@ import { v4 as uuidv4 } from "uuid";
 import { pool } from "../../../../db/pool.mjs";
 import { createFinancialProfile } from "../../../../repositories/financialProfileRepository.js";
 import {createMockUser} from '../../../../actors/users/createMockUser.js'
+import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("createFinancialProfile(profile)", () => {
 
   beforeEach(async () => {
     await pool.query("DELETE FROM financial_profiles;");
+    resetDatabase();
   });
 
   afterAll(async () => {
