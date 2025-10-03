@@ -7,6 +7,9 @@ import { validateLoanUpdate } from "../actors/validators/loan/validateLoanUpdate
 export async function saveLoan(loanData) {
   validateLoanInput(loanData);
 
+
+  console.log('loguear antes del insert:', loanData)
+
   try {
     const query = `INSERT INTO loans(
             id,
