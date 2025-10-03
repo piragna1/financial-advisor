@@ -9,6 +9,7 @@ describe("deleteLoan(id) – cobertura total", () => {
   let baseUser,profile, loan;
 
   beforeEach(async () => {
+    resetDatabase();
     baseUser = await createMockUser(uuidv4());
     profile = await createMockFinancialProfile({userId:baseUser.id});
     loan = generateValidLoan(profile.id);
