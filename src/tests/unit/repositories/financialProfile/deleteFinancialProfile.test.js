@@ -14,7 +14,6 @@ describe("deleteFinancialProfile(id)", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM financial_profiles;");
   });
 
   it("should delete the profile and return it", async () => {
