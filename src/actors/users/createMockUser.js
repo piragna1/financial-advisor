@@ -7,6 +7,9 @@ export async function createMockUser(
   email = `${userId}@example.com`,
   password = "hashedPassword"
 ) {
+  if (!userId || typeof userId !== "string") {
+  throw new Error("createMockUser requires a valid userId string");
+}
   const trimmedId = userId.trim();
 
   if (!email || typeof email !== "string") {
