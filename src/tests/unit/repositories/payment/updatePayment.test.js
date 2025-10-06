@@ -9,7 +9,6 @@ import { resetDatabase } from "../../../helpers/resetDatabase.js";
 import {createMockUser} from '../../../../actors/users/createMockUser.js'
 
 describe("updatePayment(payment)", () => {
-  let payment;
 
   beforeEach(async () => {
     await resetDatabase();
@@ -17,8 +16,6 @@ describe("updatePayment(payment)", () => {
 
   afterAll(async () => {
   });
-
-  const base = () => normalizePaymentRow(payment);
 
   it("updates amount and method", async () => {
     const updated = await updatePayment({ ...base(), amount: 750, method: "cash" });
@@ -167,8 +164,14 @@ it("rejects non-existent ID", async () => {
   });
 
   it("rejects paidAt in the future", async () => {
+    
+    let base = createPayment({
+      
+    })
+
     const future = new Date();
     future.setDate(future.getDate() + 10);
+
 
     await expectErrorCode(
       updatePayment({ ...base(), status: "paid", paidAt: future }),
