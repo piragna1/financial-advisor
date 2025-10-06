@@ -12,10 +12,6 @@ describe("deleteSchedule(id)", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM schedules;");
-    await pool.query("DELETE FROM loans;");
-    await pool.query("DELETE FROM financial_profiles;");
-    await pool.query("DELETE FROM users;");
   });
 
   it("should delete the schedule and return it", async () => {

@@ -13,8 +13,6 @@ describe("getProfileByUserId(userId)", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM profiles;");
-    await pool.query("DELETE FROM users;");
   });
 
   it("should return the profile for a valid userId", async () => {

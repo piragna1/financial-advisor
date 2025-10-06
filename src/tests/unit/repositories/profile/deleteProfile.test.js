@@ -13,8 +13,6 @@ describe("deleteProfile(id)", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM profiles;");
-    await pool.query("DELETE FROM users;");
   });
 
   it("should delete the profile and return it", async () => {

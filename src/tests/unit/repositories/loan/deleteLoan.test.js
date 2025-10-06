@@ -17,8 +17,6 @@ describe("deleteLoan(id) – cobertura total", () => {
   });
 
   afterEach(async () => {
-    await pool.query("DELETE FROM loans;");
-    await pool.query("DELETE FROM financial_profiles;");
   });
 
   it("should delete a loan by id and return the deleted loan", async () => {

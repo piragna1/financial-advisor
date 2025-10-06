@@ -20,27 +20,9 @@ describe("createPayment(payment)", () => {
   beforeEach(async () => {
     await resetDatabase();
 
-    schedule = await createMockScheduleChain();
-
-    basePayment = {
-      id: uuidv4(),
-      scheduleId: schedule.schedule.id,
-      dueDate: new Date("2025-11-01"),
-      amount: 500,
-      currency: "USD",
-      status: "pending",
-      paidAt: null,
-      method: "bank-transfer",
-      reference: "TX-123",
-      notes: "Initial payment",
-    };
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM payments;");
-    await pool.query("DELETE FROM schedules;");
-    await pool.query("DELETE FROM loans;");
-    await pool.query("DELETE FROM financial_profiles;");
   });
 
   it("should create a payment with valid data", async () => {

@@ -23,9 +23,6 @@ describe("createSchedule(schedule) — exhaustive suite", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM schedules;");
-    await pool.query("DELETE FROM loans;");
-    await pool.query("DELETE FROM financial_profiles;");
   });
 
   async function validBase(userId) {

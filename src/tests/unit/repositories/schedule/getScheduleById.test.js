@@ -16,8 +16,6 @@ describe("getScheduleById(id)", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM schedules;");
-    await pool.query("DELETE FROM loans;");
   });
 
   it("should return the schedule for a valid id", async () => {

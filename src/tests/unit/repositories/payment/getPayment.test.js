@@ -13,44 +13,9 @@ describe("getPayment(id) – full suite", () => {
 
   beforeEach(async () => {
     await resetDatabase();
-
-
-    const userId = uuidv4();
-    const user = await createMockUser(userId);
-    const fp =  await createMockFinancialProfile({userId:user.id});
-    const loanId = uuidv4();
-    const loan = await createMockLoan(loanId, fp.id);
-    
-    scheduleId = uuidv4();
-
-    // await pool.query(
-    //   `INSERT INTO financial_profiles (id, user_id, salary, created_at, updated_at)
-    //    VALUES ($1, $2, 5000, NOW(), NOW())`,
-    //   [financialProfileId, userId]
-    // );
-
-    // await pool.query(
-    //   `INSERT INTO loans (id, financial_profile_id, start_date, term_years, principal,
-    //     interest_rate, payment_frequency_per_year, compounding_frequency_per_year,
-    //     grace_period_months, balloon_payment, loan_type, currency,
-    //     saved_at, updated_at)
-    //    VALUES ($1, $2, '2025-10-01', 5, 10000,
-    //     0.07, 12, 12, 0, null, 'personal', 'USD', NOW(), NOW())`,
-    //   [loanId, financialProfileId]
-    // );
-
-    await pool.query(
-      `INSERT INTO schedules (id, plan, start_date, total_amount, currency, installments, loan_id, created_at, updated_at)
-       VALUES ($1, 'monthly', '2025-10-01', 1000, 'USD', 2, $2, NOW(), NOW())`,
-      [scheduleId, loanId]
-    );
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM payments;");
-    await pool.query("DELETE FROM schedules;");
-    await pool.query("DELETE FROM loans;");
-    await pool.query("DELETE FROM financial_profiles;");
   });
 
   const createValidPayment = async (overrides = {}) => {

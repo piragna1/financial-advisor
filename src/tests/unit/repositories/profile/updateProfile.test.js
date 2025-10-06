@@ -13,8 +13,6 @@ describe("updateProfile(profile)", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM profiles;");
-    await pool.query("DELETE FROM users;");
   });
 
   it("should update all editable fields", async () => {

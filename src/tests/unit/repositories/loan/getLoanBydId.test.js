@@ -17,8 +17,6 @@ describe("getLoanById() — robust validation", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM loans;");
-    await pool.query("DELETE FROM financial_profiles;");
   });
 
   it("should return loan when ID exists", async () => {

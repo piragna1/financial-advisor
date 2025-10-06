@@ -19,16 +19,31 @@ describe("updateLoan() — exhaustive suite", () => {
   });
 
  afterAll(async () => {
-  try {
-    await pool.query("DELETE FROM loans;");
-    await pool.query("DELETE FROM financial_profiles;");
-  } catch (error) {
-    console.error("Teardown failed:", error);
-  }
 });
 
 
   it("updates multiple fields and persists them", async () => {
+
+
+      let baseUser = await createMockUser(v4());
+    let baseFP = await createMockFinancialProfile({userId:baseUser.id});
+    let savedLoan = saveLoan({
+      id:v4(),
+      financialProfileId:baseFP.id,
+      startDate:new Date(),
+      termYears:5,
+      principal:50000,
+      interestRate:0.5,
+      paymentFrequencyPerYear:12,
+      compoundingFrequencyPerYear:4,
+      gracePeriodMonths:0,
+      balloonPayment:5000,
+      loanType:'personal',
+      currency:'USD',
+      savedAt:new Date()
+    })
+
+
     const updates = {
       termYears: 30,
       principal: 250000,
@@ -49,6 +64,25 @@ describe("updateLoan() — exhaustive suite", () => {
   });
 
   it("rejects non-numeric values for numeric fields", async () => {
+
+  let baseUser = await createMockUser(v4());
+    let baseFP = await createMockFinancialProfile({userId:baseUser.id});
+    let savedLoan = saveLoan({
+      id:v4(),
+      financialProfileId:baseFP.id,
+      startDate:new Date(),
+      termYears:5,
+      principal:50000,
+      interestRate:0.5,
+      paymentFrequencyPerYear:12,
+      compoundingFrequencyPerYear:4,
+      gracePeriodMonths:0,
+      balloonPayment:5000,
+      loanType:'personal',
+      currency:'USD',
+      savedAt:new Date()
+    })
+
     await expect(() =>
       updateLoan(savedLoan.id, { interestRate: "five point five" })
     ).rejects.toThrow();
@@ -58,6 +92,26 @@ describe("updateLoan() — exhaustive suite", () => {
   });
 
   it("rejects negative values where not allowed", async () => {
+
+  let baseUser = await createMockUser(v4());
+    let baseFP = await createMockFinancialProfile({userId:baseUser.id});
+    let savedLoan = saveLoan({
+      id:v4(),
+      financialProfileId:baseFP.id,
+      startDate:new Date(),
+      termYears:5,
+      principal:50000,
+      interestRate:0.5,
+      paymentFrequencyPerYear:12,
+      compoundingFrequencyPerYear:4,
+      gracePeriodMonths:0,
+      balloonPayment:5000,
+      loanType:'personal',
+      currency:'USD',
+      savedAt:new Date()
+    })
+
+
     await expect(() =>
       updateLoan(savedLoan.id, { termYears: -10 })
     ).rejects.toThrow();
@@ -67,6 +121,25 @@ describe("updateLoan() — exhaustive suite", () => {
   });
 
   it("rejects unknown fields", async () => {
+
+  let baseUser = await createMockUser(v4());
+    let baseFP = await createMockFinancialProfile({userId:baseUser.id});
+    let savedLoan = saveLoan({
+      id:v4(),
+      financialProfileId:baseFP.id,
+      startDate:new Date(),
+      termYears:5,
+      principal:50000,
+      interestRate:0.5,
+      paymentFrequencyPerYear:12,
+      compoundingFrequencyPerYear:4,
+      gracePeriodMonths:0,
+      balloonPayment:5000,
+      loanType:'personal',
+      currency:'USD',
+      savedAt:new Date()
+    });
+
     await expect(() =>
       updateLoan(savedLoan.id, { unknownField: "oops" })
     ).rejects.toThrow();
@@ -90,11 +163,44 @@ describe("updateLoan() — exhaustive suite", () => {
   });
 
   it("throws for missing update object", async () => {
-
+  let baseUser = await createMockUser(v4());
+    let baseFP = await createMockFinancialProfile({userId:baseUser.id});
+    let savedLoan = saveLoan({
+      id:v4(),
+      financialProfileId:baseFP.id,
+      startDate:new Date(),
+      termYears:5,
+      principal:50000,
+      interestRate:0.5,
+      paymentFrequencyPerYear:12,
+      compoundingFrequencyPerYear:4,
+      gracePeriodMonths:0,
+      balloonPayment:5000,
+      loanType:'personal',
+      currency:'USD',
+      savedAt:new Date()
+    });
     expectErrorCode(updateLoan(savedLoan.id, null), LoanErrors.UPDATE.MISSING_DATA);
   });
 
   it("throws for empty update object", async () => {
+    let baseUser = await createMockUser(v4());
+    let baseFP = await createMockFinancialProfile({userId:baseUser.id});
+    let savedLoan = saveLoan({
+      id:v4(),
+      financialProfileId:baseFP.id,
+      startDate:new Date(),
+      termYears:5,
+      principal:50000,
+      interestRate:0.5,
+      paymentFrequencyPerYear:12,
+      compoundingFrequencyPerYear:4,
+      gracePeriodMonths:0,
+      balloonPayment:5000,
+      loanType:'personal',
+      currency:'USD',
+      savedAt:new Date()
+    });
     expectErrorCode(updateLoan(savedLoan.id, {}), {}, LoanErrors.UPDATE.MISSING_DATA);
   });
 

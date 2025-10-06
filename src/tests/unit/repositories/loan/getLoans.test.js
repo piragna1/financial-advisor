@@ -10,46 +10,9 @@ describe("getLoans() – cobertura total", () => {
 
   beforeAll(async () => {
     await resetDatabase();
-    baseUserA = await createMockUser(v4());
-    baseUserB = await createMockUser(v4());
-    profileA = await createMockFinancialProfile({userId:baseUserA.id});
-    profileB = await createMockFinancialProfile({userId:baseUserB.id});
-
-    const loans = [
-      generateValidLoan(profileA.id, {
-        principal: 10000,
-        interestRate: 5.5,
-        loanType: "personal",
-        currency: "USD",
-        balloonPayment: 0,
-        savedAt: new Date("2025-01-01")
-      }),
-      generateValidLoan(profileA.id, {
-        principal: 20000,
-        interestRate: 0.01, // ✅ válido
-        loanType: "mortgage",
-        currency: "EUR",
-        balloonPayment: 5000,
-        savedAt: new Date("2025-02-01")
-      }),
-      generateValidLoan(profileB.id, {
-        principal: 15000,
-        interestRate: 100,
-        loanType: "auto",
-        currency: "ARS",
-        balloonPayment: null,
-        savedAt: new Date("2025-03-01")
-      })
-    ];
-
-    for (const loan of loans) {
-      await saveLoan(loan);
-    }
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM loans;");
-    await pool.query("DELETE FROM financial_profiles;");
   });
 
   it("should return all loans ordered by savedAt descending", async () => {

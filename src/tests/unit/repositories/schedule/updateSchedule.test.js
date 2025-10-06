@@ -17,8 +17,6 @@ describe("updateSchedule(schedule)", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM schedules;");
-    await pool.query("DELETE FROM loans;");
   });
 
   it("should update all editable fields", async () => {
