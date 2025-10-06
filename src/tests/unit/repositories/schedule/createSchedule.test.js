@@ -19,7 +19,7 @@ import {
 
 describe("createSchedule(schedule) — exhaustive suite", () => {
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {
