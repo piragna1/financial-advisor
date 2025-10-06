@@ -13,7 +13,7 @@ import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("updateSchedule(schedule)", () => {
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {
