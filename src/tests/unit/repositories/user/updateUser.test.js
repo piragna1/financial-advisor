@@ -48,7 +48,9 @@ describe("updateUser(id, updates)", () => {
   it("should update both email and passwordHash", async () => {
     const userId = uuidv4();
     const baseUser = await createMockUser(userId, "original@example.com");
-
+if (!baseUser || !baseUser.id) {
+  throw new Error("createMockUser did not return a valid user");
+}
     const result = await updateUser(baseUser.id, {
       email: "combo@example.com",
       passwordHash: "combo-hash",
