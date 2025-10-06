@@ -80,7 +80,6 @@ export async function findUserById(id) {
 }
 
 export async function updateUser(id, updates) {
-  console.log('updateUser()')
 
   if (!id || typeof id !== "string" || id.trim() === "") {
     throw new AppError(
@@ -91,11 +90,9 @@ export async function updateUser(id, updates) {
 
   id = id.trim();
 
-  console.log('id.trim()',id)
 
   
 const check1 = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
-console.log('checking:',check1.rows);
 
 
   if (!updates || typeof updates !== "object" || Array.isArray(updates)) {
