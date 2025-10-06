@@ -9,7 +9,7 @@ import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("updateProfile(profile)", () => {
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {

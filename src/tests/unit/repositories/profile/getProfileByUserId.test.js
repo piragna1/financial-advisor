@@ -9,7 +9,7 @@ import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("getProfileByUserId(userId)", () => {
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {

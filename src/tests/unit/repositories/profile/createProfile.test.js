@@ -6,7 +6,7 @@ import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("createProfile(profile)", () => {
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {
