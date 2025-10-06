@@ -105,7 +105,6 @@ if (!baseUser || !baseUser.id) {
   });
 
   it("should trim ID before updating", async () => {
-    console.log("should trim ID before updating");
     const baseUser = await createMockUser(uuidv4());
     console.log(baseUser)//suelta undefined aqui
     const result = await updateUser(`           ${baseUser.id}     `, {
