@@ -8,7 +8,7 @@ import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("deleteSchedule(id)", () => {
   beforeEach(async () => {
-    resetDatabase();
+   await resetDatabase();
   });
 
   afterAll(async () => {
