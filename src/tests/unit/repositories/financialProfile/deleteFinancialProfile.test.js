@@ -70,6 +70,9 @@ describe("deleteFinancialProfile(id)", () => {
   });
 
   it("should throw INVALID_ID if ID is an object", async () => {
+
+    const baseUser = await createMockUser(uuidv4());
+
     const baseProfile = {
     id: uuidv4(),
     userId: baseUser.id,
@@ -83,6 +86,9 @@ describe("deleteFinancialProfile(id)", () => {
   });
 
   it("should throw INVALID_ID if ID is an array", async () => {
+
+    const baseUser = await createMockUser(uuidv4());
+
     const baseProfile = {
     id: uuidv4(),
     userId: baseUser.id,
