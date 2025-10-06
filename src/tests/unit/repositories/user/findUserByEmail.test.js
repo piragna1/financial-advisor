@@ -13,7 +13,7 @@ describe("findUserByEmail(email)", () => {
   };
 
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {

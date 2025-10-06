@@ -8,7 +8,7 @@ describe("checkEmailAvailability(email)", () => {
   const testEmail = "test@example.com";
 
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {

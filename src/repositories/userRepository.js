@@ -1,13 +1,11 @@
 // userRepository.js
-import { mockUsers } from "../config/mock.users.db.config.js";
 import { AppError } from "../errors/AppError.js";
 import { AuthErrors } from "../errors/authErrors.js";
-
+import { validate as isUuid } from "uuid";
 import { pool } from "../db/pool.mjs";
 
 export async function saveUser(user) {
-  console.log("user received on saveUser", user);
-
+  console.log('user received in saveUser() method:', user)
   if (!user || typeof user !== "object") throw new Error("Invalid user input");
 
   user.email = user.email.toLocaleLowerCase();
@@ -28,7 +26,6 @@ export async function saveUser(user) {
   ];
 
   const result = await pool.query(query, values);
-  console.log("result:", result);
   return result.rows[0];
 }
 
@@ -56,12 +53,18 @@ export async function findUserByEmail(email) {
   console.log("return value in findUserByEmail()", result.rows);
   return result.rows[0];
 }
+
+
+
 export async function findUserById(id) {
   if (!id || typeof id !== "string" || id.trim() === "") {
-    throw new AppError(
-      AuthErrors.REGISTER.INVALID_INPUT,
-      "User ID must be a valid string"
-    );
+    throw new AppError(AuthErrors.REGISTER.INVALID_INPUT, "User ID must be a valid string");
+  }
+
+  const trimmedId = id.trim();
+
+  if (!isUuid(trimmedId)) {
+    throw new AppError(AuthErrors.REGISTER.INVALID_ID, "Invalid UUID format");
   }
 
   const query = `
@@ -70,7 +73,7 @@ export async function findUserById(id) {
     LIMIT 1;
   `;
 
-  const result = await pool.query(query, [id.trim()]);
+  const result = await pool.query(query, [trimmedId]);
 
   if (result.rowCount === 0) {
     throw new AppError(AuthErrors.LOGIN.USER_NOT_FOUND, "User not found");
@@ -78,7 +81,6 @@ export async function findUserById(id) {
 
   return result.rows[0];
 }
-
 export async function updateUser(id, updates) {
 
   if (!id || typeof id !== "string" || id.trim() === "") {

@@ -13,7 +13,7 @@ describe("deleteUser(id)", () => {
   };
 
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {
