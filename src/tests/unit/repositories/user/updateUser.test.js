@@ -3,6 +3,7 @@ import { pool } from "../../../../db/pool.mjs";
 import { saveUser, updateUser } from "../../../../repositories/userRepository.js";
 import {createMockUser} from '../../../../actors/users/createMockUser.js'
 import { resetDatabase } from "../../../helpers/resetDatabase.js";
+import {hashPassword} from '../../../../utils/auth/hashPassword.js'
 
 describe("updateUser(id, updates)", () => {
   const baseUser = {
@@ -30,11 +31,11 @@ describe("updateUser(id, updates)", () => {
 
   it("should update passwordHash and return updated user", async () => {
 
-
+    console.log('should update passwordHash and return updated user')
 
     const baseUser = await createMockUser(uuidv4())
-
-    const result = await updateUser(baseUser.id, { passwordHash: "new-hash" });
+console.log(hashPassword('new-pass'))
+    const result = await updateUser(baseUser.id, { passwordHash: hashPassword('new-pass') });
 
 
     expect(result.passwordHash).toBe("new-hash");
@@ -101,10 +102,11 @@ describe("updateUser(id, updates)", () => {
 
   it("should trim ID before updating", async () => {
 
+
+    console.log('should trim ID before updating')
     const baseUser = await createMockUser(uuidv4());
 
-    const email = `trimmed-${baseUser.id}@example.com`
-    const result = await updateUser(`  ${baseUser.id}  `, { email: email });
+    const result = await updateUser(`  ${baseUser.id}  `, { email: baseUser.email });
 
 
     expect(result.email).toBe(email);
