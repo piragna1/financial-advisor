@@ -1,4 +1,5 @@
 import { pool } from "../../db/pool.mjs";
+import { hashPassword } from "../../utils/auth/hashPassword";
 
 
 export async function createMockUser(userId, email = `${userId}@example.com`, passwordHash = 'hashedPassword') {
@@ -11,10 +12,11 @@ if (!email || typeof email !== "string") {
   await pool.query(`
     INSERT INTO users (id, email, password_hash, created_at, updated_at)
     VALUES ($1, $2, $3, NOW(), NOW())
-  `, [userId, email, passwordHash]);
+  `, [userId, email, hashPassword(passwordHash)]);
 
   
 const check = await pool.query("SELECT * FROM users WHERE id = $1", [userId]);
+console.log('check',check.rows);
 
 
 
