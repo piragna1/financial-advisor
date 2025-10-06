@@ -33,15 +33,16 @@ describe("updateUser(id, updates)", () => {
   });
 
   it("should update passwordHash and return updated user", async () => {
-    console.log("should update passwordHash and return updated user");
 
     const baseUser = await createMockUser(uuidv4());
-    console.log(hashPassword("new-pass"));
+
+    let newPass = hashPassword("new-pass")
+
     const result = await updateUser(baseUser.id, {
-      passwordHash: hashPassword("new-pass"),
+      passwordHash: newPass,
     });
 
-    expect(result.passwordHash).toBe("new-hash");
+    expect(result.passwordHash).toBe(newPass);
   });
 
   it("should update both email and passwordHash", async () => {
@@ -104,16 +105,11 @@ describe("updateUser(id, updates)", () => {
   it("should trim ID before updating", async () => {
     console.log("should trim ID before updating");
     const baseUser = await createMockUser(uuidv4());
-
-    const check = await pool.query("SELECT * FROM users WHERE id = $1", [
-      userId,
-    ]);
-    console.log("check2", check.rows);
-
-    const result = await updateUser(`  ${baseUser.id}  `, {
+    console.log(baseUser)//suelta undefined aqui
+    const result = await updateUser(`           ${baseUser.id}     `, {
       email: baseUser.email,
     });
 
-    expect(result.email).toBe(email);
+    expect(result.email).toBe(baseUser.email);
   });
 });
