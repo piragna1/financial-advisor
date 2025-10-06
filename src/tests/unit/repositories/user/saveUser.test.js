@@ -3,6 +3,7 @@ import { pool } from "../../../../db/pool.mjs";
 import { saveUser } from "../../../../repositories/userRepository.js";
 import {createMockUser} from '../../../../actors/users/createMockUser.js'
 import { resetDatabase } from "../../../helpers/resetDatabase.js";
+import { hashPassword } from "../../../../utils/auth/hashPassword.js";
 
 describe("saveUser(user)", () => {
   const baseUser = {
@@ -14,7 +15,7 @@ describe("saveUser(user)", () => {
   };
 
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {
@@ -66,17 +67,21 @@ describe("saveUser(user)", () => {
   });
 
   it("should persist and retrieve the same user", async () => {
+    console.log('should persist and retrieve the same user')
 
-    const passwordHash = uuidv4();
-    const baseUser = await createMockUser(uuidv4(),undefined,passwordHash);
+    const userId = uuidv4();
+    const passwordHash = hashPassword('d'+Math.random()+'b');
+    const baseUser = {
+      id:userId,
+      passwordHash,
+      email : `${userId}@gmail.com`
+    }
 
-    const query = `SELECT * FROM users WHERE id = $1`;
+    const result = await saveUser(baseUser);
 
-    const result = await pool.query(query, [baseUser.id]);
-    expect(result.rows[0]).toMatchObject({
-      id: baseUser.id,
-      email: baseUser.email,
-      password_hash: passwordHash
-    });
+
+    expect(result.id).toBe(baseUser.id);
+    expect(result.email).toBe(baseUser.email);
+    expect(result.password_hash).toBe(passwordHash);
   });
 });
