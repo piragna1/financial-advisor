@@ -17,7 +17,6 @@ describe("findUserById(id)", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM users;");
   });
 
   it("should return the user if ID exists", async () => {
