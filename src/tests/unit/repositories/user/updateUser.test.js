@@ -1,9 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
 import { pool } from "../../../../db/pool.mjs";
-import { saveUser, updateUser } from "../../../../repositories/userRepository.js";
-import {createMockUser} from '../../../../actors/users/createMockUser.js'
+import {
+  saveUser,
+  updateUser,
+} from "../../../../repositories/userRepository.js";
+import { createMockUser } from "../../../../actors/users/createMockUser.js";
 import { resetDatabase } from "../../../helpers/resetDatabase.js";
-import {hashPassword} from '../../../../utils/auth/hashPassword.js'
+import { hashPassword } from "../../../../utils/auth/hashPassword.js";
 
 describe("updateUser(id, updates)", () => {
   const baseUser = {
@@ -11,7 +14,7 @@ describe("updateUser(id, updates)", () => {
     email: "update@example.com",
     passwordHash: "hashed-password",
     createdAt: new Date(),
-    updatedAt: null
+    updatedAt: null,
   };
 
   beforeEach(async () => {
@@ -30,87 +33,87 @@ describe("updateUser(id, updates)", () => {
   });
 
   it("should update passwordHash and return updated user", async () => {
+    console.log("should update passwordHash and return updated user");
 
-    console.log('should update passwordHash and return updated user')
-
-    const baseUser = await createMockUser(uuidv4())
-console.log(hashPassword('new-pass'))
-    const result = await updateUser(baseUser.id, { passwordHash: hashPassword('new-pass') });
-
+    const baseUser = await createMockUser(uuidv4());
+    console.log(hashPassword("new-pass"));
+    const result = await updateUser(baseUser.id, {
+      passwordHash: hashPassword("new-pass"),
+    });
 
     expect(result.passwordHash).toBe("new-hash");
   });
 
-
-  
-
-
   it("should update both email and passwordHash", async () => {
-
     const userId = uuidv4();
-    const baseUser = await createMockUser(userId, 'original@example.com');
+    const baseUser = await createMockUser(userId, "original@example.com");
 
     const result = await updateUser(baseUser.id, {
       email: "combo@example.com",
-      passwordHash: "combo-hash"
+      passwordHash: "combo-hash",
     });
-    
+
     expect(result.email).toBe("combo@example.com");
 
     expect(result.passwordHash).toBe("combo-hash");
   });
 
-
-
-
   it("should throw USER_NOT_FOUND if ID does not exist", async () => {
     const fakeId = uuidv4();
-    await expect(updateUser(fakeId, { email: "ghost@example.com" })).rejects.toMatchObject({
-      code: "LOGIN_USER_NOT_FOUND"
+    await expect(
+      updateUser(fakeId, { email: "ghost@example.com" })
+    ).rejects.toMatchObject({
+      code: "LOGIN_USER_NOT_FOUND",
     });
   });
 
   it("should throw INVALID_INPUT if updates is null", async () => {
     await expect(updateUser(baseUser.id, null)).rejects.toMatchObject({
-      code: "REGISTER_INVALID_INPUT"
+      code: "REGISTER_INVALID_INPUT",
     });
   });
 
   it("should throw INVALID_INPUT if updates is not an object", async () => {
     await expect(updateUser(baseUser.id, "invalid")).rejects.toMatchObject({
-      code: "REGISTER_INVALID_INPUT"
+      code: "REGISTER_INVALID_INPUT",
     });
   });
 
   it("should throw INVALID_INPUT if updates is an array", async () => {
     await expect(updateUser(baseUser.id, ["email"])).rejects.toMatchObject({
-      code: "REGISTER_INVALID_INPUT"
+      code: "REGISTER_INVALID_INPUT",
     });
   });
 
   it("should throw INVALID_INPUT if updates has no valid fields", async () => {
-    await expect(updateUser(baseUser.id, { foo: "bar" })).rejects.toMatchObject({
-      code: "REGISTER_INVALID_INPUT"
-    });
+    await expect(updateUser(baseUser.id, { foo: "bar" })).rejects.toMatchObject(
+      {
+        code: "REGISTER_INVALID_INPUT",
+      }
+    );
   });
 
   it("should throw USER_NOT_FOUND if ID is null", async () => {
-    await expect(updateUser(null, { email: "null@example.com" })).rejects.toMatchObject({
-      code: "LOGIN_USER_NOT_FOUND"
+    await expect(
+      updateUser(null, { email: "null@example.com" })
+    ).rejects.toMatchObject({
+      code: "LOGIN_USER_NOT_FOUND",
     });
   });
 
   it("should trim ID before updating", async () => {
-
-
-    console.log('should trim ID before updating')
+    console.log("should trim ID before updating");
     const baseUser = await createMockUser(uuidv4());
 
-    const result = await updateUser(`  ${baseUser.id}  `, { email: baseUser.email });
+    const check = await pool.query("SELECT * FROM users WHERE id = $1", [
+      userId,
+    ]);
+    console.log("check2", check.rows);
 
+    const result = await updateUser(`  ${baseUser.id}  `, {
+      email: baseUser.email,
+    });
 
     expect(result.email).toBe(email);
   });
-
-  
 });
