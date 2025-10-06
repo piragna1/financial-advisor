@@ -12,7 +12,7 @@ describe("getPayment(id) – full suite", () => {
   let scheduleId;
 
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
 
 
     const userId = uuidv4();

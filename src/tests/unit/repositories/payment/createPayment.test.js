@@ -18,7 +18,7 @@ describe("createPayment(payment)", () => {
   let basePayment;
 
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
 
     schedule = await createMockScheduleChain();
 

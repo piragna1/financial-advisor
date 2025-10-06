@@ -12,7 +12,7 @@ describe("updatePayment(payment)", () => {
   let payment;
 
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
 
     const userId = uuidv4();
     await createMockUser(userId);
