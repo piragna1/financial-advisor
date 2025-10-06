@@ -5,12 +5,10 @@ import { createMockLoan } from "../loan/createMockLoan";
 import { createSchedule } from "../../repositories/scheduleRepository";
 
 export async function createMockScheduleChain(scheduleOverrides = {}) {
+
   const user = await createMockUser(uuidv4());
-
   const financialProfile = await createMockFinancialProfile({userId:user.id});
-
   const loan = await createMockLoan(uuidv4(), financialProfile.id);
-
   const schedule = await createSchedule({
     id: scheduleOverrides.id || uuidv4(),
     loanId: loan.id,
@@ -21,6 +19,8 @@ export async function createMockScheduleChain(scheduleOverrides = {}) {
     installments: 8,
     ...scheduleOverrides,
   });
+
+  console.log('returning:', schedule, loan.id, loan, financialProfile, user)
 
   return {
     schedule,

@@ -3,6 +3,10 @@ import { PaymentErrors } from "../../../errors/paymentErrors.js";
 
 export function validatePaymentInput(payment, updating = false) {
 
+
+  console.log('validatePaymentInput, payment:', payment)
+
+
   // Assign default dueDate if missing
   if (!payment.dueDate) {
     const defaultDueDate = new Date();
@@ -13,15 +17,16 @@ export function validatePaymentInput(payment, updating = false) {
 
   // Check for required fields
   if (
-    !payment.id ||
-    !payment.scheduleId ||
-    payment.amount == null ||
-    !payment.currency ||
-    !payment.status ||
+    !payment.id &&
+    !payment.scheduleId &&
+    payment.amount == null &&
+    !payment.currency &&
+    !payment.status &&
     !payment.method
   ) {
 
     if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
+    console.log('throwing 0')
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
 
@@ -29,7 +34,7 @@ export function validatePaymentInput(payment, updating = false) {
   const validStatuses = ["pending", "paid", "failed"];
   if (!validStatuses.includes(payment.status)) {
     if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-
+    console.log('throwing 1')
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
 
@@ -37,6 +42,7 @@ export function validatePaymentInput(payment, updating = false) {
   const validMethods = ["bank-transfer", "cash", "credit-card"];
   if (!validMethods.includes(payment.method)) {
     if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
+    console.log('throwing 2')
 
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
@@ -45,6 +51,7 @@ export function validatePaymentInput(payment, updating = false) {
   if (typeof payment.amount !== "number" || payment.amount < 0) {
     if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
 
+    console.log('throwing 3')
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
 
@@ -52,6 +59,7 @@ export function validatePaymentInput(payment, updating = false) {
   if (typeof payment.currency !== "string" || payment.currency.trim() === "") {
     if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
 
+    console.log('throwing 4')
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
 
@@ -59,6 +67,7 @@ export function validatePaymentInput(payment, updating = false) {
   if (!validCurrencies.includes(payment.currency)) {
     if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
 
+    console.log('throwing 5')
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
 
@@ -67,6 +76,7 @@ export function validatePaymentInput(payment, updating = false) {
     if (payment.paidAt instanceof Date || typeof payment.paidAt === "string") {
       if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
 
+    console.log('throwing 6')
       throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
     }
   }
@@ -76,6 +86,7 @@ export function validatePaymentInput(payment, updating = false) {
     if (payment.paidAt === null || payment.paidAt === undefined) {
       if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
 
+    console.log('throwing 7')
       throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
     }
 
@@ -83,6 +94,7 @@ export function validatePaymentInput(payment, updating = false) {
     if (!(paid instanceof Date) || isNaN(paid)) {
       if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
 
+    console.log('throwing 8')
       throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
     }
 
@@ -98,6 +110,7 @@ export function validatePaymentInput(payment, updating = false) {
   ) {
     if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
 
+    console.log('throwing 9')
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
 
@@ -109,6 +122,7 @@ export function validatePaymentInput(payment, updating = false) {
   ) {
     if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
 
+    console.log('throwing 10')
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
 
@@ -120,7 +134,7 @@ export function validatePaymentInput(payment, updating = false) {
   const dueDate = new Date(payment.dueDate);
   if (dueDate < minDueDate) {
     if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-
+    console.log('throwing 114')
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
 
