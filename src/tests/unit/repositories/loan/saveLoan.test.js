@@ -8,13 +8,8 @@ import {createMockUser} from '../../../../actors/users/createMockUser.js'
 import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("saveLoan() — validación completa", () => {
-  let financialProfile;
-  let baseUser;
   beforeAll(async () => {
     await resetDatabase();
-    baseUser = await createMockUser(v4());
-    financialProfile = await createMockFinancialProfile({userId:baseUser.id});
-    console.log('finprof:',financialProfile)
   });
 
   afterAll(async () => {
