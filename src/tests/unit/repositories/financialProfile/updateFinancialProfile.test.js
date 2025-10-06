@@ -15,7 +15,6 @@ describe("updateFinancialProfile(id, updates)", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM financial_profiles;");
   });
 
   it("should update salary and return updated profile", async () => {
