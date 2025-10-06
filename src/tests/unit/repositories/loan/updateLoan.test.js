@@ -16,10 +16,6 @@ describe("updateLoan() — exhaustive suite", () => {
 
   beforeAll(async () => {
     await resetDatabase();
-    const baseUser = await createMockUser(v4());
-    const financialProfile = await createMockFinancialProfile({ userId: baseUser.id });
-    const loanData = generateValidLoan(financialProfile.id);
-    savedLoan = await saveLoan(loanData);
   });
 
  afterAll(async () => {
