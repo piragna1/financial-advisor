@@ -18,7 +18,6 @@ export async function createMockUser(
   }
 
   const passwordHash = hashPassword(password);
-  console.log('inserting:', {trimmedId, email, passwordHash});
 
   try {
     await pool.query(
@@ -35,7 +34,6 @@ export async function createMockUser(
     if (rows.length === 0) {
       throw new Error(`User with ID ${trimmedId} was not inserted`);
     }
-    console.log("User inserted:", rows[0]);
     return rows[0];
   } catch (error) {
     console.error("createMockUser failed:", error);
