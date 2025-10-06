@@ -13,7 +13,7 @@ describe("findUserById(id)", () => {
   };
 
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {
