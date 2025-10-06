@@ -11,7 +11,7 @@ describe("getLoanById() — robust validation", () => {
   let savedLoan;
 
   beforeAll(async () => {
-    resetDatabase();
+   await  resetDatabase();
     baseUser = await createMockUser(uuidv4());
     financialProfile = await createMockFinancialProfile({userId:baseUser.id});
     const loanData = generateValidLoan(financialProfile.id);
