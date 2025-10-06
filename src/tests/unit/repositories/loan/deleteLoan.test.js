@@ -7,7 +7,6 @@ import { createMockUser } from "../../../../actors/users/createMockUser.js";
 import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("deleteLoan(id) – cobertura total", () => {
-  let baseUser,profile, loan;
 
   beforeEach(async () => {
     await resetDatabase();
