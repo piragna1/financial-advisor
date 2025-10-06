@@ -20,6 +20,8 @@ export async function createMockUser(
   const passwordHash = hashPassword(password);
   console.log("Hashed password:", passwordHash);
 
+  console.log('inserting:', {trimmedId, email, passwordHash});
+
   try {
     await pool.query(
       `
