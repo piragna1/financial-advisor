@@ -117,7 +117,7 @@ export async function updateUser(id, updates) {
         `${key === "passwordHash" ? "password_hash" : key} = $${i + 2}`
     )
     .join(", ");
-  const values = [id.trim(), ...fields.map(([, value]) => value)];
+  const values = [id, ...fields.map(([, value]) => value)];
 
   const query = `
     UPDATE users
