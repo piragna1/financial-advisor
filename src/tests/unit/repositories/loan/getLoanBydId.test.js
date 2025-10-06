@@ -7,8 +7,6 @@ import { createMockUser } from "../../../../actors/users/createMockUser.js";
 import { resetDatabase } from "../../../helpers/resetDatabase.js";
 
 describe("getLoanById() — robust validation", () => {
-  let baseUser,financialProfile;
-  let savedLoan;
 
   beforeAll(async () => {
    await  resetDatabase();
