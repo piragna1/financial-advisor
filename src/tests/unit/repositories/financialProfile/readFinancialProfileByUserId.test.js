@@ -14,7 +14,6 @@ describe("getFinancialProfileByUserId(userId)", () => {
   });
 
   afterAll(async () => {
-    await pool.query("DELETE FROM financial_profiles;");
   });
 
   it("should return the financial profile if userId exists", async () => {
