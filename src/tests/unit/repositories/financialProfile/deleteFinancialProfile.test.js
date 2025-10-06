@@ -10,7 +10,7 @@ import { resetDatabase } from "../../../helpers/resetDatabase.js";
 describe("deleteFinancialProfile(id)", () => {
 
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {

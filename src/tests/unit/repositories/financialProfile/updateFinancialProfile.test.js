@@ -11,7 +11,7 @@ describe("updateFinancialProfile(id, updates)", () => {
   
 
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {

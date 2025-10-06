@@ -10,7 +10,7 @@ import { resetDatabase } from "../../../helpers/resetDatabase.js";
 describe("getFinancialProfileByUserId(userId)", () => {
 
   beforeEach(async () => {
-    resetDatabase();
+    await resetDatabase();
   });
 
   afterAll(async () => {
