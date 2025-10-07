@@ -101,9 +101,9 @@ export function validatePaymentInput(payment, updating = false) {
 
   // Validate reference length
   if (payment.reference.length > 50) {
-    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
+    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_REFERENCE);
     console.log("throwing 9");
-    throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
+    throw new AppError(PaymentErrors.CREATE.INVALID_REFERENCE);
   }
 
   if (!payment.notes || typeof payment.notes !== 'string') payment.notes = '';
@@ -112,10 +112,10 @@ export function validatePaymentInput(payment, updating = false) {
   if (
     payment.notes.length > 255
   ) {
-    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
+    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_NOTES);
 
     console.log("throwing 10");
-    throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
+    throw new AppError(PaymentErrors.CREATE.INVALID_NOTES);
   }
 
   // Validate dueDate is at least one month in the future
