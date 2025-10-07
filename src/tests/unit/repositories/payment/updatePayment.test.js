@@ -23,7 +23,7 @@ describe("updatePayment(payment)", () => {
 
   it("updates amount and method", async () => {
 
-     let base = createPayment({
+     let base =await  createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -47,7 +47,7 @@ describe("updatePayment(payment)", () => {
   it("updates status to paid and sets paidAt", async () => {
 
 
-     let base = createPayment({
+     let base =await  createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -75,7 +75,7 @@ describe("updatePayment(payment)", () => {
   it("updates status to pending and clears paidAt", async () => {
 
 
- let base = createPayment({
+ let base =await  createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -136,7 +136,7 @@ describe("updatePayment(payment)", () => {
   it("accepts paidAt before dueDate (early payment)", async () => {
 
 
- let base = createPayment({
+ let base = await createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -173,7 +173,7 @@ describe("updatePayment(payment)", () => {
 
   it("rejects status: paid without paidAt", async () => {
 
-     let base = createPayment({
+     let base =await  createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -193,7 +193,7 @@ describe("updatePayment(payment)", () => {
 
   it("rejects paidAt with status not paid", async () => {
 
-     let base = createPayment({
+     let base =await createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -216,7 +216,7 @@ describe("updatePayment(payment)", () => {
 
   it("rejects amount negative", async () => {
 
-     let base = createPayment({
+     let base =await createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -237,7 +237,7 @@ describe("updatePayment(payment)", () => {
   it("rejects currency invalid", async () => {
 
 
-     let base = createPayment({
+     let base = await createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -256,7 +256,7 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects method invalid", async () => {
-     let base = createPayment({
+     let base = await createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -275,7 +275,7 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects status invalid", async () => {
-     let base = createPayment({
+     let base = await createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -294,7 +294,7 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects reference > 50 chars", async () => {
-     let base = createPayment({
+     let base = await createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -313,7 +313,7 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects notes > 255 chars", async () => {
-     let base = createPayment({
+     let base = await createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -332,7 +332,7 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects dueDate in the past", async () => {
-     let base = createPayment({
+     let base = await createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
       dueDate: new Date().getDate() + 30,
@@ -360,7 +360,7 @@ describe("updatePayment(payment)", () => {
   const nearDueDate = new Date();
   nearDueDate.setDate(nearDueDate.getDate() + 10); // 10 días adelante
 
-  const payment = createPayment({
+  const payment = await createPayment({
     id: uuidv4(),
     scheduleId: schedule.id,
     dueDate: nearDueDate,
