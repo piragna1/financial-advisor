@@ -88,6 +88,10 @@ export async function getPayment(id) {
 }
 
 export async function updatePayment(payment) {
+  
+  console.log('base payment received', payment)
+
+
   if (!isValidUUID(payment.id)) {
     throw new AppError(PaymentErrors.UPDATE.INVALID_ID);
   }
