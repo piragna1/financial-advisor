@@ -20,7 +20,6 @@ export async function createMockScheduleChain(scheduleOverrides = {}) {
     ...scheduleOverrides,
   });
 
-  console.log('returning:', schedule, loan.id, loan, financialProfile, user)
 
   return {
     schedule,

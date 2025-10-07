@@ -1,4 +1,4 @@
-export function validatePaidAt(paidAt, status) {
+export function validatePaidAt(paidAt, status, updating) {
   // Validate paidAt only allowed if status is 'paid'
   if (status !== "paid") {
     if (paidAt instanceof Date || typeof paidAt === "string") {
@@ -19,9 +19,12 @@ export function validatePaidAt(paidAt, status) {
 
     const paid = new Date(paidAt);
     if (!(paid instanceof Date) || isNaN(paid)) {
-      if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
+      if (updating){
 
-      console.log("throwing 8");
+        console.log("throwing 8");
+        throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
+      } 
+        console.log("throwing 8.1");
       throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
     }
   }

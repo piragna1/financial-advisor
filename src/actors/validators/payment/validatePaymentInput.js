@@ -10,7 +10,6 @@ import { validateAmount } from "./validateAmount.js";
 import { validatePaidAt } from "./validatePaidAt.js";
 
 export function validatePaymentInput(payment, updating = false) {
-  console.log("validatePaymentInput, payment:", payment);
   // Assign default dueDate if missing
   if (!payment.dueDate) {
     const defaultDueDate = new Date();
@@ -35,7 +34,7 @@ export function validatePaymentInput(payment, updating = false) {
   validatePaymentMethod(payment.method);
   validateAmount(payment.amount);
   validateCurrency(payment.currency);
-  validatePaidAt(payment.paidAt, payment.status);  
+  validatePaidAt(payment.paidAt, payment.status, updating);  
   validateReference(payment.reference);
   validateNotes(payment.notes, updating)
   // ✅ No need to reject paidAt before dueDate — early payments are valid
