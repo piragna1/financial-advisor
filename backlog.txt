@@ -1,160 +1,239 @@
-Next: integration of User, Profile, FinancialProfile, Loan, Schedule, Payment models into the system.
 -------------------------------------------------------------
-CHECK EVERY PART OF THE SYSTEM IN ISOLATION:
-
-(All files in here are created. The ones with the cross are not yet tested)
-
 C:.
 │   index.mjs
 │
 ├───actors
 │   ├───auth
-│   │       extractToken.js (✅).
-│   │       tokenExists.js (✅)
-│   │       validatePayloadStrcture.js (✅)
-│   │       verifyPassword.js (✅)
+│   │       extractToken.js
+│   │       tokenExists.js
+│   │       validatePayloadStructure.js
+│   │       verifyPassword.js
+│   │
 │   ├───financialProfile
-│   │       updateFinancialProfileFields.js (❌)
+│   │       createMockFinancialProfile.js
+│   │       generateFinancialProfileId.js
+│   │       updateFinancialProfileFields.js
+│   │
 │   ├───loan
-│   │       createLoan.js (❌)
-│   │       generateLoanId.js (❌)
-│   │       simulateLoan.js (❌)
-│   ├───utils
-│   │       updateProfileFields.js (❌)
+│   │       createLoan.js
+│   │       createMockLoan.js
+│   │       generateLoanId.js
+│   │       generateValidLoan.js
+│   │       simulateLoan.js
+│   │
+│   ├───normalizers
+│   │   └───payment
+│   │           normalizePayment.js
+│   │
+│   ├───payment
+│   │       createMockPaymentChain.js
+│   │
+│   ├───profile
+│   │       updateProfileFields.js
+│   │
 │   ├───retrievers
-│   │       userRetriever.js (✅)🔁
+│   │       userRetriever.js
+│   │
+│   ├───schedule
+│   │       createMockScheduleChain.js
+│   │
+│   ├───users
+│   │       checkEmailAvailability.js
+│   │       createMockUser.js
+│   │       generateValidUser.js
+│   │       normalizeEmail.js
 │   │
 │   ├───utils
-│               hasControlChars.js (✅)
-│               hasEmoji.js (✅) 
-│               hasWhiteSpaces.js (✅)
-│               isNotSymbol.js (✅)
+│   │       hasControlChars.js
+│   │       hasEmoji.js
+│   │       hasWhiteSpaces.js
+│   │       isNotSymbol.js
+│   │
 │   └───validators
-│       └───auth
-│               checkUserUniqueness.js (✅)
-│               loginResponse.js (✅)
-│               validateEmailInput.js (✅)
-│               validateLoginInput.js (✅)
-│               validateName.js (✅)
-│               validatePasswordInput.js (✅) 
-│               validateRegistrationInput.js (✅)
-│       └───loan
-│               validateLoanInput.js (❌)
+│       ├───auth
+│       │       checkUserUniqueness.js
+│       │       loginResponse.js
+│       │       validateEmailInput.js
+│       │       validateLoginInput.js
+│       │       validateName.js
+│       │       validatePasswordInput.js
+│       │       validateRegistrationInput.js
+│       │
+│       ├───loan
+│       │       validateLoanInput.js
+│       │       validateLoanUpdate.js
+│       │
+│       └───payment
+│               validatePaymentId.js
+│               validatePaymentInput.js
+│               validatePaymentUpdate.js
+│
 ├───config
-│       jwtConfig.js (🔁...) ✅
-│       loanConfig.js (✅)
-│       mock.loans.db.config.js (❌)
-│       mock.users.db.config.js (✅)
-│       passwordSecretConfig.js (✅)
-│       registerData.js (✅)
-│       userConfig.js (✅)
+│       jwtConfig.js
+│       loanConfig.js
+│       mock.loans.db.config.js
+│       mock.users.db.config.js
+│       passwordSecretConfig.js
+│       registerData.js
+│       userConfig.js
+│
+├───controllers
+│       authController.mjs
+│       financialProfileController.mjs
+│       loanController.mjs
+│       profileController.mjs
+│       userController.mjs
 │
 ├───db
-│       pool.js (❌)
-├───controllers
-│       authController.mjs (
-          ✅registerUserController(),
-          ✅loginUserController()
-          ) 
-│       financialProfileController.mjs (❌)
-│       loanController.mjs (✅)
-│       profileController.mjs (✅) 
+│   │   initDatabase.js
+│   │   listTables.js
+│   │   models.js
+│   │   pool.mjs
+│   │   runDrop.js
+│   │   runMigrations.js
+│   │   schema.sql
+│   │   setupDatabase.js
+│   │
+│   └───migrations
+│           createFinancialProfilesTable.js
+│           createLoansTable.js
+│           createUsersTable.js
+│           dropTables.js
+│           showTableContent.js
 │
 ├───entities
-│       financialProfileEntity.js (❌)
-│       loanEntity.js (❌)
-│       paymentEntity.js (❌)
-│       profileEntity.js (❌)
-│       scheduleEntity.js (❌)
-│       userEntity.js (✅)
+│       financialProfileEntity.js
+│       loanEntity.js
+│       paymentEntity.js
+│       profileEntity.js
+│       scheduleEntity.js
+│       userEntity.js
 │
 ├───errors
-│       AppError.js (✅)
-│       src\errors\authErrors.js (✅)
-│       errorRegistry.js (✅) 
-│       loanErrors.js (❌) 
-│       mapError.js (✅)
-│       profileErrors.js (✅)
-│       registrationErrors.js (✅)
-│       tokenError.js (✅)
-│       TokenGenerationError.js (✅)
+│       AppError.js
+│       authErrors.js
+│       errorRegistry.js
+│       financialProfileErrors.js
+│       loanErrors.js
+│       mapError.js
+│       paymentErrors.js
+│       profileErrors.js
+│       registrationErrors.js
+│       scheduleErrors.js
+│       tokenError.js
+│       TokenGenerationError.js
+│       userErrors.js
 │
 ├───middlewares
-│       authMiddleware.js (
-            ✅tokenExists() (lives in token.js)
-            ✅extractToken() 
-            ✅verifyToken() 
-            ✅decodePayload() (lives in token.js)
-            ✅isTokenExpired
-        ) ✅
-│       errorHandler.js (✅)
+│       authMiddleware.js
+│       errorHandler.js
 │
 ├───models
-│       financialProfileModel.js (❌)
-│       loanModel.js (✅)
-│       paymentModel.js (✅)
-│       profileModel.js (✅)
-│       scheduleModel.js (✅)
-│       userModel.js (✅)
+│       financialProfileModel.js
+│       loanModel.js
+│       paymentModel.js
+│       profileModel.js
+│       scheduleModel.js
+│       userModel.js
 │
 ├───repositories
-│       loanRepository.js (❌)
-│       userRepo.js (
-  ✅findUserByEmail
-  ✅findUserById
-  ✅saveUser
-  ✅listUsers 
-  ✅deleteUser
-   5 inner functions)
+│       financialProfileRepository.js
+│       loanRepository.js
+│       paymentRepository.js
+│       profileRepository.js
+│       scheduleRepository.js
+│       userRepository.js
 │
 ├───routes
 │   ├───auth
-│   │       auth.route.js (❌)(in order to test this it is necessary to connect the methods to a real database.)
-│   ├───financialProfile
-│   │       financialProfile.route.js (❌) (in order to test this it is necessary to connect the methods to a real database.)
-│   ├───loan
-│   │       loanRoutes.js (❌) (in order to test this it is necessary to connect the methods to a real database.)
+│   │       auth.route.js
 │   │
-│   └───profile
-│           profile.route.js (❌) (in order to test this it is necessary to connect the methods to a real database.)
+│   ├───financialProfile
+│   │       financialProfile.route.js
+│   │
+│   ├───loan
+│   │       loanRoutes.js
+│   │
+│   ├───profile
+│   │       profile.route.js
+│   │
+│   └───user
+│           userRoutes.js
 │
 ├───services
 │   ├───auth
-│   │       registerUser.mjs (✅)
+│   │       registerUser.mjs
 │   │
 │   ├───loan
-│   │       loanCalculator.js (
-  ❌ calculateRepaymentCapacity 🔁
-  ✅calculateMaxLoanCapacity
-  ✅calculateCompoundInterest
-  ✅fixedPaymentCalculation 
-  ✅generateAmortizationSchedule
-  ✅calculateInterestSaving
-  ✅applyEarlyRepayment
-  )
+│   │       loanCalculator.js
 │   │
 │   └───user
-│           generateUserId.js (✅)
-│           user.service.js (✅)
+│           generateUserId.js
+│           user.service.js
 │
 ├───tests
+│   │   globalSetup.mjs
+│   │   globalTeardown.mjs
+│   │
+│   ├───helpers
+│   │   │   resetDatabase.js
+│   │   │   testHelpers.js
+│   │   │
+│   │   └───payment
+│   │           normalizePaymentRow.js
+│   │
+│   └───unit
+│       └───repositories
+│           ├───financialProfile
+│           │       createFinancialProfile.test.js
+│           │       deleteFinancialProfile.test.js
+│           │       readFinancialProfileByUserId.test.js
+│           │       updateFinancialProfile.test.js
+│           │
+│           ├───loan
+│           │       deleteLoan.test.js
+│           │       getLoanBydId.test.js
+│           │       getLoans.test.js
+│           │       saveLoan.test.js
+│           │       updateLoan.test.js
+│           │
+│           ├───payment
+│           │       createPayment.test.js
+│           │       deletePayment.test.js
+│           │       getPayment.test.js
+│           │       updatePayment.test.js
+│           │
+│           ├───profile
+│           │       createProfile.test.js
+│           │       deleteProfile.test.js
+│           │       getProfileById.test.js
+│           │       getProfileByUserId.test.js
+│           │       updateProfile.test.js
+│           │
+│           ├───schedule
+│           │       createSchedule.test.js
+│           │       deleteSchedule.test.js
+│           │       getScheduleById.test.js
+│           │       updateSchedule.test.js
+│           │
+│           └───user
+│                   checkEmailAvailability.test.js
+│                   deleteUser.test.js
+│                   findUserByEmail.test.js
+│                   findUserById.test.js
+│                   saveUser.test.js
+│                   updateUser.test.js
 │
 └───utils
     └───auth
-            comparePasswords.js (✅) 
-            generateSignature.js (✅)
-            hashPassword.js (✅)
-            invalidateUserToken.js (✅)
-            refreshToken.js (✅)
-            token.js (
-              ✅tokenExists
-              ✅verifyToken
-              ✅decodePayload
-              ✅isTokenExpired 
-              ) 
-            tokenIssuer.js (✅)
-            verifyToken.js (✅)
-
+            comparePasswords.js
+            generateSignature.js
+            hashPassword.js
+            invalidateUserToken.js
+            refreshToken.js
+            token.js
+            tokenIssuer.js
+            verifyToken.js
 
 
 -----------------------------------------------------------------------WORKSPACE
@@ -162,19 +241,7 @@ TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
 --------------
 MIRO:https://miro.com/welcomeonboard/WDh1Uy9JWlRjZUJQYkJuaS9wV2l2clVhbE1SVk5FVlVCbk1YSUVLRFhFY2VCdjUyN0h1VVdmNEZ0VFpxVGEwcHNDRjRvM3VHR3l4cUpoREdmRkFjdFp6b3R5dlZINCtLenBvV2s5WFlYb1Nmd0lRaGpVSVBlYkNCOStsZEtleVZyVmtkMG5hNDA3dVlncnBvRVB2ZXBnPT0hdjE=?share_link_id=208190572952
 -----------------------------------------------------------------------DAY'S BACKLOG
-
-- Use POSTMAN for register attempt [✅]
-- Use POSTMAN for login attempt [✅]
-- Use POSTMAN for secured routes access attempt [✅]
-
-Please make sure that before each testing case actors are pure as much as possible. 
-  +registerController[✅]
-  +loginController[✅]
-
---------------
-
 -----------------------------------------------------------------------COURSE TASKS (must)
-
   1-GITHUB REPOSITORY (
     +Table of contents
       *Overview (✅)
@@ -192,11 +259,11 @@ Please make sure that before each testing case actors are pure as much as possib
 
   3-Create DB schema as diagram. In your application u should have at list 3 DB tables.✅
   
-  4-Your task is to implement the database you designed in your diagram by creating executable SQL scripts.❌
+  4-Your task is to implement the database you designed in your diagram by creating executable SQL scripts.✅
     It can be any SQL database. If you don't know which to use - I recommend to use PostgreSQL.
     Requirements:
       4.1-Create a comprehensive SQL script (.sql file) that generates all tables, relationships, indexes,
-        and constraints from your database diagram
+        and constraints from your database diagram ✅
 --------------
 
 -----------------------------------------------------------------------CORE FEATURES
@@ -211,61 +278,9 @@ Please make sure that before each testing case actors are pure as much as possib
         -Input validation (check)
 --------------
 
------------------------------------------------------------------------NOT CORE FEATURES
+-----------------------------------------------------------------------NON CORE FEATURES
 --------------
 Notes:
 - Test that CRUD functinalities are working for loan entity.
 - The only entity that already has the CRUD is loans, the entire others also need it. So that is pending...
 - Test that all CRUD functions are working for every entity.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Roadmap
-.🟢 Día 1: Persistencia y validación de préstamos
-✅ Completado
-
-🟡 Día 2: Lectura y consulta + CRUD de usuarios
-📄 Loans ✅ D2-L1 Repositorio getLoanById(id) [ ] D2-L2 Repositorio getLoans() ordenado por savedAt ✅ D2-L3 Test getLoanById() válido e inválido [ ] D2-L4 Test getLoans() incluye préstamo guardado
-
-👤 Users [ ] D2-U1 Tabla users con id, email, name, created_at [ ] D2-U2 Repositorio saveUser(), getUserById() [ ] D2-U3 Actor validateUserInput() [ ] D2-U4 Test saveUser() válido e inválido [ ] D2-U5 Test getUserById() válido e inexistente
-
-🔵 Día 3: Actualización y eliminación + CRUD de perfiles y pagos
-📄 Loans [ ] D3-L1 Repositorio updateLoan(id, updates) con validación [ ] D3-L2 Repositorio deleteLoan(id) con DELETE real [ ] D3-L3 Test updateLoan() válido e inválido [ ] D3-L4 Test deleteLoan() efectivo e idempotente
-
-🧾 Financial Profiles [ ] D3-F1 Repositorio updateFinancialProfile(id, updates) [ ] D3-F2 Test updateFinancialProfile() válido e inválido
-
-💳 Payments [ ] D3-P1 Tabla payments con id, loan_id, amount, paid_at [ ] D3-P2 Repositorio savePayment(), getPaymentsByLoan() [ ] D3-P3 Actor validatePaymentInput() [ ] D3-P4 Test savePayment() válido e inválido [ ] D3-P5 Test getPaymentsByLoan() incluye pago guardado
-
-🟣 Día 4: Modularidad final + CRUD de schedules
-🧩 Helpers y actores [ ] D4-H1 Actor createMockFinancialProfile() [ ] D4-H2 Actor generateLoanId() y generateFinancialProfileId() [ ] D4-H3 Refactor de tests con beforeAll y helpers [ ] D4-H4 createMockLoan() para setup completo [ ] D4-H5 validateLoanUpdate() para updates parciales [ ] D4-H6 generateValidUser(), generateValidPayment(), etc.
-
-📅 Schedules [ ] D4-S1 Tabla schedules con id, loan_id, due_date, expected_amount [ ] D4-S2 Repositorio saveSchedule(), getScheduleByLoan() [ ] D4-S3 Actor validateScheduleInput() [ ] D4-S4 Test saveSchedule() válido e inválido [ ] D4-S5 Test getScheduleByLoan() incluye cronograma
-
-🎯 Resultado final en 4 días
-
-
-
-
-
-
-
-
-
-CRUD completo para loan, user, profile, payment, schedule
-
-Validación modular por entidad
-
-Tests robustos para cada flujo
-
-Helpers para setup DRY y trazable
