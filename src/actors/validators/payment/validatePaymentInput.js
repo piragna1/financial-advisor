@@ -119,14 +119,13 @@ export function validatePaymentInput(payment, updating = false) {
   }
 
   // Validate dueDate is at least one month in the future
-  const now = new Date();
-  const minDueDate = new Date(now);
-  minDueDate.setDate(minDueDate.getDate() + 20);
+  const minDueDate = new Date();
+  minDueDate.setDate(minDueDate.getMonth() + 1);
 
   const dueDate = new Date(payment.dueDate);
   if (dueDate < minDueDate) {
     if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-    console.log("throwing 114");
+    console.log(`[validateDueDate] Rejecting dueDate: ${dueDate.toISOString()} < ${minDueDate.toISOString()}`);
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
 
