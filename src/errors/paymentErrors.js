@@ -10,6 +10,16 @@ export const PaymentErrors = {
       message: "Missing or invalid payment data",
       status: 400,
     },
+    INVALID_REFERENCE:{
+      code:"CREATE_INVALID_REFERENCE",
+      message: 'Missing or invalid payment reference for creation',
+      status:400
+    },
+    INVALID_NOTES:{
+      code:"CREATE_INVALID_NOTES",
+      message: 'Missing or invalid payment notes for creation',
+      status:400
+    },
   },
   READ: {
     INVALID_ID: {
