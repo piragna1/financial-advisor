@@ -1,4 +1,6 @@
-export function validateStatus(status){
+import { AppError } from "../../../errors/appError";
+
+export function validateStatus(status, updating){
     
       // Validate allowed status values
       const validStatuses = ["pending", "paid", "failed"];
