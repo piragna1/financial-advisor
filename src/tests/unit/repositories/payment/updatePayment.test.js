@@ -354,21 +354,29 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects dueDate less than one month ahead", async () => {
-    
-    let schedule = createMockScheduleChain();
-    let base = createPayment({
-      id: uuidv4(),
-      scheduleId: schedule.schedule.id,
-    });
+  const { schedule } = await createMockScheduleChain();
+  if (!schedule?.id) throw new Error("Failed to create schedule");
 
-    const near = new Date();
-    near.setDate(near.getDate() + 10);
+  const nearDueDate = new Date();
+  nearDueDate.setDate(nearDueDate.getDate() + 10); // 10 días adelante
 
-    await expectErrorCode(
-      updatePayment({ ...base, dueDate: near }),
-      PaymentErrors.UPDATE.INVALID_DATA
-    );
+  const payment = createPayment({
+    id: uuidv4(),
+    scheduleId: schedule.id,
+    dueDate: nearDueDate,
+    amount: 1000,
+    currency: "USD",
+    status: "pending",
+    method: "cash",
+    reference: "",
+    notes: "testing near dueDate",
   });
+
+  await expectErrorCode(
+    updatePayment(payment),
+    PaymentErrors.UPDATE.INVALID_DATA
+  );
+});
 
   it("rejects paidAt in the future", async () => {
     console.log("rejects paidAt in the future");
@@ -398,6 +406,6 @@ describe("updatePayment(payment)", () => {
       updatePayment(base),
       PaymentErrors.UPDATE.INVALID_DATA
     );
-    
+
   });
 });
