@@ -1,6 +1,7 @@
 import { AppError } from "../../../errors/appError.js";
 import { PaymentErrors } from "../../../errors/paymentErrors.js";
 import { validateDueDate } from "./validateDueDate.js";
+import { validateNotes } from "./validateNotes.js";
 
 export function validatePaymentInput(payment, updating = false) {
   console.log("validatePaymentInput, payment:", payment);
@@ -106,19 +107,7 @@ export function validatePaymentInput(payment, updating = false) {
     console.log("throwing 9");
     throw new AppError(PaymentErrors.CREATE.INVALID_REFERENCE);
   }
-
-  if (!payment.notes || typeof payment.notes !== 'string') payment.notes = '';
-
-  // Validate notes length
-  if (
-    payment.notes.length > 255
-  ) {
-    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_NOTES);
-
-    console.log("throwing 10");
-    throw new AppError(PaymentErrors.CREATE.INVALID_NOTES);
-  }
-
+  validateNotes(payment.notes, updating)
   validateDueDate(payment, updating);
   // ✅ No need to reject paidAt before dueDate — early payments are valid
 }
