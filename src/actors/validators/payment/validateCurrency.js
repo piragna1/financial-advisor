@@ -1,7 +1,7 @@
 export function validateCurrency(currency){
     
       // Validate currency format and allowed values
-      if (typeof payment.currency !== "string" || payment.currency.trim() === "") {
+      if (typeof currency !== "string" || currency.trim() === "") {
         if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
     
         console.log("throwing 4");
@@ -9,7 +9,7 @@ export function validateCurrency(currency){
       }
     
       const validCurrencies = ["USD", "ARS", "EUR"];
-      if (!validCurrencies.includes(payment.currency)) {
+      if (!validCurrencies.includes(currency)) {
         if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
     
         console.log("throwing 5");
