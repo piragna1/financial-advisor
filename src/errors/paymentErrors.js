@@ -39,6 +39,11 @@ export const PaymentErrors = {
       message: "Missing or invalid payment data for update",
       status: 400,
     },
+    INVALID_REFERENCE:{
+      code:"UPDATE_INVALID_REFERENCE",
+      message: 'Missing or invalid payment reference for update',
+      status:400
+    },
   },
   DELETE: {
     INVALID_ID: {
