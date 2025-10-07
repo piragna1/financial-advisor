@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors/appError";
-
+import { PaymentErrors } from "../../../errors/paymentErrors";
 
 export function validateNotes(notes, updating = false) {
   if (notes == null) return; // allow null or undefined

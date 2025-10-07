@@ -1,3 +1,4 @@
+import { PaymentErrors } from "../../../errors/paymentErrors";
 import { AppError } from "../../../errors/appError";
 
 export function validateStatus(status, updating){
