@@ -106,10 +106,10 @@ export function validatePaymentInput(payment, updating = false) {
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
 
+  if (!payment.notes || typeof payment.notes !== 'string') payment.notes = '';
+
   // Validate notes length
   if (
-    payment.notes &&
-    typeof payment.notes === "string" &&
     payment.notes.length > 255
   ) {
     if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
