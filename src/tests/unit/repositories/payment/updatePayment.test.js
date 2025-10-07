@@ -365,7 +365,7 @@ describe("updatePayment(payment)", () => {
     near.setDate(near.getDate() + 10);
 
     await expectErrorCode(
-      updatePayment({ ...base(), dueDate: near }),
+      updatePayment({ ...base, dueDate: near }),
       PaymentErrors.UPDATE.INVALID_DATA
     );
   });
