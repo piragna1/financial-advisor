@@ -213,7 +213,7 @@ describe("updatePayment(payment)", () => {
       status: "paid",
       paidAt: new Date().getDay() + 1,
       method: "cash",
-      reference: undefined,
+      reference: '',
       notes: "paid with cash",
     });
 
