@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4, v4 } from "uuid";
 import { pool } from "../../../../db/pool.mjs";
 import {
   createPayment,
@@ -372,12 +372,15 @@ describe("updatePayment(payment)", () => {
 
   it("rejects paidAt in the future", async () => {
     console.log("rejects paidAt in the future");
+
     let { schedule, loanId, loan,financialProfile,user } = await createMockScheduleChain();
+
     if (!schedule) throw new Error("Error while creating a schedule");
-    let base = createPayment({
-      id: uuidv4(),
+
+    let base =await createPayment({
+      id: v4(),
       scheduleId: schedule.id,
-      dueDate: new Date().getDate() + 30,
+      dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // ✅ ,
       amount: 1000,
       currency: "USD",
       status: "paid",
@@ -386,6 +389,7 @@ describe("updatePayment(payment)", () => {
       reference: '',
       notes: "paid with cash",
     });
+
     const future = new Date();
     future.setDate(future.getDate() + 100);
     base.paidAt = future;
@@ -394,5 +398,6 @@ describe("updatePayment(payment)", () => {
       updatePayment(base),
       PaymentErrors.UPDATE.INVALID_DATA
     );
+    
   });
 });
