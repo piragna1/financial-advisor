@@ -1,7 +1,7 @@
 export function validatePaidAt(paidAt, status) {
   // Validate paidAt only allowed if status is 'paid'
-  if (payment.status !== "paid") {
-    if (payment.paidAt instanceof Date || typeof payment.paidAt === "string") {
+  if (status !== "paid") {
+    if (paidAt instanceof Date || typeof paidAt === "string") {
       if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
 
       console.log("throwing 6");
