@@ -44,6 +44,11 @@ export const PaymentErrors = {
       message: 'Missing or invalid payment reference for update',
       status:400
     },
+    INVALID_NOTES:{
+      code:"UPDATE_INVALID_NOTES",
+      message: 'Missing or invalid payment notes for update',
+      status:400
+    },
   },
   DELETE: {
     INVALID_ID: {
