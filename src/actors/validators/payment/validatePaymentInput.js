@@ -1,5 +1,6 @@
 import { AppError } from "../../../errors/appError.js";
 import { PaymentErrors } from "../../../errors/paymentErrors.js";
+import { validateDueDate } from "./validateDueDate.js";
 
 export function validatePaymentInput(payment, updating = false) {
   console.log("validatePaymentInput, payment:", payment);
@@ -118,16 +119,6 @@ export function validatePaymentInput(payment, updating = false) {
     throw new AppError(PaymentErrors.CREATE.INVALID_NOTES);
   }
 
-  // Validate dueDate is at least one month in the future
-  const minDueDate = new Date();
-  minDueDate.setDate(minDueDate.getMonth() + 1);
-
-  const dueDate = new Date(payment.dueDate);
-  if (dueDate < minDueDate) {
-    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-    console.log(`[validateDueDate] Rejecting dueDate: ${dueDate.toISOString()} < ${minDueDate.toISOString()}`);
-    throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
-  }
-
+  validateDueDate(payment, updating);
   // ✅ No need to reject paidAt before dueDate — early payments are valid
 }
