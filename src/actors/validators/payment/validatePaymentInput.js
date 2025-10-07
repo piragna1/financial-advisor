@@ -2,6 +2,11 @@ import { AppError } from "../../../errors/appError.js";
 import { PaymentErrors } from "../../../errors/paymentErrors.js";
 import { validateDueDate } from "./validateDueDate.js";
 import { validateNotes } from "./validateNotes.js";
+import { validateReference } from "./validateReference.js";
+import { validateStatus } from "./validateStatus.js";
+import{validatePaymentMethod} from './validatePaymentMethod.js'
+import { validateCurrency } from "./validateCurrency.js";
+import { validateAmount } from "./validateAmount.js";
 
 export function validatePaymentInput(payment, updating = false) {
   console.log("validatePaymentInput, payment:", payment);
@@ -26,48 +31,10 @@ export function validatePaymentInput(payment, updating = false) {
     console.log("throwing 0");
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
-
-  // Validate allowed status values
-  const validStatuses = ["pending", "paid", "failed"];
-  if (!validStatuses.includes(payment.status)) {
-    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-    console.log("throwing 1");
-    throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
-  }
-
-  // Validate allowed method values
-  const validMethods = ["bank-transfer", "cash", "credit-card"];
-  if (!validMethods.includes(payment.method)) {
-    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-    console.log("throwing 2");
-
-    throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
-  }
-
-  // Validate amount is a non-negative number
-  if (typeof payment.amount !== "number" || payment.amount < 0) {
-    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-
-    console.log("throwing 3");
-    throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
-  }
-
-  // Validate currency format and allowed values
-  if (typeof payment.currency !== "string" || payment.currency.trim() === "") {
-    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-
-    console.log("throwing 4");
-    throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
-  }
-
-  const validCurrencies = ["USD", "ARS", "EUR"];
-  if (!validCurrencies.includes(payment.currency)) {
-    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-
-    console.log("throwing 5");
-    throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
-  }
-
+  validateStatus(payment.status);
+  validatePaymentMethod(payment.method);
+  validateAmount(payment.amount);
+  validateCurrency(payment.currency);
   // Validate paidAt only allowed if status is 'paid'
   if (payment.status !== "paid") {
     if (payment.paidAt instanceof Date || typeof payment.paidAt === "string") {
@@ -78,35 +45,9 @@ export function validatePaymentInput(payment, updating = false) {
     }
   }
 
-  // Validate status 'paid' must include valid paidAt
-  if (payment.status === "paid") {
-    if (payment.paidAt === null || payment.paidAt === undefined) {
-      if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-
-      console.log("throwing 7");
-      throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
-    }
-
-    const paid = new Date(payment.paidAt);
-    if (!(paid instanceof Date) || isNaN(paid)) {
-      if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-
-      console.log("throwing 8");
-      throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
-    }
-
-    const now = new Date();
-  }
-
-  if (typeof payment.reference !== "string" || !payment.reference)
-    payment.reference = "";
-
-  // Validate reference length
-  if (payment.reference.length > 50) {
-    if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_REFERENCE);
-    console.log("throwing 9");
-    throw new AppError(PaymentErrors.CREATE.INVALID_REFERENCE);
-  }
+  
+  
+  validateReference(payment.reference);
   validateNotes(payment.notes, updating)
   validateDueDate(payment, updating);
   // ✅ No need to reject paidAt before dueDate — early payments are valid
