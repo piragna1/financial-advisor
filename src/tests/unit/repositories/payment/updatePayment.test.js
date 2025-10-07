@@ -22,10 +22,11 @@ describe("updatePayment(payment)", () => {
   afterAll(async () => {});
 
   it("updates amount and method", async () => {
+    let {schedule} = await createMockScheduleChain();
 
      let base =await  createPayment({
       id: uuidv4(),
-      scheduleId: schedule.id,
+      scheduleId: schedule.schedule.id,
       dueDate: new Date().getDate() + 30,
       amount: 1000,
       currency: "USD",
@@ -46,6 +47,7 @@ describe("updatePayment(payment)", () => {
 
   it("updates status to paid and sets paidAt", async () => {
 
+    let {schedule} = await createMockScheduleChain();
 
      let base =await  createPayment({
       id: uuidv4(),
@@ -73,11 +75,12 @@ describe("updatePayment(payment)", () => {
     expectDateEqual(updated.paid_at, paidAt);
   });
   it("updates status to pending and clears paidAt", async () => {
+    let {schedule} = await createMockScheduleChain();
 
 
  let base =await  createPayment({
       id: uuidv4(),
-      scheduleId: schedule.id,
+      scheduleId: schedule.schedule.id,
       dueDate: new Date().getDate() + 30,
       amount: 1000,
       currency: "USD",
@@ -134,11 +137,12 @@ describe("updatePayment(payment)", () => {
   });
 
   it("accepts paidAt before dueDate (early payment)", async () => {
+    let {schedule} = await createMockScheduleChain();
 
 
  let base = await createPayment({
       id: uuidv4(),
-      scheduleId: schedule.id,
+      scheduleId: schedule.schedule.id,
       dueDate: new Date().getDate() + 30,
       amount: 1000,
       currency: "USD",
@@ -172,10 +176,11 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects status: paid without paidAt", async () => {
+    let {schedule} = await createMockScheduleChain();
 
      let base =await  createPayment({
       id: uuidv4(),
-      scheduleId: schedule.id,
+      scheduleId: schedule.schedule.id,
       dueDate: new Date().getDate() + 30,
       amount: 1000,
       currency: "USD",
@@ -192,10 +197,11 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects paidAt with status not paid", async () => {
+    let {schedule} = await createMockScheduleChain();
 
      let base =await createPayment({
       id: uuidv4(),
-      scheduleId: schedule.id,
+      scheduleId: schedule.schedule.id,
       dueDate: new Date().getDate() + 30,
       amount: 1000,
       currency: "USD",
@@ -215,10 +221,11 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects amount negative", async () => {
+    let {schedule} = await createMockScheduleChain();
 
      let base =await createPayment({
       id: uuidv4(),
-      scheduleId: schedule.id,
+      scheduleId: schedule.schedule.id,
       dueDate: new Date().getDate() + 30,
       amount: 1000,
       currency: "USD",
@@ -236,10 +243,11 @@ describe("updatePayment(payment)", () => {
 
   it("rejects currency invalid", async () => {
 
+    let {schedule} = await createMockScheduleChain();
 
      let base = await createPayment({
       id: uuidv4(),
-      scheduleId: schedule.id,
+      scheduleId: schedule.schedule.id,
       dueDate: new Date().getDate() + 30,
       amount: 1000,
       currency: "USD",
@@ -256,52 +264,70 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects method invalid", async () => {
-     let base = await createPayment({
-      id: uuidv4(),
-      scheduleId: schedule.id,
-      dueDate: new Date().getDate() + 30,
-      amount: 1000,
-      currency: "USD",
-      status: "paid",
-      paidAt: new Date().getDay() + 1,
-      method: "cash",
-      reference: '',
-      notes: "paid with cash",
-    });
-    await expectErrorCode(
-      updatePayment({ ...base, method: "paypal" }),
-      PaymentErrors.UPDATE.INVALID_DATA
-    );
+  const { schedule } = await createMockScheduleChain();
+  if (!schedule?.id) throw new Error("Failed to create schedule");
+
+  const futureDueDate = new Date();
+  futureDueDate.setDate(futureDueDate.getDate() + 30); // 30 días adelante
+
+  const paidAtDate = new Date(); // fecha válida actual
+
+  const base = await createPayment({
+    id: uuidv4(),
+    scheduleId: schedule.id,
+    dueDate: futureDueDate,
+    amount: 1000,
+    currency: "USD",
+    status: "paid",
+    paidAt: paidAtDate,
+    method: "cash",
+    reference: '',
+    notes: "paid with cash",
   });
 
+  await expectErrorCode(
+    updatePayment({ ...base, method: "paypal" }), // método inválido
+    PaymentErrors.UPDATE.INVALID_DATA
+  );
+});
   it("rejects status invalid", async () => {
-     let base = await createPayment({
-      id: uuidv4(),
-      scheduleId: schedule.id,
-      dueDate: new Date().getDate() + 30,
-      amount: 1000,
-      currency: "USD",
-      status: "paid",
-      paidAt: new Date().getDay() + 1,
-      method: "cash",
-      reference: '',
-      notes: "paid with cash",
-    });
-    await expectErrorCode(
-      updatePayment({ ...base, status: "processing" }),
-      PaymentErrors.UPDATE.INVALID_DATA
-    );
+  const { schedule } = await createMockScheduleChain();
+  if (!schedule?.id) throw new Error("Failed to create schedule");
+
+  const futureDueDate = new Date();
+  futureDueDate.setDate(futureDueDate.getDate() + 30); // 30 días adelante
+
+  const paidAtDate = new Date(); // fecha válida actual
+
+  const base = await createPayment({
+    id: uuidv4(),
+    scheduleId: schedule.id,
+    dueDate: futureDueDate,
+    amount: 1000,
+    currency: "USD",
+    status: "paid",
+    paidAt: paidAtDate,
+    method: "cash",
+    reference: '',
+    notes: "paid with cash",
   });
+
+  await expectErrorCode(
+    updatePayment({ ...base, status: "processing" }), // status inválido
+    PaymentErrors.UPDATE.INVALID_DATA
+  );
+});
 
   it("rejects reference > 50 chars", async () => {
+    let {schedule} = await createMockScheduleChain();
      let base = await createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
-      dueDate: new Date().getDate() + 30,
+      dueDate: new Date(),
       amount: 1000,
       currency: "USD",
       status: "paid",
-      paidAt: new Date().getDay() + 1,
+      paidAt: new Date(),
       method: "cash",
       reference: '',
       notes: "paid with cash",
@@ -313,14 +339,15 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects notes > 255 chars", async () => {
+    let {schedule } = await createMockScheduleChain();
      let base = await createPayment({
       id: uuidv4(),
       scheduleId: schedule.id,
-      dueDate: new Date().getDate() + 30,
+      dueDate: new Date(),
       amount: 1000,
       currency: "USD",
       status: "paid",
-      paidAt: new Date().getDay() + 1,
+      paidAt: new Date(),
       method: "cash",
       reference: '',
       notes: "paid with cash",
@@ -332,26 +359,33 @@ describe("updatePayment(payment)", () => {
   });
 
   it("rejects dueDate in the past", async () => {
-     let base = await createPayment({
-      id: uuidv4(),
-      scheduleId: schedule.id,
-      dueDate: new Date().getDate() + 30,
-      amount: 1000,
-      currency: "USD",
-      status: "paid",
-      paidAt: new Date().getDay() + 1,
-      method: "cash",
-      reference: '',
-      notes: "paid with cash",
-    });
-    const past = new Date();
-    past.setMonth(past.getMonth() - 1);
 
-    await expectErrorCode(
-      updatePayment({ ...base(), dueDate: past }),
-      PaymentErrors.UPDATE.INVALID_DATA
-    );
+
+  const { schedule } = await createMockScheduleChain();
+  if (!schedule?.id) throw new Error("Failed to create schedule");
+
+
+  const pastDate = new Date();
+  pastDate.setDate(pastDate.getDate() - 6); // 6 días atrás
+
+  const payment = await createPayment({
+    id: uuidv4(),
+    scheduleId: schedule.id,
+    dueDate: pastDate,
+    amount: 1000,
+    currency: "USD",
+    status: "paid",
+    paidAt: new Date(), // fecha válida
+    method: "cash",
+    reference: '',
+    notes: "paid with cash",
   });
+
+  await expectErrorCode(
+    updatePayment(payment),
+    PaymentErrors.UPDATE.INVALID_DATA
+  );
+});
 
   it("rejects dueDate less than one month ahead", async () => {
   const { schedule } = await createMockScheduleChain();
