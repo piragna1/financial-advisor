@@ -29,13 +29,13 @@ export function validatePaymentInput(payment, updating = false) {
     console.log("throwing 0");
     throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
-  validateStatus(payment.status);
+  validateStatus(payment.status, updating);
   validateDueDate(payment, updating);
-  validatePaymentMethod(payment.method);
-  validateAmount(payment.amount);
-  validateCurrency(payment.currency);
+  validatePaymentMethod(payment.method, updating);
+  validateAmount(payment.amount, updating);
+  validateCurrency(payment.currency, updating);
   validatePaidAt(payment.paidAt, payment.status, updating);  
-  validateReference(payment.reference);
+  validateReference(payment.reference, updating);
   validateNotes(payment.notes, updating)
   // ✅ No need to reject paidAt before dueDate — early payments are valid
 }

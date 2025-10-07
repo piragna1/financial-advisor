@@ -1,3 +1,6 @@
+import { AppError } from "../../../errors/appError";
+
+
 // src/validators/paymentValidator.js
 export function validateDueDate(dueDate, updating = false) {
   const minDueDate = new Date();

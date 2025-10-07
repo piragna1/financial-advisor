@@ -1,4 +1,6 @@
-export function validatePaymentMethod(method){
+import { AppError } from "../../../errors/appError";
+
+export function validatePaymentMethod(method, updating){
     
       // Validate allowed method values
       const validMethods = ["bank-transfer", "cash", "credit-card"];

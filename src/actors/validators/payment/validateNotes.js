@@ -1,3 +1,6 @@
+import { AppError } from "../../../errors/appError";
+
+
 export function validateNotes(notes, updating = false) {
   if (notes == null) return; // allow null or undefined
 

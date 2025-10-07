@@ -1,4 +1,6 @@
-export function validateReference(reference){
+import { AppError } from "../../../errors/appError";
+
+export function validateReference(reference, updating){
   if (typeof reference !== "string" || !reference)
     reference = "";
 

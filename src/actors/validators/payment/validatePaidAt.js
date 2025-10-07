@@ -1,3 +1,5 @@
+import { AppError } from "../../../errors/appError";
+
 export function validatePaidAt(paidAt, status, updating) {
   // Validate paidAt only allowed if status is 'paid'
   if (status !== "paid") {

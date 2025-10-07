@@ -1,4 +1,5 @@
-export function validateAmount(amount){
+import { AppError } from "../../../errors/appError";
+export function validateAmount(amount, updating){
     // Validate amount is a non-negative number
       if (typeof amount !== "number" || amount < 0) {
         if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);

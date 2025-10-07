@@ -1,4 +1,6 @@
-export function validateCurrency(currency){
+import { AppError } from "../../../errors/appError";
+export function validateCurrency(currency, updating
+){
     
       // Validate currency format and allowed values
       if (typeof currency !== "string" || currency.trim() === "") {
