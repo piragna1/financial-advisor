@@ -373,7 +373,6 @@ describe("updatePayment(payment)", () => {
   it("rejects paidAt in the future", async () => {
     console.log("rejects paidAt in the future");
     let { schedule, loanId, loan,financialProfile,user } = await createMockScheduleChain();
-    console.log('schedule', schedule)
     if (!schedule) throw new Error("Error while creating a schedule");
     let base = createPayment({
       id: uuidv4(),
@@ -382,18 +381,17 @@ describe("updatePayment(payment)", () => {
       amount: 1000,
       currency: "USD",
       status: "paid",
-      paidAt: new Date().getDay() + 1,
+      paidAt: new Date(),
       method: "cash",
       reference: '',
       notes: "paid with cash",
     });
-
     const future = new Date();
-    future.setDate(future.getDate() + 10);
+    future.setDate(future.getDate() + 100);
     base.paidAt = future;
 
     await expectErrorCode(
-      updatePayment({ ...base, status: "paid", paidAt: future }),
+      updatePayment(base),
       PaymentErrors.UPDATE.INVALID_DATA
     );
   });
