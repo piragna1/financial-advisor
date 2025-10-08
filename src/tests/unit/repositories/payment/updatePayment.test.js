@@ -108,6 +108,8 @@ expect(updated.method).not.toBe(base.method);
       reference: "",
       notes: "paid with cash",
     });
+    
+    base = toCamelCasePayment(base);
 
     const dueDate = new Date();
     dueDate.setDate(dueDate.getDate() + 31); // mínimo un mes en el futuro
@@ -117,6 +119,7 @@ expect(updated.method).not.toBe(base.method);
       dueDate,
       amount: 500, // aseguramos tipo numérico
       status: "pending",
+      paidAt:null,
     });
 
     expect(updated.status).toBe("pending");
@@ -195,7 +198,6 @@ expect(updated.method).not.toBe(base.method);
       notes: "paid with cash",
     });
 
-    console.log('base 1', base)
 
     const paidAt = new Date();
     paidAt.setDate(paidAt.getDate() + 21);
@@ -204,7 +206,6 @@ expect(updated.method).not.toBe(base.method);
     dueDate.setDate(dueDate.getDate() + 31); 
 
     base = toCamelCasePayment(base);
-    console.log('base 2', base)
 
     const updated = await updatePayment({
       ...base,
