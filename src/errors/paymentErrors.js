@@ -20,6 +20,11 @@ export const PaymentErrors = {
       message: 'Missing or invalid payment notes for creation',
       status:400
     },
+    INVALID_PAIDAT:{
+      code:"CREATE_INVALID_PAIDAT",
+      message: 'Invalid paidAt value',
+      status:400
+    }
   },
   READ: {
     INVALID_ID: {
@@ -59,6 +64,11 @@ export const PaymentErrors = {
       message: 'Missing or invalid payment notes for update',
       status:400
     },
+    INVALID_PAIDAT:{
+      code:"UPDATE_INVALID_PAIDAT",
+      message: 'Invalid paidAt value',
+      status:400
+    }
   },
   DELETE: {
     INVALID_ID: {
