@@ -10,22 +10,19 @@ import { isValidUUID } from "../tests/helpers/testHelpers.js";
 
 export async function createPayment(payment) {
 
-
-  // Validación semántica completa
   validatePaymentInput(payment);
 
   const { id, scheduleId } = payment;
 
-  // Validación de formato UUID
   if (!isValidUUID(id) || !isValidUUID(scheduleId)) {
     throw new AppError(PaymentErrors.CREATE.INVALID_ID);
   }
 
-  // Validación de existencia de schedule
   const { rows: scheduleRows } = await pool.query(
     "SELECT id FROM schedules WHERE id = $1",
     [scheduleId]
   );
+  
   if (scheduleRows.length === 0) {
     throw PaymentErrors.CREATE.INVALID_ID;
   }
