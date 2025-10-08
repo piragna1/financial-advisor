@@ -5,7 +5,7 @@ C:.
 ├───actors
 │   ├───auth
 │   │       extractToken.js (tested)
-│   │       tokenExists.js 
+│   │       tokenExists.js (testing)
 │   │       validatePayloadStructure.js
 │   │       verifyPassword.js
 │   │
