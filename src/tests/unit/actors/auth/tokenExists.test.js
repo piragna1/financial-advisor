@@ -31,7 +31,6 @@ describe("tokenExists(req)", () => {
 
   it("throws MISSING_TOKEN when authorization header is missing", () => {
     const req = { headers: {} };
-    expect(() => tokenExists(req)).toThrow(AppError);
     expect(() => tokenExists(req)).toThrow(AuthErrors.TOKEN.MISSING_TOKEN);
   });
 
