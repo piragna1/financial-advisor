@@ -44,4 +44,24 @@ describe("extractToken(req)", () => {
     const token = extractToken(req);
     expect(token).toBe("");
   });
+
+it("returns token without 'Bearer ' prefix", () => {
+  const req = {
+    headers: {
+      authorization: "Bearer abc123"
+    }
+  };
+  expect(extractToken(req)).toBe("abc123");
+});
+
+it("returns full header if it doesn't start with 'Bearer '", () => {
+  const req = {
+    headers: {
+      authorization: "Token abc123"
+    }
+  };
+  expect(extractToken(req)).toBe("Token abc123");
+});
+
+
 });
