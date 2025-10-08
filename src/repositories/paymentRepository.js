@@ -89,7 +89,6 @@ export async function getPayment(id) {
 }
 
 export async function updatePayment(payment) {
-console.log('updatePaytment')
 
   if (!isValidUUID(payment.id)) {
     throw new AppError(PaymentErrors.UPDATE.INVALID_ID);
@@ -98,7 +97,6 @@ console.log('updatePaytment')
   validatePaymentUpdate(payment);
 
 payment = toSnakeCasePayment(payment);
-  console.log('base 3', payment)
   const {
     id,
     schedule_id,
