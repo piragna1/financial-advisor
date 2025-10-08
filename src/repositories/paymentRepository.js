@@ -5,6 +5,7 @@ import { validatePaymentUpdate } from "../actors/validators/payment/validatePaym
 import { pool } from "../db/pool.mjs";
 import { AppError } from "../errors/appError.js";
 import { PaymentErrors } from "../errors/paymentErrors.js";
+import { toSnakeCasePayment } from "../helpers/transformers/paymentTransformer.js";
 import { isValidUUID } from "../tests/helpers/testHelpers.js";
 
 export async function createPayment(payment) {
@@ -88,9 +89,7 @@ export async function getPayment(id) {
 }
 
 export async function updatePayment(payment) {
-  
-  console.log('base payment received', payment)
-
+console.log('updatePaytment')
 
   if (!isValidUUID(payment.id)) {
     throw new AppError(PaymentErrors.UPDATE.INVALID_ID);
@@ -98,14 +97,16 @@ export async function updatePayment(payment) {
 
   validatePaymentUpdate(payment);
 
+payment = toSnakeCasePayment(payment);
+  console.log('base 3', payment)
   const {
     id,
-    scheduleId,
-    dueDate,
+    schedule_id,
+    due_date,
     amount,
     currency,
     status,
-    paidAt,
+    paid_at,
     method,
     reference,
     notes,
@@ -126,12 +127,12 @@ export async function updatePayment(payment) {
     RETURNING *`,
     [
       id,
-      scheduleId,
-      dueDate,
+      schedule_id,
+      due_date,
       amount,
       currency,
       status,
-      paidAt,
+      paid_at,
       method,
       reference,
       notes,
