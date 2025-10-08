@@ -12,7 +12,7 @@ export function validatePaidAt(paidAt, status, updating) {
     }
   }
   // Validate status 'paid' must include valid paidAt
-  if (status === "paid") {
+  else if (status === "paid") {
     if (paidAt === null || paidAt === undefined) {
       if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
 
@@ -31,4 +31,11 @@ export function validatePaidAt(paidAt, status, updating) {
       throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
     }
   }
+  else if (status === 'pending')
+    if (updating){
+      if (paidAt) throw new AppError(PaymentErrors.UPDATE.INVALID_PAIDAT);
+    }
+    else{
+      throw new AppError(PaymentErrors.CREATE.INVALID_PAIDAT) ;
+    }
 }
