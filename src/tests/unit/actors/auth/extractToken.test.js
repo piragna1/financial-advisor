@@ -16,7 +16,7 @@ describe("extractToken(req)", () => {
     };
 
     const token = extractToken(req);
-    expect(token).toBe("Bearer abc123");
+    expect(token).toBe("abc123");
   });
 
   it("returns undefined when authorization header is missing", () => {
