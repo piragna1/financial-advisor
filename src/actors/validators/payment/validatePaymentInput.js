@@ -10,6 +10,7 @@ import { validateAmount } from "./validateAmount.js";
 import { validatePaidAt } from "./validatePaidAt.js";
 
 export function validatePaymentInput(payment, updating = false) {
+  console.log('validatePaymentInput, updating:', updating)
   // Assign default dueDate if missing
   if (!payment.dueDate) {
     const defaultDueDate = new Date();
