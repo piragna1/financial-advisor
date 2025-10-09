@@ -82,4 +82,30 @@ export const PaymentErrors = {
       status: 404,
     },
   },
+  AMOUNT: {
+    NOT_A_NUMBER:{
+      code:'AMOUNT_NOT_A_NUMBER',
+      message: 'The amount is not a valid number',
+      status:404
+    },
+    LESS_THAN_ZERO:{
+      code:"AMOUNT_LESS_THAN_ZERO",
+      message:"The amount of the payment is less than zero",
+      status:405
+    },
+  },
+  CURRENCY:{
+    INVALID:{
+      code:"CURRENCY_INVALID",
+      message:'The currency entered is not valid',
+      status:406
+    }
+  },
+  DUE_DATE:{
+    INVALID:{
+      code:'DUE_DATE_INVALID',
+      message:'The due date indicated is not valid',
+      status:407
+    }
+  }
 };
