@@ -30,11 +30,9 @@ C:.
 │   │       userRetriever.js (pending)
 │   │
 │   ├───schedule
-│   │       createMockScheduleChain.js
 │   │
 │   ├───users
-│   │       checkEmailAvailability.js
-│   │       createMockUser.js
+│   │       checkEmailAvailability.js (pending)
 │   │       generateValidUser.js
 │   │       normalizeEmail.js
 │   │
