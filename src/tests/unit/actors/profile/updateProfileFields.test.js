@@ -19,7 +19,7 @@ export function updateProfileFields(profile,updates){
 
 // src/tests/unit/actors/profile/updateProfileFields.test.js
 
-import { updateProfileFields } from "../../../../src/actors/profile/updateProfileFields.js";
+import { updateProfileFields } from "../../../../actors/profile/updateProfileFields.js";
 
 describe("updateProfileFields(profile, updates)", () => {
   it("updates allowed fields correctly", () => {
