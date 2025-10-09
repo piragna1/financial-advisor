@@ -33,7 +33,7 @@ C:.
 │   │
 │   ├───users
 │   │       checkEmailAvailability.js (pending)
-│   │       normalizeEmail.js (testing)
+│   │       normalizeEmail.js (tested)
 │   │
 │   ├───utils
 │   │       hasControlChars.js
