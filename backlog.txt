@@ -33,7 +33,6 @@ C:.
 │   │
 │   ├───users
 │   │       checkEmailAvailability.js (pending)
-│   │       generateValidUser.js
 │   │       normalizeEmail.js
 │   │
 │   ├───utils
