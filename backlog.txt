@@ -27,7 +27,7 @@ C:.
 │   │       updateProfileFields.js (tested)
 │   │
 │   ├───retrievers
-│   │       userRetriever.js
+│   │       userRetriever.js (pending)
 │   │
 │   ├───schedule
 │   │       createMockScheduleChain.js
