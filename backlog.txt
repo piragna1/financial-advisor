@@ -22,7 +22,6 @@ C:.
 │   │           normalizePayment.js (tested)
 │   │
 │   ├───payment
-│   │       createMockPaymentChain.js
 │   │
 │   ├───profile
 │   │       updateProfileFields.js
