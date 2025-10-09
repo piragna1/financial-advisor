@@ -14,8 +14,8 @@ C:.
 │   │       updateFinancialProfileFields.js (tested)
 │   │
 │   ├───loan
-│   │       generateLoanId.js
-│   │       simulateLoan.js
+│   │       generateLoanId.js (tested)
+│   │       simulateLoan.js (pending)
 │   │
 │   ├───normalizers
 │   │   └───payment
