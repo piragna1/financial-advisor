@@ -15,7 +15,7 @@ C:.
 │   │
 │   ├───loan
 │   │       generateLoanId.js (tested)
-│   │       simulateLoan.js (pending)
+│   │       simulateLoan.js (pending. Impure actor)
 │   │
 │   ├───normalizers
 │   │   └───payment
@@ -27,12 +27,12 @@ C:.
 │   │       updateProfileFields.js (tested)
 │   │
 │   ├───retrievers
-│   │       userRetriever.js (pending)
+│   │       userRetriever.js (pending. Impure actor)
 │   │
 │   ├───schedule
 │   │
 │   ├───users
-│   │       checkEmailAvailability.js (pending)
+│   │       checkEmailAvailability.js (pending. Impure actor)
 │   │       normalizeEmail.js (tested)
 │   │
 │   ├───utils
@@ -43,15 +43,15 @@ C:.
 │   │
 │   └───validators
 │       ├───auth
-│       │       loginResponse.js
-│       │       validateEmailInput.js
-│       │       validateLoginInput.js
-│       │       validateName.js
-│       │       validatePasswordInput.js
-│       │       validateRegistrationInput.js
+│       │       loginResponse.js (tested)
+│       │       validateEmailInput.js (tested)
+│       │       validateLoginInput.js (pending. Impure actor)
+│       │       validateName.js (pending. Impure actor)
+│       │       validatePasswordInput.js (pending. Impure actor)
+│       │       validateRegistrationInput.js (pending. Impure actor)
 │       │
 │       ├───loan
-│       │       validateLoanInput.js
+│       │       validateLoanInput.js (testing)
 │       │       validateLoanUpdate.js
 │       │
 │       └───payment
