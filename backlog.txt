@@ -7,7 +7,7 @@ C:.
 │   │       extractToken.js (tested)
 │   │       tokenExists.js (tested)
 │   │       validatePayloadStructure.js (tested)
-│   │       verifyPassword.js
+│   │       verifyPassword.js (tested)
 │   │
 │   ├───financialProfile
 │   │       createMockFinancialProfile.js
