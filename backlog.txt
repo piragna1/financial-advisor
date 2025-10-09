@@ -7,66 +7,66 @@ C:.
 │
 ├───actors
 │   ├───auth
-│   │       extractToken.js (tested)
-│   │       tokenExists.js (tested)
-│   │       validatePayloadStructure.js (tested)
-│   │       verifyPassword.js (tested)
+│   │       extractToken.js (tested)✅
+│   │       tokenExists.js (tested)✅
+│   │       validatePayloadStructure.js (tested)✅
+│   │       verifyPassword.js (tested)✅
 │   │
 │   ├───financialProfile
-│   │       generateFinancialProfileId.js(tested)
-│   │       updateFinancialProfileFields.js(tested)
+│   │       generateFinancialProfileId.js(tested)✅
+│   │       updateFinancialProfileFields.js(tested)✅
 │   │
 │   ├───loan
-│   │       generateLoanId.js(tested)
+│   │       generateLoanId.js(tested)✅
 
-│   │       simulateLoan.js (pending)
+│   │       simulateLoan.js (pending)❌
 │   │
 │   ├───normalizers
 │   │   └───payment
-│   │           normalizePayment.js (tested)
+│   │           normalizePayment.js (tested)✅
 │   │
 │   ├───payment
 │   ├───profile
-│   │       updateProfileFields.js(tested)
+│   │       updateProfileFields.js(tested)✅
 │   │
 │   ├───retrievers
 
-│   │       userRetriever.js (pending)
+│   │       userRetriever.js (pending)❌
 │   │
 │   ├───schedule
 │   ├───users
 
-│   │       checkEmailAvailability.js (pending)
+│   │       checkEmailAvailability.js (pending)❌
 
-│   │       normalizeEmail.js(tested)
+│   │       normalizeEmail.js(tested)✅
 │   │
 │   ├───utils
-│   │       hasControlChars.js(tested)
-│   │       hasEmoji.js(tested)
-│   │       hasWhiteSpaces.js(tested)
-│   │       isNotSymbol.js(tested)
+│   │       hasControlChars.js(tested)✅
+│   │       hasEmoji.js(tested)✅
+│   │       hasWhiteSpaces.js(tested)✅
+│   │       isNotSymbol.js(tested)✅
 │   │
 │   └───validators
 │       ├───auth
-│       │       loginResponse.js(tested)
-│       │       validateEmailInput.js(tested)
+│       │       loginResponse.js(tested)✅
+│       │       validateEmailInput.js(tested)✅
 
-│       │       validateLoginInput.js(pending)
-│       │       validateName.js(pending)
-│       │       validatePasswordInput.js(pending)
-│       │       validateRegistrationInput.js(pending)
-│       │       validateToken.js(pending)
+│       │       validateLoginInput.js(pending)❌
+│       │       validateName.js(pending)❌
+│       │       validatePasswordInput.js(pending)❌
+│       │       validateRegistrationInput.js(pending)❌
+│       │       validateToken.js(pending)❌
 │       │
 │       ├───loan
-│       │       validateLoanInput.js(tested)
+│       │       validateLoanInput.js(tested)✅
 │       │
 │       └───payment
-│               validateAmount.js(tested)
-│               validateCurrency.js(tested)
-│               validateDueDate.js(tested) 
-│               validateNotes.js(testing)--------
-│               validatePaidAt.js(pending)
-│               validatePaymentId.js(pending)
+│               validateAmount.js(tested)✅
+│               validateCurrency.js(tested)✅
+│               validateDueDate.js(tested) ✅
+│               validateNotes.js(tested)✅
+│               validatePaidAt.js(testing)✅ 
+│               validatePaymentId.js(pending)❌ <--------
 │               validatePaymentInput.js(pending)
 │               validatePaymentMethod.js(pending)
 │               validatePaymentUpdate.js(pending)
