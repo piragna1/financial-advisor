@@ -10,7 +10,7 @@ C:.
 │   │       verifyPassword.js (tested)
 │   │
 │   ├───financialProfile
-│   │       generateFinancialProfileId.js
+│   │       generateFinancialProfileId.js (tested)
 │   │       updateFinancialProfileFields.js
 │   │
 │   ├───loan
