@@ -19,7 +19,7 @@ C:.
 │   │
 │   ├───normalizers
 │   │   └───payment
-│   │           normalizePayment.js
+│   │           normalizePayment.js (tested)
 │   │
 │   ├───payment
 │   │       createMockPaymentChain.js
