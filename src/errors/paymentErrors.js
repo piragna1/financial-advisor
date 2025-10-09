@@ -107,5 +107,24 @@ export const PaymentErrors = {
       message:'The due date indicated is not valid',
       status:407
     }
+  },
+  NOTES:{
+    NOT_A_STRING:{
+      code:'NOTES_NOT_A_STRING',
+      message:'Notes received are not valid',
+      status:408
+    },
+    CAPACITY_EXCEEDED:{
+      code:'NOTES_CAPACITY_EXCEEDED',
+      message:'Notes have exceeded the maximum capacity of characters',
+      status:409
+    },
+  },
+  PAID_AT:{
+    INVALID:{
+      code:'PAID_AT_INVALID',
+      message: 'Paid at value is not valid',
+      status:410
+    }
   }
 };
