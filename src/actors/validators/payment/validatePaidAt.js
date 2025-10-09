@@ -1,41 +1,24 @@
-import { PaymentErrors } from "../../../errors/paymentErrors";
 import { AppError } from "../../../errors/appError";
+import { PaymentErrors } from "../../../errors/paymentErrors";
 
-export function validatePaidAt(paidAt, status, updating) {
-  // Validate paidAt only allowed if status is 'paid'
+export function validatePaidAt(paidAt, status) {
   if (status !== "paid") {
-    if (paidAt instanceof Date || typeof paidAt === "string") {
-      if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-
-      console.log("throwing 6");
+    if (
+      paidAt instanceof Date ||
+      typeof paidAt === "string" ||
+      typeof paidAt === "number"
+    ) {
       throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
     }
+    return;
   }
-  // Validate status 'paid' must include valid paidAt
-  else if (status === "paid") {
-    if (paidAt === null || paidAt === undefined) {
-      if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
 
-      console.log("throwing 7");
-      throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
-    }
-
-    const paid = new Date(paidAt);
-    if (!(paid instanceof Date) || isNaN(paid)) {
-      if (updating){
-
-        console.log("throwing 8");
-        throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-      } 
-        console.log("throwing 8.1");
-      throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
-    }
+  if (paidAt === null || paidAt === undefined) {
+    throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
   }
-  else if (status === 'pending')
-    if (updating){
-      if (paidAt) throw new AppError(PaymentErrors.UPDATE.INVALID_PAIDAT);
-    }
-    else{
-      throw new AppError(PaymentErrors.CREATE.INVALID_PAIDAT) ;
-    }
+
+  const paid = new Date(paidAt);
+  if (isNaN(paid.getTime())) {
+    throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
+  }
 }
