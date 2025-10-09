@@ -43,7 +43,6 @@ C:.
 │   │
 │   └───validators
 │       ├───auth
-│       │       checkUserUniqueness.js
 │       │       loginResponse.js
 │       │       validateEmailInput.js
 │       │       validateLoginInput.js
