@@ -3,13 +3,12 @@ import { AppError } from "../../../errors/appError";
 
 // src/validators/paymentValidator.js
 export function validateDueDate(dueDate) {
-  const minDueDate = new Date();
-  minDueDate.setDate(minDueDate.getDate() + 20);
-
   if (dueDate == null) {
     throw new AppError(PaymentErrors.DUE_DATE.INVALID);
   }
 
+  const minDueDate = new Date();
+  minDueDate.setDate(minDueDate.getDate() + 20);
   let parsed;
 
   if (typeof dueDate === "string" || dueDate instanceof Date) {
