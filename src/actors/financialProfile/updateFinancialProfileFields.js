@@ -8,7 +8,7 @@ export function updateFinancialProfileFields(profile,updates){
             sanitized[key] = updates[key];
         }
     };
-    if (Object.keys(sanitized) === 0 )
+    if (Object.keys(sanitized).length == 0 )
         throw new AppError(FinancialErrors.UPDATE.NO_VALID_FIELDS);
 
     return {
