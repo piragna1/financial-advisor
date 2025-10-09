@@ -1,3 +1,5 @@
+import { FinancialErrors } from "../../errors/financialProfileErrors";
+import {AppError} from '../../errors/AppError.js';
 export function updateFinancialProfileFields(profile,updates){
     const allowed = ['salary'];
     const sanitized = {};
@@ -7,7 +9,7 @@ export function updateFinancialProfileFields(profile,updates){
         }
     };
     if (Object.keys(sanitized) === 0 )
-        throw new Error('No valid financial fields to update');
+        throw new AppError(FinancialErrors.UPDATE.NO_VALID_FIELDS);
 
     return {
         ...profile,
