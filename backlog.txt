@@ -11,7 +11,7 @@ C:.
 │   │
 │   ├───financialProfile
 │   │       generateFinancialProfileId.js (tested)
-│   │       updateFinancialProfileFields.js
+│   │       updateFinancialProfileFields.js (tested)
 │   │
 │   ├───loan
 │   │       createLoan.js
