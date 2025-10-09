@@ -5,13 +5,13 @@ export function updateFinancialProfileFields(profile,updates){
         if (key in updates){
             sanitized[key] = updates[key];
         }
-    }
+    };
     if (Object.keys(sanitized) === 0 )
-        throw new Error('No valid financial fields to update')
+        throw new Error('No valid financial fields to update');
 
     return {
         ...profile,
         ...sanitized,
         updatedAt:Date.now()
     };
-}
+};
