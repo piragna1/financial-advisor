@@ -16,7 +16,6 @@ C:.
 │   ├───loan
 │   │       createMockLoan.js
 │   │       generateLoanId.js
-│   │       generateValidLoan.js
 │   │       simulateLoan.js
 │   │
 │   ├───normalizers
