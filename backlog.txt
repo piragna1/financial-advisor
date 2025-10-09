@@ -36,8 +36,8 @@ C:.
 │   │       normalizeEmail.js (tested)
 │   │
 │   ├───utils
-│   │       hasControlChars.js
-│   │       hasEmoji.js
+│   │       hasControlChars.js (tested)
+│   │       hasEmoji.js 
 │   │       hasWhiteSpaces.js
 │   │       isNotSymbol.js
 │   │
