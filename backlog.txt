@@ -39,7 +39,7 @@ C:.
 │   │       hasControlChars.js (tested)
 │   │       hasEmoji.js (tested)
 │   │       hasWhiteSpaces.js (tested)
-│   │       isNotSymbol.js
+│   │       isNotSymbol.js (tested)
 │   │
 │   └───validators
 │       ├───auth
