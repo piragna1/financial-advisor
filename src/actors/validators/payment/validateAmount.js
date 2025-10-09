@@ -1,11 +1,12 @@
-import { PaymentErrors } from "../../../errors/paymentErrors";
-import { AppError } from "../../../errors/appError";
-export function validateAmount(amount, updating){
-    // Validate amount is a non-negative number
-      if (typeof amount !== "number" || amount < 0) {
-        if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-    
-        console.log("throwing 3");
-        throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
-      }
+import { AppError } from "../../../errors/appError.js";
+import { PaymentErrors } from "../../../errors/paymentErrors.js";
+export function validateAmount(amount) {
+  // Validate amount is a non-negative number
+
+  if (typeof amount !== 'number' || isNaN(amount))
+    throw new AppError(PaymentErrors.AMOUNT.NOT_A_NUMBER);
+
+  if (amount < 0) {
+    throw new AppError(PaymentErrors.AMOUNT.LESS_THAN_ZERO);
+  }
 }
