@@ -38,7 +38,7 @@ C:.
 │   ├───utils
 │   │       hasControlChars.js (tested)
 │   │       hasEmoji.js (tested)
-│   │       hasWhiteSpaces.js (testing)
+│   │       hasWhiteSpaces.js (tested)
 │   │       isNotSymbol.js
 │   │
 │   └───validators

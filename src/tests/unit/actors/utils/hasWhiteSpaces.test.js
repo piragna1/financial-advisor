@@ -5,7 +5,7 @@
 
 // src/tests/unit/utils/hasWhiteSpaces.test.js
 
-import { hasWhiteSpaces } from "../../../src/utils/hasWhiteSpaces.js";
+import { hasWhiteSpaces } from "../../../../actors/utils/hasWhiteSpaces.js";
 
 describe("hasWhiteSpaces(input)", () => {
   it("returns true for space character", () => {
