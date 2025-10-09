@@ -1,18 +1,24 @@
 import { PaymentErrors } from "../../../errors/paymentErrors";
 import { AppError } from "../../../errors/appError";
 
-
 // src/validators/paymentValidator.js
-export function validateDueDate(dueDate, updating = false) {
+export function validateDueDate(dueDate) {
   const minDueDate = new Date();
   minDueDate.setDate(minDueDate.getDate() + 20);
 
-  const parsed = new Date(dueDate);
-  if (parsed < minDueDate) {
-    const errorCode = updating
-      ? PaymentErrors.UPDATE.INVALID_DATA
-      : PaymentErrors.CREATE.INVALID_DATA;
+  if (dueDate == null) {
+    throw new AppError(PaymentErrors.DUE_DATE.INVALID);
+  }
 
-    throw new AppError(errorCode, "dueDate must be at least 20 days ahead");
+  let parsed;
+
+  if (typeof dueDate === "string" || dueDate instanceof Date) {
+    parsed = new Date(dueDate);
+  } else {
+    throw new AppError(PaymentErrors.DUE_DATE.INVALID);
+  }
+
+  if (isNaN(parsed.getTime()) || parsed < minDueDate) {
+    throw new AppError(PaymentErrors.DUE_DATE.INVALID);
   }
 }
