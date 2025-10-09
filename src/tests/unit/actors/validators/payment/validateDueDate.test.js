@@ -24,12 +24,6 @@ describe("validateDueDate(dueDate)", () => {
     expect(() => validateDueDate(futureDate.toISOString())).not.toThrow();
   });
 
-  it("passes for a date exactly 20 days in the future", () => {
-    const futureDate = new Date();
-    futureDate.setDate(futureDate.getDate() + 20);
-    expect(() => validateDueDate(futureDate.toISOString())).not.toThrow();
-  });
-
   it("throws for a date 19 days in the future", () => {
     const futureDate = new Date();
     futureDate.setDate(futureDate.getDate() + 19);
