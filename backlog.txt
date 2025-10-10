@@ -18,7 +18,7 @@ C:.
 │   │       
 │   ├───loan
 │   │       generateLoanId.js✅
-│   │       simulateLoan.js
+│   │       simulateLoan.js❌
 │   │       
 │   ├───normalizers
 │   │   └───payment
@@ -29,11 +29,11 @@ C:.
 │   │       updateProfileFields.js✅
 │   │
 │   ├───retrievers
-│   │       userRetriever.js
+│   │       userRetriever.js❌
 │   │
 │   ├───schedule
 │   ├───users
-│   │       checkEmailAvailability.js
+│   │       checkEmailAvailability.js❌
 │   │       normalizeEmail.js✅
 │   │
 │   ├───utils
@@ -49,7 +49,7 @@ C:.
 │       │       validateLoginInput.js❌
 │       │       validateName.js❌
 │       │       validatePasswordInput.js❌
-│       │       validateRegistrationInput.js
+│       │       validateRegistrationInput.js❌
 │       │       validateToken.js✅
 │       │
 │       ├───loan
