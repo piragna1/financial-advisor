@@ -1,6 +1,6 @@
 import { validatePaymentMethod } from "../../../../../actors/validators/payment/validatePaymentMethod.js";
-import { AppError } from "../../../../../errors/appError.js";
 import { PaymentErrors } from "../../../../../errors/paymentErrors.js";
+import { AppError } from "../../../../../errors/AppError.js";
 
 
 describe("validatePaymentMethod(method, updating)", () => {
