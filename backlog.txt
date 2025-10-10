@@ -79,7 +79,7 @@ C:.
 │       mock.loans.db.config.js
 │       mock.users.db.config.js
 │       passwordSecretConfig.js
-│       registerData.js <--------
+│       registerData.js
 │       userConfig.js
 │
 ├───controllers❌
@@ -107,8 +107,8 @@ C:.
 │           showTableContent.js
 │
 ├───entities
-│       financialProfileEntity.js
-│       loanEntity.js
+│       financialProfileEntity.js✅ 
+│       loanEntity.js <--------
 │       paymentEntity.js
 │       profileEntity.js
 │       scheduleEntity.js
