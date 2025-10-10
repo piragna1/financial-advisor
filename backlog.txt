@@ -71,25 +71,25 @@ C:.
 │               validatePaymentMethod.js(tested)✅ 
 │               validatePaymentUpdate.js(pending)❌
 │               validateReference.js(tested)✅
-│               validateStatus.js(pending) <--------
+│               validateStatus.js(pending)✅
 │
-├───config
+├───config❌
 │       jwtConfig.js
 │       loanConfig.js
 │       mock.loans.db.config.js
 │       mock.users.db.config.js
 │       passwordSecretConfig.js
-│       registerData.js
+│       registerData.js <--------
 │       userConfig.js
 │
-├───controllers
+├───controllers❌
 │       authController.mjs
 │       financialProfileController.mjs
 │       loanController.mjs
 │       profileController.mjs
 │       userController.mjs
 │
-├───db
+├───db❌
 │   │   initDatabase.js
 │   │   listTables.js
 │   │   models.js
@@ -99,7 +99,7 @@ C:.
 │   │   schema.sql
 │   │   setupDatabase.js
 │   │
-│   └───migrations
+│   └───migrations❌
 │           createFinancialProfilesTable.js
 │           createLoansTable.js
 │           createUsersTable.js
@@ -114,7 +114,7 @@ C:.
 │       scheduleEntity.js
 │       userEntity.js
 │
-├───errors
+├───errors❌
 │       AppError.js
 │       authErrors.js
 │       errorRegistry.js
@@ -137,7 +137,7 @@ C:.
 │       authMiddleware.js
 │       errorHandler.js
 │
-├───models
+├───models❌
 │       financialProfileModel.js
 │       loanModel.js
 │       paymentModel.js
@@ -153,7 +153,7 @@ C:.
 │       scheduleRepository.js
 │       userRepository.js
 │
-├───routes
+├───routes❌
 │   ├───auth
 │   │       auth.route.js
 │   │
@@ -180,7 +180,7 @@ C:.
 │           generateUserId.js
 │           user.service.js
 │
-├───tests
+├───tests❌
 │   │   globalSetup.mjs
 │   │   globalTeardown.mjs
 │   │
