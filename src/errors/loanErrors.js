@@ -129,6 +129,23 @@ export const LoanErrors = {
       message: "The id received is not valid",
       status:413
     },
+  },
+  BALLOON_PAYMENT:{
+    MISSING:{
+      code:"BALLOON_PAYMENT_MISSING",
+      message:"Balloon payment is missing",
+      status:414
+    },
+    NEGATIVE:{
+      code:"BALLON_PAYMENT_NEGATIVE",
+      message:"Balloon payment must be a positive number",
+      status:415
+    },
+    NOT_A_NUMBER:{
+      code:"BALLON_PAYMENT_NOT_A_NUMBER",
+      message:"Balloon payment must be a number",
+      status:416
+    }
   }
 
 };
