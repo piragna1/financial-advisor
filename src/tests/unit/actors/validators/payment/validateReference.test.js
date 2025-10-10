@@ -13,8 +13,8 @@
 // }
 
 import { validateReference } from "../../../../../actors/validators/payment/validateReference.js";
-import { AppError } from "../../../../../errors/appError";
 import { PaymentErrors } from "../../../../../errors/paymentErrors";
+import { AppError } from "../../../../../errors/AppError.js";
 
 
 describe("validateReference(reference, updating)", () => {
@@ -63,7 +63,6 @@ describe("validateReference(reference, updating)", () => {
         });
 
         it("throws CREATE.INVALID_REFERENCE for non-string input with length > 50 after coercion", () => {
-            console.log('throws CREATE.INVALID_REFERENCE for non-string input with length > 50 after coercion')
             const ref = { toString: () => "x".repeat(60) };
             expect(() => validateReference(ref, false)).not.toThrow();
         });
