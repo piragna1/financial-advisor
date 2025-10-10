@@ -1,3 +1,14 @@
+import { validateStartDate } from "./validateStartDate.js";
+import { validateTermYears } from "./validateTermYears.js";
+import { validatePrincipal } from './validatePrincipal.js'
+import { validateInterestRate } from './validateInterestRate.js'
+import { validatePaymentFrequencyPerYear } from "./validatePaymentFrequencyPerYear.js";
+import { validateCompoundingFrequencyPerYear } from "./validateCompoundingFrequencyPerYear.js";
+import { validateGracePeriodMonths } from "./validateGracePeriodMonths.js";
+import { validateBalloonPayment } from "./validateBalloonPayment.js";
+import { validateLoanType } from "./validateLoanType.js";
+import { validateCurrency } from "./validateCurrency.js";
+
 // validators/validateLoanData.js
 export function validateLoanInput(loanData) {
   //not nullish and object
@@ -15,74 +26,33 @@ export function validateLoanInput(loanData) {
   )
     throw new Error("Financial profile ID must be a string");
 
-    //startDate instance of date and .getTime() returns a number
-  if (
-    !(loanData.startDate instanceof Date) ||
-    isNaN(loanData.startDate.getTime())
-  )
-    throw new Error("startDate must be a valid Date object");
+  //startDate instance of date and .getTime() returns a number
+  validateStartDate(loanData.startDate);
 
-    //termyears is number
-  if (typeof loanData.termYears !== "number" || isNaN(loanData.termYears))
-    throw new Error("termYears must be a valid number");
+  //termyears is number
+  validateTermYears(loanData.termYears);
 
   //principal is a number
-  if (typeof loanData.principal !== "number" || isNaN(loanData.principal))
-    throw new Error("Principal must be a valid number");
+  validatePrincipal(loanData.principal);
 
   //interest rate is a number
-  if (typeof loanData.interestRate !== "number" || loanData.interestRate <= 0)
-    throw new Error("Interest rate must be a positive number");
+  validateInterestRate(loanData.interestRate);
 
   //payment frequency per year is a number greater than 0
-  if (
-    typeof loanData.paymentFrequencyPerYear !== "number" ||
-    loanData.paymentFrequencyPerYear <= 0
-  )
-    throw new Error("Payment frequency must be a positive number");
+  validatePaymentFrequencyPerYear(loanData.paymentFrequencyPerYear);
 
-    // compounding frequency per year is a number greater than zero
-  if (
-    typeof loanData.compoundingFrequencyPerYear !== "number" ||
-    loanData.compoundingFrequencyPerYear <= 0
-  )
-    throw new Error("Compounding frequency must be a positive number");
+  // compounding frequency per year is a number greater than zero
+  validateCompoundingFrequencyPerYear(loanData.compoundingFrequencyPerYear);
 
+  //grace period months is a number greater than zero
+  validateGracePeriodMonths(loanData.gracePeriodMonths);
 
-    //grace period months is a number greater than zero
-  if (
-    typeof loanData.gracePeriodMonths !== "number" ||
-    loanData.gracePeriodMonths < 0
-  )
-    throw new Error("Grace period must be zero or positive");
+  //balloon payment is a number greater than zero
+  validateBalloonPayment(loanData.baloonPayment);
 
-    //balloon payment is a number greater than zero
-  if (
-    loanData.balloonPayment !== null &&
-    (typeof loanData.balloonPayment !== "number" || loanData.balloonPayment < 0)
-  )
-    throw new Error("Balloon payment must be zero or positive");
+  //allowed types for loan types
+  validateLoanType(loanData.loanType);
 
-    //allowed types for loan types
-  const allowedLoanTypes = [
-    "personal",
-    "mortgage",
-    "auto",
-    "education",
-    "business",
-  ];
-
-  //loanType is an allowed type and a string
-  if (
-    typeof loanData.loanType !== "string" ||
-    !allowedLoanTypes.includes(loanData.loanType.toLowerCase())
-  )
-    throw new Error(`Unsupported loan type: ${loanData.loanType}`);
-
-    //currency is a 3-letter ISO code.
-  if (
-    typeof loanData.currency !== "string" ||
-    !/^[A-Z]{3}$/.test(loanData.currency)
-  )
-    throw new Error("Currency must be a 3-letter ISO code (e.g., USD, EUR)");
+  //currency is a 3-letter ISO code.
+  validateCurrency(loanData.currency);
 }
