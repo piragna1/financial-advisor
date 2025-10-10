@@ -65,13 +65,13 @@ C:.
 │               validateCurrency.js(tested)✅
 │               validateDueDate.js(tested) ✅
 │               validateNotes.js(tested)✅
-│               validatePaidAt.js(testing)✅ 
-│               validatePaymentId.js(pending)❌ <--------
-│               validatePaymentInput.js(pending)
-│               validatePaymentMethod.js(pending)
-│               validatePaymentUpdate.js(pending)
-│               validateReference.js(pending)
-│               validateStatus.js(pending)
+│               validatePaidAt.js(tested)✅ 
+│               validatePaymentId.js(pending)❌ 
+│               validatePaymentInput.js(pending)❌
+│               validatePaymentMethod.js(tested)✅ 
+│               validatePaymentUpdate.js(pending)❌
+│               validateReference.js(tested)✅
+│               validateStatus.js(pending) <--------
 │
 ├───config
 │       jwtConfig.js
