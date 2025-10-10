@@ -50,7 +50,7 @@ C:.
 │       │       validateName.js❌
 │       │       validatePasswordInput.js❌
 │       │       validateRegistrationInput.js
-│       │       validateToken.js
+│       │       validateToken.js✅
 │       │
 │       ├───loan
 │       │       validateBalloonPayment.js
