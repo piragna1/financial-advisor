@@ -55,8 +55,8 @@ C:.
 │       ├───loan
 │       │       validateBalloonPayment.js✅
 │       │       validateCompoundingFrequencyPerYear.js✅
-│       │       validateCurrency.js <----
-│       │       validateGracePeriodMonths.js
+│       │       validateCurrency.js ✅
+│       │       validateGracePeriodMonths.js<----
 │       │       validateInterestRate.js
 │       │       validateLoanInput.js
 │       │       validateLoanType.js
