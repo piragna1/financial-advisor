@@ -1,13 +1,11 @@
 // import { PaymentErrors } from "../../../errors/paymentErrors";
 // import { AppError } from "../../../errors/appError";
 
-// export function validateStatus(status, updating){
+// export function validateStatus(status){
     
 //       // Validate allowed status values
 //       const validStatuses = ["pending", "paid", "failed"];
 //       if (!validStatuses.includes(status)) {
-//         if (updating) throw new AppError(PaymentErrors.UPDATE.INVALID_DATA);
-//         console.log("throwing 1");
 //         throw new AppError(PaymentErrors.CREATE.INVALID_DATA);
 //       }
 // }
@@ -16,85 +14,73 @@ import { validateStatus } from "../../../../../actors/validators/payment/validat
 import { AppError } from "../../../../../errors/appError";
 import { PaymentErrors } from "../../../../../errors/paymentErrors";
 
-describe("validateStatus(status, updating)", () => {
+describe("validateStatus(status)", () => {
   describe("valid statuses", () => {
-    it("passes for 'pending' during creation", () => {
-      expect(() => validateStatus("pending", false)).not.toThrow();
+    it("passes for 'pending'", () => {
+      expect(() => validateStatus("pending")).not.toThrow();
     });
 
-    it("passes for 'paid' during creation", () => {
-      expect(() => validateStatus("paid", false)).not.toThrow();
+    it("passes for 'paid'", () => {
+      expect(() => validateStatus("paid")).not.toThrow();
     });
 
-    it("passes for 'failed' during creation", () => {
-      expect(() => validateStatus("failed", false)).not.toThrow();
-    });
-
-    it("passes for 'pending' during update", () => {
-      expect(() => validateStatus("pending", true)).not.toThrow();
-    });
-
-    it("passes for 'paid' during update", () => {
-      expect(() => validateStatus("paid", true)).not.toThrow();
-    });
-
-    it("passes for 'failed' during update", () => {
-      expect(() => validateStatus("failed", true)).not.toThrow();
+    it("passes for 'failed'", () => {
+      expect(() => validateStatus("failed")).not.toThrow();
     });
   });
 
   describe("invalid statuses", () => {
-    it("throws CREATE.INVALID_DATA for 'cancelled'", () => {
-      expect(() => validateStatus("cancelled", false)).toThrow(AppError);
+    it("throws STATUS.INVALID for 'cancelled'", () => {
+      expect(() => validateStatus("cancelled")).toThrow(AppError);
       try {
-        validateStatus("cancelled", false);
+        validateStatus("cancelled");
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.CREATE.INVALID_DATA.code);
+        expect(err.code).toBe(PaymentErrors.STATUS.INVALID.code);
       }
     });
 
-    it("throws UPDATE.INVALID_DATA.code for 'refunded'", () => {
-      expect(() => validateStatus("refunded", true)).toThrow(AppError);
+    it("throws STATUS.INVALID for null", () => {
+      expect(() => validateStatus(null)).toThrow(AppError);
       try {
-        validateStatus("refunded", true);
+        validateStatus(null);
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.UPDATE.INVALID_DATA.code);
+        expect(err.code).toBe(PaymentErrors.STATUS.INVALID.code);
       }
     });
 
-    it("throws CREATE.INVALID_DATA.code for null", () => {
-      expect(() => validateStatus(null, false)).toThrow(AppError);
+    it("throws STATUS.INVALID for undefined", () => {
+      expect(() => validateStatus(undefined)).toThrow(AppError);
       try {
-        validateStatus(null, false);
+        validateStatus(undefined);
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.CREATE.INVALID_DATA.code);
+        expect(err.code).toBe(PaymentErrors.STATUS.INVALID.code);
       }
     });
 
-    it("throws UPDATE.INVALID_DATA.code for undefined", () => {
-      expect(() => validateStatus(undefined, true)).toThrow(AppError);
+    it("throws STATUS.INVALID for number", () => {
+      expect(() => validateStatus(123)).toThrow(AppError);
       try {
-        validateStatus(undefined, true);
+        validateStatus(123);
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.UPDATE.INVALID_DATA.code);
+        expect(err.code).toBe(PaymentErrors.STATUS.INVALID.code);
       }
     });
 
-    it("throws CREATE.INVALID_DATA.code for number", () => {
-      expect(() => validateStatus(123, false)).toThrow(AppError);
+    it("throws STATUS.INVALID for object", () => {
+      expect(() => validateStatus({ status: "paid" })).toThrow(AppError);
       try {
-        validateStatus(123, false);
+        validateStatus({ status: "paid" });
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.CREATE.INVALID_DATA.code);
+        expect(err.code).toBe(PaymentErrors.STATUS.INVALID.code);
       }
     });
 
-    it("throws UPDATE.INVALID_DATA.code for object", () => {
-      expect(() => validateStatus({ status: "paid" }, true)).toThrow(AppError);
+    it("throws STATUS.INVALID for empty string", () => {
+      expect(() => validateStatus("")).toThrow(AppError);
       try {
-        validateStatus({ status: "paid" }, true);
+        validateStatus("");
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.UPDATE.INVALID_DATA.code);
+        expect(err.code).toBe(PaymentErrors.STATUS.INVALID.code);
       }
     });
   });
