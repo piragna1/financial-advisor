@@ -14,7 +14,7 @@
 
 import { validateReference } from "../../../../../actors/validators/payment/validateReference.js";
 import { PaymentErrors } from "../../../../../errors/paymentErrors";
-import { AppError } from "../../../../../errors/AppError.js";
+import { AppError } from "../../../../../errors/appError.js";
 
 
 describe("validateReference(reference, updating)", () => {
