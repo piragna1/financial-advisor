@@ -1,10 +1,12 @@
 import {v4} from 'uuid'
+import {AppError} from '../errors/AppError.js'
+import { FinancialErrors } from '../errors/financialProfileErrors.js';
 
 export function buildFinancialProfileEntity(data){
-    if (!data.userId || !data.id) 
-        throw new Error('Fin. profile or/and user id is/are missing');
-    if(typeof salary !=='number' || salary <=0)
-        throw new Error("Invalid salary data received");
+    if (!data.id)throw new AppError(FinancialErrors.CREATE.INVALID_ID);
+    if (!data.userId) throw new AppError(FinancialErrors.CREATE.INVALID_USER_ID);
+    if(typeof data.salary !=='number' || data.salary <=0)
+        throw new AppError(FinancialErrors.CREATE.INVALID_SALARY);
     
     return {
         id:v4(),
