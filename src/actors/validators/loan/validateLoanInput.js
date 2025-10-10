@@ -42,6 +42,7 @@ export function validateLoanInput(loanData) {
   validatePaymentFrequencyPerYear(loanData.paymentFrequencyPerYear);
 
   // compounding frequency per year is a number greater than zero
+  if (loanData.compoundingFrequencyPerYear == null) loanData.compoundingFrequencyPerYear = 0;
   validateCompoundingFrequencyPerYear(loanData.compoundingFrequencyPerYear);
 
   //grace period months is a number greater than zero
