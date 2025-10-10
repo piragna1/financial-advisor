@@ -126,5 +126,12 @@ export const PaymentErrors = {
       message: 'Paid at value is not valid',
       status:410
     }
+  },
+  STATUS:{
+    INVALID:{
+      code:'STATUS_INVALID',
+      message:'The status is not valid',
+      status:411
+    }
   }
 };
