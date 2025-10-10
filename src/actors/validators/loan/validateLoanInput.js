@@ -48,7 +48,8 @@ export function validateLoanInput(loanData) {
   validateGracePeriodMonths(loanData.gracePeriodMonths);
 
   //balloon payment is a number greater than zero
-  validateBalloonPayment(loanData.baloonPayment);
+  if (loanData.balloonPayment == null) loanData.balloonPayment = 0;
+  else validateBalloonPayment(loanData.balloonPayment);
 
   //allowed types for loan types
   validateLoanType(loanData.loanType);
