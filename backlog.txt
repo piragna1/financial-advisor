@@ -4,76 +4,81 @@ Folder PATH listing
 Volume serial number is 6E99-5812
 C:.
 │   index.mjs
-│
+│   
 ├───actors
 │   ├───auth
-│   │       extractToken.js (tested)✅
-│   │       tokenExists.js (tested)✅
-│   │       validatePayloadStructure.js (tested)✅
-│   │       verifyPassword.js (tested)✅
-│   │
+│   │       extractToken.js ✅
+│   │       tokenExists.js✅
+│   │       validatePayloadStructure.js✅
+│   │       verifyPassword.js✅
+│   │       
 │   ├───financialProfile
-│   │       generateFinancialProfileId.js(tested)✅
-│   │       updateFinancialProfileFields.js(tested)✅
-│   │
+│   │       generateFinancialProfileId.js✅
+│   │       updateFinancialProfileFields.js✅
+│   │       
 │   ├───loan
-│   │       generateLoanId.js(tested)✅
-
-│   │       simulateLoan.js (pending)❌
-│   │
+│   │       generateLoanId.js✅
+│   │       simulateLoan.js
+│   │       
 │   ├───normalizers
 │   │   └───payment
-│   │           normalizePayment.js (tested)✅
+│   │           normalizePayment.js✅
 │   │
 │   ├───payment
 │   ├───profile
-│   │       updateProfileFields.js(tested)✅
+│   │       updateProfileFields.js✅
 │   │
 │   ├───retrievers
-
-│   │       userRetriever.js (pending)❌
+│   │       userRetriever.js
 │   │
 │   ├───schedule
 │   ├───users
-
-│   │       checkEmailAvailability.js (pending)❌
-
-│   │       normalizeEmail.js(tested)✅
+│   │       checkEmailAvailability.js
+│   │       normalizeEmail.js✅
 │   │
 │   ├───utils
-│   │       hasControlChars.js(tested)✅
-│   │       hasEmoji.js(tested)✅
-│   │       hasWhiteSpaces.js(tested)✅
-│   │       isNotSymbol.js(tested)✅
+│   │       hasControlChars.js✅
+│   │       hasEmoji.js✅
+│   │       hasWhiteSpaces.js✅
+│   │       isNotSymbol.js✅
 │   │
 │   └───validators
 │       ├───auth
-│       │       loginResponse.js(tested)✅
-│       │       validateEmailInput.js(tested)✅
-
-│       │       validateLoginInput.js(pending)❌
-│       │       validateName.js(pending)❌
-│       │       validatePasswordInput.js(pending)❌
-│       │       validateRegistrationInput.js(pending)❌
-│       │       validateToken.js(pending)❌
+│       │       loginResponse.js✅
+│       │       validateEmailInput.js✅
+│       │       validateLoginInput.js❌
+│       │       validateName.js❌
+│       │       validatePasswordInput.js❌
+│       │       validateRegistrationInput.js
+│       │       validateToken.js
 │       │
 │       ├───loan
-│       │       validateLoanInput.js(tested)✅
+│       │       validateBalloonPayment.js
+│       │       validateCompoundingFrequencyPerYear.js
+│       │       validateCurrency.js
+│       │       validateGracePeriodMonths.js
+│       │       validateInterestRate.js
+│       │       validateLoanInput.js
+│       │       validateLoanType.js
+│       │       validatePaymentFrequencyPerYear.js
+│       │       validatePrincipal.js
+│       │       validateStartDate.js
+│       │       validateTermYears.js
 │       │
 │       └───payment
-│               validateAmount.js(tested)✅
-│               validateCurrency.js(tested)✅
-│               validateDueDate.js(tested) ✅
-│               validateNotes.js(tested)✅
-│               validatePaidAt.js(tested)✅ 
-│               validatePaymentId.js(pending)❌ 
-│               validatePaymentInput.js(pending)❌
-│               validatePaymentMethod.js(tested)✅ 
-│               validatePaymentUpdate.js(pending)❌
-│               validateReference.js(tested)✅
-│               validateStatus.js(pending)✅
+│               validateAmount.js✅
+│               validateCurrency.js✅
+│               validateDueDate.js✅
+│               validateNotes.js✅
+│               validatePaidAt.js✅
+│               validatePaymentId.js
+│               validatePaymentInput.js
+│               validatePaymentMethod.js✅
+│               validatePaymentUpdate.js
+│               validateReference.js✅
+│               validateStatus.js✅
 │
-├───config❌
+├───config
 │       jwtConfig.js
 │       loanConfig.js
 │       mock.loans.db.config.js
@@ -82,14 +87,14 @@ C:.
 │       registerData.js
 │       userConfig.js
 │
-├───controllers❌
+├───controllers
 │       authController.mjs
 │       financialProfileController.mjs
 │       loanController.mjs
 │       profileController.mjs
 │       userController.mjs
 │
-├───db❌
+├───db
 │   │   initDatabase.js
 │   │   listTables.js
 │   │   models.js
@@ -99,7 +104,7 @@ C:.
 │   │   schema.sql
 │   │   setupDatabase.js
 │   │
-│   └───migrations❌
+│   └───migrations
 │           createFinancialProfilesTable.js
 │           createLoansTable.js
 │           createUsersTable.js
@@ -107,14 +112,14 @@ C:.
 │           showTableContent.js
 │
 ├───entities
-│       financialProfileEntity.js✅ 
-│       loanEntity.js <--------
+│       financialProfileEntity.js✅
+│       loanEntity.js
 │       paymentEntity.js
 │       profileEntity.js
 │       scheduleEntity.js
 │       userEntity.js
 │
-├───errors❌
+├───errors
 │       AppError.js
 │       authErrors.js
 │       errorRegistry.js
@@ -137,7 +142,7 @@ C:.
 │       authMiddleware.js
 │       errorHandler.js
 │
-├───models❌
+├───models
 │       financialProfileModel.js
 │       loanModel.js
 │       paymentModel.js
@@ -153,7 +158,7 @@ C:.
 │       scheduleRepository.js
 │       userRepository.js
 │
-├───routes❌
+├───routes
 │   ├───auth
 │   │       auth.route.js
 │   │
@@ -180,7 +185,7 @@ C:.
 │           generateUserId.js
 │           user.service.js
 │
-├───tests❌
+├───tests
 │   │   globalSetup.mjs
 │   │   globalTeardown.mjs
 │   │
@@ -191,51 +196,59 @@ C:.
 │   │   └───payment
 │   │           normalizePaymentRow.js
 │   │
-│   ├───unit
-│   │   ├───actors
-│   │   │   ├───auth
-│   │   │   │       extractToken.test.js
-│   │   │   │       tokenExists.test.js
-│   │   │   │       validatePayloadStructure.test.js
-│   │   │   │       verifyPassword.test.js
-│   │   │   │
-│   │   │   ├───financialProfile
-│   │   │   │       generateFinancialProfileId.test.js
-│   │   │   │       updateFinancialProfileFields.test.js
-│   │   │   │
-│   │   │   ├───loan
-│   │   │   │       generateLoanId.test.js
-│   │   │   │
-│   │   │   ├───normalizers
-│   │   │   │   └───payment
-│   │   │   │           normalizePayment.test.js
-│   │   │   │
-│   │   │   ├───profile
-│   │   │   │       updateProfileFields.test.js
-│   │   │   │
-│   │   │   ├───users
-│   │   │   │       normalizeEmail.test.js
-│   │   │   │
-│   │   │   ├───utils
-│   │   │   │       hasControlChars.test.js
-│   │   │   │       hasEmoji.test.js
-│   │   │   │       hasWhiteSpaces.test.js
-│   │   │   │       isNotSymbol.test.js
-│   │   │   │
-│   │   │   └───validators
-│   │   │       ├───auth
-│   │   │       │       loginResponse.test.js
-│   │   │       │       validateEmailInput.test.js
-│   │   │       │
-│   │   │       ├───loan
-│   │   │       │       validateLoanInput.test.js
-│   │   │       │
-│   │   │       └───payment
-│   │   │               validateAmount.test.js
-│   │   │
-│   │   └───repositories
-│   └───validators
-│       └───auth
+│   └───unit
+│       ├───actors
+│       │   ├───auth
+│       │   │       extractToken.test.js
+│       │   │       tokenExists.test.js
+│       │   │       validatePayloadStructure.test.js
+│       │   │       verifyPassword.test.js
+│       │   │
+│       │   ├───financialProfile
+│       │   │       generateFinancialProfileId.test.js
+│       │   │       updateFinancialProfileFields.test.js
+│       │   │
+│       │   ├───loan
+│       │   │       generateLoanId.test.js
+│       │   │
+│       │   ├───normalizers
+│       │   │   └───payment
+│       │   │           normalizePayment.test.js
+│       │   │
+│       │   ├───profile
+│       │   │       updateProfileFields.test.js
+│       │   │
+│       │   ├───users
+│       │   │       normalizeEmail.test.js
+│       │   │
+│       │   ├───utils
+│       │   │       hasControlChars.test.js
+│       │   │       hasEmoji.test.js
+│       │   │       hasWhiteSpaces.test.js
+│       │   │       isNotSymbol.test.js
+│       │   │
+│       │   └───validators
+│       │       ├───auth
+│       │       │       loginResponse.test.js
+│       │       │       validateEmailInput.test.js
+│       │       │
+│       │       ├───loan
+│       │       │       validateLoanInput.test.js
+│       │       │
+│       │       └───payment
+│       │               validateAmount.test.js
+│       │               validateCurrency.test.js
+│       │               validateDueDate.test.js
+│       │               validateNotes.test.js
+│       │               validatePaidAt.test.js
+│       │               validatePaymentMethod.test.js
+│       │               validateReference.test.js
+│       │               validateStatus.test.js
+│       │
+│       ├───entities
+│       │       financialProfileEntity.test.js
+│       │
+│       └───repositories
 └───utils
     └───auth
             comparePasswords.js
@@ -246,6 +259,7 @@ C:.
             token.js
             tokenIssuer.js
             verifyToken.js
+
 
 -----------------------------------------------------------------------WORKSPACE
 TRELLO:https://trello.com/b/9ty2CCja/finance-advisor
