@@ -49,52 +49,52 @@ describe("validateStatus(status, updating)", () => {
       try {
         validateStatus("cancelled", false);
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.CREATE.INVALID_DATA);
+        expect(err.code).toBe(PaymentErrors.CREATE.INVALID_DATA.code);
       }
     });
 
-    it("throws UPDATE.INVALID_DATA for 'refunded'", () => {
+    it("throws UPDATE.INVALID_DATA.code for 'refunded'", () => {
       expect(() => validateStatus("refunded", true)).toThrow(AppError);
       try {
         validateStatus("refunded", true);
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.UPDATE.INVALID_DATA);
+        expect(err.code).toBe(PaymentErrors.UPDATE.INVALID_DATA.code);
       }
     });
 
-    it("throws CREATE.INVALID_DATA for null", () => {
+    it("throws CREATE.INVALID_DATA.code for null", () => {
       expect(() => validateStatus(null, false)).toThrow(AppError);
       try {
         validateStatus(null, false);
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.CREATE.INVALID_DATA);
+        expect(err.code).toBe(PaymentErrors.CREATE.INVALID_DATA.code);
       }
     });
 
-    it("throws UPDATE.INVALID_DATA for undefined", () => {
+    it("throws UPDATE.INVALID_DATA.code for undefined", () => {
       expect(() => validateStatus(undefined, true)).toThrow(AppError);
       try {
         validateStatus(undefined, true);
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.UPDATE.INVALID_DATA);
+        expect(err.code).toBe(PaymentErrors.UPDATE.INVALID_DATA.code);
       }
     });
 
-    it("throws CREATE.INVALID_DATA for number", () => {
+    it("throws CREATE.INVALID_DATA.code for number", () => {
       expect(() => validateStatus(123, false)).toThrow(AppError);
       try {
         validateStatus(123, false);
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.CREATE.INVALID_DATA);
+        expect(err.code).toBe(PaymentErrors.CREATE.INVALID_DATA.code);
       }
     });
 
-    it("throws UPDATE.INVALID_DATA for object", () => {
+    it("throws UPDATE.INVALID_DATA.code for object", () => {
       expect(() => validateStatus({ status: "paid" }, true)).toThrow(AppError);
       try {
         validateStatus({ status: "paid" }, true);
       } catch (err) {
-        expect(err.code).toBe(PaymentErrors.UPDATE.INVALID_DATA);
+        expect(err.code).toBe(PaymentErrors.UPDATE.INVALID_DATA.code);
       }
     });
   });
