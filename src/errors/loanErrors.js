@@ -146,8 +146,24 @@ export const LoanErrors = {
       message:"Balloon payment must be a number",
       status:416
     }
+  },
+  COMPOUNDING_FREQUENCY_PER_YEAR: {
+    MISSING: {
+      code: "COMPOUNDING_FREQUENCY_PER_YEAR_MISSING",
+      message: "Compounding frequency per year is missing",
+      status: 414
+    },
+    NEGATIVE: {
+      code: "COMPOUNDING_FREQUENCY_PER_YEAR_NEGATIVE",
+      message: "Compounding frequency per year must be a positive number",
+      status: 415
+    },
+    NOT_A_NUMBER: {
+      code: "COMPOUNDING_FREQUENCY_PER_YEAR_NOT_A_NUMBER",
+      message: "Compounding frequency per year must be a number",
+      status: 416
+    }
   }
-
 };
 
 
