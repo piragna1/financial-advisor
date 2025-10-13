@@ -1,7 +1,7 @@
 
 import { validateGracePeriodMonths } from "../../../../../actors/validators/loan/validateGracePeriodMonths.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/loanErrors.js";
+import { LoanErrors } from "../../../../../errors/LoanErrors.js";
 
 describe("validateGracePeriodMonths(gracePeriodMonths)", () => {
   describe("valid inputs", () => {

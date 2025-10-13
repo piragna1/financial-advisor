@@ -1,6 +1,6 @@
 import { validateStartDate } from "../../../../../actors/validators/loan/validateStartDate.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/loanErrors.js";
+import { LoanErrors } from "../../../../../errors/LoanErrors.js";
 
 describe("validateStartDate(startDate)", () => {
   describe("valid inputs", () => {

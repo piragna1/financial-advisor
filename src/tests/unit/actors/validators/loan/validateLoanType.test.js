@@ -43,7 +43,7 @@ describe("validateLoanType(loanType)", () => {
       }
     });
 
-    it("throws INVALID_LOAN_TYPE.code for empty string", () => {
+    it("throws INVALID_LOAN_TYPE for empty string", () => {
       expect(() => validateLoanType("")).toThrow(AppError);
       try {
         validateLoanType("");
@@ -52,7 +52,7 @@ describe("validateLoanType(loanType)", () => {
       }
     });
 
-    it("throws INVALID_LOAN_TYPE.code for null", () => {
+    it("throws INVALID_LOAN_TYPE for null", () => {
       expect(() => validateLoanType(null)).toThrow(AppError);
       try {
         validateLoanType(null);
@@ -61,7 +61,7 @@ describe("validateLoanType(loanType)", () => {
       }
     });
 
-    it("throws INVALID_LOAN_TYPE.code for undefined", () => {
+    it("throws INVALID_LOAN_TYPE for undefined", () => {
       expect(() => validateLoanType(undefined)).toThrow(AppError);
       try {
         validateLoanType(undefined);
@@ -70,7 +70,7 @@ describe("validateLoanType(loanType)", () => {
       }
     });
 
-    it("throws INVALID_LOAN_TYPE.code for number", () => {
+    it("throws INVALID_LOAN_TYPE for number", () => {
       expect(() => validateLoanType(123)).toThrow(AppError);
       try {
         validateLoanType(123);
@@ -79,7 +79,7 @@ describe("validateLoanType(loanType)", () => {
       }
     });
 
-    it("throws INVALID_LOAN_TYPE.code for object", () => {
+    it("throws INVALID_LOAN_TYPE for object", () => {
       expect(() => validateLoanType({ type: "personal" })).toThrow(AppError);
       try {
         validateLoanType({ type: "personal" });
@@ -88,7 +88,7 @@ describe("validateLoanType(loanType)", () => {
       }
     });
 
-    it("throws INVALID_LOAN_TYPE.code for array", () => {
+    it("throws INVALID_LOAN_TYPE for array", () => {
       expect(() => validateLoanType(["personal"])).toThrow(AppError);
       try {
         validateLoanType(["personal"]);

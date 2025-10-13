@@ -10,7 +10,7 @@
 
 import { validateInterestRate } from "../../../../../actors/validators/loan/validateInterestRate.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/loanErrors.js";
+import { LoanErrors } from "../../../../../errors/LoanErrors.js";
 describe("validateInterestRate(interestRate)", () => {
   describe("valid inputs", () => {
     it("accepts small positive float", () => {

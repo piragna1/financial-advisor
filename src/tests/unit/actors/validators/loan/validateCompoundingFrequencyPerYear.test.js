@@ -1,6 +1,6 @@
 import { validateCompoundingFrequencyPerYear } from "../../../../../actors/validators/loan/validateCompoundingFrequencyPerYear.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/loanErrors.js";
+import { LoanErrors } from "../../../../../errors/LoanErrors.js";
 
 describe("validateCompoundingFrequencyPerYear(compoundingFrequencyPerYear)", () => {
   describe("valid inputs", () => {
