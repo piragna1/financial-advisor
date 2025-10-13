@@ -63,7 +63,7 @@ C:.
 │       │       validatePaymentFrequencyPerYear.js✅
 │       │       validatePrincipal.js✅
 │       │       validateStartDate.js✅
-│       │       validateTermYears.js<----
+│       │       validateTermYears.js✅
 │       │
 │       └───payment
 │               validateAmount.js✅
@@ -113,7 +113,7 @@ C:.
 │
 ├───entities
 │       financialProfileEntity.js✅
-│       loanEntity.js
+│       loanEntity.js<----
 │       paymentEntity.js
 │       profileEntity.js
 │       scheduleEntity.js
