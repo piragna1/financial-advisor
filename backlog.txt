@@ -114,8 +114,8 @@ C:.
 ├───entities
 │       financialProfileEntity.js✅
 │       loanEntity.js✅
-│       paymentEntity.js<----
-│       profileEntity.js
+│       paymentEntity.js✅
+│       profileEntity.js<----
 │       scheduleEntity.js
 │       userEntity.js
 │
