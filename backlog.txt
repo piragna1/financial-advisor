@@ -60,8 +60,8 @@ C:.
 │       │       validateInterestRate.js✅
 │       │       validateLoanInput.js❌
 │       │       validateLoanType.js✅
-│       │       validatePaymentFrequencyPerYear.js<----
-│       │       validatePrincipal.js
+│       │       validatePaymentFrequencyPerYear.js✅
+│       │       validatePrincipal.js<----
 │       │       validateStartDate.js
 │       │       validateTermYears.js
 │       │
