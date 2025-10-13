@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors/AppError";
-import { LoanErrors } from "../../../errors/loanErrors";
+import { LoanErrors } from "../../../errors/LoanErrors";
 
 export function validateTermYears(termYears) {
   if (typeof termYears !== "number" || isNaN(termYears))

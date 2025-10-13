@@ -1,6 +1,6 @@
 import { validateTermYears } from "../../../../../actors/validators/loan/validateTermYears.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/loanErrors.js";
+import { LoanErrors } from "../../../../../errors/LoanErrors.js";
 describe("validateTermYears(termYears)", () => {
   describe("valid inputs", () => {
     it("accepts positive integer", () => {

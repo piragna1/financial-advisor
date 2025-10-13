@@ -1,5 +1,5 @@
 import {AppError} from '../../../errors/AppError.js'
-import {LoanErrors, loanErrors} from '../../../errors/loanErrors.js'
+import {LoanErrors, loanErrors} from '../../../errors/LoanErrors.js'
 export function validateLoanType(loanType){
     const allowedLoanTypes = [
     "personal",
