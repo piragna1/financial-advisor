@@ -1,6 +1,6 @@
 import { validatePaymentFrequencyPerYear } from "../../../../../actors/validators/loan/validatePaymentFrequencyPerYear.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { loanErrors } from "../../../../../errors/LoanErrors.js";
+import { loanErrors } from "../../../../../errors/loanErrors.js";
 
 describe("validatePaymentFrequencyPerYear(paymentFrequencyPerYear)", () => {
   describe("valid inputs", () => {

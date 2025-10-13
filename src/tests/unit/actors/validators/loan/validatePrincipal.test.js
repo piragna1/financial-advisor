@@ -1,6 +1,6 @@
 import { validatePrincipal } from "../../../../../actors/validators/loan/validatePrincipal.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { loanErrors } from "../../../../../errors/LoanErrors.js";
+import { loanErrors } from "../../../../../errors/loanErrors.js";
 
 describe("validatePrincipal(principal)", () => {
   describe("valid inputs", () => {
