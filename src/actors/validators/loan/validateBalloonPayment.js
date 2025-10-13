@@ -1,9 +1,9 @@
 import { AppError } from '../../../errors/AppError.js'
-import { LoanErrors } from '../../../errors/loanErrors';
+import { loanErrors } from '../../../errors/LoanErrors.js';
 
 export function validateBalloonPayment(balloonPayment) {
   if (typeof balloonPayment !== "number" || isNaN(balloonPayment))
-    throw new AppError(LoanErrors.BALLOON_PAYMENT.NOT_A_NUMBER)
+    throw new AppError(loanErrors.VALIDATION.INVALID_BALLOON_PAYMENT)
   if (balloonPayment < 0)
-    throw new AppError(LoanErrors.BALLOON_PAYMENT.NEGATIVE)
+    throw new AppError(loanErrors.VALIDATION.INVALID_BALLOON_PAYMENT)
 }

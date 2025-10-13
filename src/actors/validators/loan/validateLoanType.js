@@ -1,5 +1,5 @@
 import {AppError} from '../../../errors/AppError.js'
-import {LoanErrors, loanErrors} from '../../../errors/LoanErrors.js'
+import {loanErrors} from '../../../errors/LoanErrors.js'
 export function validateLoanType(loanType){
     const allowedLoanTypes = [
     "personal",
@@ -13,5 +13,5 @@ export function validateLoanType(loanType){
     typeof loanType !== "string" ||
     !allowedLoanTypes.includes(loanType.toLowerCase())
   )
-    throw new AppError(LoanErrors.VALIDATION.INVALID_LOAN_TYPE);
+    throw new AppError(loanErrors.VALIDATION.INVALID_LOAN_TYPE);
 }

@@ -1,6 +1,6 @@
 import { validateCompoundingFrequencyPerYear } from "../../../../../actors/validators/loan/validateCompoundingFrequencyPerYear.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/LoanErrors.js";
+import { loanErrors } from "../../../../../errors/LoanErrors.js";
 
 describe("validateCompoundingFrequencyPerYear(compoundingFrequencyPerYear)", () => {
   describe("valid inputs", () => {
@@ -27,7 +27,7 @@ describe("validateCompoundingFrequencyPerYear(compoundingFrequencyPerYear)", () 
       try {
         validateCompoundingFrequencyPerYear("12");
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.COMPOUNDING_FREQUENCY_PER_YEAR.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_COMPOUNDING_FREQUENCY.code);
       }
     });
 
@@ -36,7 +36,7 @@ describe("validateCompoundingFrequencyPerYear(compoundingFrequencyPerYear)", () 
       try {
         validateCompoundingFrequencyPerYear(null);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.COMPOUNDING_FREQUENCY_PER_YEAR.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_COMPOUNDING_FREQUENCY.code);
       }
     });
 
@@ -45,7 +45,7 @@ describe("validateCompoundingFrequencyPerYear(compoundingFrequencyPerYear)", () 
       try {
         validateCompoundingFrequencyPerYear(undefined);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.COMPOUNDING_FREQUENCY_PER_YEAR.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_COMPOUNDING_FREQUENCY.code);
       }
     });
 
@@ -54,7 +54,7 @@ describe("validateCompoundingFrequencyPerYear(compoundingFrequencyPerYear)", () 
       try {
         validateCompoundingFrequencyPerYear(NaN);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.COMPOUNDING_FREQUENCY_PER_YEAR.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_COMPOUNDING_FREQUENCY.code);
       }
     });
 
@@ -63,7 +63,7 @@ describe("validateCompoundingFrequencyPerYear(compoundingFrequencyPerYear)", () 
       try {
         validateCompoundingFrequencyPerYear({});
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.COMPOUNDING_FREQUENCY_PER_YEAR.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_COMPOUNDING_FREQUENCY.code);
       }
     });
 
@@ -72,7 +72,7 @@ describe("validateCompoundingFrequencyPerYear(compoundingFrequencyPerYear)", () 
       try {
         validateCompoundingFrequencyPerYear([12]);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.COMPOUNDING_FREQUENCY_PER_YEAR.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_COMPOUNDING_FREQUENCY.code);
       }
     });
 
@@ -83,7 +83,7 @@ describe("validateCompoundingFrequencyPerYear(compoundingFrequencyPerYear)", () 
       try {
         validateCompoundingFrequencyPerYear(-1);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.COMPOUNDING_FREQUENCY_PER_YEAR.NEGATIVE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_COMPOUNDING_FREQUENCY.code);
       }
     });
   });

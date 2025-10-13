@@ -1,6 +1,6 @@
-import { validateLoanType } from "../../../../../actors/validators/loan/validateLoanType.js";
-import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/LoanErrors.js";
+import {validateLoanType} from '../../../../../actors/validators/loan/validateLoanType.js'
+import { AppError } from '../../../../../errors/AppError.js';
+import { loanErrors } from '../../../../../errors/LoanErrors.js';
 
 describe("validateLoanType(loanType)", () => {
   describe("valid inputs", () => {
@@ -39,7 +39,7 @@ describe("validateLoanType(loanType)", () => {
       try {
         validateLoanType("vacation");
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
       }
     });
 
@@ -48,7 +48,7 @@ describe("validateLoanType(loanType)", () => {
       try {
         validateLoanType("");
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
       }
     });
 
@@ -57,7 +57,7 @@ describe("validateLoanType(loanType)", () => {
       try {
         validateLoanType(null);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
       }
     });
 
@@ -66,7 +66,7 @@ describe("validateLoanType(loanType)", () => {
       try {
         validateLoanType(undefined);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
       }
     });
 
@@ -75,7 +75,7 @@ describe("validateLoanType(loanType)", () => {
       try {
         validateLoanType(123);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
       }
     });
 
@@ -84,7 +84,7 @@ describe("validateLoanType(loanType)", () => {
       try {
         validateLoanType({ type: "personal" });
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
       }
     });
 
@@ -93,7 +93,7 @@ describe("validateLoanType(loanType)", () => {
       try {
         validateLoanType(["personal"]);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_LOAN_TYPE.code);
       }
     });
   });

@@ -10,7 +10,7 @@
 
 import { validateInterestRate } from "../../../../../actors/validators/loan/validateInterestRate.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/LoanErrors.js";
+import { loanErrors } from "../../../../../errors/LoanErrors.js";
 describe("validateInterestRate(interestRate)", () => {
   describe("valid inputs", () => {
     it("accepts small positive float", () => {
@@ -32,7 +32,7 @@ describe("validateInterestRate(interestRate)", () => {
       try {
         validateInterestRate("5");
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
       }
     });
 
@@ -41,7 +41,7 @@ describe("validateInterestRate(interestRate)", () => {
       try {
         validateInterestRate(null);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
       }
     });
 
@@ -50,7 +50,7 @@ describe("validateInterestRate(interestRate)", () => {
       try {
         validateInterestRate(undefined);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
       }
     });
 
@@ -59,7 +59,7 @@ describe("validateInterestRate(interestRate)", () => {
       try {
         validateInterestRate(NaN);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
       }
     });
 
@@ -68,7 +68,7 @@ describe("validateInterestRate(interestRate)", () => {
       try {
         validateInterestRate({});
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
       }
     });
 
@@ -77,7 +77,7 @@ describe("validateInterestRate(interestRate)", () => {
       try {
         validateInterestRate([5]);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
       }
     });
 
@@ -86,7 +86,7 @@ describe("validateInterestRate(interestRate)", () => {
       try {
         validateInterestRate(0);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
       }
     });
 
@@ -95,7 +95,7 @@ describe("validateInterestRate(interestRate)", () => {
       try {
         validateInterestRate(-1);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_INTEREST_RATE.code);
       }
     });
   });

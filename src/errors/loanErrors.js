@@ -1,4 +1,4 @@
-export const LoanErrors = {
+export const loanErrors = {
   VALIDATION: {
     INVALID_STRUCTURE: {
       code: "VALIDATION_INVALID_STRUCTURE",
@@ -188,4 +188,4 @@ function deepFreeze(obj) {
   });
 }
 
-deepFreeze(LoanErrors);
+deepFreeze(loanErrors);

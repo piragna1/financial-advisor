@@ -1,7 +1,7 @@
 
 import { validateGracePeriodMonths } from "../../../../../actors/validators/loan/validateGracePeriodMonths.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/LoanErrors.js";
+import { loanErrors } from "../../../../../errors/LoanErrors.js";
 
 describe("validateGracePeriodMonths(gracePeriodMonths)", () => {
   describe("valid inputs", () => {
@@ -24,7 +24,7 @@ describe("validateGracePeriodMonths(gracePeriodMonths)", () => {
       try {
         validateGracePeriodMonths("6");
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
       }
     });
 
@@ -33,7 +33,7 @@ describe("validateGracePeriodMonths(gracePeriodMonths)", () => {
       try {
         validateGracePeriodMonths(null);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
       }
     });
 
@@ -42,7 +42,7 @@ describe("validateGracePeriodMonths(gracePeriodMonths)", () => {
       try {
         validateGracePeriodMonths(undefined);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
       }
     });
 
@@ -51,7 +51,7 @@ describe("validateGracePeriodMonths(gracePeriodMonths)", () => {
       try {
         validateGracePeriodMonths(NaN);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
       }
     });
 
@@ -60,7 +60,7 @@ describe("validateGracePeriodMonths(gracePeriodMonths)", () => {
       try {
         validateGracePeriodMonths({});
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
       }
     });
 
@@ -69,7 +69,7 @@ describe("validateGracePeriodMonths(gracePeriodMonths)", () => {
       try {
         validateGracePeriodMonths([6]);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.GRACE_PERIOD_MONTHS.NOT_A_NUMBER.code);
       }
     });
 
@@ -78,7 +78,7 @@ describe("validateGracePeriodMonths(gracePeriodMonths)", () => {
       try {
         validateGracePeriodMonths(-1);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.GRACE_PERIOD_MONTHS.NEGATIVE.code);
+        expect(err.code).toBe(loanErrors.GRACE_PERIOD_MONTHS.NEGATIVE.code);
       }
     });
   });

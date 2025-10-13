@@ -1,6 +1,6 @@
 import { validateStartDate } from "../../../../../actors/validators/loan/validateStartDate.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/LoanErrors.js";
+import { loanErrors } from "../../../../../errors/LoanErrors.js";
 
 describe("validateStartDate(startDate)", () => {
   describe("valid inputs", () => {
@@ -19,7 +19,7 @@ describe("validateStartDate(startDate)", () => {
       try {
         validateStartDate(new Date("invalid"));
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_START_DATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_START_DATE.code);
       }
     });
 
@@ -28,7 +28,7 @@ describe("validateStartDate(startDate)", () => {
       try {
         validateStartDate("2025-01-01");
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_START_DATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_START_DATE.code);
       }
     });
 
@@ -37,7 +37,7 @@ describe("validateStartDate(startDate)", () => {
       try {
         validateStartDate(null);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_START_DATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_START_DATE.code);
       }
     });
 
@@ -46,7 +46,7 @@ describe("validateStartDate(startDate)", () => {
       try {
         validateStartDate(undefined);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_START_DATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_START_DATE.code);
       }
     });
 
@@ -55,7 +55,7 @@ describe("validateStartDate(startDate)", () => {
       try {
         validateStartDate(123456789);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_START_DATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_START_DATE.code);
       }
     });
 
@@ -64,7 +64,7 @@ describe("validateStartDate(startDate)", () => {
       try {
         validateStartDate({});
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_START_DATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_START_DATE.code);
       }
     });
 
@@ -73,7 +73,7 @@ describe("validateStartDate(startDate)", () => {
       try {
         validateStartDate([new Date()]);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_START_DATE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_START_DATE.code);
       }
     });
   });

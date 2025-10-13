@@ -11,7 +11,7 @@
 
 import { validateBalloonPayment } from "../../../../../actors/validators/loan/validateBalloonPayment.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/LoanErrors.js";
+import { loanErrors } from "../../../../../errors/LoanErrors.js";
 
 describe("validateBalloonPayment(balloonPayment)", () => {
   describe("valid inputs", () => {
@@ -34,7 +34,7 @@ describe("validateBalloonPayment(balloonPayment)", () => {
       try {
         validateBalloonPayment("1000");
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.BALLOON_PAYMENT.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_BALLOON_PAYMENT.code);
       }
     });
 
@@ -43,7 +43,7 @@ describe("validateBalloonPayment(balloonPayment)", () => {
       try {
         validateBalloonPayment(null);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.BALLOON_PAYMENT.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_BALLOON_PAYMENT.code);
       }
     });
 
@@ -52,7 +52,7 @@ describe("validateBalloonPayment(balloonPayment)", () => {
       try {
         validateBalloonPayment(undefined);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.BALLOON_PAYMENT.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_BALLOON_PAYMENT.code);
       }
     });
 
@@ -61,7 +61,7 @@ describe("validateBalloonPayment(balloonPayment)", () => {
       try {
         validateBalloonPayment(NaN);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.BALLOON_PAYMENT.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_BALLOON_PAYMENT.code);
       }
     });
 
@@ -70,7 +70,7 @@ describe("validateBalloonPayment(balloonPayment)", () => {
       try {
         validateBalloonPayment({});
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.BALLOON_PAYMENT.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_BALLOON_PAYMENT.code);
       }
     });
 
@@ -79,7 +79,7 @@ describe("validateBalloonPayment(balloonPayment)", () => {
       try {
         validateBalloonPayment([1000]);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.BALLOON_PAYMENT.NOT_A_NUMBER.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_BALLOON_PAYMENT.code);
       }
     });
 
@@ -88,7 +88,7 @@ describe("validateBalloonPayment(balloonPayment)", () => {
       try {
         validateBalloonPayment(-1);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.BALLOON_PAYMENT.NEGATIVE.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_BALLOON_PAYMENT.code);
       }
     });
   });

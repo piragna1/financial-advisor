@@ -1,11 +1,11 @@
 import { AppError } from "../../../errors/AppError";
-import { LoanErrors } from "../../../errors/loanErrors";
+import { loanErrors, LoanErrors } from "../../../errors/LoanErrors.js";
 
 export function validateCompoundingFrequencyPerYear(compoundingFrequencyPerYear) {
   if (typeof compoundingFrequencyPerYear !== "number" || isNaN(compoundingFrequencyPerYear))
-    throw new AppError(LoanErrors.COMPOUNDING_FREQUENCY_PER_YEAR.NOT_A_NUMBER);
+    throw new AppError(loanErrors.VALIDATION.INVALID_COMPOUNDING_FREQUENCY);
 
     if (compoundingFrequencyPerYear < 0)
-      throw new AppError(LoanErrors.COMPOUNDING_FREQUENCY_PER_YEAR.NEGATIVE);
+      throw new AppError(loanErrors.VALIDATION.INVALID_COMPOUNDING_FREQUENCY);
 
 }

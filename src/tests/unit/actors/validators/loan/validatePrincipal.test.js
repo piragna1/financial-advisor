@@ -1,6 +1,6 @@
 import { validatePrincipal } from "../../../../../actors/validators/loan/validatePrincipal.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/LoanErrors.js";
+import { loanErrors } from "../../../../../errors/LoanErrors.js";
 
 describe("validatePrincipal(principal)", () => {
   describe("valid inputs", () => {
@@ -23,7 +23,7 @@ describe("validatePrincipal(principal)", () => {
       try {
         validatePrincipal("1000");
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PRINCIPAL.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PRINCIPAL.code);
       }
     });
 
@@ -32,7 +32,7 @@ describe("validatePrincipal(principal)", () => {
       try {
         validatePrincipal(null);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PRINCIPAL.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PRINCIPAL.code);
       }
     });
 
@@ -41,7 +41,7 @@ describe("validatePrincipal(principal)", () => {
       try {
         validatePrincipal(undefined);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PRINCIPAL.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PRINCIPAL.code);
       }
     });
 
@@ -50,7 +50,7 @@ describe("validatePrincipal(principal)", () => {
       try {
         validatePrincipal(NaN);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PRINCIPAL.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PRINCIPAL.code);
       }
     });
 
@@ -59,7 +59,7 @@ describe("validatePrincipal(principal)", () => {
       try {
         validatePrincipal({});
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PRINCIPAL.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PRINCIPAL.code);
       }
     });
 
@@ -68,7 +68,7 @@ describe("validatePrincipal(principal)", () => {
       try {
         validatePrincipal([1000]);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PRINCIPAL.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PRINCIPAL.code);
       }
     });
   });

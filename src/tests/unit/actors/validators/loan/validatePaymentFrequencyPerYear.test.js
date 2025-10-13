@@ -1,6 +1,6 @@
 import { validatePaymentFrequencyPerYear } from "../../../../../actors/validators/loan/validatePaymentFrequencyPerYear.js";
 import { AppError } from "../../../../../errors/AppError.js";
-import { LoanErrors } from "../../../../../errors/LoanErrors.js";
+import { loanErrors } from "../../../../../errors/LoanErrors.js";
 
 describe("validatePaymentFrequencyPerYear(paymentFrequencyPerYear)", () => {
   describe("valid inputs", () => {
@@ -27,7 +27,7 @@ describe("validatePaymentFrequencyPerYear(paymentFrequencyPerYear)", () => {
       try {
         validatePaymentFrequencyPerYear("12");
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
       }
     });
 
@@ -36,7 +36,7 @@ describe("validatePaymentFrequencyPerYear(paymentFrequencyPerYear)", () => {
       try {
         validatePaymentFrequencyPerYear(null);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
       }
     });
 
@@ -45,7 +45,7 @@ describe("validatePaymentFrequencyPerYear(paymentFrequencyPerYear)", () => {
       try {
         validatePaymentFrequencyPerYear(undefined);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
       }
     });
 
@@ -54,7 +54,7 @@ describe("validatePaymentFrequencyPerYear(paymentFrequencyPerYear)", () => {
       try {
         validatePaymentFrequencyPerYear(NaN);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
       }
     });
 
@@ -63,7 +63,7 @@ describe("validatePaymentFrequencyPerYear(paymentFrequencyPerYear)", () => {
       try {
         validatePaymentFrequencyPerYear({});
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
       }
     });
 
@@ -72,7 +72,7 @@ describe("validatePaymentFrequencyPerYear(paymentFrequencyPerYear)", () => {
       try {
         validatePaymentFrequencyPerYear([12]);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
       }
     });
 
@@ -81,7 +81,7 @@ describe("validatePaymentFrequencyPerYear(paymentFrequencyPerYear)", () => {
       try {
         validatePaymentFrequencyPerYear(0);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
       }
     });
 
@@ -90,7 +90,7 @@ describe("validatePaymentFrequencyPerYear(paymentFrequencyPerYear)", () => {
       try {
         validatePaymentFrequencyPerYear(-1);
       } catch (err) {
-        expect(err.code).toBe(LoanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
+        expect(err.code).toBe(loanErrors.VALIDATION.INVALID_PAYMENT_FREQUENCY.code);
       }
     });
   });
