@@ -1,4 +1,5 @@
 export function buildProfileEntity(data){
+    if (!data) throw new Error('User is missing.')
     if (!data.userId) throw new Error('User id missing.');
     const {
         userId,
