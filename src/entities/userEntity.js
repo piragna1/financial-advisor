@@ -4,7 +4,6 @@ import assert from "assert";
 
 export function buildUserEntity({ id, email, hashedPassword }) {
 
-console.log('receiving in buildUserEntity', {id,email,hashedPassword})
 
   if (!id || !email || !hashedPassword) {
     throw new AppError(AuthErrors.MISSING_CREDENTIALS);
