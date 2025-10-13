@@ -57,8 +57,8 @@ C:.
 │       │       validateCompoundingFrequencyPerYear.js✅
 │       │       validateCurrency.js ✅
 │       │       validateGracePeriodMonths.js✅
-│       │       validateInterestRate.js<----
-│       │       validateLoanInput.js
+│       │       validateInterestRate.js✅
+│       │       validateLoanInput.js<----
 │       │       validateLoanType.js
 │       │       validatePaymentFrequencyPerYear.js
 │       │       validatePrincipal.js
