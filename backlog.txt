@@ -58,8 +58,8 @@ C:.
 │       │       validateCurrency.js ✅
 │       │       validateGracePeriodMonths.js✅
 │       │       validateInterestRate.js✅
-│       │       validateLoanInput.js<----
-│       │       validateLoanType.js
+│       │       validateLoanInput.js❌
+│       │       validateLoanType.js<----
 │       │       validatePaymentFrequencyPerYear.js
 │       │       validatePrincipal.js
 │       │       validateStartDate.js
