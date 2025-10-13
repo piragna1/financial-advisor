@@ -116,8 +116,8 @@ C:.
 │       loanEntity.js✅
 │       paymentEntity.js✅
 │       profileEntity.js✅
-│       scheduleEntity.js<----
-│       userEntity.js
+│       scheduleEntity.js✅
+│       userEntity.js<----
 │
 ├───errors
 │       AppError.js
