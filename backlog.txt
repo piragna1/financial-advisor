@@ -59,8 +59,8 @@ C:.
 │       │       validateGracePeriodMonths.js✅
 │       │       validateInterestRate.js✅
 │       │       validateLoanInput.js❌
-│       │       validateLoanType.js<----
-│       │       validatePaymentFrequencyPerYear.js
+│       │       validateLoanType.js✅
+│       │       validatePaymentFrequencyPerYear.js<----
 │       │       validatePrincipal.js
 │       │       validateStartDate.js
 │       │       validateTermYears.js
