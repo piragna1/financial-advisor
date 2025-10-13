@@ -1,5 +1,9 @@
-export function validateInterestRate(interestRat){
-    
-  if (typeof loanData.interestRate !== "number" || loanData.interestRate <= 0)
-    throw new Error("Interest rate must be a positive number");
+import {AppError } from '../../../errors/AppError.js'
+import { LoanErrors } from '../../../errors/loanErrors.js';
+export function validateInterestRate(interestRate){
+ 
+  if (typeof interestRate !== "number"  || isNaN(interestRate)) 
+    throw new AppError(LoanErrors.VALIDATION.INVALID_INTEREST_RATE);
+  if (interestRate <= 0)
+    throw new AppError(LoanErrors.VALIDATION.INVALID_INTEREST_RATE)
 }
