@@ -117,7 +117,7 @@ C:.
 │       paymentEntity.js✅
 │       profileEntity.js✅
 │       scheduleEntity.js✅
-│       userEntity.js<----
+│       userEntity.js✅
 │
 ├───errors
 │       AppError.js
@@ -136,7 +136,7 @@ C:.
 │
 ├───helpers
 │   └───transformers
-│           paymentTransformer.js
+│           paymentTransformer.js<----
 │
 ├───middlewares
 │       authMiddleware.js
