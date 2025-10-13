@@ -163,6 +163,18 @@ export const LoanErrors = {
       message: "Compounding frequency per year must be a number",
       status: 416
     }
+  },
+  GRACE_PERIOD_MONTHS:{
+    NEGATIVE:{
+      code:"GRACE_PERIOD_MONTHS_NEGATIVE",
+      message:"Grace period months can not be negative",
+      status:417
+    },
+    NOT_A_NUMBER:{
+      code:"GRACE_PERIOD_MONTHS_NOT_A_NUMBER",
+      message:"Grace period months must be a number",
+      status:418
+    }
   }
 };
 
