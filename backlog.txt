@@ -136,7 +136,7 @@ C:.
 │
 ├───helpers
 │   └───transformers
-│           paymentTransformer.js<----
+│           paymentTransformer.js✅
 │
 ├───middlewares
 │       authMiddleware.js
@@ -151,7 +151,7 @@ C:.
 │       userModel.js
 │
 ├───repositories
-│       financialProfileRepository.js
+│       financialProfileRepository.js<----
 │       loanRepository.js
 │       paymentRepository.js
 │       profileRepository.js
