@@ -62,8 +62,8 @@ C:.
 │       │       validateLoanType.js✅
 │       │       validatePaymentFrequencyPerYear.js✅
 │       │       validatePrincipal.js✅
-│       │       validateStartDate.js<----
-│       │       validateTermYears.js
+│       │       validateStartDate.js✅
+│       │       validateTermYears.js<----
 │       │
 │       └───payment
 │               validateAmount.js✅
